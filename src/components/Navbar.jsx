@@ -1,4 +1,6 @@
 import { useState } from 'react'
+import { useSelector } from 'react-redux'
+import { MenuIcon, OptionsIcon, PlayPauseIcon, StopIcon } from '../icons';
 
 import './Navbar.css'
 import './Task.css'
@@ -25,7 +27,11 @@ import footerMenu from '../images/footer-icon.svg'
 
 const Navbar = () => {
   const [toggleMenu, setToggleMenu] = useState(false)
+
   const [toggleTask, setToggleTask] = useState(false)
+  const [isTask, setIsTask] = useState(false)
+
+
   const [toggleCalendar, setToggleCalendar] = useState(false)
   const [toggleNotes, setToggleNotes] = useState(false)
   const [toggleTag, setToggleTag] = useState(false)
@@ -89,7 +95,8 @@ const Navbar = () => {
     setToggleSettings(false);
     setToggleUSer(!toggleUSer);
   };
-
+  const { toggle } = useSelector((store) => store.menu);
+  const { Menu, Task, Calendar, Notes } = toggle;
 
 
 
@@ -100,9 +107,10 @@ const Navbar = () => {
       <nav className='navbar-main'>
         <div className="menu-bar">
           <button className='main-menu icon-button' onClick={() => MenuButton()}>
-            <img className='logo' src={homeMenu} alt="my icon" />
+            {/* <img className='logo' src={homeMenu} alt="my icon" /> */}
+            <MenuIcon />
           </button>
-          {toggleMenu && (
+          {Menu && (
             <>
               <button className={`icon-button ${toggleTask ? 'button-clicked' : ''} `} onClick={() => TaskButton()}>
                 <img className='logo' src={taskMenu} alt="Task icon" />
@@ -129,17 +137,18 @@ const Navbar = () => {
           </div>
           <div className='timer-stage2-clock'>
             <button className='play-buttons'>
-              <img className='play-option' src={playIcon} alt="play" />
-              <img className='play-option' src={pauseIcon} alt="pause" />
+              <PlayPauseIcon />
             </button>
             <button className='play-buttons'>
-              <img className='play-option' src={stopIcon} alt="stop" />
+              <StopIcon />
+              {/* <img className='play-option' src={stopIcon} alt="stop" /> */}
             </button>
           </div>
         </div>
         <div className="option-bar">
           <button className='icon-button' onClick={() => OptionButton()}>
-            <img className='logo' src={optionsMenu} alt="my icon" />
+            {/* <img className='logo' src={optionsMenu} alt="my icon" /> */}
+            <OptionsIcon />
           </button>
           {toggleOption && (
             <>
@@ -155,24 +164,40 @@ const Navbar = () => {
           )}
         </div>
       </nav >
-      {toggleTask && (
-        <section className='task-background'>
-          <div className='task-container-left'>
-            <div className='task-element'>
+
+
+      {Task && (
+        <section className='task-container'>
+          <div className='task-overall'>
+            <div className='overall-title'>
+              <div className=' task-title box1'><h1>Tasks</h1></div>
+              <div className=' task-quantity box2'><p>4</p></div>
             </div>
-            <div className='task-element'>
+            <div className='overall-myTask'>
+              <div className='myTask-container box1'>
+                <button>Logo</button>
+                <p>All tasks</p>
+                <button>Quantity</button>
+              </div>
+              <div className='myTask-container box2'>
+                <button>Logo</button>
+                <p>Current</p>
+                <button>Quantity</button>
+              </div>
+              <div className='myTask-container box1'>
+                <button>Logo</button>
+                <p>Completed</p>
+                <button>Quantity</button>
+              </div>
             </div>
-            <div className='task-element'>
-            </div>
-            <div className='task-element'>
-            </div>
+            <div className='overall-list'>List projects</div>
+            <div className='overall-tags'>Tags</div>
           </div>
-          <div className='task-container-center'>
-            Center
-          </div>
-          <div className='task-container-right'>
-            Right
-          </div>
+          <div className='task-focus'>center</div>
+          {isTask && (
+            <div className='task-details'>right</div>
+          )}
+          {/* <button className='task-test btn' onClick={() => setIsTask(!isTask)}>Toggle test</button> */}
         </section>
       )
       }

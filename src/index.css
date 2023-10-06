@@ -9,6 +9,11 @@
   color: rgba(255, 255, 255, 0.87);
   background-color: #242424;
   background-color: #cd6666e8;
+  --back01: rgb(200, 200, 200);
+  --back02: rgb(50, 50, 50);
+  --back03: rgb(75, 75, 75);
+  --black: #191919;
+
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -17,10 +22,22 @@
   -webkit-text-size-adjust: 100%;
 }
 
+nav svg {
+  width: 1.5rem;
+  color: var(--black)
+
+}
+
 body {
   margin: 0;
 }
 
+
+.btn {
+  background-color: bisque;
+  color: black;
+  padding: 0.3rem;
+}
 /* a {
   font-weight: 500;
   color: #646cff;
