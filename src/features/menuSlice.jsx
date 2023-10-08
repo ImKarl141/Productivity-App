@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  toggle: {
+  menuToggle: {
     Menu: false,
     Task: false,
     Calendar: false,
@@ -15,9 +15,31 @@ const initialState = {
 
 const menuSlice = createSlice({
   name: 'menu',
-  initialState
-})
+  initialState,
+  reducers: {
+    showMenuOptions: (state) => {
+      const { menuToggle } = state;
+      menuToggle.Menu = !menuToggle.Menu;
+      menuToggle.Task = menuToggle.Calendar = menuToggle.Notes = false;
+    },
+    showTask: (state) => {
+      const { menuToggle } = state;
+      menuToggle.Task = !menuToggle.Task;
+      menuToggle.Calendar = menuToggle.Notes = false;
+      // return menuToggle.Task
+    },
+    showCalendar: (state) => {
+      const { menuToggle } = state;
+      menuToggle.Calendar = !menuToggle.Calendar;
+      menuToggle.Task = menuToggle.Notes = false;
+    },
+    showNotes: (state) => {
+      const { menuToggle } = state;
+      menuToggle.Notes = !menuToggle.Notes;
+      menuToggle.Task = menuToggle.Calendar = false;
+    }
+  },
+});
 
-// console.log(menuSlice);
-
+export const { showMenuOptions, showTask, showCalendar, showNotes } = menuSlice.actions;
 export default menuSlice.reducer;
