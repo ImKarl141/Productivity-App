@@ -1,15 +1,23 @@
 import { createSlice } from "@reduxjs/toolkit";
-import taskItems from "../taskItems";
+import { task } from '../data'
 
 const initialState = {
-  taskItems: taskItems,
+  taskItems: task,
   isEdit: false,
   userName: 'Carlos'
 }
 
 const taskSlice = createSlice({
   name: 'task',
-  initialState
+  initialState,
+  reducers: {
+    ShowTaskEdit: (state) => {
+      // const { isEdit } = state
+      state.isEdit = !state.isEdit;
+      // console.log(state.isEdit);
+    },
+  }
 });
 
+export const { ShowTaskEdit } = taskSlice.actions;
 export default taskSlice.reducer;

@@ -1,8 +1,8 @@
 const taskItems = [
   {
     id: 0,
-    title: 'Project 01',
-    description: 'Make dinner for my parents',
+    title: 'Make dinner',
+    description: `Prepare the dinner for my Sister's birthday`,
     subtask: {},
     dueDate: '23-12-2023',
     tag: '',
@@ -10,8 +10,8 @@ const taskItems = [
   },
   {
     id: 1,
-    title: 'Project 02',
-    description: 'Buy a new PC for my birthday',
+    title: 'Clean the house',
+    description: 'Getting ready for the day',
     subtask: {},
     dueDate: '14-02-2024',
     tag: '',

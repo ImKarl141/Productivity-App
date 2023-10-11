@@ -37,26 +37,39 @@
   justify-content: space-between;
   /* grid-template-columns: 20rem 1fr 20rem; */
   /* column-gap: 0.2rem; */
-  background-color: #cc6666;
+  /* background-color: #cc6666; */
+  background-color: var(--pomodoroDark);
   padding: 0.2rem;
 }
 
 
 .task-overall,
 .task-details {
-  background-color: lightcoral;
+  /* background-color: lightcoral; */
   flex-basis: 18rem;
 }
-
 
 .task-focus {
   background-color: lightblue;
   flex: 1;
+  padding: 0.4rem;
+}
+.overall-title,
+.overall-myTask,
+.overall-list,
+.overall-tags {
+  background-color: var(--pomodoroLight);
+}
+.overall-title,
+.overall-myTask,
+.overall-list,
+.overall-tags {
+  padding: 0.25rem;
 }
 
-.task-test {
+/* .task-test {
   position: fixed;
-}
+} */
 
 .task-overall {
   display: flex;
@@ -67,73 +80,325 @@
 
 .overall-title {
   display: flex;
-  /* align-items: center; */
+  color: var(--black);
   justify-content: space-between;
-  flex-basis: 4rem;
-  border: 0.1rem solid black;
+  flex-basis: 2.5rem;
 }
 
 .task-title,
 .task-quantity {
   display: flex;
   align-items: center;
-  justify-content: center;
 }
 
 .task-title {
-  display: flex;
-  align-items: center;
-  justify-content: center;
   flex: 1;
+  justify-content: start;
+  margin-left: 0.6rem;
 }
 
 .task-quantity {
-  display: flex;
-  align-items: center;
-  justify-content: center;
   flex-basis: 5rem;
+  justify-content: end;
+  margin-right: 1rem;
 }
 
-.box1 {
+/* .box1 {
   background-color: var(--back01);
 }
 .box2 {
   background-color: var(--back02);
+} */
+
+.myTask-text {
+  white-space: nowrap;
+  font-family: Nunito;
+  font-weight: 600;
+  font-size: 1em;
+  color: var(--black);
+  margin: 0 0 0 0.6rem;
 }
 
+
+.overall-tags {
+  /* flex-basis: 8rem; */
+  min-height: 6rem;
+  margin: 0.2rem 0 0 0;
+}
+
+h1, h2 {
+  margin: 0;
+  cursor: context-menu;
+}
+
+.task-input {
+  padding: 0.2rem;
+  height: 1.2rem;
+}
+
+.task-input:focus {
+  outline: none;
+}
+
+.addBtn {
+  background-color: transparent;
+  border: 0rem none;
+  border-radius: 0.2rem;
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+}
+
+.addBtn:hover {
+  background-color: transparent;
+}
+
+.add-task-btn {
+  display: flex;
+  align-items: center;
+  border: 0.15rem solid var(--pomodoroLight);
+  border-radius: 0.5rem ;
+  width: 100%;
+  padding: 0.5rem;
+  /* margin: 0.5rem; */
+}
+
+
+/* List of tasks start */
 
 .overall-myTask {
   display: flex;
   flex-direction: column;
   justify-content: start;
-  flex: 1;
+  /* flex: 1; */
   margin: 0.2rem 0rem;
-  background-color: var(--back03);
-  padding: 0.5rem;
-  border: 0.1rem solid black;
+
+}
+
+.list-title {
+  color: var(--black);
+  font-size: 1rem;
+}
+
+.box:hover {
+  background-color: var(--pomodoroDark);
+}
+
+.list-tasks {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.list-tasks-item {
+  display: flex;
+  align-items: center;
+  margin: 0.2rem 0rem;
+}
+
+/* List of tasks end */
+
+
+/* Tasks toggle start  */
+.myTask-toggle {
+  background-color: #cc6666;
+}
+
+.myTask-container-main {
+  display: flex;
+  align-items: center;
+  flex-basis: 2.5rem;
+  padding: 0.2rem 0.6rem;
+  justify-content: space-between;
+  border: 0 none;
+  border-radius: 0.2rem;
 }
 
 .myTask-container {
   display: flex;
-  flex-basis: 2.5rem;
-  justify-content: space-between;
+  align-items: center;
 }
 
+.task-number {
+  font-family: Nunito;
+  font-size: 0.8rem;
+  color: var(--black);
+  font-weight: 800;
+  padding: 0.1rem 0.6rem ;
+  /* margin: 2rem; */
+  background-color: var(--pomodoroDark);
+  border-radius: 0.2rem;
+}
 
+.myTask-container-main:hover  .task-number {
+  background-color: var(--pomodoroLight);
+}
+/* Tasks toggle end */
+
+
+/* Tasks icons start */
+.add-task {
+  width: 1.2rem;
+  color: var(--black);
+}
+
+.task-icons {
+  margin: 0;
+  padding: 0;
+  height: 1.2rem;
+  width: 1.2rem;
+  color: var(--black);
+}
+
+.task-icons-02 {
+  height: 1rem;
+  width: 1.2rem;
+  fill: var(--black);
+}
+
+/* Tasks icons end */
+
+
+/* List of projects start */
 
 .overall-list {
+  display: flex;
+  flex-direction: column;
   flex: 2;
-  background-color: var(--back03);
+  /* background-color: var(--back03); */
+}
+
+.list-title,
+.list-projects {
+  display: flex;
+  align-items: center;
+}
+
+.project-color {
   padding: 0.5rem;
+  border: 0.12rem solid var(--black);
+  border-radius: 0.2rem;
+  background-color: rgb(110, 69, 69);
 }
 
-.overall-tags {
-  flex-basis: 8rem;
-  background-color: var(--back03);
+.list-title {
+  margin-left: 0.6rem;
 }
 
-
-h1 {
-  margin: 0;
+.list-projects {
+  /* flex: 1; */
+  flex-basis: 2.5rem;
+  padding: 0.2rem 0.6rem;
+  align-items: center;
+  justify-content: space-between;
+  border: 0 none;
+  border-radius: 0.2rem;
 }
 
+.projects-container {
+  display: flex;
+  align-items: center;
+}
+
+.list-projects:hover  .projects-number {
+  background-color: var(--pomodoroLight);
+}
+
+.projects-number {
+  color: var(--black);
+  font-weight: 800;
+  font-size: 0.8rem;
+  padding: 0.1rem 0.6rem ;
+  background-color: var(--pomodoroDark);
+  border-radius: 0.2rem;
+}
+
+.add-project-btn {
+  display: flex;
+  align-items: center;
+  padding: 0.2rem 0.6rem;
+  /* border: 0.1rem solid var(--black); */
+  border-radius: 0.5rem ;
+  width: 100%;
+  /* padding: 0.3rem; */
+  /* margin: 0.5rem; */
+  opacity: 0.9;
+}
+
+.add-project-btn:hover {
+  background-color: var(--pomodoroDark);
+}
+
+/* List of projects end */
+
+
+/* Tags start */
+
+.tags-container {
+  margin: 0.6rem;
+  grid-column-gap: 0.2rem;
+  grid-row-gap: 0.2rem;
+  display: grid;
+  grid-template-columns: 4rem 4rem 1fr;
+  justify-items: stretch;
+  align-items: center;
+  /* padding: 0.2rem 0.6rem; */
+}
+
+.add-tags-btn {
+  display: flex;
+  align-items: center;
+  padding: 0.2rem 0.6rem;
+  /* border: 0.1rem solid var(--black); */
+  border-radius: 0.5rem ;
+  /* width: 100%; */
+  /* padding: 0.3rem; */
+  /* margin: 0.5rem; */
+  background-color: var(--pomodoroDark);
+  opacity: 0.9;
+}
+
+.myTag {
+  display: flex;
+  align-items: center;
+  padding: 0.2rem 0.6rem;
+  border-radius: 0.25rem ;
+  background-color: var(--pomodoroDark);
+  opacity: 0.9;
+  max-width: 6rem;
+}
+
+/* button.myTag {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  width: 4rem;
+} */
+
+/* .myTag:after {
+  content: '...';
+  white-space: nowrap;
+  overflow: hidden;
+} */
+
+.add-tags-btn:hover {
+  background-color: var(--pomodoroDark);
+  opacity: 0.7;
+}
+
+.add-tags {
+  width: 0.8rem;
+  color: var(--black);
+}
+
+.myTags-text {
+  white-space: nowrap;
+  font-family: Nunito;
+  font-weight: 600;
+  font-size: 1em;
+  color: var(--black);
+  margin: 0 0.2rem 0 0.2rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+/* Tags end */

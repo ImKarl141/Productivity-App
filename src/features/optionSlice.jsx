@@ -31,7 +31,7 @@ const optionSlice = createSlice({
     }
   }
 })
-console.log('hello friend');
+// console.log('hello friend');
 
 //destructuring slice
 export const { showOption, showSettings, showUser } = optionSlice.actions;

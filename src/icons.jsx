@@ -192,3 +192,139 @@ export const LogoutIcon = () => {
 
   );
 };
+
+export const FooterIcon = () => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      strokeWidth={1.5}
+      stroke="currentColor"
+      className="footer-icon">
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M4.5 12.75l7.5-7.5 7.5 7.5m-15 6l7.5-7.5 7.5 7.5" />
+    </svg>
+  );
+};
+
+export const AddTaskIcon = () => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      strokeWidth={2.5}
+      stroke="currentColor"
+      className="add-task">
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M12 4.5v15m7.5-7.5h-15"
+      />
+    </svg>
+
+  );
+};
+
+// export const AddTaskIcon = () => {
+//   return (
+//     <svg
+//       xmlns="http://www.w3.org/2000/svg"
+//       fill="none"
+//       viewBox="0 0 24 24"
+//       strokeWidth={1.5}
+//       stroke="currentColor"
+//       className="add-task">
+//       <path
+//         strokeLinecap="round"
+//         strokeLinejoin="round"
+//         d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+//     </svg>
+
+//   );
+// };
+
+export const AllTasksIcon = () => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      height="1em"
+      viewBox="0 0 512 512"
+      strokeWidth={1}
+      className="task-icons-02">
+      <path
+        d="M152.1 38.2c9.9 8.9 10.7 24 1.8 33.9l-72 80c-4.4 4.9-10.6 7.8-17.2 7.9s-12.9-2.4-17.6-7L7 113C-2.3 103.6-2.3 88.4 7 79s24.6-9.4 33.9 0l22.1 22.1 55.1-61.2c8.9-9.9 24-10.7 33.9-1.8zm0 160c9.9 8.9 10.7 24 1.8 33.9l-72 80c-4.4 4.9-10.6 7.8-17.2 7.9s-12.9-2.4-17.6-7L7 273c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l22.1 22.1 55.1-61.2c8.9-9.9 24-10.7 33.9-1.8zM224 96c0-17.7 14.3-32 32-32H480c17.7 0 32 14.3 32 32s-14.3 32-32 32H256c-17.7 0-32-14.3-32-32zm0 160c0-17.7 14.3-32 32-32H480c17.7 0 32 14.3 32 32s-14.3 32-32 32H256c-17.7 0-32-14.3-32-32zM160 416c0-17.7 14.3-32 32-32H480c17.7 0 32 14.3 32 32s-14.3 32-32 32H192c-17.7 0-32-14.3-32-32zM48 368a48 48 0 1 1 0 96 48 48 0 1 1 0-96z" />
+    </svg>
+  );
+};
+
+export const CurrentTasksIcon = () => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      height="1em"
+      viewBox="0 0 448 512"
+      strokeWidth={1}
+      className="task-icons-02">
+      <path
+        d="M128 0c17.7 0 32 14.3 32 32V64H288V32c0-17.7 14.3-32 32-32s32 14.3 32 32V64h48c26.5 0 48 21.5 48 48v48H0V112C0 85.5 21.5 64 48 64H96V32c0-17.7 14.3-32 32-32zM0 192H448V464c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V192zm80 64c-8.8 0-16 7.2-16 16v64c0 8.8 7.2 16 16 16H368c8.8 0 16-7.2 16-16V272c0-8.8-7.2-16-16-16H80z"
+      />
+    </svg>
+  );
+};
+
+export const CompletedTasksIcon = () => {
+  return (
+    <svg
+      viewBox="0 0 120 120"
+      width="120"
+      height="120"
+      stroke="currentColor"
+      fill="currentColor"
+      className="task-icons"
+    >
+      <path
+        d="M94.4 37.5L75 18.1V37.5h19.4zM97.5 45H67.5V15H22.5v90h75V45zM18.8 7.5h56.2l30 30v71.3a3.8 3.8 0 0 1-3.8 3.7H18.8a3.8 3.8 0 0 1-3.8-3.7V11.3a3.8 3.8 0 0 1 3.7-3.8z m37.3 68.2l21.2-21.2L82.6 59.8 56.1 86.3 37.5 67.8l5.3-5.3L56.1 75.7z"
+      />
+    </svg>
+  );
+};
+
+export const AddProjectIcon = () => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      strokeWidth={2.5}
+      stroke="currentColor"
+      className="add-task">
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M12 4.5v15m7.5-7.5h-15"
+      />
+    </svg>
+  );
+};
+
+export const AddTagsIcon = () => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      strokeWidth={3}
+      stroke="currentColor"
+      className="add-tags">
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M12 4.5v15m7.5-7.5h-15"
+      />
+    </svg>
+  );
+};

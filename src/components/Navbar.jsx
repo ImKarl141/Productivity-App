@@ -1,27 +1,14 @@
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { MenuIcon, OptionsIcon, PlayPauseIcon, StopIcon, TaskIcon, CalendarIcon, NotesIcon, UserIcon, LoginIcon, LogoutIcon } from '../icons';
+import { MenuIcon, OptionsIcon, PlayPauseIcon, StopIcon, TaskIcon, CalendarIcon, NotesIcon, UserIcon, LoginIcon, LogoutIcon, FooterIcon } from '../icons';
+import TaskMenu from './Task';
 
 import './Navbar.css'
-import './Task.css'
-
-
-// import homeMenu from '../images/bars-icon.svg'
-import taskMenu from '../images/task-icon.svg'
-import calendarMenu from '../images/calendar-icon.svg'
-import notesMenu from '../images/notes-icon.svg'
-import tagMenu from '../images/tag01-icon.svg'
 
 import timerMini from '../images/timer-stage2-icon.svg'
 // import playIcon from '../images/play-icon.svg'
 // import pauseIcon from '../images/pause-icon.svg'
 // import stopIcon from '../images/stop-icon.svg'
-
-// import optionsMenu from '../images/options-icon.svg'
-import userMenu from '../images/user-icon.svg'
-import loginMenu from '../images/login-icon.svg'
-
-import footerMenu from '../images/footer-icon.svg'
 
 //menu dispatch
 import { showCalendar, showTask, showMenuOptions, showNotes } from '../features/menuSlice';
@@ -38,7 +25,9 @@ const Navbar = () => {
   const { Menu, Task, Calendar, Notes } = menuToggle;
 
   //taskItems and destructuring
-  const { taskItems } = useSelector((store) => store.task);
+  // const { taskItems } = useSelector((store) => store.task);
+
+
   const dispatch = useDispatch();
 
 
@@ -115,48 +104,9 @@ const Navbar = () => {
           )}
         </div>
       </nav >
-
-
       {Task && (
-        <section className='task-container'>
-          <div className='task-overall'>
-            <div className='overall-title'>
-              <div className=' task-title box1'><h1>Tasks</h1></div>
-              <div className=' task-quantity box2'><p>4</p></div>
-            </div>
-            <div className='overall-myTask'>
-              <div className='myTask-container box1'>
-                <button>Logo</button>
-                <p>All tasks</p>
-                <button>Quantity</button>
-              </div>
-              <div className='myTask-container box2'>
-                <button>Logo</button>
-                <p>Current</p>
-                <button>Quantity</button>
-              </div>
-              <div className='myTask-container box1'>
-                <button>Logo</button>
-                <p>Completed</p>
-                <button>Quantity</button>
-              </div>
-            </div>
-            <div className='overall-list'>List projects</div>
-            <div className='overall-tags'>Tags</div>
-          </div>
-          <div className='task-focus'>center</div>
-          {isTask && (
-            <div className='task-details'>right</div>
-          )}
-          {/* <button className='task-test btn' onClick={() => setIsTask(!isTask)}>Toggle test</button> */}
-        </section>
-      )
-      }
-      <footer>
-        <button className='footer'>
-          <img className='logo-footer' src={footerMenu} alt="footer icon" />
-        </button>
-      </footer>
+        <TaskMenu />
+      )}
     </>
   )
 

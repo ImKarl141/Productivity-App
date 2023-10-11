@@ -108,28 +108,6 @@ button:hover {
   margin: 0rem 1rem;
 }
 
-
-
-footer {
-  position: fixed;
-  bottom: -0.2rem;
-  left: 0;
-  right: 0;
-  z-index: 3;
-}
-
-.footer {
-  background-color: #cc6666;
-  border-top-right-radius: 0.2rem;
-  border-top-left-radius: 0.2rem;
-  border-bottom-right-radius: 0rem;
-  border-bottom-left-radius: 0rem;
-}
-
-.footer:hover{
-  background-color: #cc6666;
-}
-
 .logo-footer {
   height: 1.4rem;
   object-fit: cover;

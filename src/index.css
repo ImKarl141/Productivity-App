@@ -12,7 +12,12 @@
   --back01: rgb(200, 200, 200);
   --back02: rgb(50, 50, 50);
   --back03: rgb(75, 75, 75);
+  --pomodoroLight: #cc6666;
+  --pomodoroDark: #BB5F5F;
   --black: #191919;
+  --white: #eff9f9;
+  --gray01: #919190;
+  --gray02: #aaaaaa;
 
 
   font-synthesis: none;
@@ -21,6 +26,8 @@
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
 }
+
+/* Icons start */
 
 nav svg {
   width: 1.5rem;
@@ -38,6 +45,14 @@ nav .menu-icon,
   color: var(--black);
 }
 
+.footer-icon {
+  width: 1.45rem;
+  color: var(--black);
+}
+/* Icons end */
+
+
+
 body {
   margin: 0;
 }
@@ -48,6 +63,7 @@ body {
   color: black;
   padding: 0.3rem;
 }
+
 /* a {
   font-weight: 500;
   color: #646cff;
