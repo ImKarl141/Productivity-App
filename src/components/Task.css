@@ -27,13 +27,13 @@
 
 
 .task-container {
+  display: flex;
   position: fixed;
   top: 5.8rem;
   bottom: 1.8rem;
   right: 5.8rem;
   left: 5.8rem;
   z-index: 2;
-  display: flex;
   justify-content: space-between;
   /* grid-template-columns: 20rem 1fr 20rem; */
   /* column-gap: 0.2rem; */
@@ -50,15 +50,20 @@
 }
 
 .task-focus {
-  background-color: lightblue;
+  background-color: var(--pomodoroLight);
   flex: 1;
-  padding: 0.4rem;
+  margin-left: 0.2rem;
+  padding: 0.6rem;
+  border: 0 none;
+  border-radius: 0.2rem;
 }
 .overall-title,
 .overall-myTask,
 .overall-list,
 .overall-tags {
   background-color: var(--pomodoroLight);
+  border: 0 none;
+  border-radius: 0.2rem;
 }
 .overall-title,
 .overall-myTask,
@@ -110,6 +115,7 @@
   background-color: var(--back02);
 } */
 
+
 .myTask-text {
   white-space: nowrap;
   font-family: Nunito;
@@ -118,6 +124,128 @@
   color: var(--black);
   margin: 0 0 0 0.6rem;
 }
+
+.task-item-container {
+  display: flex;
+  position: relative;
+  align-items: center;
+  font-size: 1rem;
+  /* cursor: pointer; */
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Hide browsers default checkbox */
+.task-item-container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+ /* Custom checkbox */
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 1.2rem;
+  width: 1.22rem;
+  /* padding-left: 2rem; */
+  background-color: var(--pomodoroDark);
+  border: 0.15rem solid var(--blackLight);
+  border-radius: 0.2rem;
+}
+
+/* Background color when hovering */
+.task-item-container:hover input ~ .checkmark {
+  background-color: var(--pomodoroLight);
+}
+
+/* When is checked add a background */
+.task-item-container input:checked ~ .checkmark {
+  background-color: var(--blackLight);
+}
+
+/* Checkmark indicator, hidden when not checked */
+.checkmark::after {
+  content: '';
+  position: absolute;
+  display: none;
+}
+
+/* Showing the checkmark when checked */
+.task-item-container input:checked ~ .checkmark::after {
+  display: block;
+}
+
+.task-item-container input:checked ~ .input-text {
+  text-decoration: line-through;
+  opacity: 0.6;
+}
+
+/* Style of the checkmark */
+.task-item-container .checkmark::after {
+  left: 0.4rem;
+  top: 0.15rem;
+  width: 0.3rem;
+  height: 0.6rem;
+  border: solid var(--pomodoroDark);
+  border-width: 0rem 0.2rem 0.2rem 0rem;
+  -webkit-transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+.input-text {
+  padding-left: 1.5rem;
+}
+
+
+
+/* .myInput {
+  accent-color: var(--pomodoroDark);
+  width: 1.2rem;
+  height: 1.2rem;
+  border: 0.15rem solid var(--blackLight);
+  border-radius: 0.6rem;
+  background-color: var(--pomodoroLight);
+  margin-right: 0.5rem;
+}
+
+.myInput::before {
+  width: 1.2rem;
+  height: 1.2rem;
+  border: 0.15rem solid var(--blackLight);
+  border-radius: 0.6rem;
+  background-color: var(--pomodoroLight);
+  margin-right: 0.5rem;
+} */
+
+/* Test
+
+ */
+
+/* Test */
+
+
+
+
+/* .myInput::after {
+  background-color: rebeccapurple;
+} */
+
+/* .checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  background-color: #eee;
+} */
+
 
 
 .overall-tags {
@@ -156,11 +284,12 @@ h1, h2 {
 .add-task-btn {
   display: flex;
   align-items: center;
-  border: 0.15rem solid var(--pomodoroLight);
-  border-radius: 0.5rem ;
+  border: 0.15rem solid var(--pomodoroDark);
+  border-radius: 0.2rem ;
   width: 100%;
   padding: 0.5rem;
   /* margin: 0.5rem; */
+  opacity: 0.8;
 }
 
 
@@ -193,8 +322,14 @@ h1, h2 {
 .list-tasks-item {
   display: flex;
   align-items: center;
-  margin: 0.2rem 0rem;
+  padding: 0.6rem 0rem;
+  /* margin-top: -0.1rem;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem; */
+  /* border-top: 0.15rem solid var(--pomodoroDark); */
+  border-bottom: 0.15rem solid var(--pomodoroDark);
 }
+
 
 /* List of tasks end */
 
@@ -240,6 +375,7 @@ h1, h2 {
 .add-task {
   width: 1.2rem;
   color: var(--black);
+  opacity: 0.8;
 }
 
 .task-icons {
@@ -322,7 +458,7 @@ h1, h2 {
   width: 100%;
   /* padding: 0.3rem; */
   /* margin: 0.5rem; */
-  opacity: 0.9;
+  opacity: 0.8;
 }
 
 .add-project-btn:hover {

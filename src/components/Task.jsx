@@ -84,7 +84,7 @@ const TaskMenu = () => {
             <h2 className='list-title'>Tags</h2>
           </div>
           <div className='tags-container'>
-            <div>
+            {/* <div>
               <button className='myTag' >
                 <p className='myTags-text'>Tag 1</p>
               </button>
@@ -98,7 +98,7 @@ const TaskMenu = () => {
               <button className='myTag' >
                 <p className='myTags-text' title='Birthday Party for me'>Birthday Party for me</p>
               </button>
-            </div>
+            </div> */}
             {/* <div>
               <button className='myTag' >
                 <p className='myTask-text'>Tag 2</p>
@@ -117,16 +117,23 @@ const TaskMenu = () => {
         <div >
           <button className='addBtn add-task-btn' onClick={() => dispatch(ShowTaskEdit())}>
             <AddTaskIcon />
-            <span>Add Task</span>
+            <p className='myTask-text'>Add Task</p>
           </button>
         </div>
+        {/* <li className='list-tasks-item' key={id}>
+          <input id='task' type="checkbox" name={title} />
+          <label htmlFor="task" className='myTask-text'>{title}</label>
+        </li> */}
         <ul className='list-tasks'>
           {listOfTasks.map((task) => {
             const { id, title } = task
             return (
               <li className='list-tasks-item' key={id}>
-                <input type="checkbox" />
-                <label htmlFor="task">{title}</label>
+                <label htmlFor={id} className='myTask-text task-item-container'>
+                  <input id={id} type="checkbox" name={title} />
+                  <span className='checkmark'></span>
+                  <p className='myTask-text input-text'>{title}</p>
+                </label>
               </li>
             )
           })}
