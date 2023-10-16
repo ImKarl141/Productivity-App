@@ -46,8 +46,39 @@
 .task-overall,
 .task-details {
   /* background-color: lightcoral; */
-  flex-basis: 18rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex-basis: 15rem;
+  margin-left: 0.2rem ;
+  background-color: var(--pomodoroLight);
+  border-radius: 0.2rem;
+  border: 0 none;
 }
+
+.task-details-task {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  padding: 0.6rem;
+  color: var(--black);
+}
+
+.task-details-subtask {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  padding: 0.6rem;
+  height: 100%;
+  color: var(--black);
+}
+
+/* .mySubtask {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  width: 100%;  
+} */
 
 .task-focus {
   background-color: var(--pomodoroLight);
@@ -75,13 +106,6 @@
 /* .task-test {
   position: fixed;
 } */
-
-.task-overall {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  /* border: 0.1rem solid black; */
-}
 
 .overall-title {
   display: flex;
@@ -203,6 +227,118 @@
   padding-left: 1.5rem;
 }
 
+.myInput {
+  font-family: Nunito;
+  color: var(--black);
+  padding: 0.5rem;
+  background-color: var(--pomodoroLight);
+  border: 0.15rem solid var(--pomodoroDark);
+  border-radius: 0.2rem;
+  width: 110%;
+}
+
+.myInput::placeholder {
+  font-family: Nunito;
+  color: var(--blackLight);
+}
+
+.myInput:focus {
+  outline: none;
+}
+
+.myInput-description {
+  margin-top: 0.2rem;
+  padding: 0.5rem;
+  resize: none;
+  width: 110%;
+  overflow: auto;
+  height: 10rem;
+}
+
+.details-text {
+  white-space: nowrap;
+  font-family: Nunito;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--black);
+  margin: 0;
+  cursor: context-menu;
+}
+
+.task-details-info {
+  display: grid;
+  grid-template-columns: 5rem 1fr;
+  width: 80%;
+  justify-items: start;
+  align-items: start;
+  padding-left: 0.1rem;
+  margin-bottom: 0.4rem;
+}
+
+select {
+  font-family: Nunito ;
+  color: var(--blackLight);
+  font-weight: 700;
+  padding: 0.2rem;
+  background-color: var(--pomodoroLight);
+  border-radius: 0.2rem;
+  border: 0.15rem solid var(--pomodoroDark);
+  cursor: pointer;
+}
+
+select:focus {
+  outline: none;
+}
+
+.myInput-date {
+  color: var(--blackLight);
+  font-family: Nunito;
+  font-weight: 700;
+  padding: 0.2rem;
+  background-color: var(--pomodoroLight);
+  border: 0.15rem solid var(--pomodoroDark);
+  border-radius: 0.2rem;
+  cursor: pointer;
+}
+
+.myInput-date:focus {
+  outline: none;
+}
+
+input[type=date]::after {
+  color: red;
+}
+
+.add-subtask-btn {
+  display: flex;
+  align-items: center;
+  border: 0.15rem solid var(--pomodoroDark);
+  border-radius: 0.2rem ;
+  width: 100%;
+  padding: 0.5rem;
+  opacity: 0.8;
+}
+
+.task-details-button {
+  display: flex;
+  justify-content: space-between;
+  padding: 0rem 0.8rem 0.8rem 0.8rem;
+  /* width: 100%; */
+  /* align-items: end; */
+}
+
+.detailsBtn {
+  font-family: Nunito;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--black);
+  padding: 0.4rem 0.6rem;
+  background-color: var(--pomodoroDark);
+}
+
+.detailsBtn:hover {
+  opacity: 0.8;
+}
 
 
 /* .myInput {

@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { ShowTaskEdit } from '../features/taskSlice';
 import { useEffect, useRef, useState, useEventListener } from 'react';
-import { task } from '../data'
+// import { task } from '../data'
 import './Task.css'
 import { AddTaskIcon, AllTasksIcon, CurrentTasksIcon, CompletedTasksIcon, AddProjectIcon, AddTagsIcon } from '../icons';
 
@@ -28,7 +28,6 @@ const TaskMenu = () => {
     setListOfTasks(updateUser)
     setMyTask('')
   }
-
   //Edit task menu
 
   return (
@@ -142,19 +141,59 @@ const TaskMenu = () => {
       {
         isEdit && (
           <div className='task-details'>
-            <form onSubmit={handleSubmit}>
-              <label htmlFor="task">Task</label>
-              <input
-                type='text'
-                className='task-input'
-                value={myTask}
-                onChange={(e) => setMyTask(e.target.value)}
-              // value=''
-              // onChange=''
-              >
-              </input>
-            </form>
+            <div className='task-details-task'>
+              <h1>Task:</h1>
+              <form onSubmit={handleSubmit}>
+                {/* <label htmlFor="tasks-title"></label> */}
+                <input
+                  id='title-task'
+                  name='taskTitle'
+                  className='myInput'
+                  type="text"
+                  placeholder='Title name'
+                  value={myTask}
+                  onChange={(e) => setMyTask(e.target.value)}
+                />
+              </form>
+              <form onSubmit={(e) => e.preventDefault()}>
+                <textarea id='description' name='taskDescription' type="text" placeholder='Description' className='myInput myInput-description' />
+              </form>
+              <div className='task-details-info'>
+                <p className='details-text'>Due date</p>
+                <input className='myInput-date' type="date" name='dueDate' />
+              </div>
+              <div className='task-details-info'>
+                <p className='details-text'>List</p>
+                <select name='Projects'>
+                  <option value="1">Personal</option>
+                  <option value="2">Programming</option>
+                  <option value="3">Vacations</option>
+                </select>
+              </div>
+              <div className='task-details-info'>
+                <p className='details-text'>Tags</p>
+                <select name='Tags'>
+                  <option value="1">Tag1</option>
+                  <option value="2">Tag2</option>
+                  <option value="3">Tag3</option>
+                </select>
+              </div>
+            </div>
+            <div className='task-details-subtask'>
+              <h1>Subtask:</h1>
+              <button className='add-subtask-btn'>
+                <AddTaskIcon />
+                <p className='myTask-text'>Add Subtask</p>
+              </button>
+              {/* <div className='mySubtask'>
+              </div> */}
+            </div>
+            <div className='task-details-button'>
+              <button className='detailsBtn'>Delete Task</button>
+              <button className='detailsBtn'>Save Changes</button>
+            </div>
           </div>
+
         )
       }
     </section >

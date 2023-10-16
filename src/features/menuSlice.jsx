@@ -2,8 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   menuToggle: {
-    Menu: true,
-    Task: true,
+    Menu: false,
+    Task: false,
     Calendar: false,
     Notes: false,
   },
@@ -31,6 +31,7 @@ const menuSlice = createSlice({
     showCalendar: (state) => {
       const { menuToggle } = state;
       menuToggle.Calendar = !menuToggle.Calendar;
+      // console.log('Calendar displayed');
       menuToggle.Task = menuToggle.Notes = false;
     },
     showNotes: (state) => {
