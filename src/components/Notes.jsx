@@ -1,6 +1,6 @@
-const Notes = () => {
+const NotesMenu = () => {
   return (
-    <div>Notes</div>
+    <div>Hello from Notes</div>
   )
 }
-export default Notes
+export default NotesMenu

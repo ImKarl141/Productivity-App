@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { MenuIcon, OptionsIcon, PlayPauseIcon, StopIcon, TaskIcon, CalendarIcon, NotesIcon, UserIcon, LoginIcon, LogoutIcon, FooterIcon } from '../icons';
 import TaskMenu from './Task';
 import CalendarMenu from './Calendar'
+import NotesMenu from './Notes'
 
 import './Navbar.css'
 
@@ -110,6 +111,9 @@ const Navbar = () => {
       )}
       {Calendar && (
         <CalendarMenu />
+      )}
+      {Notes && (
+        <NotesMenu />
       )}
     </>
   )
