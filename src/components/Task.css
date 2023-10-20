@@ -118,6 +118,7 @@
 .task-quantity {
   display: flex;
   align-items: center;
+  font-weight: 800;
 }
 
 .task-title {
