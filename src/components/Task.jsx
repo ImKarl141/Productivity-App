@@ -3,7 +3,7 @@ import { ShowTaskEdit } from '../features/taskSlice';
 import { useEffect, useRef, useState, useEventListener } from 'react';
 // import { task } from '../data'
 import './Task.css'
-import { AddTaskIcon, AllTasksIcon, CurrentTasksIcon, CompletedTasksIcon, AddProjectIcon, AddTagsIcon } from '../icons';
+import { AddTaskIcon, AllTasksIcon, CurrentTasksIcon, CompletedTasksIcon, AddProjectIcon, AddTagsIcon, EnterTaskIcon } from '../icons';
 
 //taskItems and destructuring
 
@@ -129,9 +129,26 @@ const TaskMenu = () => {
             return (
               <li className='list-tasks-item' key={id}>
                 <label htmlFor={id} className='myTask-text task-item-container'>
-                  <input id={id} type="checkbox" name={title} />
-                  <span className='checkmark'></span>
-                  <p className='myTask-text input-text'>{title}</p>
+                  <div className='task-element-container'>
+                    <div className='task-element'>
+                      <input id={id} type="checkbox" name={title} />
+                      {/* Custom Checkmark */}
+                      <span className='checkmark'></span>
+                    </div>
+                    <div className='task-element-details'>
+                      <div className='task-element'>
+                        <p className='myTask-text input-text'>{title}</p>
+                      </div>
+                      <div className='task-element'>
+                        Due Date
+                        Subtask
+                        List
+                      </div>
+                    </div>
+                    <div className='task-element'>
+                      <EnterTaskIcon />
+                    </div>
+                  </div>
                 </label>
               </li>
             )
