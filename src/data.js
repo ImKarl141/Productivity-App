@@ -6,7 +6,7 @@ export const task = [
     subtask: [],
     dueDate: '23-12-2023',
     tag: '',
-    project: '',
+    project: 'Daily',
   },
   {
     id: 1,
@@ -15,7 +15,15 @@ export const task = [
     subtask: [],
     dueDate: '14-02-2024',
     tag: '',
-    project: '',
+    project: 'Personal',
+  }
+];
+
+export const userProjects = [
+  {
+    id: 0,
+    nameProject: 'Default',
+    color: 'blue'
   }
 ];
 

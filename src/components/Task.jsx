@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { ShowTaskEdit } from '../features/taskSlice';
+import { ShowTaskEdit, ShowAddProjectEdit } from '../features/taskSlice';
 import { useEffect, useRef, useState, useEventListener } from 'react';
 // import { task } from '../data'
 import './Task.css'
@@ -8,21 +8,31 @@ import { AddTaskIcon, AllTasksIcon, CurrentTasksIcon, CompletedTasksIcon, AddPro
 //taskItems and destructuring
 
 const TaskMenu = () => {
-  const { taskItems, isEdit } = useSelector((store) => store.task);
+  const { taskItems, isEdit, addProjectEdit, projects } = useSelector((store) => store.task);
   const dispatch = useDispatch();
 
   const [myButton, setMyButton] = useState(false)
 
   const [myList, setMyList] = useState([1, 2, 3, 4])
 
+  //Input for tasks
   const [myTask, setMyTask] = useState('')
   const [listOfTasks, setListOfTasks] = useState(taskItems)
+
+  //Inputs for projects
+  const [myProject, setMyProject] = useState('');
+  const [listOfProjects, setListOfProjects] = useState(projects);
+  const [nameProject] = listOfProjects;
+  console.log(nameProject.nameProject);
+
+
   //Add a new tasks
-  const handleSubmit = (e) => {
+  const handleTaskSubmit = (e) => {
     e.preventDefault();
     if (!myTask) {
       return;
     }
+    //Create a new list base on the old + new
     const newTask = { id: Date.now(), title: myTask }
     const updateUser = [...listOfTasks, newTask]
     setListOfTasks(updateUser)
@@ -66,14 +76,20 @@ const TaskMenu = () => {
           <div className='list-title'>
             <h2 className='list-title'>List of Projects</h2>
           </div>
-          <button className='list-projects'>
-            <div className='projects-container'>
-              <div className='project-color'></div>
-              <p className='myTask-text'>Name</p>
-            </div>
-            <div className='projects-number'>0</div>
-          </button>
-          <button className='addBtn add-project-btn' >
+          {listOfProjects.map((project) => {
+            const { id, nameProject } = project;
+            return (
+              <>{nameProject}</>
+            )
+          })}
+          {
+            addProjectEdit && (
+              <form className='formTest'>
+                <input className='myInputAddProject' type="text" />
+              </form>
+            )
+          }
+          <button className='addBtn add-project-btn' onClick={() => dispatch(ShowAddProjectEdit())} >
             <AddProjectIcon />
             <p className='myTask-text'>Add Project</p>
           </button>
@@ -125,7 +141,7 @@ const TaskMenu = () => {
         </li> */}
         <ul className='list-tasks'>
           {listOfTasks.map((task) => {
-            const { id, title } = task
+            const { id, title, dueDate, project } = task
             return (
               <li className='list-tasks-item' key={id}>
                 <label htmlFor={id} className='myTask-text task-item-container'>
@@ -137,7 +153,7 @@ const TaskMenu = () => {
                   <div className='task-item-details'>
                     <div className='task-item item-left'>
                       <CalendarIconTask />
-                      <p className='myTask-text-details'>11-22-23</p>
+                      <p className='myTask-text-details'>{dueDate}</p>
                     </div>
                     <div className='task-item'>
                       <span className='subtask-number'>1</span>
@@ -145,13 +161,15 @@ const TaskMenu = () => {
                     </div>
                     <div className='task-item item-right'>
                       <span className='project-color'></span>
-                      <p className='myTask-text-details'>Personal</p>
+                      <p className='myTask-text-details'>{project}</p>
                     </div>
                     {/* <span>List</span> */}
                     {/* <div className='project-color'></div> */}
                   </div>
                 </label>
-                <EnterTaskIcon />
+                <button className='task-item-btn'>
+                  <EnterTaskIcon />
+                </button>
               </li>
             )
           })}
@@ -162,7 +180,7 @@ const TaskMenu = () => {
           <div className='task-details'>
             <div className='task-details-task'>
               <h1>Task:</h1>
-              <form onSubmit={handleSubmit}>
+              <form onSubmit={handleTaskSubmit}>
                 {/* <label htmlFor="tasks-title"></label> */}
                 <input
                   id='title-task'

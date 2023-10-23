@@ -140,7 +140,7 @@
   background-color: var(--back02);
 } */
 
-/* Test Start */
+/* Task Focus Test Start */
 .task-item-details {
   display: flex;
   align-items: center;
@@ -176,7 +176,6 @@
   margin-left: 0.3rem;
 }
 
-
 .subtask-number {
   font-size: 0.7rem;
   padding: 0.05rem 0.6rem;
@@ -186,8 +185,38 @@
   color: var(--black);
   background-color: var(--pomodoroDark);
 }
-/* Test End */
 
+.task-item-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* border: 0.2rem solid black; */
+  padding: 1rem 0.2rem;
+}
+/* Task Focus Test End */
+
+/* Add Project Test Start */
+
+.myInputAddProject {
+  font-family: Nunito;
+  color: var(--black);
+  padding: 0.25rem;
+  background-color: var(--pomodoroLight);
+  border: 0.15rem solid var(--pomodoroDark);
+  border-radius: 0.2rem; 
+}
+
+.formTest {
+  display: grid;
+  padding: 0rem 0.4rem;
+  margin: 0.2rem 0rem;
+}
+
+.myInputAddProject:focus {
+  outline: none;
+}
+
+/* Add Project Test End */
 
 .myTask-text {
   white-space: nowrap;
@@ -213,7 +242,7 @@
 }
 
 /* Hide browsers default checkbox */
-.task-item-container input {
+.task-item-title input {
   position: absolute;
   opacity: 0;
   cursor: pointer;
@@ -234,12 +263,12 @@
 }
 
 /* Background color when hovering */
-.task-item-container:hover input ~ .checkmark {
+.task-item-title:hover input ~ .checkmark {
   background-color: var(--pomodoroLight);
 }
 
 /* When is checked add a background */
-.task-item-container input:checked ~ .checkmark {
+.task-item-title input:checked ~ .checkmark {
   background-color: var(--blackLight);
 }
 
@@ -251,22 +280,32 @@
 }
 
 /* Showing the checkmark when checked */
-.task-item-container input:checked ~ .checkmark::after {
+.task-item-title input:checked ~ .checkmark::after {
   display: block;
 }
 
-.task-item-container input:checked ~ .input-text {
+/* .task-item-container input:checked ~ .input-text {
+  text-decoration: line-through;
+  opacity: 0.6;
+} */
+
+.task-item-title input:checked ~ .input-text {
   text-decoration: line-through;
   opacity: 0.6;
 }
 
-.task-element input:checked ~ .input-text {
+/* .task-item input:checked ~ .myTask-text-details {
   text-decoration: line-through;
   opacity: 0.6;
-}
+} */
+
+/* .task-element input:checked ~ .input-text {
+  text-decoration: line-through;
+  opacity: 0.6;
+} */
 
 /* Style of the checkmark */
-.task-item-container .checkmark::after {
+.task-item-title .checkmark::after {
   left: 0.4rem;
   top: 0.15rem;
   width: 0.3rem;
@@ -515,13 +554,14 @@ h1, h2 {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0.6rem 0rem;
+  padding: 0.6rem 1rem 0.6rem 0rem; 
   /* margin-top: -0.1rem;
   margin-left: 0.5rem;
   margin-right: 0.5rem; */
   /* border-top: 0.15rem solid var(--pomodoroDark); */
   border-bottom: 0.15rem solid var(--pomodoroDark);
 }
+
 
 
 /* List of tasks end */
