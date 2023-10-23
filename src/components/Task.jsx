@@ -3,7 +3,7 @@ import { ShowTaskEdit } from '../features/taskSlice';
 import { useEffect, useRef, useState, useEventListener } from 'react';
 // import { task } from '../data'
 import './Task.css'
-import { AddTaskIcon, AllTasksIcon, CurrentTasksIcon, CompletedTasksIcon, AddProjectIcon, AddTagsIcon, EnterTaskIcon } from '../icons';
+import { AddTaskIcon, AllTasksIcon, CurrentTasksIcon, CompletedTasksIcon, AddProjectIcon, AddTagsIcon, EnterTaskIcon, CalendarIconTask } from '../icons';
 
 //taskItems and destructuring
 
@@ -129,27 +129,29 @@ const TaskMenu = () => {
             return (
               <li className='list-tasks-item' key={id}>
                 <label htmlFor={id} className='myTask-text task-item-container'>
-                  <div className='task-element-container'>
-                    <div className='task-element'>
-                      <input id={id} type="checkbox" name={title} />
-                      {/* Custom Checkmark */}
-                      <span className='checkmark'></span>
+                  <div className='task-item-title'>
+                    <input id={id} type="checkbox" name={title} />
+                    <span className='checkmark'></span>
+                    <p className='myTask-text input-text'>{title}</p>
+                  </div>
+                  <div className='task-item-details'>
+                    <div className='task-item item-left'>
+                      <CalendarIconTask />
+                      <p className='myTask-text-details'>11-22-23</p>
                     </div>
-                    <div className='task-element-details'>
-                      <div className='task-element'>
-                        <p className='myTask-text input-text'>{title}</p>
-                      </div>
-                      <div className='task-element'>
-                        Due Date
-                        Subtask
-                        List
-                      </div>
+                    <div className='task-item'>
+                      <span className='subtask-number'>1</span>
+                      <p className='myTask-text-details'>Subtasks</p>
                     </div>
-                    <div className='task-element'>
-                      <EnterTaskIcon />
+                    <div className='task-item item-right'>
+                      <span className='project-color'></span>
+                      <p className='myTask-text-details'>Personal</p>
                     </div>
+                    {/* <span>List</span> */}
+                    {/* <div className='project-color'></div> */}
                   </div>
                 </label>
+                <EnterTaskIcon />
               </li>
             )
           })}
