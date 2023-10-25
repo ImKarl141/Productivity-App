@@ -206,14 +206,35 @@
   border-radius: 0.2rem; 
 }
 
-.formTest {
+.project-form {
   display: grid;
-  padding: 0rem 0.4rem;
+  grid-template-columns: 2rem 1fr;
+  align-items: center;
+  /* justify-items: start; */
+  grid-column-gap: 0.2rem;
+  padding: 0rem 0.6rem;
   margin: 0.2rem 0rem;
 }
 
 .myInputAddProject:focus {
   outline: none;
+}
+
+.color-selector {
+  /* width: 1.6rem;
+  height: 1.6rem; */
+  /* padding: 0.5rem; */
+  border: 0rem none;
+  border-radius: 0.2rem;
+}
+
+#myColorPicker {
+  background-color: transparent;
+  border: 0 none;
+  width: 40px;
+  height: 40px;
+  padding: 0rem;
+  margin: 0rem;
 }
 
 /* Add Project Test End */
@@ -647,7 +668,7 @@ h1, h2 {
   padding: 0.5rem;
   border: 0.12rem solid var(--black);
   border-radius: 0.2rem;
-  background-color: rgb(110, 69, 69);
+  background-color: #6e4545;
 }
 
 .list-title {

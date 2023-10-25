@@ -26,6 +26,10 @@ const TaskMenu = () => {
   // console.log(nameProject.nameProject);
 
 
+  //Project Color
+  const [projectColor, setProjectColor] = useState('#FFFFFF')
+
+
   //Add a new tasks
   const handleTaskSubmit = (e) => {
     e.preventDefault();
@@ -60,7 +64,7 @@ const TaskMenu = () => {
         {/* <button onClick={() => dispatch(ShowTaskEdit())}>Click me</button> */}
         <div className='overall-title'>
           <div className='task-title'><h1>Tasks</h1></div>
-          <div className='task-quantity'><span>{listOfTasks.length}</span></div>
+          {/* <div className='task-quantity'><span>{listOfTasks.length}</span></div> */}
         </div>
         <div className='overall-myTask'>
           <button className='myTask-container-main box' >
@@ -68,7 +72,7 @@ const TaskMenu = () => {
               <AllTasksIcon />
               <p className='myTask-text'>All</p>
             </div>
-            <div className='task-number'>0</div>
+            <div className='task-number'><span>{listOfTasks.length}</span></div>
           </button>
           <button className='myTask-container-main box'>
             <div className='myTask-container'>
@@ -95,7 +99,7 @@ const TaskMenu = () => {
             return (
               <button key={id} className='list-projects'>
                 <div className='projects-container'>
-                  <div className='project-color'></div>
+                  <div className='project-color' style={{ backgroundColor: projectColor }}></div>
                   <p className='myTask-text'>{nameProject}</p>
                 </div>
                 <div className='projects-number'>{number}</div>
@@ -104,10 +108,22 @@ const TaskMenu = () => {
           })}
           {
             addProjectEdit && (
-              <form className='formTest' onSubmit={handleProjectSubmit}>
+              <form className='project-form' onSubmit={handleProjectSubmit}>
                 <input
-                  id=''
-                  name=''
+                  type="color"
+                  id='myColorPicker'
+                  onChange={(e) => setProjectColor(e.target.value)}
+                />
+                {/* <input
+                  id='projectColor'
+                  name='color'
+                  className='color-selector'
+                  type="color"
+                // value='#ff0000'
+                /> */}
+                <input
+                  id='projectName'
+                  name='nameProject'
                   className='myInputAddProject'
                   type="text"
                   value={myProject}
