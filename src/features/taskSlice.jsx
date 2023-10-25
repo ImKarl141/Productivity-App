@@ -20,7 +20,7 @@ const taskSlice = createSlice({
     },
     ShowAddProjectEdit: (state) => {
       state.addProjectEdit = !state.addProjectEdit;
-      console.log(`Your state is ${state.addProjectEdit}`)
+      // console.log(`Your state is ${state.addProjectEdit}`)
     }
   }
 });

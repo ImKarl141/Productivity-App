@@ -22,9 +22,14 @@ export const task = [
 export const userProjects = [
   {
     id: 0,
-    nameProject: 'Default',
-    color: 'blue'
-  }
+    nameProject: 'Home',
+    number: 3
+  },
+  {
+    id: 1,
+    nameProject: 'Coding',
+    number: 1
+  },
 ];
 
 export const user = [

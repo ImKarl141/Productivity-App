@@ -23,7 +23,7 @@ const TaskMenu = () => {
   const [myProject, setMyProject] = useState('');
   const [listOfProjects, setListOfProjects] = useState(projects);
   const [nameProject] = listOfProjects;
-  console.log(nameProject.nameProject);
+  // console.log(nameProject.nameProject);
 
 
   //Add a new tasks
@@ -38,6 +38,20 @@ const TaskMenu = () => {
     setListOfTasks(updateUser)
     setMyTask('')
   }
+
+  //Add a new project 
+  const handleProjectSubmit = (e) => {
+    e.preventDefault();
+    if (!myProject) {
+      return;
+    }
+    //Create a new list base on the old + new
+    const newProject = { id: Date.now(), nameProject: myProject, number: Math.floor((Math.random() * 5) + 1) };
+    const updateProject = [...listOfProjects, newProject];
+    setListOfProjects(updateProject)
+    setMyProject('')
+  }
+
   //Edit task menu
 
   return (
@@ -77,15 +91,29 @@ const TaskMenu = () => {
             <h2 className='list-title'>List of Projects</h2>
           </div>
           {listOfProjects.map((project) => {
-            const { id, nameProject } = project;
+            const { id, nameProject, number } = project;
             return (
-              <>{nameProject}</>
+              <button key={id} className='list-projects'>
+                <div className='projects-container'>
+                  <div className='project-color'></div>
+                  <p className='myTask-text'>{nameProject}</p>
+                </div>
+                <div className='projects-number'>{number}</div>
+              </button>
             )
           })}
           {
             addProjectEdit && (
-              <form className='formTest'>
-                <input className='myInputAddProject' type="text" />
+              <form className='formTest' onSubmit={handleProjectSubmit}>
+                <input
+                  id=''
+                  name=''
+                  className='myInputAddProject'
+                  type="text"
+                  value={myProject}
+                  onChange={(e) => setMyProject(e.target.value)}
+                  placeholder='Project name'
+                />
               </form>
             )
           }

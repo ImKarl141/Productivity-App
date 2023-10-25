@@ -698,6 +698,11 @@ h1, h2 {
   background-color: var(--pomodoroDark);
 }
 
+.myInputAddProject::placeholder {
+  font-family: Nunito;
+  color: var(--blackLight);
+}
+
 /* List of projects end */
 
 
