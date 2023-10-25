@@ -3,7 +3,7 @@ import { ShowTaskEdit, ShowAddProjectEdit } from '../features/taskSlice';
 import { useEffect, useRef, useState, useEventListener } from 'react';
 // import { task } from '../data'
 import './Task.css'
-import { AddTaskIcon, AllTasksIcon, CurrentTasksIcon, CompletedTasksIcon, AddProjectIcon, AddTagsIcon, EnterTaskIcon, CalendarIconTask } from '../icons';
+import { AddTaskIcon, AllTasksIcon, CurrentTasksIcon, CompletedTasksIcon, AddProjectIcon, AddTagsIcon, EnterTaskIcon, CalendarIconTask, ProjectSettingsIcon } from '../icons';
 
 //taskItems and destructuring
 
@@ -50,10 +50,11 @@ const TaskMenu = () => {
       return;
     }
     //Create a new list base on the old + new
-    const newProject = { id: Date.now(), nameProject: myProject, number: Math.floor((Math.random() * 5) + 1) };
+    const newProject = { id: Date.now(), nameProject: myProject, number: Math.floor((Math.random() * 5) + 1), color: projectColor };
     const updateProject = [...listOfProjects, newProject];
     setListOfProjects(updateProject)
     setMyProject('')
+    setProjectColor('#FFFFFF')
   }
 
   //Edit task menu
@@ -95,14 +96,19 @@ const TaskMenu = () => {
             <h2 className='list-title'>List of Projects</h2>
           </div>
           {listOfProjects.map((project) => {
-            const { id, nameProject, number } = project;
+            const { id, nameProject, number, color } = project;
             return (
               <button key={id} className='list-projects'>
                 <div className='projects-container'>
-                  <div className='project-color' style={{ backgroundColor: projectColor }}></div>
+                  <div className='project-color' style={{ backgroundColor: color }}></div>
                   <p className='myTask-text'>{nameProject}</p>
                 </div>
-                <div className='projects-number'>{number}</div>
+                <div className='projects-container-settings'>
+                  <div className='projects-number'>{number}</div>
+                  <button className='project-settings-btn'>
+                    <ProjectSettingsIcon />
+                  </button>
+                </div>
               </button>
             )
           })}
@@ -110,9 +116,15 @@ const TaskMenu = () => {
             addProjectEdit && (
               <form className='project-form' onSubmit={handleProjectSubmit}>
                 <input
+                  id='color-picker'
+                  name='color'
                   type="color"
-                  id='myColorPicker'
-                  onChange={(e) => setProjectColor(e.target.value)}
+                  className='myColorPicker'
+                  value={projectColor}
+                  onChange={(e) => {
+                    setProjectColor(e.target.value)
+                    console.log(e.target.value);
+                  }}
                 />
                 {/* <input
                   id='projectColor'
@@ -124,8 +136,8 @@ const TaskMenu = () => {
                 <input
                   id='projectName'
                   name='nameProject'
-                  className='myInputAddProject'
                   type="text"
+                  className='myInputAddProject'
                   value={myProject}
                   onChange={(e) => setMyProject(e.target.value)}
                   placeholder='Project name'

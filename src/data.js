@@ -23,7 +23,8 @@ export const userProjects = [
   {
     id: 0,
     nameProject: 'Default',
-    number: 0
+    number: 0,
+    color: '#eb896c',
   },
   // {
   //   id: 1,

@@ -228,7 +228,7 @@
   border-radius: 0.2rem;
 }
 
-#myColorPicker {
+.myColorPicker {
   background-color: transparent;
   border: 0 none;
   width: 40px;
@@ -646,6 +646,12 @@ h1, h2 {
   fill: var(--black);
 }
 
+.projectSettings-icon {
+  height: 1.3rem;
+  width: 1.3rem;
+  color: var(--black);
+}
+
 /* Tasks icons end */
 
 
@@ -690,14 +696,32 @@ h1, h2 {
   align-items: center;
 }
 
+.projects-container-settings {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-column-gap: 0.4rem;
+  align-items: center;
+  /* justify-items: center; */
+}
+
+.project-settings-btn {
+  opacity: 0;
+  transition: opacity 0.1s;
+}
+
+.list-projects:hover .project-settings-btn{
+  opacity: 1;
+}
+
 .list-projects:hover  .projects-number {
   background-color: var(--pomodoroLight);
 }
 
 .projects-number {
-  color: var(--black);
+  font-family: Nunito;
   font-weight: 800;
   font-size: 0.8rem;
+  color: var(--black);
   padding: 0.1rem 0.6rem ;
   background-color: var(--pomodoroDark);
   border-radius: 0.2rem;
