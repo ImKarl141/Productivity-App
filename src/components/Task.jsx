@@ -50,7 +50,8 @@ const TaskMenu = () => {
       return;
     }
     //Create a new list base on the old + new
-    const newProject = { id: Date.now(), nameProject: myProject, number: Math.floor((Math.random() * 5) + 1), color: projectColor };
+    // const newProject = { id: Date.now(), nameProject: myProject, number: Math.floor((Math.random() * 5) + 1), color: projectColor };
+    const newProject = { id: Date.now(), nameProject: myProject, color: projectColor };
     const updateProject = [...listOfProjects, newProject];
     setListOfProjects(updateProject)
     setMyProject('')
@@ -96,19 +97,19 @@ const TaskMenu = () => {
             <h2 className='list-title'>List of Projects</h2>
           </div>
           {listOfProjects.map((project) => {
-            const { id, nameProject, number, color } = project;
+            const { id, nameProject, color } = project;
             return (
               <button key={id} className='list-projects'>
-                <div className='projects-container'>
+                <div className='projects-container' title='Project name'>
                   <div className='project-color' style={{ backgroundColor: color }}></div>
                   <p className='myTask-text'>{nameProject}</p>
                 </div>
-                <div className='projects-container-settings'>
-                  <div className='projects-number'>{number}</div>
-                  <button className='project-settings-btn'>
-                    <ProjectSettingsIcon />
-                  </button>
+                <div className='project-settings-btn' title='Options'>
+                  <ProjectSettingsIcon />
                 </div>
+                {/* <div className='projects-container-settings'>
+                  <div className='projects-number'>{number}</div>
+                </div> */}
               </button>
             )
           })}
