@@ -37,9 +37,29 @@ export const userProjects = [
 export const userTags = [
   {
     id: 0,
-    nameTag: 'Default',
+    nameTag: 'Default Project',
     color: '#FFFFFF',
-  }
+  },
+  {
+    id: 1,
+    nameTag: 'Vacations',
+    color: '#FFFFFF',
+  },
+  {
+    id: 2,
+    nameTag: 'Coding idea',
+    color: '#FFFFFF',
+  },
+  {
+    id: 3,
+    nameTag: 'Vacations',
+    color: '#FFFFFF',
+  },
+  {
+    id: 4,
+    nameTag: 'Coding idea',
+    color: '#FFFFFF',
+  },
 ];
 
 export const user = [

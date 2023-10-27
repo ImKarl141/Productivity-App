@@ -30,5 +30,5 @@ const taskSlice = createSlice({
   }
 });
 
-export const { ShowTaskEdit, ShowAddProjectEdit } = taskSlice.actions;
+export const { ShowTaskEdit, ShowAddProjectEdit, ShowAddTagEdit } = taskSlice.actions;
 export default taskSlice.reducer;

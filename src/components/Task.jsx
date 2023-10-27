@@ -1,14 +1,14 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { ShowTaskEdit, ShowAddProjectEdit } from '../features/taskSlice';
+import { ShowTaskEdit, ShowAddProjectEdit, ShowAddTagEdit } from '../features/taskSlice';
 import { useEffect, useRef, useState, useEventListener } from 'react';
 // import { task } from '../data'
 import './Task.css'
-import { AddTaskIcon, AllTasksIcon, CurrentTasksIcon, CompletedTasksIcon, AddProjectIcon, AddTagsIcon, EnterTaskIcon, CalendarIconTask, ProjectSettingsIcon } from '../icons';
+import { AddTaskIcon, AllTasksIcon, CurrentTasksIcon, CompletedTasksIcon, AddProjectIcon, AddTagsIcon, EnterTaskIcon, CalendarIconTask, ProjectSettingsIcon, CancelIcon } from '../icons';
 
 //taskItems and destructuring
 
 const TaskMenu = () => {
-  const { taskItems, isEdit, addProjectEdit, projects, tags } = useSelector((store) => store.task);
+  const { taskItems, isEdit, addProjectEdit, projects, tags, addTagEdit } = useSelector((store) => store.task);
   const dispatch = useDispatch();
 
   const [myButton, setMyButton] = useState(false)
@@ -165,24 +165,47 @@ const TaskMenu = () => {
             <h2 className='list-title'>Tags</h2>
           </div>
           <div className='tags-container'>
-            <form className='tag-form' onSubmit={handleTagSubmit}>
-              <input
-                id='tagName'
-                name='nameTag'
-                type="text"
-                className='myInputAddTag'
-                value={myTag}
-                onChange={(e) => setMyTag(e.target.value)}
-                placeholder='Tag name'
-              />
-            </form>
-            <div>
-              <button className='addBtn add-tags-btn' >
-                <AddTagsIcon />
-                <p className='myTags-text'>Add Tag</p>
-              </button>
-            </div>
+            {listOfTags.map((tag) => {
+              const { id, nameTag, color } = tag;
+              return (
+                <button key={id} className='myTag' style={{ backgroundColor: color }} title={nameTag}>
+                  <span>{nameTag}</span>
+                  {/* <p className='myTags-text'>{nameTag}</p> */}
+                </button>
+              )
+            })}
           </div>
+          {
+            addTagEdit && (
+              <form className='tag-form' onSubmit={handleTagSubmit}>
+                <div style={{ display: 'grid', position: 'relative' }}>
+                  <input
+                    id='tagName'
+                    name='nameTag'
+                    type="text"
+                    className='myInputAddTag'
+                    value={myTag}
+                    onChange={(e) => setMyTag(e.target.value)}
+                    placeholder='Tag name'
+                  />
+                  <button className='cancel-tags-btn' onClick={() => dispatch(ShowAddTagEdit())}>
+                    <CancelIcon />
+                  </button>
+                </div>
+              </form>
+            )
+          }
+          {/* <div className='tags-container'>
+
+          </div> */}
+          {
+            !addTagEdit && (
+              <button className='addBtn add-tags-btn' onClick={() => dispatch(ShowAddTagEdit())}>
+                <AddTagsIcon />
+                <p className='myTask-text'>Add Tag</p>
+              </button>
+            )
+          }
         </div>
       </div>
       <div className='task-focus'>
