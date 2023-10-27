@@ -8,7 +8,7 @@ import { AddTaskIcon, AllTasksIcon, CurrentTasksIcon, CompletedTasksIcon, AddPro
 //taskItems and destructuring
 
 const TaskMenu = () => {
-  const { taskItems, isEdit, addProjectEdit, projects } = useSelector((store) => store.task);
+  const { taskItems, isEdit, addProjectEdit, projects, tags } = useSelector((store) => store.task);
   const dispatch = useDispatch();
 
   const [myButton, setMyButton] = useState(false)
@@ -22,9 +22,13 @@ const TaskMenu = () => {
   //Inputs for projects
   const [myProject, setMyProject] = useState('');
   const [listOfProjects, setListOfProjects] = useState(projects);
-  const [nameProject] = listOfProjects;
+  // const [nameProject] = listOfProjects;
   // console.log(nameProject.nameProject);
 
+  //Inputs for tags 
+  const [myTag, setMyTag] = useState('');
+  const [listOfTags, setListOfTags] = useState(tags);
+  // const [nameTag] = listOfTags;
 
   //Project Color
   const [projectColor, setProjectColor] = useState('#FFFFFF')
@@ -56,6 +60,11 @@ const TaskMenu = () => {
     setListOfProjects(updateProject)
     setMyProject('')
     setProjectColor('#FFFFFF')
+  }
+
+  const handleTagSubmit = (e) => {
+    e.preventDefault();
+    console.log('Tag Submitted');
   }
 
   //Edit task menu
@@ -156,26 +165,17 @@ const TaskMenu = () => {
             <h2 className='list-title'>Tags</h2>
           </div>
           <div className='tags-container'>
-            {/* <div>
-              <button className='myTag' >
-                <p className='myTags-text'>Tag 1</p>
-              </button>
-            </div>
-            <div>
-              <button className='myTag' >
-                <p className='myTags-text'>Tag 2</p>
-              </button>
-            </div>
-            <div>
-              <button className='myTag' >
-                <p className='myTags-text' title='Birthday Party for me'>Birthday Party for me</p>
-              </button>
-            </div> */}
-            {/* <div>
-              <button className='myTag' >
-                <p className='myTask-text'>Tag 2</p>
-              </button>
-            </div> */}
+            <form className='tag-form' onSubmit={handleTagSubmit}>
+              <input
+                id='tagName'
+                name='nameTag'
+                type="text"
+                className='myInputAddTag'
+                value={myTag}
+                onChange={(e) => setMyTag(e.target.value)}
+                placeholder='Tag name'
+              />
+            </form>
             <div>
               <button className='addBtn add-tags-btn' >
                 <AddTagsIcon />

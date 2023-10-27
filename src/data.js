@@ -33,6 +33,15 @@ export const userProjects = [
   // },
 ];
 
+
+export const userTags = [
+  {
+    id: 0,
+    nameTag: 'Default',
+    color: '#FFFFFF',
+  }
+];
+
 export const user = [
   { id: 1, name: 'Michael' },
   { id: 2, name: 'Dwight' },

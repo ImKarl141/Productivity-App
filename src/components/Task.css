@@ -776,6 +776,11 @@ h1, h2 {
   opacity: 0.9;
 }
 
+.add-tags-btn:hover {
+  background-color: var(--pomodoroDark);
+  opacity: 0.7;
+}
+
 .myTag {
   display: flex;
   align-items: center;
@@ -798,10 +803,6 @@ h1, h2 {
   overflow: hidden;
 } */
 
-.add-tags-btn:hover {
-  background-color: var(--pomodoroDark);
-  opacity: 0.7;
-}
 
 .add-tags {
   width: 0.8rem;
@@ -816,7 +817,34 @@ h1, h2 {
   color: var(--black);
   margin: 0 0.2rem 0 0.2rem;
   white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  /* overflow: hidden; */
+  /* text-overflow: ellipsis; */
+}
+
+.myInputAddTag {
+  font-family: Nunito;
+  color: var(--black);
+  padding: 0.25rem;
+  background-color: var(--pomodoroLight);
+  border: 0.15rem solid var(--pomodoroDark);
+  border-radius: 0.2rem; 
+}
+
+.myInputAddTag:focus {
+  outline: none;
+}
+
+.myInputAddTag::placeholder {
+  font-family: Nunito;
+  color: var(--blackLight);
+}
+
+.tag-form {
+  display: grid;
+  /* align-items: center; */
+  /* justify-items: start; */
+  grid-column-gap: 0.2rem;
+  padding: 0rem 0.6rem;
+  margin: 0.2rem 0rem;
 }
 /* Tags end */
