@@ -208,10 +208,9 @@
 
 .project-form {
   display: grid;
-  grid-template-columns: 2rem 1fr;
+  grid-template-columns: 1.5rem 1fr;
   align-items: center;
-  /* justify-items: start; */
-  grid-column-gap: 0.2rem;
+  /* justify-items: stretch; */
   padding: 0rem 0.6rem;
   margin: 0.2rem 0rem;
 }
@@ -228,22 +227,45 @@
   border-radius: 0.2rem;
 }
 
-/* Hide color picker */
-.myColorPicker {
+/* Color picker container */
+.color-picker-container {
+  position: relative;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  /* width: 1.3rem; */
+}
+
+/* Hide default color picker */
+.default-colorPicker {
   background-color: transparent;
   opacity: 0;
   border: 0 none;
-  width: 2rem;
-  height: 2rem;
+  z-index: 1;
 }
+
 /* Custom Color Picker*/
-.ColorPickerIcon {
+.custom-colorPicker {
+  position: absolute;
+  background-color: var(--pomodoroDark);
+  border: 0.1rem solid var(--black);
+  border-radius: 2.6rem;
   opacity: 0.8;
+  z-index: 0;
+  /* color: var(--black); */
+}
+
+.default-colorPicker,
+.custom-colorPicker {
+  width: 1.125rem;
+  height: 1.125rem;
+}
+
+.colorPicker-icon {
   height: 1.3rem;
   width: 1.3rem;
   color: var(--black);
 }
-
 
 
 /* Add Project Test End */

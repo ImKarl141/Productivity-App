@@ -126,17 +126,20 @@ const TaskMenu = () => {
             addProjectEdit && (
               <div className='cancel-btn-container'>
                 <form className='project-form' onSubmit={handleProjectSubmit}>
-                  <input
-                    id='color-picker'
-                    name='color'
-                    type="color"
-                    className='myColorPicker'
-                    value={projectColor}
-                    onChange={(e) => {
-                      setProjectColor(e.target.value)
-                      console.log(e.target.value);
-                    }}
-                  />
+                  <div className='color-picker-container'>
+                    <input
+                      id='color-picker'
+                      name='color'
+                      type="color"
+                      className='default-colorPicker'
+                      value={projectColor}
+                      onChange={(e) => {
+                        setProjectColor(e.target.value)
+                        console.log(e.target.value);
+                      }}
+                    />
+                    <div className='custom-colorPicker' style={{ backgroundColor: projectColor }}></div>
+                  </div>
                   {/* <input
                   id='projectColor'
                   name='color'
