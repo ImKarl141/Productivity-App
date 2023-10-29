@@ -31,11 +31,11 @@ button {
 }
 
 button:hover {
-  background-color: #BB5F5F;
+  background-color: var(--pomodoroDark);
 }
 
 .button-clicked {
-  background-color: #BB5F5F;
+  background-color: var(--pomodoroLight);
 }
 
 /* .main-menu {

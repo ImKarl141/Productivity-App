@@ -124,41 +124,50 @@ const TaskMenu = () => {
           })}
           {
             addProjectEdit && (
-              <form className='project-form' onSubmit={handleProjectSubmit}>
-                <input
-                  id='color-picker'
-                  name='color'
-                  type="color"
-                  className='myColorPicker'
-                  value={projectColor}
-                  onChange={(e) => {
-                    setProjectColor(e.target.value)
-                    console.log(e.target.value);
-                  }}
-                />
-                {/* <input
+              <div className='cancel-btn-container'>
+                <form className='project-form' onSubmit={handleProjectSubmit}>
+                  <input
+                    id='color-picker'
+                    name='color'
+                    type="color"
+                    className='myColorPicker'
+                    value={projectColor}
+                    onChange={(e) => {
+                      setProjectColor(e.target.value)
+                      console.log(e.target.value);
+                    }}
+                  />
+                  {/* <input
                   id='projectColor'
                   name='color'
                   className='color-selector'
                   type="color"
                 // value='#ff0000'
                 /> */}
-                <input
-                  id='projectName'
-                  name='nameProject'
-                  type="text"
-                  className='myInputAddProject'
-                  value={myProject}
-                  onChange={(e) => setMyProject(e.target.value)}
-                  placeholder='Project name'
-                />
-              </form>
+                  <input
+                    id='projectName'
+                    name='nameProject'
+                    type="text"
+                    className='myInputAddProject'
+                    value={myProject}
+                    onChange={(e) => setMyProject(e.target.value)}
+                    placeholder='Project name'
+                  />
+                </form>
+                <button className='cancel-projects-btn' onClick={() => dispatch(ShowAddProjectEdit())}>
+                  <CancelIcon />
+                </button>
+              </div>
             )
           }
-          <button className='addBtn add-project-btn' onClick={() => dispatch(ShowAddProjectEdit())} >
-            <AddProjectIcon />
-            <p className='myTask-text'>Add Project</p>
-          </button>
+          {
+            !addProjectEdit && (
+              <button className='addBtn add-project-btn' onClick={() => dispatch(ShowAddProjectEdit())} >
+                <AddProjectIcon />
+                <p className='myTask-text'>Add Project</p>
+              </button>
+            )
+          }
         </div>
         <div className='overall-tags'>
           <div className='list-title'>
@@ -177,8 +186,8 @@ const TaskMenu = () => {
           </div>
           {
             addTagEdit && (
-              <form className='tag-form' onSubmit={handleTagSubmit}>
-                <div style={{ display: 'grid', position: 'relative' }}>
+              <div className='cancel-btn-container'>
+                <form className='tag-form' onSubmit={handleTagSubmit}>
                   <input
                     id='tagName'
                     name='nameTag'
@@ -188,11 +197,11 @@ const TaskMenu = () => {
                     onChange={(e) => setMyTag(e.target.value)}
                     placeholder='Tag name'
                   />
-                  <button className='cancel-tags-btn' onClick={() => dispatch(ShowAddTagEdit())}>
-                    <CancelIcon />
-                  </button>
-                </div>
-              </form>
+                </form>
+                <button className='cancel-tags-btn' onClick={() => dispatch(ShowAddTagEdit())}>
+                  <CancelIcon />
+                </button>
+              </div>
             )
           }
           {/* <div className='tags-container'>
