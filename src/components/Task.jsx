@@ -138,7 +138,9 @@ const TaskMenu = () => {
                         console.log(e.target.value);
                       }}
                     />
-                    <div className='custom-colorPicker' style={{ backgroundColor: projectColor }}></div>
+                    <div className='custom-colorPicker' style={{ backgroundColor: projectColor }}>
+
+                    </div>
                   </div>
                   {/* <input
                   id='projectColor'
