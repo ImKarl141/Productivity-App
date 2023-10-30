@@ -14,8 +14,10 @@ export const task = [
     description: `Buy a new PC for my birthday`,
     subtask: [],
     dueDate: '14-02-2024',
-    tag: '',
+    tag: 'Productivity',
     project: 'Personal',
+    projectColor: '',
+    tagColor: '',
   }
 ];
 
@@ -26,11 +28,11 @@ export const userProjects = [
     color: '#eb896c',
     // number: 0,
   },
-  // {
-  //   id: 1,
-  //   nameProject: 'Coding',
-  //   number: 1
-  // },
+  {
+    id: 1,
+    nameProject: 'Coding',
+    color: '#d22828'
+  },
 ];
 
 
@@ -53,11 +55,6 @@ export const userTags = [
   {
     id: 3,
     nameTag: 'Vacations',
-    color: '#FFFFFF',
-  },
-  {
-    id: 4,
-    nameTag: 'Coding idea',
     color: '#FFFFFF',
   },
 ];

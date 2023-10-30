@@ -149,28 +149,26 @@
 
 /* Task Focus Test Start */
 .task-item-details {
-  display: flex;
-  align-items: center;
-  /* display: grid;
-  grid-template-columns: auto auto auto; */
-  /* grid-column-gap: 0.5rem; */
-  /* padding-left: 2.1rem; */
-  padding: 0.5rem 0rem 0rem 1.1rem ;
+  display: grid;
+  grid-template-columns: auto auto auto;
+  padding: 0.5rem 0rem 0rem 1.7rem ;
+  grid-column-gap: 0.5rem;
 }
 
 .task-item {
-  display: flex;
-  align-items: center;
-  justify-content: start;
-  padding: 0rem 1rem; 
+  display: grid;
+  grid-template-columns: auto auto;
+  font-size: 0.8rem;
 }
 
-.item-left {
-  border-right: 0.1rem solid var(--blackLight);
+.task-item span {
+  font-size: 0.8rem;
+  margin-left: 0.2rem;
 }
 
-.item-right {
-  border-left: 0.1rem solid var(--blackLight);
+.next-item {
+  border-left: 0.1rem solid var(--black);
+  padding-left: 0.5rem;
 }
 
 .myTask-text-details {
@@ -286,6 +284,7 @@
   margin: 0 0 0 0.6rem;
 }
 
+
 .task-item-container {
   display: flex;
   position: relative;
@@ -300,14 +299,77 @@
   user-select: none;
 }
 
+.task-item-title {
+  display: grid;
+  grid-template-columns: auto auto auto;
+}
+
+/* Task items test start */
+.list-tasks-item-test {
+  display: grid;
+  grid-template-columns: auto auto;
+  padding: 0.6rem 1rem 0.6rem 0rem; 
+  border-bottom: 0.15rem solid var(--pomodoroDark);
+  white-space: nowrap;
+  font-family: Nunito;
+  font-weight: 600;
+  font-size: 0.8rem;
+  color: var(--black);
+}
+
+.task-item-container-test {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  /* align-content: center; */
+}
+
+.task-item-title-test {
+  display: grid;
+  grid-template-columns: auto auto auto;
+}
+
+.checkmark-container {
+  display: flex;
+  align-items: start;
+  justify-content: start;
+}
+
+.task-checkmark-default {
+  width: 1.2rem;
+  height: 1.2rem;
+  margin: 0rem;
+  padding: 0rem;
+}
+
+.input-text-title-test,
+.input-text-description-test {
+  /* display: grid;
+  justify-content: start;
+  align-content: center;
+  white-space: nowrap;
+  font-family: Nunito;
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--black); */
+}
+
+.input-text-description-test span {
+  /* font-size: 0.8rem;
+  overflow: hidden;
+  text-overflow: ellipsis; */
+}
+
+/* Task items test end */
+
+
 /* Hide browsers default checkbox */
-.task-item-title input {
+/* .task-item-title input {
   position: absolute;
   opacity: 0;
   cursor: pointer;
   height: 0;
   width: 0;
-}
+} */
 
  /* Custom checkbox */
 .checkmark {
@@ -344,17 +406,21 @@
   display: block;
 }
 
-/* .task-item-container input:checked ~ .input-text {
-  text-decoration: line-through;
-  opacity: 0.6;
-} */
-
-.task-item-title input:checked ~ .input-text {
+.task-item-title input:checked ~ .input-text-title {
   text-decoration: line-through;
   opacity: 0.6;
 }
 
-/* .task-item input:checked ~ .myTask-text-details {
+.task-item-title input:checked ~ .input-text-description {
+  text-decoration: line-through;
+  opacity: 0.6;
+}
+
+.task-item-container input:checked ~ .input-text-description {
+  color: red;
+}
+
+/* .task-item input:checked ~ span {
   text-decoration: line-through;
   opacity: 0.6;
 } */
@@ -378,8 +444,27 @@
   transform: rotate(45deg);
 }
 
-.input-text {
+.input-text-title,
+.input-text-description {
+  display: grid;
+  align-items: end;
+  white-space: nowrap;
+  font-family: Nunito;
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--black);
+}
+
+/* .input-text-title {
+  margin-left: 0.3rem;
   padding-left: 1.5rem;
+} */
+
+.input-text-description span {
+  font-size: 0.8rem;
+  padding-left: 0.4rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .myInput {
@@ -640,15 +725,17 @@ h1, h2 {
 }
 
 .list-tasks-item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: auto auto;
   padding: 0.6rem 1rem 0.6rem 0rem; 
+  border-bottom: 0.15rem solid var(--pomodoroDark);
+  /* display: flex;
+  align-items: center;
+  justify-content: space-between; */
   /* margin-top: -0.1rem;
   margin-left: 0.5rem;
   margin-right: 0.5rem; */
   /* border-top: 0.15rem solid var(--pomodoroDark); */
-  border-bottom: 0.15rem solid var(--pomodoroDark);
 }
 
 

@@ -19,8 +19,8 @@ const TaskMenu = () => {
   const [taskTitle, setTaskTitle] = useState('')
   const [taskDescription, setTaskDescription] = useState('')
   const [taskDate, setTaskDate] = useState(new Date().toLocaleDateString('en-US').split('-'));
-  // const [taskList, setTaskList] = useState('')
-  // const [taskTag, setTaskTag] = useState('')
+  const [taskProject, setTaskProject] = useState(projects[0].nameProject)
+  const [taskTag, setTaskTag] = useState(tags[0].nameTag)
   const [listOfTasks, setListOfTasks] = useState(taskItems)
 
   //Inputs for projects
@@ -48,7 +48,14 @@ const TaskMenu = () => {
       return;
     }
     //Create a new list base on the old + new
-    const newTask = { id: Date.now(), title: taskTitle }
+    const newTask = {
+      id: Date.now(),
+      title: taskTitle,
+      description: taskDescription,
+      dueDate: taskDate,
+      tag: taskTag,
+      project: taskProject,
+    }
     const updateUser = [...listOfTasks, newTask]
     setListOfTasks(updateUser)
     setTaskTitle('')
@@ -252,30 +259,64 @@ const TaskMenu = () => {
         </div>
         <ul className='list-tasks'>
           {listOfTasks.map((task) => {
-            const { id, title, dueDate, project } = task
+            const { id, title, description, dueDate, tag, project } = task
             return (
-              <li className='list-tasks-item' key={id}>
-                <label htmlFor={id} className='myTask-text task-item-container'>
-                  <div className='task-item-title'>
-                    <input id={id} type="checkbox" name={title} />
-                    <span className='checkmark'></span>
-                    <p className='myTask-text input-text'>{title}</p>
+              <li className='list-tasks-item-test' key={id}>
+                <label htmlFor={id} className='task-item-container-test'>
+                  <div className='task-item-title-test'>
+                    <div className='checkmark-container'>
+                      <input className='task-checkmark-default' type="text" />
+                    </div>
+                    <span className='input-text-title-test'>{title}:</span>
+                    <div className='input-text-description-test'>
+                      <span>{description}</span>
+                    </div>
                   </div>
                   <div className='task-item-details'>
-                    <div className='task-item item-left'>
-                      <CalendarIconTask />
-                      <p className='myTask-text-details'>{dueDate}</p>
-                    </div>
                     <div className='task-item'>
-                      <span className='subtask-number'>1</span>
-                      <p className='myTask-text-details'>Subtasks</p>
+                      <CalendarIconTask />
+                      <span>{dueDate}</span>
                     </div>
-                    <div className='task-item item-right'>
-                      <span className='project-color'></span>
-                      <p className='myTask-text-details'>{project}</p>
-                    </div>
+                    {project && (
+                      <div className='task-item next-item'>
+                        {project}
+                      </div>
+                    )}
+                    {tag && (
+                      <div className='task-item next-item'>
+                        {tag}
+                      </div>
+                    )}
                   </div>
                 </label>
+                {/* <label htmlFor={id} className='myTask-text'>
+                  <div className='task-item-container'>
+                    <div className='task-item-title'>
+                      <input id={id} type="checkbox" name={title} />
+                      <span className='checkmark'></span>
+                      <span className='input-text-title'>{title}:</span>
+                      <div className='input-text-description'>
+                        <span>{description}</span>
+                      </div>
+                    </div>
+                    <div className='task-item-details'>
+                      <div className='task-item'>
+                        <CalendarIconTask />
+                        <span>{dueDate}</span>
+                      </div>
+                      {project && (
+                        <div className='task-item next-item'>
+                          {project}
+                        </div>
+                      )}
+                      {tag && (
+                        <div className='task-item next-item'>
+                          {tag}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </label> */}
                 <button className='task-item-btn'>
                   <EnterTaskIcon />
                 </button>
@@ -306,21 +347,35 @@ const TaskMenu = () => {
                   placeholder='Description'
                   className='myInput myInput-description'
                   value={taskDescription}
-                  onChange={(e) => setTaskDescription(e.target.value)}
+                  onChange={(e) => {
+                    setTaskDescription(e.target.value)
+                    // console.log(taskDescription)
+                  }
+                  }
                 />
+
                 <div className='task-details-info'>
                   <p className='details-text'>Due date</p>
                   <input
                     className='myInput-date'
                     type="date"
                     name='dueDate'
-                    value={taskDate}
-                    onChange={(e) => setTaskDate(e.target.value)}
+                    onChange={(e) => {
+                      setTaskDate(e.target.value)
+                      // console.log(`Your date is ${e.target.value}`)
+                    }}
                   />
                 </div>
                 <div className='task-details-info'>
                   <p className='details-text'>List</p>
-                  <select name='Projects'>
+                  <select
+                    name='Projects'
+                    onChange={(e) => {
+                      setTaskProject(e.target.value)
+                      console.log(e.target.value)
+                    }
+                    }
+                  >
                     {listOfProjects.map((listProjects) => {
                       const { id, nameProject } = listProjects;
                       return (
@@ -331,7 +386,14 @@ const TaskMenu = () => {
                 </div>
                 <div className='task-details-info'>
                   <p className='details-text'>Tags</p>
-                  <select name='Tags'>
+                  <select
+                    name='Tags'
+                    onChange={(e) => {
+                      setTaskTag(e.target.value)
+                      console.log(e.target.value)
+                    }
+                    }
+                  >
                     {listOfTags.map((listTag) => {
                       const { id, nameTag } = listTag;
                       return (
