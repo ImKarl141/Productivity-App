@@ -3,7 +3,7 @@ import { ShowTaskEdit, ShowAddProjectEdit, ShowAddTagEdit } from '../features/ta
 import { useEffect, useRef, useState, useEventListener } from 'react';
 // import { task } from '../data'
 import './Task.css'
-import { AddTaskIcon, AllTasksIcon, CurrentTasksIcon, CompletedTasksIcon, AddProjectIcon, AddTagsIcon, EnterTaskIcon, CalendarIconTask, ProjectSettingsIcon, CancelIcon } from '../icons';
+import { AddTaskIcon, AllTasksIcon, CurrentTasksIcon, CompletedTasksIcon, AddProjectIcon, AddTagsIcon, EnterTaskIcon, CalendarIconTask, ProjectSettingsIcon, CancelIcon, ColorPickerIcon } from '../icons';
 
 //taskItems and destructuring
 
@@ -16,7 +16,11 @@ const TaskMenu = () => {
   const [myList, setMyList] = useState([1, 2, 3, 4])
 
   //Input for tasks
-  const [myTask, setMyTask] = useState('')
+  const [taskTitle, setTaskTitle] = useState('')
+  const [taskDescription, setTaskDescription] = useState('')
+  const [taskDate, setTaskDate] = useState(new Date().toLocaleDateString('en-US').split('-'));
+  // const [taskList, setTaskList] = useState('')
+  // const [taskTag, setTaskTag] = useState('')
   const [listOfTasks, setListOfTasks] = useState(taskItems)
 
   //Inputs for projects
@@ -34,17 +38,20 @@ const TaskMenu = () => {
   const [projectColor, setProjectColor] = useState('#FFFFFF')
 
 
+  //Tag Color 
+  const [tagColor, setTagColor] = useState('#FFFFFF')
+
   //Add a new tasks
   const handleTaskSubmit = (e) => {
     e.preventDefault();
-    if (!myTask) {
+    if (!taskTitle) {
       return;
     }
     //Create a new list base on the old + new
-    const newTask = { id: Date.now(), title: myTask }
+    const newTask = { id: Date.now(), title: taskTitle }
     const updateUser = [...listOfTasks, newTask]
     setListOfTasks(updateUser)
-    setMyTask('')
+    setTaskTitle('')
   }
 
   //Add a new project 
@@ -62,10 +69,20 @@ const TaskMenu = () => {
     setProjectColor('#FFFFFF')
   }
 
+  //Add a new tag
   const handleTagSubmit = (e) => {
     e.preventDefault();
-    console.log('Tag Submitted');
+    if (!myTag) {
+      return;
+    }
+    const newTag = { id: Date.now(), nameTag: myTag, color: tagColor };
+    const updateTag = [...listOfTags, newTag];
+    setListOfTags(updateTag);
+    setMyTag('');
+    setTagColor('#FFFFFF')
+    // console.log('Tag Submitted');
   }
+
 
   //Edit task menu
 
@@ -105,50 +122,41 @@ const TaskMenu = () => {
           <div className='list-title'>
             <h2 className='list-title'>List of Projects</h2>
           </div>
-          {listOfProjects.map((project) => {
-            const { id, nameProject, color } = project;
-            return (
-              <button key={id} className='list-projects'>
-                <div className='projects-container' title='Project name'>
-                  <div className='project-color' style={{ backgroundColor: color }}></div>
-                  <p className='myTask-text'>{nameProject}</p>
-                </div>
-                <div className='project-settings-btn' title='Options'>
-                  <ProjectSettingsIcon />
-                </div>
-                {/* <div className='projects-container-settings'>
-                  <div className='projects-number'>{number}</div>
-                </div> */}
-              </button>
-            )
-          })}
+          <div className='projects-container'>
+            {listOfProjects.map((project) => {
+              const { id, nameProject, color } = project;
+              return (
+                <button key={id} className='list-projects'>
+                  <div className='project-title-container' title='Project name'>
+                    <div className='project-color' style={{ backgroundColor: color }}></div>
+                    <p className='myTask-text'>{nameProject}</p>
+                  </div>
+                  <div className='project-settings-btn' title='Options'>
+                    <ProjectSettingsIcon />
+                  </div>
+                </button>
+              )
+            })}
+          </div>
           {
             addProjectEdit && (
               <div className='cancel-btn-container'>
                 <form className='project-form' onSubmit={handleProjectSubmit}>
                   <div className='color-picker-container'>
                     <input
-                      id='color-picker'
+                      id='color-picker-project'
                       name='color'
                       type="color"
                       className='default-colorPicker'
                       value={projectColor}
                       onChange={(e) => {
                         setProjectColor(e.target.value)
-                        console.log(e.target.value);
+                        // console.log(e.target.value);
                       }}
                     />
                     <div className='custom-colorPicker' style={{ backgroundColor: projectColor }}>
-
                     </div>
                   </div>
-                  {/* <input
-                  id='projectColor'
-                  name='color'
-                  className='color-selector'
-                  type="color"
-                // value='#ff0000'
-                /> */}
                   <input
                     id='projectName'
                     name='nameProject'
@@ -184,7 +192,6 @@ const TaskMenu = () => {
               return (
                 <button key={id} className='myTag' style={{ backgroundColor: color }} title={nameTag}>
                   <span>{nameTag}</span>
-                  {/* <p className='myTags-text'>{nameTag}</p> */}
                 </button>
               )
             })}
@@ -193,6 +200,20 @@ const TaskMenu = () => {
             addTagEdit && (
               <div className='cancel-btn-container'>
                 <form className='tag-form' onSubmit={handleTagSubmit}>
+                  <div className='color-picker-container'>
+                    <input
+                      id='color-picker-tag'
+                      name='color'
+                      type="color"
+                      className='default-colorPicker'
+                      value={tagColor}
+                      onChange={(e) => {
+                        setTagColor(e.target.value)
+                      }}
+                    />
+                    <div className='custom-colorPicker' style={{ backgroundColor: tagColor }}>
+                    </div>
+                  </div>
                   <input
                     id='tagName'
                     name='nameTag'
@@ -229,10 +250,6 @@ const TaskMenu = () => {
             <p className='myTask-text'>Add Task</p>
           </button>
         </div>
-        {/* <li className='list-tasks-item' key={id}>
-          <input id='task' type="checkbox" name={title} />
-          <label htmlFor="task" className='myTask-text'>{title}</label>
-        </li> */}
         <ul className='list-tasks'>
           {listOfTasks.map((task) => {
             const { id, title, dueDate, project } = task
@@ -257,8 +274,6 @@ const TaskMenu = () => {
                       <span className='project-color'></span>
                       <p className='myTask-text-details'>{project}</p>
                     </div>
-                    {/* <span>List</span> */}
-                    {/* <div className='project-color'></div> */}
                   </div>
                 </label>
                 <button className='task-item-btn'>
@@ -275,40 +290,57 @@ const TaskMenu = () => {
             <div className='task-details-task'>
               <h1>Task:</h1>
               <form onSubmit={handleTaskSubmit}>
-                {/* <label htmlFor="tasks-title"></label> */}
                 <input
                   id='title-task'
                   name='taskTitle'
                   className='myInput'
                   type="text"
                   placeholder='Title name'
-                  value={myTask}
-                  onChange={(e) => setMyTask(e.target.value)}
+                  value={taskTitle}
+                  onChange={(e) => setTaskTitle(e.target.value)}
                 />
+                <textarea
+                  id='description'
+                  name='taskDescription'
+                  type="text"
+                  placeholder='Description'
+                  className='myInput myInput-description'
+                  value={taskDescription}
+                  onChange={(e) => setTaskDescription(e.target.value)}
+                />
+                <div className='task-details-info'>
+                  <p className='details-text'>Due date</p>
+                  <input
+                    className='myInput-date'
+                    type="date"
+                    name='dueDate'
+                    value={taskDate}
+                    onChange={(e) => setTaskDate(e.target.value)}
+                  />
+                </div>
+                <div className='task-details-info'>
+                  <p className='details-text'>List</p>
+                  <select name='Projects'>
+                    {listOfProjects.map((listProjects) => {
+                      const { id, nameProject } = listProjects;
+                      return (
+                        <option key={id}>{nameProject}</option>
+                      )
+                    })}
+                  </select>
+                </div>
+                <div className='task-details-info'>
+                  <p className='details-text'>Tags</p>
+                  <select name='Tags'>
+                    {listOfTags.map((listTag) => {
+                      const { id, nameTag } = listTag;
+                      return (
+                        <option key={id}>{nameTag}</option>
+                      )
+                    })}
+                  </select>
+                </div>
               </form>
-              <form onSubmit={(e) => e.preventDefault()}>
-                <textarea id='description' name='taskDescription' type="text" placeholder='Description' className='myInput myInput-description' />
-              </form>
-              <div className='task-details-info'>
-                <p className='details-text'>Due date</p>
-                <input className='myInput-date' type="date" name='dueDate' />
-              </div>
-              <div className='task-details-info'>
-                <p className='details-text'>List</p>
-                <select name='Projects'>
-                  <option value="1">Personal</option>
-                  <option value="2">Programming</option>
-                  <option value="3">Vacations</option>
-                </select>
-              </div>
-              <div className='task-details-info'>
-                <p className='details-text'>Tags</p>
-                <select name='Tags'>
-                  <option value="1">Tag1</option>
-                  <option value="2">Tag2</option>
-                  <option value="3">Tag3</option>
-                </select>
-              </div>
             </div>
             <div className='task-details-subtask'>
               <h1>Subtask:</h1>
@@ -320,11 +352,11 @@ const TaskMenu = () => {
               </div> */}
             </div>
             <div className='task-details-button'>
-              <button className='detailsBtn'>Delete Task</button>
-              <button className='detailsBtn'>Save Changes</button>
+              <button className='detailsBtn saveBtn'>Save Changes</button>
+              <button className='detailsBtn' onClick={() => dispatch(ShowTaskEdit())}>Cancel Task</button>
+              <button className='detailsBtn deleteBtn' >Delete Task</button>
             </div>
           </div>
-
         )
       }
     </section >
