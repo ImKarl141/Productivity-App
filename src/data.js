@@ -5,10 +5,10 @@ export const task = [
     description: `Prepare the dinner for my Sister's birthday And the buy of a awesome`,
     subtask: [],
     dueDate: '23-12-2023',
-    tag: 'Coding',
+    tag: 'Vacation',
     tagColor: '',
-    project: 'Daily',
-    projectColor: '',
+    project: 'Default',
+    projectColor: '#eb896c',
   },
   {
     id: 1,
@@ -18,8 +18,8 @@ export const task = [
     dueDate: '14-02-2024',
     tag: 'Productivity',
     tagColor: '',
-    project: 'Personal',
-    projectColor: '',
+    project: 'Coding',
+    projectColor: '#d22828',
   }
 ];
 

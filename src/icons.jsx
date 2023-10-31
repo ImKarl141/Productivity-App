@@ -372,7 +372,7 @@ export const CalendarIconTask = () => {
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="currentColor"
-      className="task-icons">
+      className="task-icons calendar-icon">
       <path
         strokeLinecap="round"
         strokeLinejoin="round"

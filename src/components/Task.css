@@ -155,11 +155,6 @@
   grid-column-gap: 0.5rem;
 } */
 
-.task-item {
-  display: grid;
-  grid-template-columns: auto auto;
-  font-size: 0.8rem;
-}
 
 .task-item span {
   font-size: 0.8rem;
@@ -167,8 +162,13 @@
 }
 
 .next-item {
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-column-gap: 0.2rem;
+  align-items: center;
   border-left: 0.1rem solid var(--black);
   padding-left: 0.5rem;
+  margin-left: 0.5rem;
 }
 
 .myTask-text-details {
@@ -294,12 +294,10 @@
   white-space: nowrap;
   padding: 0.4rem 0rem;
   border-bottom: 0.1rem solid var(--blackLight);
-  /* display: flex;
-  position: relative;
-  flex-direction: column;
-  align-items: start;
-  justify-content: center; */
-  font-size: 1rem;
+  font-family: Nunito;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--black);
   cursor: pointer;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -308,11 +306,56 @@
 }
 
 .task-item-container {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  position: relative;
+  grid-template-columns: auto auto;
+  grid-column-gap: 0.4rem;
+  grid-row-gap: 0.4rem;
+  align-items: start;
+  justify-items: start;
 }
 
-.task-item-title {
+.default-checkbox {
+  width: 1.5rem;
+  height: 1.5rem;
+  grid-row: span 2;
+  margin: 0;
+  padding: 0;
+  opacity: 0;
+}
+
+.task-item-text,
+.task-item-details {
+  display: grid;
+}
+
+.task-item-text {
+  grid-column-gap: 0.4rem;
+  grid-template-columns: auto auto;
+  align-items: end;
+}
+
+.task-item-details {
+  /* grid-column-gap: 0.8rem; */
+  grid-template-columns: auto auto auto auto;
+  height: 2rem;
+  align-items: center;
+}
+
+.task-item-description {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.task-item-details-calendar {
+  display: grid;
+  grid-template-columns: auto auto;
+  align-items: center;
+}
+
+
+
+/* .task-item-title {
   display: grid;
   position: relative;
   grid-template-columns: auto auto auto;
@@ -344,7 +387,7 @@
 .task-text-description {
   overflow: hidden;
   text-overflow: ellipsis;
-}
+} */
 
 
 /* Task items test end */
@@ -368,8 +411,8 @@
   position: absolute;
   top: 0;
   left: 0;
-  height: 1.2rem;
-  width: 1.22rem;
+  height: 1.25rem;
+  width: 1.25rem;
   /* padding-left: 2rem; */
   background-color: var(--pomodoroDark);
   border: 0.15rem solid var(--blackLight);
@@ -377,12 +420,12 @@
 }
 
 /* Background color when hovering */
-.task-item-title:hover input ~ .checkmark {
+.task-item-container:hover input ~ .checkmark {
   background-color: var(--pomodoroLight);
 }
 
 /* When is checked add a background */
-.task-item-title input:checked ~ .checkmark {
+.task-item-container input:checked ~ .checkmark {
   background-color: var(--blackLight);
 }
 
@@ -394,21 +437,11 @@
 }
 
 /* Showing the checkmark when checked */
-.task-item-title input:checked ~ .checkmark::after {
+.task-item-container input:checked ~ .checkmark::after {
   display: block;
 }
 
-.task-item-container .default-checkbox:checked ~ span  {
-  text-decoration: line-through;
-  opacity: 0.6;
-}
-
-.task-item-container .default-checkbox:checked ~ .task-text-description {
-  text-decoration: line-through;
-  opacity: 0.6;
-}
-
-.task-item-container .default-checkbox:checked ~ .task-item-details {
+.task-item-container .default-checkbox:checked ~ div {
   text-decoration: line-through;
   opacity: 0.6;
 }
@@ -424,7 +457,7 @@
 } */
 
 /* Style of the checkmark */
-.task-item-title .checkmark::after {
+.task-item-container .checkmark::after {
   left: 0.4rem;
   top: 0.15rem;
   width: 0.3rem;

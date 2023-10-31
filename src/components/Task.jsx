@@ -3,7 +3,7 @@ import { ShowTaskEdit, ShowAddProjectEdit, ShowAddTagEdit } from '../features/ta
 import { useEffect, useRef, useState, useEventListener } from 'react';
 // import { task } from '../data'
 import './Task.css'
-import { AddTaskIcon, AllTasksIcon, CurrentTasksIcon, CompletedTasksIcon, AddProjectIcon, AddTagsIcon, EnterTaskIcon, CalendarIconTask, ProjectSettingsIcon, CancelIcon, ColorPickerIcon } from '../icons';
+import { AddTaskIcon, AllTasksIcon, CurrentTasksIcon, CompletedTasksIcon, AddProjectIcon, AddTagsIcon, EnterTaskIcon, CalendarIconTask, ProjectSettingsIcon, CancelIcon, ColorPickerIcon, CalendarIcon } from '../icons';
 
 //taskItems and destructuring
 
@@ -27,7 +27,6 @@ const TaskMenu = () => {
   const [myProject, setMyProject] = useState('');
   const [listOfProjects, setListOfProjects] = useState(projects);
   // const [nameProject] = listOfProjects;
-  // console.log(nameProject.nameProject);
 
   //Inputs for tags 
   const [myTag, setMyTag] = useState('');
@@ -54,7 +53,9 @@ const TaskMenu = () => {
       description: taskDescription,
       dueDate: taskDate,
       tag: taskTag,
+      colorTag: taskTag.color,
       project: taskProject,
+      projectColor: taskProject.color,
     }
     const updateUser = [...listOfTasks, newTask]
     setListOfTasks(updateUser)
@@ -87,7 +88,6 @@ const TaskMenu = () => {
     setListOfTags(updateTag);
     setMyTag('');
     setTagColor('#FFFFFF')
-    // console.log('Tag Submitted');
   }
 
 
@@ -158,7 +158,6 @@ const TaskMenu = () => {
                       value={projectColor}
                       onChange={(e) => {
                         setProjectColor(e.target.value)
-                        // console.log(e.target.value);
                       }}
                     />
                     <div className='custom-colorPicker' style={{ backgroundColor: projectColor }}>
@@ -259,65 +258,51 @@ const TaskMenu = () => {
         </div>
         <ul className='list-tasks'>
           {listOfTasks.map((task) => {
-            const { id, title, description, dueDate, tag, project } = task
+            const { id, title, description, dueDate, tag, project, projectColor } = task
             return (
               <li key={id}>
                 <label className='task-item-overall-container'>
                   <div className='task-item-container'>
-                    <div className='task-item-title'>
-                      <input className='default-checkbox' type="checkbox" />
-                      <span className='checkmark'></span>
+                    <input className='default-checkbox' type="checkbox" />
+                    <span className='checkmark'></span>
+                    <div className='task-item-text'>
                       <span>{title}:</span>
-                      <div className='task-text-description'>
-                        <span>{description}</span>
-                      </div>
-                      {/* <div className='test-text'>
-                        <span>Hello friend</span>
-                      </div> */}
+                      <span className='task-item-description'>{description}</span>
                     </div>
                     <div className='task-item-details'>
+                      {/* <div className='task-item-details-calendar'>
+                        <div>
+                        <CalendarIconTask />
+                        </div>
+                        <span>{dueDate}</span>
+                      </div> */}
+                      <span><CalendarIconTask /></span>
                       <span>{dueDate}</span>
-                      <span>{tag}</span>
-                      <span>{project}</span>
+                      {
+                        tag && (
+                          <span className='next-item'>{tag}</span>
+                        )
+                      }
+                      {
+                        project && (
+                          <span className='next-item'>
+                            <span className='project-color' style={{ backgroundColor: projectColor }}></span>
+                            {/* Find a way to grab the color, maybe with get element by name or something. I need to grab the color of that element */}
+                            {project}
+                          </span>
+                        )
+                      }
                     </div>
                   </div>
-                  <button className='task-item-btn'>
+                  <button className='task-item-btn' >
                     <EnterTaskIcon />
                   </button>
                 </label>
-                {/* <label htmlFor={id} className='myTask-text'>
-                  <div className='task-item-container'>
-                    <div className='task-item-title'>
-                      <input id={id} type="checkbox" name={title} />
-                      <span className='checkmark'></span>
-                      <span className='input-text-title'>{title}:</span>
-                      <div className='input-text-description'>
-                        <span>{description}</span>
-                      </div>
-                    </div>
-                    <div className='task-item-details'>
-                      <div className='task-item'>
-                        <CalendarIconTask />
-                        <span>{dueDate}</span>
-                      </div>
-                      {project && (
-                        <div className='task-item next-item'>
-                          {project}
-                        </div>
-                      )}
-                      {tag && (
-                        <div className='task-item next-item'>
-                          {tag}
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                </label> */}
               </li>
             )
           })}
-        </ul>
-      </div>
+        </ul >
+      </div >
       {
         isEdit && (
           <div className='task-details'>
@@ -342,7 +327,6 @@ const TaskMenu = () => {
                   value={taskDescription}
                   onChange={(e) => {
                     setTaskDescription(e.target.value)
-                    // console.log(taskDescription)
                   }
                   }
                 />
@@ -355,7 +339,6 @@ const TaskMenu = () => {
                     name='dueDate'
                     onChange={(e) => {
                       setTaskDate(e.target.value)
-                      // console.log(`Your date is ${e.target.value}`)
                     }}
                   />
                 </div>
@@ -365,7 +348,6 @@ const TaskMenu = () => {
                     name='Projects'
                     onChange={(e) => {
                       setTaskProject(e.target.value)
-                      console.log(e.target.value)
                     }
                     }
                   >
@@ -383,7 +365,6 @@ const TaskMenu = () => {
                     name='Tags'
                     onChange={(e) => {
                       setTaskTag(e.target.value)
-                      console.log(e.target.value)
                     }
                     }
                   >
@@ -403,8 +384,6 @@ const TaskMenu = () => {
                 <AddTaskIcon />
                 <p className='myTask-text'>Add Subtask</p>
               </button>
-              {/* <div className='mySubtask'>
-              </div> */}
             </div>
             <div className='task-details-button'>
               <button className='detailsBtn saveBtn'>Save Changes</button>
