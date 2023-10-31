@@ -261,33 +261,29 @@ const TaskMenu = () => {
           {listOfTasks.map((task) => {
             const { id, title, description, dueDate, tag, project } = task
             return (
-              <li className='list-tasks-item-test' key={id}>
-                <label htmlFor={id} className='task-item-container-test'>
-                  <div className='task-item-title-test'>
-                    <div className='checkmark-container'>
-                      <input className='task-checkmark-default' type="text" />
+              <li key={id}>
+                <label className='task-item-overall-container'>
+                  <div className='task-item-container'>
+                    <div className='task-item-title'>
+                      <input className='default-checkbox' type="checkbox" />
+                      <span className='checkmark'></span>
+                      <span>{title}:</span>
+                      <div className='task-text-description'>
+                        <span>{description}</span>
+                      </div>
+                      {/* <div className='test-text'>
+                        <span>Hello friend</span>
+                      </div> */}
                     </div>
-                    <span className='input-text-title-test'>{title}:</span>
-                    <div className='input-text-description-test'>
-                      <span>{description}</span>
-                    </div>
-                  </div>
-                  <div className='task-item-details'>
-                    <div className='task-item'>
-                      <CalendarIconTask />
+                    <div className='task-item-details'>
                       <span>{dueDate}</span>
+                      <span>{tag}</span>
+                      <span>{project}</span>
                     </div>
-                    {project && (
-                      <div className='task-item next-item'>
-                        {project}
-                      </div>
-                    )}
-                    {tag && (
-                      <div className='task-item next-item'>
-                        {tag}
-                      </div>
-                    )}
                   </div>
+                  <button className='task-item-btn'>
+                    <EnterTaskIcon />
+                  </button>
                 </label>
                 {/* <label htmlFor={id} className='myTask-text'>
                   <div className='task-item-container'>
@@ -317,9 +313,6 @@ const TaskMenu = () => {
                     </div>
                   </div>
                 </label> */}
-                <button className='task-item-btn'>
-                  <EnterTaskIcon />
-                </button>
               </li>
             )
           })}

@@ -2,11 +2,13 @@ export const task = [
   {
     id: 0,
     title: `Make dinner`,
-    description: `Prepare the dinner for my Sister's birthday`,
+    description: `Prepare the dinner for my Sister's birthday And the buy of a awesome`,
     subtask: [],
     dueDate: '23-12-2023',
-    tag: '',
+    tag: 'Coding',
+    tagColor: '',
     project: 'Daily',
+    projectColor: '',
   },
   {
     id: 1,
@@ -15,9 +17,9 @@ export const task = [
     subtask: [],
     dueDate: '14-02-2024',
     tag: 'Productivity',
+    tagColor: '',
     project: 'Personal',
     projectColor: '',
-    tagColor: '',
   }
 ];
 

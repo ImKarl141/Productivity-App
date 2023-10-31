@@ -148,12 +148,12 @@
 } */
 
 /* Task Focus Test Start */
-.task-item-details {
+/* .task-item-details {
   display: grid;
   grid-template-columns: auto auto auto;
   padding: 0.5rem 0rem 0rem 1.7rem ;
   grid-column-gap: 0.5rem;
-}
+} */
 
 .task-item {
   display: grid;
@@ -275,6 +275,8 @@
 
 /* Add Project Test End */
 
+/* Task items test start */
+
 .myTask-text {
   white-space: nowrap;
   font-family: Nunito;
@@ -285,81 +287,71 @@
 }
 
 
-.task-item-container {
+.task-item-overall-container {
   display: flex;
+  justify-content: space-between;
+  align-items: center;
+  white-space: nowrap;
+  padding: 0.4rem 0rem;
+  border-bottom: 0.1rem solid var(--blackLight);
+  /* display: flex;
   position: relative;
   flex-direction: column;
   align-items: start;
-  /* justify-content: center; */
+  justify-content: center; */
   font-size: 1rem;
-  /* cursor: pointer; */
+  cursor: pointer;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
-  user-select: none;
+  user-select: none; 
+}
+
+.task-item-container {
+  display: flex;
+  flex-direction: column;
 }
 
 .task-item-title {
   display: grid;
+  position: relative;
   grid-template-columns: auto auto auto;
+  justify-content: start;
+  grid-column-gap: 0.6rem;
 }
 
-/* Task items test start */
-.list-tasks-item-test {
-  display: grid;
-  grid-template-columns: auto auto;
-  padding: 0.6rem 1rem 0.6rem 0rem; 
-  border-bottom: 0.15rem solid var(--pomodoroDark);
-  white-space: nowrap;
-  font-family: Nunito;
-  font-weight: 600;
-  font-size: 0.8rem;
-  color: var(--black);
+.default-checkbox {
+  width: 1.4rem;
+  height: 1.4rem;
+  margin: 0;
+  opacity: 0;
 }
 
-.task-item-container-test {
-  display: grid;
-  grid-template-rows: 1fr 1fr;
-  /* align-content: center; */
+.custom-checkbox {
+  padding: 0.9rem;
+  border: 0.1rem solid black;
+  position: absolute;
 }
 
-.task-item-title-test {
+.task-item-details {
   display: grid;
   grid-template-columns: auto auto auto;
-}
-
-.checkmark-container {
-  display: flex;
-  align-items: start;
   justify-content: start;
+  grid-column-gap: 0.6rem;
+  padding-left: 2rem;
 }
 
-.task-checkmark-default {
-  width: 1.2rem;
-  height: 1.2rem;
-  margin: 0rem;
-  padding: 0rem;
-}
-
-.input-text-title-test,
-.input-text-description-test {
-  /* display: grid;
-  justify-content: start;
-  align-content: center;
-  white-space: nowrap;
-  font-family: Nunito;
-  font-weight: 600;
-  font-size: 1rem;
-  color: var(--black); */
-}
-
-.input-text-description-test span {
-  /* font-size: 0.8rem;
+.task-text-description {
   overflow: hidden;
-  text-overflow: ellipsis; */
+  text-overflow: ellipsis;
 }
+
 
 /* Task items test end */
+
+
+
+
 
 
 /* Hide browsers default checkbox */
@@ -406,18 +398,19 @@
   display: block;
 }
 
-.task-item-title input:checked ~ .input-text-title {
+.task-item-container .default-checkbox:checked ~ span  {
   text-decoration: line-through;
   opacity: 0.6;
 }
 
-.task-item-title input:checked ~ .input-text-description {
+.task-item-container .default-checkbox:checked ~ .task-text-description {
   text-decoration: line-through;
   opacity: 0.6;
 }
 
-.task-item-container input:checked ~ .input-text-description {
-  color: red;
+.task-item-container .default-checkbox:checked ~ .task-item-details {
+  text-decoration: line-through;
+  opacity: 0.6;
 }
 
 /* .task-item input:checked ~ span {
@@ -723,22 +716,6 @@ h1, h2 {
   padding: 0;
   margin: 0;
 }
-
-.list-tasks-item {
-  display: grid;
-  grid-template-columns: auto auto;
-  padding: 0.6rem 1rem 0.6rem 0rem; 
-  border-bottom: 0.15rem solid var(--pomodoroDark);
-  /* display: flex;
-  align-items: center;
-  justify-content: space-between; */
-  /* margin-top: -0.1rem;
-  margin-left: 0.5rem;
-  margin-right: 0.5rem; */
-  /* border-top: 0.15rem solid var(--pomodoroDark); */
-}
-
-
 
 /* List of tasks end */
 
