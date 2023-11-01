@@ -18,8 +18,9 @@ const TaskMenu = () => {
   //Input for tasks
   const [taskTitle, setTaskTitle] = useState('')
   const [taskDescription, setTaskDescription] = useState('')
-  const [taskDate, setTaskDate] = useState(new Date().toLocaleDateString('en-US').split('-'));
-  const [taskProject, setTaskProject] = useState(projects[0].nameProject)
+  const [taskDate, setTaskDate] = useState('');
+  const [taskProjectName, setTaskProjectName] = useState(projects[0].nameProject)
+  const [taskProjectColor, setTaskProjectColor] = useState(projects[0].color)
   const [taskTag, setTaskTag] = useState(tags[0].nameTag)
   const [listOfTasks, setListOfTasks] = useState(taskItems)
 
@@ -54,12 +55,13 @@ const TaskMenu = () => {
       dueDate: taskDate,
       tag: taskTag,
       colorTag: taskTag.color,
-      project: taskProject,
-      projectColor: taskProject.color,
+      project: taskProjectName,
+      projectColor: taskProjectColor,
     }
     const updateUser = [...listOfTasks, newTask]
     setListOfTasks(updateUser)
     setTaskTitle('')
+    setTaskDescription('')
   }
 
   //Add a new project 
@@ -76,7 +78,6 @@ const TaskMenu = () => {
     setMyProject('')
     setProjectColor('#FFFFFF')
   }
-
   //Add a new tag
   const handleTagSubmit = (e) => {
     e.preventDefault();
@@ -270,26 +271,26 @@ const TaskMenu = () => {
                       <span className='task-item-description'>{description}</span>
                     </div>
                     <div className='task-item-details'>
-                      {/* <div className='task-item-details-calendar'>
-                        <div>
-                        <CalendarIconTask />
-                        </div>
-                        <span>{dueDate}</span>
-                      </div> */}
-                      <span><CalendarIconTask /></span>
-                      <span>{dueDate}</span>
                       {
-                        tag && (
-                          <span className='next-item'>{tag}</span>
+                        dueDate && (
+                          <>
+                            <span title='Due date'><CalendarIconTask /></span>
+                            <span title='Due date' className='next-item'>{dueDate}</span>
+                          </>
                         )
                       }
                       {
                         project && (
-                          <span className='next-item'>
+                          <span className='next-item' title='Project'>
                             <span className='project-color' style={{ backgroundColor: projectColor }}></span>
-                            {/* Find a way to grab the color, maybe with get element by name or something. I need to grab the color of that element */}
                             {project}
+                            {/* Find a way to grab the color, maybe with get element by name or something. I need to grab the color of that element */}
                           </span>
+                        )
+                      }
+                      {
+                        tag && (
+                          <span title='Tag'>{tag}</span>
                         )
                       }
                     </div>
@@ -338,23 +339,27 @@ const TaskMenu = () => {
                     type="date"
                     name='dueDate'
                     onChange={(e) => {
-                      setTaskDate(e.target.value)
+                      const [year, month, day] = e.target.value.split('-')
+                      // console.log(`${day}-${month}-${year}`)
+                      setTaskDate(`${month}-${day}-${year}`)
+                      // console.log(e.target.value)
                     }}
                   />
                 </div>
                 <div className='task-details-info'>
                   <p className='details-text'>List</p>
                   <select
-                    name='Projects'
                     onChange={(e) => {
-                      setTaskProject(e.target.value)
+                      const selectedProject = listOfProjects.find((myProject) => myProject.id == e.target.value)
+                      setTaskProjectName(selectedProject.nameProject)
+                      setTaskProjectColor(selectedProject.color)
                     }
                     }
                   >
                     {listOfProjects.map((listProjects) => {
                       const { id, nameProject } = listProjects;
                       return (
-                        <option key={id}>{nameProject}</option>
+                        <option key={id} value={id} >{nameProject}</option>
                       )
                     })}
                   </select>
