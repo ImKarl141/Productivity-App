@@ -36,9 +36,10 @@
 
 
 .task-details-task {
-  display: flex;
-  flex-direction: column;
-  align-items: start;
+  display: grid;
+  justify-items: stretch;
+  /* flex-direction: column; */
+  /* align-items: start; */
   padding: 0.6rem;
   color: var(--black);
 }
@@ -59,7 +60,14 @@
   padding: 0.6rem;
   border: 0 none;
   border-radius: 0.2rem;
+  overflow: auto;
+  overflow-x: hidden;
 }
+
+.task-focus-add {
+  margin-bottom: 0.2rem;  
+}
+
 .overall-title,
 .overall-myTask,
 .overall-list,
@@ -458,6 +466,11 @@
   text-overflow: ellipsis;
 }
 
+.taskForm {
+  display: grid;
+  grid-column-gap: 1rem;
+}
+
 .myInput {
   font-family: Nunito;
   color: var(--black);
@@ -465,7 +478,16 @@
   background-color: var(--pomodoroLight);
   border: 0.15rem solid var(--pomodoroDark);
   border-radius: 0.2rem;
-  width: 110%;
+  /* width: 110%; */
+}
+
+.myInput-description {
+  margin: 0.2rem 0rem;
+  padding: 0.5rem;
+  resize: none;
+  /* width: 110%; */
+  overflow: auto;
+  height: 10rem;
 }
 
 .myInput::placeholder {
@@ -477,16 +499,10 @@
   outline: none;
 }
 
-.myInput-description {
-  margin-top: 0.2rem;
-  padding: 0.5rem;
-  resize: none;
-  width: 110%;
-  overflow: auto;
-  height: 10rem;
-}
 
 .details-text {
+  display: grid;
+  justify-items: start;
   white-space: nowrap;
   font-family: Nunito;
   font-weight: 600;
@@ -499,9 +515,8 @@
 .task-details-info {
   display: grid;
   grid-template-columns: 5rem 1fr;
-  width: 80%;
-  justify-items: start;
-  align-items: start;
+  justify-items: auto ;
+  /* align-items: start; */
   padding-left: 0.1rem;
   margin-bottom: 0.4rem;
 }

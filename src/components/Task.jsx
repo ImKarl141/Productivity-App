@@ -251,7 +251,7 @@ const TaskMenu = () => {
         </div>
       </div>
       <div className='task-focus'>
-        <div >
+        <div className='task-focus-add' >
           <button className='addBtn add-task-btn' onClick={() => dispatch(ShowTaskEdit())}>
             <AddTaskIcon />
             <p className='myTask-text'>Add Task</p>
@@ -309,7 +309,7 @@ const TaskMenu = () => {
           <div className='task-details'>
             <div className='task-details-task'>
               <h1>Task:</h1>
-              <form onSubmit={handleTaskSubmit}>
+              <form className='taskForm' onSubmit={handleTaskSubmit}>
                 <input
                   id='title-task'
                   name='taskTitle'
