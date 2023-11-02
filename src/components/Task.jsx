@@ -391,7 +391,7 @@ const TaskMenu = () => {
               </button>
             </div>
             <div className='task-details-button'>
-              <button className='detailsBtn saveBtn'>Save Changes</button>
+              <button className='detailsBtn saveBtn' onClick={handleTaskSubmit}>Save Changes</button>
               <button className='detailsBtn' onClick={() => dispatch(ShowTaskEdit())}>Cancel Task</button>
               <button className='detailsBtn deleteBtn' >Delete Task</button>
             </div>

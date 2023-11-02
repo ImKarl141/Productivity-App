@@ -1,15 +1,12 @@
 .task-container {
   display: flex;
+  justify-content: space-between;
   position: fixed;
   top: 5.8rem;
   bottom: 1.8rem;
   right: 5.8rem;
   left: 5.8rem;
   z-index: 2;
-  justify-content: space-between;
-  /* grid-template-columns: 20rem 1fr 20rem; */
-  /* column-gap: 0.2rem; */
-  /* background-color: #cc6666; */
   background-color: var(--pomodoroDark);
   padding: 0.2rem;
 }
