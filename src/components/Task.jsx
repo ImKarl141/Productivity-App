@@ -1,7 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { ShowTaskEdit, ShowAddProjectEdit, ShowAddTagEdit } from '../features/taskSlice';
-import { useEffect, useRef, useState, useEventListener } from 'react';
-// import { task } from '../data'
+import { useState } from 'react';
 import './Task.css'
 import { AddTaskIcon, AllTasksIcon, CurrentTasksIcon, CompletedTasksIcon, AddProjectIcon, AddTagsIcon, EnterTaskIcon, CalendarIconTask, ProjectSettingsIcon, CancelIcon, ColorPickerIcon, CalendarIcon } from '../icons';
 

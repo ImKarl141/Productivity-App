@@ -26,11 +26,23 @@
 }
 
 
+@media only screen and (max-width: 958px) {
+  .notes-overall {
+    grid-template-columns: repeat(3, 15rem);
+  }
+}
+
+
 .note-item {
   display: flex;
-  padding: 6.2rem;
-  height: 2rem;
-  width: 2rem;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  /* padding: 6.2rem; */
+  /* height: 2rem; */
+  /* width: 2rem; */
+  height: 14.4rem;
+  width: 14.4rem;
   border-radius: 0.2rem;
   background-color: var(--pomodoroDark);
   cursor: pointer
@@ -93,8 +105,9 @@
 .note-item-add:hover {
   opacity: 0.9;
 }
+*/
 
 .add-notes {
   width: 2rem;
-  color: var(--black);
-} */
+  color: var(--white);
+} 

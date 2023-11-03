@@ -16,9 +16,7 @@ const taskSlice = createSlice({
   initialState,
   reducers: {
     ShowTaskEdit: (state) => {
-      // const { isEdit } = state
       state.isEdit = !state.isEdit;
-      // console.log(state.isEdit);
     },
     ShowAddProjectEdit: (state) => {
       state.addProjectEdit = !state.addProjectEdit;

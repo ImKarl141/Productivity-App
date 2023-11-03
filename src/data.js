@@ -67,3 +67,12 @@ export const user = [
   { id: 3, name: 'Jim' },
   { id: 4, name: 'Pam' },
 ];
+
+export const userNotes = [
+  {
+    id: 0,
+    noteTitle: 'Projects',
+    noteContent: 'Create a Todo App for my portfolio ',
+    noteTag: '',
+  }
+]
