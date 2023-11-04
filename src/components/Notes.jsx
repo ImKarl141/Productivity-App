@@ -16,10 +16,46 @@ const NotesMenu = () => {
   return (
     <section className="notes-container">
       <div className="notes-overall">
-        <div onClick={() => dispatch(ShowNoteEdit())} className='note-item'>
-          <AddNoteIcon />
+        <div className='note-input-container' >
+          {/*Ternary operator*/}
+          {
+            isEdit ?
+              <div className='note-edit' onClick={() => dispatch(ShowNoteEdit())} >
+                <form className='noteForm'>
+                  <input
+                    type="text"
+                    placeholder='Title'
+                    className='myInput'
+                  />
+                  <textarea
+                    placeholder='Note content'
+                    className='myInput myInput-content '>
+                  </textarea>
+                </form>
+                <div className='note-buttons'>
+                  <button className='close-btn'>Close</button>
+                </div>
+              </div> :
+              <div className='note-placeholder' onClick={() => dispatch(ShowNoteEdit())} >
+                <AddNoteIcon />
+                <span>Create a note...</span>
+              </div>
+          }
         </div>
-        {noteItems.map((notes) => {
+        <div className='note-list'>
+          {
+            noteItems.map((myNote) => {
+              const { id, noteTitle, noteContent } = myNote;
+              return (
+                <div className='note-card' key={id}>
+                  <p>{noteTitle}</p>
+                  <p>{noteContent}</p>
+                </div>
+              )
+            })
+          }
+        </div>
+        {/* {noteItems.map((notes) => {
           const { id, noteTitle, noteContent } = notes
           // console.log(noteTitle);
           return (
@@ -28,65 +64,9 @@ const NotesMenu = () => {
               <div>{noteContent}</div>
             </div>
           )
-        })}
+        })} */}
         {/*Map through the list of notes*/}
 
-        {/* <div className='note-item'>
-          <AddNoteIcon />
-        </div>
-        
-        <div className='note-item'>
-          <AddNoteIcon />
-        </div>
-        <div className='note-item'>
-          <AddNoteIcon />
-        </div>
-        <div className='note-item'>
-          <AddNoteIcon />
-        </div>
-        <div className='note-item'>
-          <AddNoteIcon />
-        </div>
-        <div className='note-item'>
-          <AddNoteIcon />
-        </div>
-        <div className='note-item'>
-          <AddNoteIcon />
-        </div>
-        <div className='note-item'>
-          <AddNoteIcon />
-        </div>
-        <div className='note-item'>
-          <AddNoteIcon />
-        </div>
-        <div className='note-item'>
-          <AddNoteIcon />
-        </div>
-        <div className='note-item'>
-          <AddNoteIcon />
-        </div>
-        <div className='note-item'>
-          <AddNoteIcon />
-        </div>
-        <div className='note-item'>
-          <AddNoteIcon />
-        </div> */}
-        {/* <div className='note-item-add'>
-        </div> */}
-        {/* <div className='note-item'>
-          <div className='note-item-container'>
-            <div className='note-item-title'>Title</div>
-            <div className='note-item-content'>Note2</div>
-          </div>
-        </div>
-        <div className='note-item'>Note 3</div>
-        <div className='note-item'>Note 4</div>
-        <div className='note-item'>Note 5</div>
-        <div className='note-item'>Note 6</div>
-        <div className='note-item'>Note 7</div>
-        <div className='note-item'>Note 8</div>
-        <div className='note-item'>Note 9</div>
-        <div className='note-item'>Note 9</div> */}
       </div>
     </section>
   )

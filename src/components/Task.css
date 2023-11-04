@@ -474,7 +474,7 @@
   padding: 0.5rem;
   background-color: var(--pomodoroLight);
   border: 0.15rem solid var(--pomodoroDark);
-  border-radius: 0.2rem;
+  border-radius: 0.4rem;
   /* width: 110%; */
 }
 

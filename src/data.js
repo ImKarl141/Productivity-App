@@ -74,5 +74,53 @@ export const userNotes = [
     noteTitle: 'Projects',
     noteContent: 'Create a Todo App for my portfolio ',
     noteTag: '',
-  }
+  },
+  {
+    id: 1,
+    noteTitle: 'Calendar',
+    noteContent: 'Create a Todo App for my portfolio ',
+    noteTag: '',
+  },
+  {
+    id: 2,
+    noteTitle: 'Notes',
+    noteContent: 'Create a Todo App for my portfolio ',
+    noteTag: '',
+  },
+  // {
+  //   id: 3,
+  //   noteTitle: 'Projects',
+  //   noteContent: 'Create a Todo App for my portfolio ',
+  //   noteTag: '',
+  // },
+  // {
+  //   id: 4,
+  //   noteTitle: 'Calendar',
+  //   noteContent: 'Create a Todo App for my portfolio ',
+  //   noteTag: '',
+  // },
+  // {
+  //   id: 5,
+  //   noteTitle: 'Notes',
+  //   noteContent: 'Create a Todo App for my portfolio ',
+  //   noteTag: '',
+  // },
+  // {
+  //   id: 6,
+  //   noteTitle: 'Projects',
+  //   noteContent: 'Create a Todo App for my portfolio ',
+  //   noteTag: '',
+  // },
+  // {
+  //   id: 7,
+  //   noteTitle: 'Calendar',
+  //   noteContent: 'Create a Todo App for my portfolio ',
+  //   noteTag: '',
+  // },
+  // {
+  //   id: 8,
+  //   noteTitle: 'Notes',
+  //   noteContent: 'Create a Todo App for my portfolio ',
+  //   noteTag: '',
+  // }
 ]

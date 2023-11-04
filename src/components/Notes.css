@@ -1,6 +1,7 @@
 .notes-container {
   display: grid;
   grid-template-columns: auto;
+  grid-template-rows: auto;
   position: fixed;
   top: 5.8rem;
   bottom: 1.8rem;
@@ -13,101 +14,152 @@
 
 .notes-overall {
   display: grid;
-  /* grid-auto-columns: 1fr; */
+  align-items: start;
+  justify-items: center;
+  grid-template-rows: auto 1fr;
+  grid-row-gap: 0.6rem;
+  /* grid-template-rows: auto 1fr;
+  grid-row-gap: 0.6rem;
+  justify-content: center; */
+  background-color: var(--pomodoroLight);
+  border-radius: 0.2rem;
+  padding: 0.6rem;
+  overflow: auto;
+  overflow-y: auto;
+  /* overflow-x: hidden;
+  overflow-y: scroll; */
+} 
+
+.note-input-container {
+  padding: 0.3rem;
+  border-radius: 0.2rem;
+  background-color: var(--pomodoroDark);
+}
+
+.note-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.6;
+  cursor: text;
+}
+
+.note-placeholder span {
+  color: var(--black);
+  font-weight: 600;
+  font-size: 0.8rem;
+  padding-left: 0.2rem;
+  margin: 0;
+}
+
+.add-notes-icon {
+  width: 1.2rem;
+  color: var(--black);
+} 
+
+.note-edit {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: center;
+}
+
+.noteForm {
+  display: grid;
+  width: 30rem;
+  /* grid-row-gap: 0rem; */
+}
+
+.close-btn {
+  background-color: var(--pomodoroLight);
+  padding: 0.2rem 0.6rem;
+}
+
+.myInput {
+  border: 0.2rem solid var(--pomodoroDark);
+  background-color: var(--pomodoroLight);
+}
+
+.myInput::placeholder {
+  font-family: Nunito;
+  font-size: 0.8rem;
+}
+
+.myInput-content {
+  height: 4rem;
+  resize: none;
+}
+
+.note-edit span {
+  color: var(--black);
+  font-weight: 600;
+  font-size: 0.8rem;
+  padding-left: 0.2rem;
+  margin: 0;
+}
+
+.note-list {
+  display: grid;
   grid-template-columns: repeat(7, 15rem);
   grid-template-rows: repeat(2, 15rem);
   justify-items: start;
   align-items: start;
-  background-color: var(--pomodoroLight);
-  border-radius: 0.2rem;
-  padding: 0.6rem;
-  overflow-x: hidden;
-  overflow-y: scroll;
+  /* display: flex;
+  flex-direction: column; */
 }
 
-
 @media only screen and (max-width: 958px) {
-  .notes-overall {
+  .note-list {
     grid-template-columns: repeat(3, 15rem);
   }
 }
 
+.note-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: start;
+  height: 13.2rem;
+  width: 13.2rem;
+  padding: 0.4rem;
+  border-radius: 0.4rem;
+  background-color: var(--pomodoroDark);
+}
 
+.note-card p {
+margin: 0;
+padding: 0;
+text-align: start;
+}
+
+
+
+/* .note-item-add,
 .note-item {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  /* padding: 6.2rem; */
-  /* height: 2rem; */
-  /* width: 2rem; */
   height: 14.4rem;
   width: 14.4rem;
   border-radius: 0.2rem;
   background-color: var(--pomodoroDark);
   cursor: pointer
 }
+.note-item-add {
+  position: relative;
+}
 
 .note-item:hover {
   opacity: 0.7;
 }
 
-/* 
-.notes-overall {
-  display: flex;
-  justify-items: center;
-  align-items: start;
-  grid-column-gap: 0.6rem;
-  grid-row-gap: 0.6rem;
-  padding: 0.6rem;
-  border: 0 none;
-  border-radius: 0.4rem;
-  background-color:var(--pomodoroLight);
-  overflow-y: auto;
-}
+.note-form {
+  display: grid;
+  grid-template-columns: 1rem 1fr;
+  position: absolute;
+  background-color: var(--pomodoroDark);
+  top: 0.5rem;
+} */
 
-.note-item-add {
-  display: flex;
-  background-color: var(--gray02);
-  justify-content: center;
-  align-items: center;
-  border: 0 none;
-  border-radius: 0.2rem;
-}
 
-.note-item {
-  background-color: var(--gray01);
-  justify-content: start;
-  align-items: center;
-  border: 0 none;
-  border-radius: 0.2rem;
-}
-
-.note-item-container {
-  display: flex;
-  flex-direction: column;
-  padding: 0.2rem;
-}
-
-.note-item-title {
-  padding: 1rem 0rem;
-}
-
-.note-item, 
-.note-item-add {
-  color: var(--black);
-  width: 15rem;
-  height: 15rem;
-  cursor: pointer;
-}
-
-.note-item:hover, 
-.note-item-add:hover {
-  opacity: 0.9;
-}
-*/
-
-.add-notes {
-  width: 2rem;
-  color: var(--white);
-} 
