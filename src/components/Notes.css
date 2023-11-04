@@ -58,10 +58,7 @@
 } 
 
 .note-edit {
-  display: flex;
-  flex-direction: column;
-  align-items: start;
-  justify-content: center;
+  display: grid;
 }
 
 .noteForm {
@@ -70,12 +67,45 @@
   /* grid-row-gap: 0rem; */
 }
 
-.close-btn {
+.note-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.note-buttons-send {
+  display: flex;
+}
+
+.notes-btn {
+  display: flex;
+  font-family: Nunito;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--blackMedium);
+  border: 0.2rem solid var(--pomodoroDark);
+  border-radius: 0.4rem;
   background-color: var(--pomodoroLight);
   padding: 0.2rem 0.6rem;
 }
 
+.btn-save {
+  color: var(--white);
+}
+
+.notes-btn:hover {
+  background-color: var(--pomodoroLight);
+  opacity: 0.8;
+}
+
+.noteList-icon {
+  width: 1.2rem;
+  height: 1.2rem;
+  padding-bottom: 0.1rem;
+  color: var(--black);
+}
+
 .myInput {
+  font-weight: 700;
   border: 0.2rem solid var(--pomodoroDark);
   background-color: var(--pomodoroLight);
 }
@@ -86,6 +116,7 @@
 }
 
 .myInput-content {
+  font-weight: 500;
   height: 4rem;
   resize: none;
 }
@@ -124,6 +155,9 @@
   padding: 0.4rem;
   border-radius: 0.4rem;
   background-color: var(--pomodoroDark);
+  color: var(--blackMedium);
+  font-weight: 700;
+  font-size: 1rem;
 }
 
 .note-card p {
@@ -132,6 +166,10 @@ padding: 0;
 text-align: start;
 }
 
+.note-card-content {
+  font-size: 0.8rem;
+  font-weight: 600;
+}
 
 
 /* .note-item-add,

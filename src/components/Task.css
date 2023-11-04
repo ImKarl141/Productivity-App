@@ -363,19 +363,6 @@
 /* Task items test end */
 
 
-
-
-
-
-/* Hide browsers default checkbox */
-/* .task-item-title input {
-  position: absolute;
-  opacity: 0;
-  cursor: pointer;
-  height: 0;
-  width: 0;
-} */
-
  /* Custom checkbox */
 .checkmark {
   position: absolute;
@@ -698,6 +685,7 @@ h1, h2 {
   padding: 0.5rem;
   /* margin: 0.5rem; */
   opacity: 0.8;
+  cursor: text;
 }
 
 

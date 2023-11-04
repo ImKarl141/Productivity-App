@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux'
-import { AddNoteIcon } from '../icons'
+import { AddNoteIcon, NoteListIcon } from '../icons'
 import './Notes.css'
 import { ShowNoteEdit } from '../features/NoteSlice'
 
@@ -20,7 +20,7 @@ const NotesMenu = () => {
           {/*Ternary operator*/}
           {
             isEdit ?
-              <div className='note-edit' onClick={() => dispatch(ShowNoteEdit())} >
+              <div className='note-edit' >
                 <form className='noteForm'>
                   <input
                     type="text"
@@ -33,7 +33,20 @@ const NotesMenu = () => {
                   </textarea>
                 </form>
                 <div className='note-buttons'>
-                  <button className='close-btn'>Close</button>
+                  <button className='notes-btn'>
+                    <NoteListIcon />
+                  </button>
+                  <div className='note-buttons-send'>
+                    <button
+                      className='notes-btn btn-save'>
+                      Save changes
+                    </button>
+                    <button
+                      className='notes-btn'
+                      onClick={() => dispatch(ShowNoteEdit())}>
+                      Close
+                    </button>
+                  </div>
                 </div>
               </div> :
               <div className='note-placeholder' onClick={() => dispatch(ShowNoteEdit())} >
@@ -49,7 +62,7 @@ const NotesMenu = () => {
               return (
                 <div className='note-card' key={id}>
                   <p>{noteTitle}</p>
-                  <p>{noteContent}</p>
+                  <p className='note-card-content'>{noteContent}</p>
                 </div>
               )
             })
