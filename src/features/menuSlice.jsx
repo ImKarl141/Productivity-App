@@ -5,7 +5,7 @@ const initialState = {
     Menu: false,
     Task: false,
     Calendar: false,
-    Notes: false,
+    Notes: true,
   },
   isActive: {
     Task: false

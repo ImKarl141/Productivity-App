@@ -42,22 +42,22 @@ export const userTags = [
   {
     id: 0,
     nameTag: 'Default Project',
-    color: '#FFFFFF',
+    color: '#e4b1a0',
   },
   {
     id: 1,
     nameTag: 'Vacations',
-    color: '#FFFFFF',
+    color: '#e4eeff',
   },
   {
     id: 2,
     nameTag: 'Coding idea',
-    color: '#FFFFFF',
+    color: '#c5c5c5',
   },
   {
     id: 3,
     nameTag: 'Vacations',
-    color: '#FFFFFF',
+    color: '#db842b',
   },
 ];
 
@@ -74,18 +74,21 @@ export const userNotes = [
     noteTitle: 'Projects',
     noteContent: 'Create a Todo App for my portfolio ',
     noteTag: '',
+    noteTagColor: '#FFFFFF',
   },
   {
     id: 1,
     noteTitle: 'Calendar',
     noteContent: 'Create a Todo App for my portfolio ',
     noteTag: '',
+    noteTagColor: '#FFFFFF',
   },
   {
     id: 2,
     noteTitle: 'Notes',
     noteContent: 'Create a Todo App for my portfolio ',
     noteTag: '',
+    noteTagColor: '#FFFFFF',
   },
   // {
   //   id: 3,

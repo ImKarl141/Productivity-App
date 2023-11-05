@@ -34,10 +34,30 @@
   padding: 0.3rem;
   border-radius: 0.2rem;
   background-color: var(--pomodoroDark);
+  position: relative;
+}
+
+.label-title {
+  position: absolute;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  cursor: text;
+}
+
+.label-title span {
+  color: var(--black);
+  font-weight: 600;
+  font-size: 0.8rem;
+  padding-left: 0.2rem;
+  margin: 0;
 }
 
 .note-placeholder {
   display: flex;
+  z-index: 3;
   align-items: center;
   justify-content: center;
   opacity: 0.6;
@@ -150,14 +170,27 @@
   flex-direction: column;
   justify-content: start;
   align-items: start;
+  position: relative;
   height: 13.2rem;
   width: 13.2rem;
-  padding: 0.4rem;
+  padding: 0.6rem;
   border-radius: 0.4rem;
   background-color: var(--pomodoroDark);
   color: var(--blackMedium);
   font-weight: 700;
   font-size: 1rem;
+}
+
+.note-tag {
+  position: absolute;
+  background-color: red;
+  width: 13.8rem;
+  padding: 0rem 0.3rem;
+  left: 0;
+  bottom: 0;
+  height: 2rem;
+  border-bottom-left-radius: 0.4rem;
+  border-bottom-right-radius: 0.4rem;
 }
 
 .note-card p {

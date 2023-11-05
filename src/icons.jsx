@@ -344,8 +344,8 @@ export const AddNoteIcon = () => {
         d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
       />
     </svg>
-  )
-}
+  );
+};
 
 export const EnterTaskIcon = () => {
   return (
@@ -361,8 +361,8 @@ export const EnterTaskIcon = () => {
         strokeLinejoin="round"
         d="M8.25 4.5l7.5 7.5-7.5 7.5" />
     </svg>
-  )
-}
+  );
+};
 
 export const CalendarIconTask = () => {
   return (
@@ -379,9 +379,8 @@ export const CalendarIconTask = () => {
         d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5m-9-6h.008v.008H12v-.008zM12 15h.008v.008H12V15zm0 2.25h.008v.008H12v-.008zM9.75 15h.008v.008H9.75V15zm0 2.25h.008v.008H9.75v-.008zM7.5 15h.008v.008H7.5V15zm0 2.25h.008v.008H7.5v-.008zm6.75-4.5h.008v.008h-.008v-.008zm0 2.25h.008v.008h-.008V15zm0 2.25h.008v.008h-.008v-.008zm2.25-4.5h.008v.008H16.5v-.008zm0 2.25h.008v.008H16.5V15z"
       />
     </svg>
-  )
-
-}
+  );
+};
 
 export const ProjectSettingsIcon = () => {
   return (
@@ -397,8 +396,8 @@ export const ProjectSettingsIcon = () => {
         d="M6.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM12.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM18.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0z"
       />
     </svg>
-  )
-}
+  );
+};
 
 export const CancelIcon = () => {
   return (
@@ -415,8 +414,8 @@ export const CancelIcon = () => {
         d="M18 12H6"
       />
     </svg>
-  )
-}
+  );
+};
 
 export const ColorPickerIcon = () => {
   return (
@@ -433,9 +432,8 @@ export const ColorPickerIcon = () => {
         d="M9.53 16.122a3 3 0 00-5.78 1.128 2.25 2.25 0 01-2.4 2.245 4.5 4.5 0 008.4-2.245c0-.399-.078-.78-.22-1.128zm0 0a15.998 15.998 0 003.388-1.62m-5.043-.025a15.994 15.994 0 011.622-3.395m3.42 3.42a15.995 15.995 0 004.764-4.648l3.876-5.814a1.151 1.151 0 00-1.597-1.597L14.146 6.32a15.996 15.996 0 00-4.649 4.763m3.42 3.42a6.776 6.776 0 00-3.42-3.42"
       />
     </svg>
-
-  )
-}
+  );
+};
 
 export const NoteListIcon = () => {
   return (
@@ -452,6 +450,17 @@ export const NoteListIcon = () => {
         d="M8.25 6.75h12M8.25 12h12m-12 5.25h12M3.75 6.75h.007v.008H3.75V6.75zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zM3.75 12h.007v.008H3.75V12zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm-.375 5.25h.007v.008H3.75v-.008zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"
       />
     </svg>
+  );
+};
 
-  )
+export const DeleteNoteIcon = () => {
+  return (
+    <></>
+  );
 }
+
+export const PinNoteIcon = () => {
+  return (
+    <></>
+  );
+};

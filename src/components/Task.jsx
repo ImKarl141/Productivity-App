@@ -251,10 +251,10 @@ const TaskMenu = () => {
       </div>
       <div className='task-focus'>
         <div className='task-focus-add' >
-          <button className='addBtn add-task-btn' onClick={() => dispatch(ShowTaskEdit())}>
+          <label htmlFor='title-task' className='addBtn add-task-btn' onClick={() => dispatch(ShowTaskEdit())}>
             <AddTaskIcon />
             <p className='myTask-text'>Add Task</p>
-          </button>
+          </label>
         </div>
         <ul className='list-tasks'>
           {listOfTasks.map((task) => {

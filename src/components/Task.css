@@ -511,7 +511,7 @@ select {
   font-weight: 700;
   padding: 0.2rem;
   background-color: var(--pomodoroLight);
-  border-radius: 0.2rem;
+  border-radius: 0.4rem;
   border: 0.15rem solid var(--pomodoroDark);
   cursor: pointer;
 }
@@ -527,7 +527,7 @@ select:focus {
   padding: 0.2rem;
   background-color: var(--pomodoroLight);
   border: 0.15rem solid var(--pomodoroDark);
-  border-radius: 0.2rem;
+  border-radius: 0.4rem;
   cursor: pointer;
 }
 
