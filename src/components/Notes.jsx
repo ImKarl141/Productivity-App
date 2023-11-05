@@ -29,14 +29,15 @@ const NotesMenu = () => {
     }
     //Create new note
     const newNote = {
-      id: Date.now() + 1,
+      id: Date.now(),
       noteTitle: noteTitle,
       noteContent: noteContent,
       noteTag: tagName,
       noteTagColor: tagColor,
     }
     //merge with existing note list
-    const updateNote = [...noteItems, newNote]
+    const updateNote = [...listOfNotes, newNote]
+
     setListOfNotes(updateNote)
     setNoteTitle('');
     setNoteContent('')
@@ -125,10 +126,9 @@ const NotesMenu = () => {
               const { id, noteTitle, noteContent, noteTag, noteTagColor } = myNote;
               return (
                 <div className='note-card' key={id}>
-                  <p>{noteTitle}</p>
-                  <p className='note-card-content'>{noteContent}</p>
+                  <span className='note-card-title'>{noteTitle}</span>
+                  <span className='note-card-content'>{noteContent}</span>
                   <span className='note-tag' style={{ backgroundColor: noteTagColor }}></span>
-                  <span>{noteTag}</span>
                   {/* <div className='note-tag-container'>
                   </div> */}
                 </div>
