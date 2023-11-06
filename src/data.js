@@ -75,6 +75,7 @@ export const userNotes = [
     noteContent: 'Create a Todo App for my portfolio ',
     noteTag: '',
     noteTagColor: '#FFFFFF',
+    isSettings: false,
   },
   {
     id: 1,
@@ -82,6 +83,7 @@ export const userNotes = [
     noteContent: 'Create a Todo App for my portfolio ',
     noteTag: '',
     noteTagColor: '#FFFFFF',
+    isSettings: false,
   },
   {
     id: 2,
@@ -89,6 +91,7 @@ export const userNotes = [
     noteContent: 'Create a Todo App for my portfolio ',
     noteTag: '',
     noteTagColor: '#FFFFFF',
+    isSettings: false,
   },
   // {
   //   id: 3,

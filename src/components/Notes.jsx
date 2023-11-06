@@ -1,12 +1,13 @@
 import { useSelector, useDispatch } from 'react-redux'
-import { AddNoteIcon, NoteListIcon } from '../icons'
+import { AddNoteIcon, NoteListIcon, NoteSettingsIcon, DeleteNoteIcon, PinNoteIcon } from '../icons'
 import './Notes.css'
-import { ShowNoteEdit } from '../features/NoteSlice'
+import { ShowNoteEdit, ShowNoteSettings } from '../features/NoteSlice'
 import { useState } from 'react'
 
 
+
 const NotesMenu = () => {
-  const { isEdit, noteItems, tag } = useSelector((store) => store.note);
+  const { isEdit, isSettings, noteItems, tag } = useSelector((store) => store.note);
   // console.log(isEdit);
   const dispatch = useDispatch();
 
@@ -22,6 +23,9 @@ const NotesMenu = () => {
   const [tagColor, setTagColor] = useState(listOfTags[0].color)
   const [tagName, setTagName] = useState(listOfTags[0].nameTag)
 
+  //display note settings 
+  const [noteMenu, setNoteMenu] = useState(false)
+
   const handleNoteSubmit = (e) => {
     e.preventDefault();
     if (!noteTitle) {
@@ -34,6 +38,7 @@ const NotesMenu = () => {
       noteContent: noteContent,
       noteTag: tagName,
       noteTagColor: tagColor,
+      isSettings: noteMenu,
     }
     //merge with existing note list
     const updateNote = [...listOfNotes, newNote]
@@ -41,6 +46,12 @@ const NotesMenu = () => {
     setListOfNotes(updateNote)
     setNoteTitle('');
     setNoteContent('')
+  }
+
+  //display note settings 
+  const HandleNoteSettings = (e) => {
+    e.preventDefault();
+    console.log(e.target.value);
   }
 
   //Add Tags from the list, figure out how to share the listOfTags into this component.
@@ -121,16 +132,30 @@ const NotesMenu = () => {
           }
         </div>
         <div className='note-list'>
+          {/*Map through the list of notes*/}
           {
             listOfNotes.map((myNote) => {
-              const { id, noteTitle, noteContent, noteTag, noteTagColor } = myNote;
+              // const [show, setShow] = useState(false);
+              const { id, noteTitle, noteContent, noteTagColor, isSettings } = myNote;
               return (
                 <div className='note-card' key={id}>
                   <span className='note-card-title'>{noteTitle}</span>
                   <span className='note-card-content'>{noteContent}</span>
-                  <span className='note-tag' style={{ backgroundColor: noteTagColor }}></span>
+                  <span className='note-tag' title={tagName} style={{ backgroundColor: noteTagColor }}>
+                    <button className='noteSettings-btn' >
+                      <NoteSettingsIcon />
+                    </button>
+                  </span>
                   {/* <div className='note-tag-container'>
                   </div> */}
+                  {
+                    isSettings && (
+                      <div className='noteSettings-menu'>
+                        <button className='note-btn'>Delete Note</button>
+                        <button className='note-btn'>Make a project</button>
+                      </div>
+                    )
+                  }
                 </div>
               )
             })
@@ -146,7 +171,7 @@ const NotesMenu = () => {
             </div>
           )
         })} */}
-        {/*Map through the list of notes*/}
+
 
       </div>
     </section >

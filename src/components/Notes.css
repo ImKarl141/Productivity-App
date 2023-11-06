@@ -173,7 +173,7 @@
   display: grid;
   grid-template-rows: auto 1fr;
   align-content: start;
-  justify-content: center;
+  justify-content: stretch;
   position: relative;
   height: 13.2rem;
   width: 13.2rem;
@@ -203,17 +203,71 @@ text-align: start;
 }
 
 .note-tag {
+  display: flex;
+  align-items: center;
+  justify-content: end;
   position: absolute;
   background-color: red;
-  width: 13.8rem;
+  width: 13rem;
   padding: 0rem 0.3rem;
   left: 0;
   bottom: 0;
   height: 2rem;
-  border-bottom-left-radius: 0.4rem;
-  border-bottom-right-radius: 0.4rem;
+  border: 0.4rem solid var(--pomodoroDark);
+  border-radius: 0.6rem;
+  /* border-bottom-left-radius: 0.4rem;
+  border-bottom-right-radius: 0.4rem; */
+  transition: 0.2s opacity;
+  opacity: 0;
 }
 
+.note-card:hover .note-tag {
+  transition: 0.1s opacity;
+  opacity: 1;
+}
+
+.noteSettings-icon {
+  height: 1.5rem;
+  width: 1.5rem;
+  color: var(--black);
+}
+
+.noteSettings-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+}
+
+.noteSettings-btn:hover {
+  background-color: transparent;
+  opacity: 0.6;
+}
+
+.noteSettings-menu {
+  display: grid;
+  grid-template-rows: 2rem 2rem;
+  justify-items: stretch;
+  position: absolute;
+  z-index: 4;
+  padding: 0.4rem 0rem;
+  background-color: var(--pomodoroLight);
+  border: 0.2rem solid var(--pomodoroDark);
+  border-radius: 0.4rem;
+  bottom: -5.2rem;
+  right: -0.1rem;
+}
+
+.note-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0rem 0.4rem ;
+  border-radius: 0rem;
+  color: var(--black);
+  font-family: Nunito;
+  font-weight: 700;
+}
 
 
 

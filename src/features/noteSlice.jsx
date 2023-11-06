@@ -21,26 +21,6 @@ const noteSlice = createSlice({
 })
 
 
-export const { ShowNoteEdit } = noteSlice.actions;
+export const { ShowNoteEdit, ShowNoteSettings } = noteSlice.actions;
 export default noteSlice.reducer;
-
-// const initialState = {
-//   noteItem: userNotes,
-//   isEdit: false,
-//   noteTag: userTags,
-// }
-
-// const noteSlice = createSlice({
-//   name: 'notes',
-//   initialState,
-//   reducers: {
-//     ShowNoteEdit: (state) => {
-//       state.isEdit = !state.isEdit;
-//     }
-//   },
-// });
-
-// export const { ShowNoteEdit } = noteSlice.actions;
-// export default noteSlice.reducer;
-
 
