@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux'
-import { AddNoteIcon, NoteListIcon, NoteSettingsIcon, DeleteNoteIcon, PinNoteIcon } from '../icons'
+import { AddNoteIcon, NoteListIcon, TaskNoteIcon, DeleteNoteIcon, PinNoteIcon } from '../icons'
 import './Notes.css'
 import { ShowNoteEdit, ShowNoteSettings } from '../features/NoteSlice'
 import { useState } from 'react'
@@ -142,20 +142,10 @@ const NotesMenu = () => {
                   <span className='note-card-title'>{noteTitle}</span>
                   <span className='note-card-content'>{noteContent}</span>
                   <span className='note-tag' title={tagName} style={{ backgroundColor: noteTagColor }}>
-                    <button className='noteSettings-btn' >
-                      <NoteSettingsIcon />
-                    </button>
                   </span>
-                  {/* <div className='note-tag-container'>
-                  </div> */}
-                  {
-                    isSettings && (
-                      <div className='noteSettings-menu'>
-                        <button className='note-btn'>Delete Note</button>
-                        <button className='note-btn'>Make a project</button>
-                      </div>
-                    )
-                  }
+                  <button className='noteDelete-btn' onClick={() => console.log(`${noteTitle} Note deleted`)}><DeleteNoteIcon /></button>
+                  <button className='noteMakeTask-btn' onClick={() => console.log(`${noteTitle} Task created`)}><TaskNoteIcon /></button>
+                  <button className='notePin-btn' onClick={() => console.log(`${noteTitle} Note pinned`)}><PinNoteIcon /></button>
                 </div>
               )
             })
