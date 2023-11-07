@@ -143,9 +143,9 @@ const NotesMenu = () => {
                   <span className='note-card-content'>{noteContent}</span>
                   <span className='note-tag' title={tagName} style={{ backgroundColor: noteTagColor }}>
                   </span>
-                  <button className='noteDelete-btn' onClick={() => console.log(`${noteTitle} Note deleted`)}><DeleteNoteIcon /></button>
-                  <button className='noteMakeTask-btn' onClick={() => console.log(`${noteTitle} Task created`)}><TaskNoteIcon /></button>
-                  <button className='notePin-btn' onClick={() => console.log(`${noteTitle} Note pinned`)}><PinNoteIcon /></button>
+                  <button className='noteDelete-btn' title='Delete Note' onClick={() => console.log(`${noteTitle} Note deleted`)}><DeleteNoteIcon /></button>
+                  <button className='noteMakeTask-btn' title='Make a task' onClick={() => console.log(`${noteTitle} Task created`)}><TaskNoteIcon /></button>
+                  <button className='notePin-btn' title='Pin note' onClick={() => console.log(`${noteTitle} Note pinned`)}><PinNoteIcon /></button>
                 </div>
               )
             })

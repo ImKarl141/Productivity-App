@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ShowTaskEdit, ShowAddProjectEdit, ShowAddTagEdit } from '../features/taskSlice';
 import { useState } from 'react';
 import './Task.css'
-import { AddTaskIcon, AllTasksIcon, CurrentTasksIcon, CompletedTasksIcon, AddProjectIcon, AddTagsIcon, EnterTaskIcon, CalendarIconTask, ProjectSettingsIcon, CancelIcon, ColorPickerIcon, CalendarIcon } from '../icons';
+import { AddTaskIcon, AllTasksIcon, CurrentTasksIcon, CompletedTasksIcon, AddProjectIcon, AddTagsIcon, EnterTaskIcon, CalendarIconTask, ProjectSettingsIcon, CancelIcon, ColorPickerIcon, CalendarIcon, TagSettingsIcon } from '../icons';
 
 //taskItems and destructuring
 
@@ -198,6 +198,7 @@ const TaskMenu = () => {
               return (
                 <button key={id} className='myTag' style={{ backgroundColor: color }} title={nameTag}>
                   <span>{nameTag}</span>
+                  <TagSettingsIcon />
                 </button>
               )
             })}
