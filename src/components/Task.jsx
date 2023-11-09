@@ -95,7 +95,7 @@ const TaskMenu = () => {
 
   return (
     <section className='task-container'>
-      <div style={{ position: 'absolute', fontSize: '3rem', zIndex: '3', color: 'black', fontWeight: '800', backgroundColor: 'var(--white)', borderRadius: '1rem' }}> Make the edit and delete in the add Project</div>
+      {/* <div style={{ position: 'absolute', fontSize: '3rem', zIndex: '3', color: 'black', fontWeight: '800', backgroundColor: 'var(--white)', borderRadius: '1rem' }}> Make the edit and delete in the add Project</div> */}
       <div className='task-overall'>
         {/* <button onClick={() => dispatch(ShowTaskEdit())}>Click me</button> */}
         <div className='overall-title'>
@@ -103,27 +103,27 @@ const TaskMenu = () => {
           {/* <div className='task-quantity'><span>{listOfTasks.length}</span></div> */}
         </div>
         <div className='overall-myTask'>
-          <button className='myTask-container-main box' >
+          <a className='myTask-container-main box' id='All' href='#All'>
             <div className='myTask-container'>
               <AllTasksIcon />
               <p className='myTask-text'>All</p>
             </div>
             <div className='task-number'><span>{listOfTasks.length}</span></div>
-          </button>
-          <button className='myTask-container-main box'>
+          </a>
+          <a className='myTask-container-main box' id='Current' href='#Current'>
             <div className='myTask-container'>
               <CurrentTasksIcon />
               <p className='myTask-text'>Current</p>
             </div>
             <div className='task-number'>0</div>
-          </button>
-          <button className='myTask-container-main box'>
+          </a>
+          <a className='myTask-container-main box' id='Completed' href='#Completed'>
             <div className='myTask-container'>
               <CompletedTasksIcon />
               <p className='myTask-text'>Completed</p>
             </div>
             <div className='task-number'>0</div>
-          </button>
+          </a>
         </div>
         {/* List of projects */}
         <div className='overall-list'>
@@ -134,14 +134,14 @@ const TaskMenu = () => {
             {listOfProjects.map((project) => {
               const { id, nameProject, color } = project;
               return (
-                <button key={id} className='list-projects'>
-                  <div className='project-title-container' title='Project name'>
+                <button key={id} className='list-projects' >
+                  <a className='project-title-container' title='Project name' id={id} href={`#${id}`}>
                     <div className='project-color' style={{ backgroundColor: color }}></div>
                     <p className='myTask-text'>{nameProject}</p>
-                  </div>
+                  </a>
                   <div className='project-settings-btn' >
-                    <button title='Edit'><EditListIcon /></button>
-                    <button title='Delete'><DeleteListIcon /></button>
+                    <span title='Edit' onClick={() => console.log(`${nameProject} Project edited`)}><EditListIcon /></span>
+                    <span title='Delete' onClick={() => console.log(`${nameProject} Project deleted`)}><DeleteListIcon /></span>
                     {/* <ProjectSettingsIcon /> */}
                   </div>
                 </button>
@@ -260,14 +260,18 @@ const TaskMenu = () => {
             <p className='myTask-text'>Add Task</p>
           </label>
         </div>
+        {/* <div className='test-check'>
+          <input type="checkbox" />
+          <span>Hello</span>
+        </div> */}
         <ul className='list-tasks'>
           {listOfTasks.map((task) => {
             const { id, title, description, dueDate, tag, project, projectColor } = task
             return (
               <li key={id}>
-                <label className='task-item-overall-container'>
+                <div className='task-item-overall-container'>
                   <div className='task-item-container'>
-                    <input className='default-checkbox' type="checkbox" />
+                    <input className='default-checkbox checkbox-test' type="checkbox" />
                     <span className='checkmark'></span>
                     <div className='task-item-text'>
                       <span>{title}:</span>
@@ -301,7 +305,7 @@ const TaskMenu = () => {
                   <button className='task-item-btn' >
                     <EnterTaskIcon />
                   </button>
-                </label>
+                </div>
               </li>
             )
           })}

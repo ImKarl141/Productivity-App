@@ -110,12 +110,6 @@
   margin-right: 1rem;
 }
 
-/* .box1 {
-  background-color: var(--back01);
-}
-.box2 {
-  background-color: var(--back02);
-} */
 
 /* Task Focus Test Start */
 /* .task-item-details {
@@ -268,7 +262,7 @@
   font-size: 0.8rem;
   font-weight: 600;
   color: var(--black);
-  cursor: pointer;
+  /* cursor: pointer; */
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -292,6 +286,7 @@
   margin: 0;
   padding: 0;
   opacity: 0;
+  z-index: 2;
 }
 
 .task-item-text,
@@ -323,43 +318,6 @@
   align-items: center;
 }
 
-
-
-/* .task-item-title {
-  display: grid;
-  position: relative;
-  grid-template-columns: auto auto auto;
-  justify-content: start;
-  grid-column-gap: 0.6rem;
-}
-
-.default-checkbox {
-  width: 1.4rem;
-  height: 1.4rem;
-  margin: 0;
-  opacity: 0;
-}
-
-.custom-checkbox {
-  padding: 0.9rem;
-  border: 0.1rem solid black;
-  position: absolute;
-}
-
-.task-item-details {
-  display: grid;
-  grid-template-columns: auto auto auto;
-  justify-content: start;
-  grid-column-gap: 0.6rem;
-  padding-left: 2rem;
-}
-
-.task-text-description {
-  overflow: hidden;
-  text-overflow: ellipsis;
-} */
-
-
 /* Task items test end */
 
 
@@ -381,6 +339,10 @@
   background-color: var(--pomodoroLight);
 }
 
+.test-check input:checked ~ span {
+  color: red;
+}
+
 /* When is checked add a background */
 .task-item-container input:checked ~ .checkmark {
   background-color: var(--blackLight);
@@ -398,20 +360,14 @@
   display: block;
 }
 
-.task-item-container .default-checkbox:checked ~ div {
+.task-item-container .default-checkbox:checked ~ .task-item-text {
   text-decoration: line-through;
   opacity: 0.6;
 }
 
-/* .task-item input:checked ~ span {
-  text-decoration: line-through;
+.task-item-container .default-checkbox:checked ~ .task-item-details {
   opacity: 0.6;
-} */
-
-/* .task-element input:checked ~ .input-text {
-  text-decoration: line-through;
-  opacity: 0.6;
-} */
+}
 
 /* Style of the checkmark */
 .task-item-container .checkmark::after {
@@ -437,11 +393,6 @@
   font-size: 1rem;
   color: var(--black);
 }
-
-/* .input-text-title {
-  margin-left: 0.3rem;
-  padding-left: 1.5rem;
-} */
 
 .input-text-description span {
   font-size: 0.8rem;
@@ -667,7 +618,6 @@ h1, h2 {
   background-color: transparent;
   border: 0rem none;
   border-radius: 0.2rem;
-  cursor: pointer;
   padding: 0;
   margin: 0;
 }
@@ -681,13 +631,11 @@ h1, h2 {
   align-items: center;
   border: 0.15rem solid var(--pomodoroDark);
   border-radius: 0.2rem ;
-  width: 100%;
   padding: 0.5rem;
   /* margin: 0.5rem; */
   opacity: 0.8;
   cursor: text;
 }
-
 
 /* List of tasks start */
 
@@ -697,17 +645,33 @@ h1, h2 {
   justify-content: start;
   /* flex: 1; */
   /* margin: 0.2rem 0rem; */
-
 }
+
+/* .overall-myTask button:focus {
+  background-color: var(--black);
+  pointer-events: auto;
+} */
+
+a {
+  text-decoration: none;
+}
+
+.myTask-container-main:target {
+  background-color: var(--pomodoroDark);
+}
+
+/* .list-projects:target {
+  background-color: var(--pomodoroDark);
+} */
 
 .list-title {
   color: var(--black);
   font-size: 1rem;
 }
 
-.box:hover {
+/* .box:hover {
   background-color: var(--pomodoroDark);
-}
+} */
 
 .list-tasks {
   list-style-type: none;
@@ -745,12 +709,12 @@ h1, h2 {
   font-weight: 800;
   padding: 0.1rem 0.6rem ;
   /* margin: 2rem; */
-  background-color: var(--pomodoroDark);
+  /* background-color: var(--pomodoroDark); */
   border-radius: 0.2rem;
 }
 
 .myTask-container-main:hover  .task-number {
-  background-color: var(--pomodoroLight);
+  background-color: var(--pomodoroDark);
 }
 /* Tasks toggle end */
 
@@ -811,8 +775,9 @@ h1, h2 {
 
 .list-title,
 .list-projects {
-  display: flex;
-  align-items: center;
+  display: grid;
+  /* justify-items: start; */
+  /* align-items: start; */
 }
 
 .project-color {
@@ -823,11 +788,14 @@ h1, h2 {
 }
 
 .list-title {
+  align-items: start;
+  justify-content: start;
   margin-left: 0.6rem;
 }
 
 .list-projects {
   /* flex: 1; */
+  grid-template-columns: 1fr auto;
   flex-basis: 2.5rem;
   padding: 0.2rem 0.6rem;
   align-items: center;
@@ -865,17 +833,29 @@ h1, h2 {
   color: var(--black);
 }
 
-.list-projects button {
-  opacity: 0.4;
+.projects-container span {
+  opacity: 0;
 }
 
-.list-projects button:hover {
+.list-projects:hover span {
+  opacity: 0.3;
+}
+
+.list-projects span:hover {
   opacity: 1;
 }
 
-.list-projects:hover  .projects-number {
-  background-color: var(--pomodoroLight);
+/* .list-projects span {
+  opacity: 0.4;
 }
+
+.list-projects span:hover {
+  opacity: 1;
+} */
+
+/* .list-projects:hover  .projects-number {
+  background-color: var(--pomodoroLight);
+} */
 
 .projects-number {
   font-family: Nunito;
@@ -993,7 +973,7 @@ h1, h2 {
   position: relative;
   /* align-items: center;
   justify-content: space-between; */
-  padding: 0.2rem 0.6rem;
+  padding: 0.3rem 0.6rem;
   border-radius: 0.25rem ;
   background-color: var(--pomodoroDark);
   opacity: 0.9;
@@ -1001,12 +981,14 @@ h1, h2 {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  opacity: 0.5;
 }
 
 .myTag span {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  padding-right: 0.2rem;
 }
 
 /* button.myTag {
