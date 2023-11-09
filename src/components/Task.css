@@ -789,10 +789,11 @@ h1, h2 {
 }
 
 .tagsSettings-icon {
-  width: 0.8rem;
+  width: 1rem;
   color: var(--black);
   position: absolute;
-  right: 0.4rem;
+  bottom: 0.3rem;
+  right: -0.1rem;
 }
 
 /* Tasks icons end */
@@ -848,11 +849,27 @@ h1, h2 {
 }
 
 .project-settings-btn {
-  opacity: 0;
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-column-gap: 0.4rem;
   /* transition: opacity 0.1s; */
 }
 
-.list-projects:hover .project-settings-btn{
+.deleteList-icon {
+  width: 1.2rem;
+  color: var(--black);
+} 
+
+.editList-icon {
+  width: 1.2rem;
+  color: var(--black);
+}
+
+.list-projects button {
+  opacity: 0.4;
+}
+
+.list-projects button:hover {
   opacity: 1;
 }
 

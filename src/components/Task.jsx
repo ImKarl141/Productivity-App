@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ShowTaskEdit, ShowAddProjectEdit, ShowAddTagEdit } from '../features/taskSlice';
 import { useState } from 'react';
 import './Task.css'
-import { AddTaskIcon, AllTasksIcon, CurrentTasksIcon, CompletedTasksIcon, AddProjectIcon, AddTagsIcon, EnterTaskIcon, CalendarIconTask, ProjectSettingsIcon, CancelIcon, ColorPickerIcon, CalendarIcon, TagSettingsIcon } from '../icons';
+import { AddTaskIcon, AllTasksIcon, CurrentTasksIcon, CompletedTasksIcon, AddProjectIcon, AddTagsIcon, EnterTaskIcon, CalendarIconTask, ProjectSettingsIcon, CancelIcon, TagSettingsIcon, EditListIcon, DeleteListIcon } from '../icons';
 
 //taskItems and destructuring
 
@@ -95,6 +95,7 @@ const TaskMenu = () => {
 
   return (
     <section className='task-container'>
+      <div style={{ position: 'absolute', fontSize: '3rem', zIndex: '3', color: 'black', fontWeight: '800', backgroundColor: 'var(--white)', borderRadius: '1rem' }}> Make the edit and delete in the add Project</div>
       <div className='task-overall'>
         {/* <button onClick={() => dispatch(ShowTaskEdit())}>Click me</button> */}
         <div className='overall-title'>
@@ -138,8 +139,10 @@ const TaskMenu = () => {
                     <div className='project-color' style={{ backgroundColor: color }}></div>
                     <p className='myTask-text'>{nameProject}</p>
                   </div>
-                  <div className='project-settings-btn' title='Options'>
-                    <ProjectSettingsIcon />
+                  <div className='project-settings-btn' >
+                    <button title='Edit'><EditListIcon /></button>
+                    <button title='Delete'><DeleteListIcon /></button>
+                    {/* <ProjectSettingsIcon /> */}
                   </div>
                 </button>
               )
