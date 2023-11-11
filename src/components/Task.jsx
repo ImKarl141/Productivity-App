@@ -3,16 +3,13 @@ import { ShowTaskEdit, ShowAddProjectEdit, ShowAddTagEdit } from '../features/ta
 import { useState } from 'react';
 import './Task.css'
 import { AddTaskIcon, AllTasksIcon, CurrentTasksIcon, CompletedTasksIcon, AddProjectIcon, AddTagsIcon, EnterTaskIcon, CalendarIconTask, ProjectSettingsIcon, CancelIcon, TagSettingsIcon, EditListIcon, DeleteListIcon } from '../icons';
+import { TaskEdit } from './Task/TaskEdit';
 
 //taskItems and destructuring
 
 const TaskMenu = () => {
   const { taskItems, isEdit, addProjectEdit, projects, tags, addTagEdit } = useSelector((store) => store.task);
   const dispatch = useDispatch();
-
-  const [myButton, setMyButton] = useState(false)
-
-  const [myList, setMyList] = useState([1, 2, 3, 4])
 
   //Input for tasks
   const [taskTitle, setTaskTitle] = useState('')
@@ -90,6 +87,18 @@ const TaskMenu = () => {
     setTagColor('#FFFFFF')
   }
 
+  // Remove list element
+  const removeListItem = (id) => {
+    const newList = listOfProjects.filter((project) => project.id !== id);
+    setListOfProjects(newList);
+  }
+
+  // Remove task element
+  const removeTaskITem = (id) => {
+    const newTaskList = listOfProjects.filter((task) => task.id !== id);
+    setListOfTasks(newTaskList)
+  }
+
 
   //Edit task menu
 
@@ -141,7 +150,7 @@ const TaskMenu = () => {
                   </a>
                   <div className='project-settings-btn' >
                     <span title='Edit' onClick={() => console.log(`${nameProject} Project edited`)}><EditListIcon /></span>
-                    <span title='Delete' onClick={() => console.log(`${nameProject} Project deleted`)}><DeleteListIcon /></span>
+                    <span title='Delete' onClick={() => removeListItem(id)} ><DeleteListIcon /></span>
                     {/* <ProjectSettingsIcon /> */}
                   </div>
                 </button>
@@ -260,10 +269,6 @@ const TaskMenu = () => {
             <p className='myTask-text'>Add Task</p>
           </label>
         </div>
-        {/* <div className='test-check'>
-          <input type="checkbox" />
-          <span>Hello</span>
-        </div> */}
         <ul className='list-tasks'>
           {listOfTasks.map((task) => {
             const { id, title, description, dueDate, tag, project, projectColor } = task
@@ -311,6 +316,10 @@ const TaskMenu = () => {
           })}
         </ul >
       </div >
+      {/*Fix the component by creating an store and a selector to prop drilling*/}
+      {/* {
+        isEdit && <TaskEdit />
+      } */}
       {
         isEdit && (
           <div className='task-details'>

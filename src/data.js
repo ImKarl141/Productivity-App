@@ -35,6 +35,16 @@ export const userProjects = [
     nameProject: 'Coding',
     color: '#d22828'
   },
+  {
+    id: 2,
+    nameProject: 'Vacations',
+    color: '#45f542'
+  },
+  {
+    id: 3,
+    nameProject: 'Computer',
+    color: '#426cf5'
+  },
 ];
 
 
