@@ -8,8 +8,11 @@ import { TaskEdit } from './Task/TaskEdit';
 //taskItems and destructuring
 
 const TaskMenu = () => {
-  const { taskItems, isEdit, addProjectEdit, projects, tags, addTagEdit } = useSelector((store) => store.task);
+  const { taskItems, isEdit, addProjectEdit, projects, tags, addTagEdit, taskElement } = useSelector((store) => store.task);
   const dispatch = useDispatch();
+
+  // const { taskDate, taskTitle } = taskElement
+  // console.log(taskDate);
 
   //Input for tasks
   const [taskTitle, setTaskTitle] = useState('')

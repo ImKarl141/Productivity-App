@@ -9,7 +9,20 @@ const initialState = {
   tags: userTags,
   addProjectEdit: false,
   addTagEdit: false,
+  taskElement: {
+    taskTitle: 'My project',
+    taskDescription: '',
+    taskDate: 'February',
+  }
 }
+
+// const [taskTitle, setTaskTitle] = useState('')
+// const [taskDescription, setTaskDescription] = useState('')
+// const [taskDate, setTaskDate] = useState('');
+// const [taskProjectName, setTaskProjectName] = useState(projects[0].nameProject)
+// const [taskProjectColor, setTaskProjectColor] = useState(projects[0].color)
+// const [taskTag, setTaskTag] = useState(tags[0].nameTag)
+// const [listOfTasks, setListOfTasks] = useState(taskItems)
 
 const taskSlice = createSlice({
   name: 'task',
