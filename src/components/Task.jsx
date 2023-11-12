@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { ShowTaskEdit, ShowAddProjectEdit, ShowAddTagEdit } from '../features/taskSlice';
+import { ShowTaskEdit, ShowAddProjectEdit, ShowAddTagEdit, ChangeTitleInput, ChangeDescriptionInput, ChangeDateInput, ChangeProjectNameInput, ChangeProjectColorInput, ChangeTagInput } from '../features/taskSlice';
 import { useState } from 'react';
 import './Task.css'
 import { AddTaskIcon, AllTasksIcon, CurrentTasksIcon, CompletedTasksIcon, AddProjectIcon, AddTagsIcon, EnterTaskIcon, CalendarIconTask, ProjectSettingsIcon, CancelIcon, TagSettingsIcon, EditListIcon, DeleteListIcon } from '../icons';
@@ -8,19 +8,22 @@ import { TaskEdit } from './Task/TaskEdit';
 //taskItems and destructuring
 
 const TaskMenu = () => {
-  const { taskItems, isEdit, addProjectEdit, projects, tags, addTagEdit, taskElement } = useSelector((store) => store.task);
+  const { taskItems, isEdit, addProjectEdit, projects, tags, addTagEdit, taskInput, taskProjectInput, taskTag } = useSelector((store) => store.task);
+
+  // Input for tasks
+  const { taskTitle, taskDescription, taskDate } = taskInput
+  const { taskProjectName, taskProjectColor } = taskProjectInput
+
+
   const dispatch = useDispatch();
 
-  // const { taskDate, taskTitle } = taskElement
-  // console.log(taskDate);
-
   //Input for tasks
-  const [taskTitle, setTaskTitle] = useState('')
-  const [taskDescription, setTaskDescription] = useState('')
-  const [taskDate, setTaskDate] = useState('');
-  const [taskProjectName, setTaskProjectName] = useState(projects[0].nameProject)
-  const [taskProjectColor, setTaskProjectColor] = useState(projects[0].color)
-  const [taskTag, setTaskTag] = useState(tags[0].nameTag)
+  // const [taskTitle, setTaskTitle] = useState('')
+  // const [taskDescription, setTaskDescription] = useState('')
+  // const [taskDate, setTaskDate] = useState('');
+  // const [taskProjectName, setTaskProjectName] = useState(projects[0].nameProject)
+  // const [taskProjectColor, setTaskProjectColor] = useState(projects[0].color)
+  // const [taskTag, setTaskTag] = useState(tags[0].nameTag)
   const [listOfTasks, setListOfTasks] = useState(taskItems)
 
   //Inputs for projects
@@ -59,8 +62,10 @@ const TaskMenu = () => {
     }
     const updateUser = [...listOfTasks, newTask]
     setListOfTasks(updateUser)
-    setTaskTitle('')
-    setTaskDescription('')
+    dispatch(ChangeTitleInput(''))
+    dispatch(ChangeDescriptionInput(''))
+    // setTaskTitle('')
+    // setTaskDescription('')
   }
 
   //Add a new project 
@@ -115,6 +120,7 @@ const TaskMenu = () => {
           {/* <div className='task-quantity'><span>{listOfTasks.length}</span></div> */}
         </div>
         <div className='overall-myTask'>
+          {/* <button onClick={() => dispatch(ChangeValue('Carlos'))}>Change value</button> */}
           <a className='myTask-container-main box' id='All' href='#All'>
             <div className='myTask-container'>
               <AllTasksIcon />
@@ -336,7 +342,9 @@ const TaskMenu = () => {
                   type="text"
                   placeholder='Title name'
                   value={taskTitle}
-                  onChange={(e) => setTaskTitle(e.target.value)}
+                  onChange={(e) => dispatch(ChangeTitleInput(e.target.value))
+                    // onChange={(e) => setTaskTitle(e.target.value)
+                  }
                 />
                 <textarea
                   id='description'
@@ -346,7 +354,7 @@ const TaskMenu = () => {
                   className='myInput myInput-description'
                   value={taskDescription}
                   onChange={(e) => {
-                    setTaskDescription(e.target.value)
+                    dispatch(ChangeDescriptionInput(e.target.value))
                   }
                   }
                 />
@@ -359,9 +367,7 @@ const TaskMenu = () => {
                     name='dueDate'
                     onChange={(e) => {
                       const [year, month, day] = e.target.value.split('-')
-                      // console.log(`${day}-${month}-${year}`)
-                      setTaskDate(`${month}-${day}-${year}`)
-                      // console.log(e.target.value)
+                      dispatch(ChangeDateInput(`${month}-${day}-${year}`))
                     }}
                   />
                 </div>
@@ -370,8 +376,10 @@ const TaskMenu = () => {
                   <select
                     onChange={(e) => {
                       const selectedProject = listOfProjects.find((myProject) => myProject.id == e.target.value)
-                      setTaskProjectName(selectedProject.nameProject)
-                      setTaskProjectColor(selectedProject.color)
+                      dispatch(ChangeProjectNameInput(selectedProject.nameProject))
+                      dispatch(ChangeProjectColorInput(selectedProject.color))
+                      // setTaskProjectName(selectedProject.nameProject)
+                      // setTaskProjectColor(selectedProject.color)
                     }
                     }
                   >
@@ -388,7 +396,7 @@ const TaskMenu = () => {
                   <select
                     name='Tags'
                     onChange={(e) => {
-                      setTaskTag(e.target.value)
+                      dispatch(ChangeTagInput(e.target.value))
                     }
                     }
                   >

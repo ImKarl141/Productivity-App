@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { task, userProjects, userTags } from '../data'
+import { task, taskInput, taskProjectInput, userProjects, userTags } from '../data'
 
 const initialState = {
   taskItems: task,
@@ -9,11 +9,9 @@ const initialState = {
   tags: userTags,
   addProjectEdit: false,
   addTagEdit: false,
-  taskElement: {
-    taskTitle: 'My project',
-    taskDescription: '',
-    taskDate: 'February',
-  }
+  taskInput: taskInput,
+  taskProjectInput: taskProjectInput,
+  taskTag: userTags[0].nameTag
 }
 
 // const [taskTitle, setTaskTitle] = useState('')
@@ -37,9 +35,30 @@ const taskSlice = createSlice({
     },
     ShowAddTagEdit: (state) => {
       state.addTagEdit = !state.addTagEdit;
+    },
+    //Task input
+    ChangeTitleInput: (state, value) => {
+      state.taskInput.taskTitle = value.payload
+    },
+    ChangeDescriptionInput: (state, value) => {
+      state.taskInput.taskDescription = value.payload
+    },
+    ChangeDateInput: (state, value) => {
+      state.taskInput.taskDate = value.payload
+    },
+    //Project Input
+    ChangeProjectNameInput: (state, value) => {
+      state.taskProjectInput.taskProjectName = value.payload
+    },
+    ChangeProjectColorInput: (state, value) => {
+      state.taskProjectInput.taskProjectColor = value.payload
+    },
+    //Tag input
+    ChangeTagInput: (state, value) => {
+      state.taskTag = value.payload
     }
   }
 });
 
-export const { ShowTaskEdit, ShowAddProjectEdit, ShowAddTagEdit } = taskSlice.actions;
+export const { ShowTaskEdit, ShowAddProjectEdit, ShowAddTagEdit, ChangeTitleInput, ChangeDescriptionInput, ChangeDateInput, ChangeProjectNameInput, ChangeProjectColorInput, ChangeTagInput } = taskSlice.actions;
 export default taskSlice.reducer;

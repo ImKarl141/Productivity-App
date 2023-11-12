@@ -23,6 +23,12 @@ export const task = [
   }
 ];
 
+export const taskInput = {
+  taskTitle: '',
+  taskDescription: '',
+  taskDate: '',
+}
+
 export const userProjects = [
   {
     id: 0,
@@ -46,6 +52,11 @@ export const userProjects = [
     color: '#426cf5'
   },
 ];
+
+export const taskProjectInput = {
+  taskProjectName: userProjects[0].nameProject,
+  taskProjectColor: userProjects[0].color
+}
 
 
 export const userTags = [
