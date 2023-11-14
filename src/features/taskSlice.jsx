@@ -56,9 +56,16 @@ const taskSlice = createSlice({
     //Tag input
     ChangeTagInput: (state, value) => {
       state.taskTag = value.payload
+    },
+    //Task List
+    AddTaskItem: (state, value) => {
+      state.taskItems = value.payload
+    },
+    AddProject: (state, value) => {
+      state.projects = value.payload
     }
   }
 });
 
-export const { ShowTaskEdit, ShowAddProjectEdit, ShowAddTagEdit, ChangeTitleInput, ChangeDescriptionInput, ChangeDateInput, ChangeProjectNameInput, ChangeProjectColorInput, ChangeTagInput } = taskSlice.actions;
+export const { ShowTaskEdit, ShowAddProjectEdit, ShowAddTagEdit, ChangeTitleInput, ChangeDescriptionInput, ChangeDateInput, ChangeProjectNameInput, ChangeProjectColorInput, ChangeTagInput, AddTaskItem, AddProject } = taskSlice.actions;
 export default taskSlice.reducer;

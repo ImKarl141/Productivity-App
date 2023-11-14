@@ -1,9 +1,10 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { ShowTaskEdit, ShowAddProjectEdit, ShowAddTagEdit, ChangeTitleInput, ChangeDescriptionInput, ChangeDateInput, ChangeProjectNameInput, ChangeProjectColorInput, ChangeTagInput } from '../features/taskSlice';
+import { createSlice } from '@reduxjs/toolkit';
+import { ShowTaskEdit, ShowAddProjectEdit, ShowAddTagEdit, ChangeTitleInput, ChangeDescriptionInput, ChangeDateInput, ChangeProjectNameInput, ChangeProjectColorInput, ChangeTagInput, AddTaskItem, AddProject } from '../features/taskSlice';
 import { useState } from 'react';
 import './Task.css'
 import { AddTaskIcon, AllTasksIcon, CurrentTasksIcon, CompletedTasksIcon, AddProjectIcon, AddTagsIcon, EnterTaskIcon, CalendarIconTask, ProjectSettingsIcon, CancelIcon, TagSettingsIcon, EditListIcon, DeleteListIcon } from '../icons';
-import { TaskEdit } from './Task/TaskEdit';
+import TaskEdit from './Task/TaskEdit';
 
 //taskItems and destructuring
 
@@ -14,22 +15,14 @@ const TaskMenu = () => {
   const { taskTitle, taskDescription, taskDate } = taskInput
   const { taskProjectName, taskProjectColor } = taskProjectInput
 
-
   const dispatch = useDispatch();
 
   //Input for tasks
-  // const [taskTitle, setTaskTitle] = useState('')
-  // const [taskDescription, setTaskDescription] = useState('')
-  // const [taskDate, setTaskDate] = useState('');
-  // const [taskProjectName, setTaskProjectName] = useState(projects[0].nameProject)
-  // const [taskProjectColor, setTaskProjectColor] = useState(projects[0].color)
-  // const [taskTag, setTaskTag] = useState(tags[0].nameTag)
-  const [listOfTasks, setListOfTasks] = useState(taskItems)
+  // const [listOfTasks, setListOfTasks] = useState(taskItems)
 
   //Inputs for projects
   const [myProject, setMyProject] = useState('');
   const [listOfProjects, setListOfProjects] = useState(projects);
-  // const [nameProject] = listOfProjects;
 
   //Inputs for tags 
   const [myTag, setMyTag] = useState('');
@@ -42,6 +35,34 @@ const TaskMenu = () => {
 
   //Tag Color 
   const [tagColor, setTagColor] = useState('#FFFFFF')
+
+  // const InputSlice = createSlice({
+  //   name: 'input',
+  //   reducers: {
+  //     TaskSubmit: (state, e) => {
+
+  //       e.preventDefault();
+  //       if (!taskTitle) {
+  //         return;
+  //       }
+  //       //Create a new list base on the old + new
+  //       const newTask = {
+  //         id: Date.now(),
+  //         title: taskTitle,
+  //         description: taskDescription,
+  //         dueDate: taskDate,
+  //         tag: taskTag,
+  //         colorTag: taskTag.color,
+  //         project: taskProjectName,
+  //         projectColor: taskProjectColor,
+  //       }
+  //       const updateUser = [...listOfTasks, newTask]
+  //       setListOfTasks(updateUser)
+  //       dispatch(ChangeTitleInput(''))
+  //       dispatch(ChangeDescriptionInput(''))
+  //     }
+  //   }
+  // })
 
   //Add a new tasks
   const handleTaskSubmit = (e) => {
@@ -60,12 +81,10 @@ const TaskMenu = () => {
       project: taskProjectName,
       projectColor: taskProjectColor,
     }
-    const updateUser = [...listOfTasks, newTask]
-    setListOfTasks(updateUser)
+    const updateUser = [...taskItems, newTask]
+    dispatch(AddTaskItem(updateUser))
     dispatch(ChangeTitleInput(''))
     dispatch(ChangeDescriptionInput(''))
-    // setTaskTitle('')
-    // setTaskDescription('')
   }
 
   //Add a new project 
@@ -75,13 +94,13 @@ const TaskMenu = () => {
       return;
     }
     //Create a new list base on the old + new
-    // const newProject = { id: Date.now(), nameProject: myProject, number: Math.floor((Math.random() * 5) + 1), color: projectColor };
     const newProject = { id: Date.now(), nameProject: myProject, color: projectColor };
     const updateProject = [...listOfProjects, newProject];
     setListOfProjects(updateProject)
     setMyProject('')
     setProjectColor('#FFFFFF')
   }
+
   //Add a new tag
   const handleTagSubmit = (e) => {
     e.preventDefault();
@@ -104,7 +123,7 @@ const TaskMenu = () => {
   // Remove task element
   const removeTaskITem = (id) => {
     const newTaskList = listOfProjects.filter((task) => task.id !== id);
-    setListOfTasks(newTaskList)
+    dispatch(AddTaskItem(newTaskList))
   }
 
 
@@ -112,21 +131,18 @@ const TaskMenu = () => {
 
   return (
     <section className='task-container'>
-      {/* <div style={{ position: 'absolute', fontSize: '3rem', zIndex: '3', color: 'black', fontWeight: '800', backgroundColor: 'var(--white)', borderRadius: '1rem' }}> Make the edit and delete in the add Project</div> */}
+      <h1 style={{ position: 'absolute', fontSize: '5rem', zIndex: '3', opacity: '0.5' }}>Continue with AddProject reducer</h1>
       <div className='task-overall'>
-        {/* <button onClick={() => dispatch(ShowTaskEdit())}>Click me</button> */}
         <div className='overall-title'>
           <div className='task-title'><h1>Tasks</h1></div>
-          {/* <div className='task-quantity'><span>{listOfTasks.length}</span></div> */}
         </div>
         <div className='overall-myTask'>
-          {/* <button onClick={() => dispatch(ChangeValue('Carlos'))}>Change value</button> */}
           <a className='myTask-container-main box' id='All' href='#All'>
             <div className='myTask-container'>
               <AllTasksIcon />
               <p className='myTask-text'>All</p>
             </div>
-            <div className='task-number'><span>{listOfTasks.length}</span></div>
+            <div className='task-number'><span>{taskItems.length}</span></div>
           </a>
           <a className='myTask-container-main box' id='Current' href='#Current'>
             <div className='myTask-container'>
@@ -279,7 +295,7 @@ const TaskMenu = () => {
           </label>
         </div>
         <ul className='list-tasks'>
-          {listOfTasks.map((task) => {
+          {taskItems.map((task) => {
             const { id, title, description, dueDate, tag, project, projectColor } = task
             return (
               <li key={id}>
@@ -343,7 +359,6 @@ const TaskMenu = () => {
                   placeholder='Title name'
                   value={taskTitle}
                   onChange={(e) => dispatch(ChangeTitleInput(e.target.value))
-                    // onChange={(e) => setTaskTitle(e.target.value)
                   }
                 />
                 <textarea
@@ -378,8 +393,6 @@ const TaskMenu = () => {
                       const selectedProject = listOfProjects.find((myProject) => myProject.id == e.target.value)
                       dispatch(ChangeProjectNameInput(selectedProject.nameProject))
                       dispatch(ChangeProjectColorInput(selectedProject.color))
-                      // setTaskProjectName(selectedProject.nameProject)
-                      // setTaskProjectColor(selectedProject.color)
                     }
                     }
                   >

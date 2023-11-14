@@ -1,6 +1,36 @@
+import { useDispatch, useSelector } from 'react-redux';
+import { ShowTaskEdit, ChangeTitleInput, ChangeDescriptionInput, ChangeDateInput, ChangeProjectNameInput, ChangeProjectColorInput, ChangeTagInput } from '../../features/taskSlice';
+import { useState } from 'react';
 import '../Task.css'
 
-export const TaskEdit = () => {
+const TaskEdit = () => {
+  const { taskItems, isEdit, addProjectEdit, projects, tags, addTagEdit, taskInput, taskProjectInput, taskTag } = useSelector((store) => store.task);
+  const { taskTitle, taskDescription, taskDate } = taskInput
+  const { taskProjectName, taskProjectColor } = taskProjectInput
+  const dispatch = useDispatch();
+
+  const handleTaskSubmit = (e) => {
+    e.preventDefault();
+    if (!taskTitle) {
+      return;
+    }
+    //Create a new list base on the old + new
+    const newTask = {
+      id: Date.now(),
+      title: taskTitle,
+      description: taskDescription,
+      dueDate: taskDate,
+      tag: taskTag,
+      colorTag: taskTag.color,
+      project: taskProjectName,
+      projectColor: taskProjectColor,
+    }
+    const updateUser = [...listOfTasks, newTask]
+    setListOfTasks(updateUser)
+    dispatch(ChangeTitleInput(''))
+    dispatch(ChangeDescriptionInput(''))
+  }
+
   return (
     <div className='task-details'>
       <div className='task-details-task'>
@@ -13,7 +43,9 @@ export const TaskEdit = () => {
             type="text"
             placeholder='Title name'
             value={taskTitle}
-            onChange={(e) => setTaskTitle(e.target.value)}
+            onChange={(e) => dispatch(ChangeTitleInput(e.target.value))
+              // onChange={(e) => setTaskTitle(e.target.value)
+            }
           />
           <textarea
             id='description'
@@ -23,7 +55,7 @@ export const TaskEdit = () => {
             className='myInput myInput-description'
             value={taskDescription}
             onChange={(e) => {
-              setTaskDescription(e.target.value)
+              dispatch(ChangeDescriptionInput(e.target.value))
             }
             }
           />
@@ -36,9 +68,7 @@ export const TaskEdit = () => {
               name='dueDate'
               onChange={(e) => {
                 const [year, month, day] = e.target.value.split('-')
-                // console.log(`${day}-${month}-${year}`)
-                setTaskDate(`${month}-${day}-${year}`)
-                // console.log(e.target.value)
+                dispatch(ChangeDateInput(`${month}-${day}-${year}`))
               }}
             />
           </div>
@@ -47,8 +77,10 @@ export const TaskEdit = () => {
             <select
               onChange={(e) => {
                 const selectedProject = listOfProjects.find((myProject) => myProject.id == e.target.value)
-                setTaskProjectName(selectedProject.nameProject)
-                setTaskProjectColor(selectedProject.color)
+                dispatch(ChangeProjectNameInput(selectedProject.nameProject))
+                dispatch(ChangeProjectColorInput(selectedProject.color))
+                // setTaskProjectName(selectedProject.nameProject)
+                // setTaskProjectColor(selectedProject.color)
               }
               }
             >
@@ -65,7 +97,7 @@ export const TaskEdit = () => {
             <select
               name='Tags'
               onChange={(e) => {
-                setTaskTag(e.target.value)
+                dispatch(ChangeTagInput(e.target.value))
               }
               }
             >
@@ -94,3 +126,4 @@ export const TaskEdit = () => {
     </div>
   )
 }
+export default TaskEdit;
