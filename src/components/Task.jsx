@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { createSlice } from '@reduxjs/toolkit';
-import { ShowTaskEdit, ShowAddProjectEdit, ShowAddTagEdit, ChangeTitleInput, ChangeDescriptionInput, ChangeDateInput, ChangeProjectNameInput, ChangeProjectColorInput, ChangeTagInput, AddTaskItem, AddProject } from '../features/taskSlice';
+import { ShowTaskEdit, ShowAddProjectEdit, ShowAddTagEdit, ChangeTitleInput, ChangeDescriptionInput, ChangeDateInput, ChangeProjectName, ChangeProjectColor, ChangeProjectNameInput, ChangeProjectColorInput, ChangeTagName, ChangeTagColor, AddTaskItem, RemoveTaskItem, AddProjectItem, RemoveProjectItem, AddTagItem, RemoveTagItem } from '../features/taskSlice';
 import { useState } from 'react';
 import './Task.css'
 import { AddTaskIcon, AllTasksIcon, CurrentTasksIcon, CompletedTasksIcon, AddProjectIcon, AddTagsIcon, EnterTaskIcon, CalendarIconTask, ProjectSettingsIcon, CancelIcon, TagSettingsIcon, EditListIcon, DeleteListIcon } from '../icons';
@@ -9,11 +9,13 @@ import TaskEdit from './Task/TaskEdit';
 //taskItems and destructuring
 
 const TaskMenu = () => {
-  const { taskItems, isEdit, addProjectEdit, projects, tags, addTagEdit, taskInput, taskProjectInput, taskTag } = useSelector((store) => store.task);
+  const { taskItems, isEdit, addProjectEdit, projects, tags, addTagEdit, taskInput, taskProjectInput, taskTag, projectInput, tagInput } = useSelector((store) => store.task);
 
-  // Input for tasks
+  // Inputs
   const { taskTitle, taskDescription, taskDate } = taskInput
   const { taskProjectName, taskProjectColor } = taskProjectInput
+  const { nameProject, projectColor } = projectInput
+  const { nameTag, tagColor } = tagInput
 
   const dispatch = useDispatch();
 
@@ -21,117 +23,94 @@ const TaskMenu = () => {
   // const [listOfTasks, setListOfTasks] = useState(taskItems)
 
   //Inputs for projects
-  const [myProject, setMyProject] = useState('');
-  const [listOfProjects, setListOfProjects] = useState(projects);
+  // const [myProject, setMyProject] = useState('');
+  // const [listOfProjects, setListOfProjects] = useState(projects);
 
   //Inputs for tags 
-  const [myTag, setMyTag] = useState('');
-  const [listOfTags, setListOfTags] = useState(tags);
+  // const [myTag, setMyTag] = useState('');
+  // const [listOfTags, setListOfTags] = useState(tags);
   // const [nameTag] = listOfTags;
 
   //Project Color
-  const [projectColor, setProjectColor] = useState('#FFFFFF')
-
+  // const [projectColor, setProjectColor] = useState('#FFFFFF')
 
   //Tag Color 
-  const [tagColor, setTagColor] = useState('#FFFFFF')
-
-  // const InputSlice = createSlice({
-  //   name: 'input',
-  //   reducers: {
-  //     TaskSubmit: (state, e) => {
-
-  //       e.preventDefault();
-  //       if (!taskTitle) {
-  //         return;
-  //       }
-  //       //Create a new list base on the old + new
-  //       const newTask = {
-  //         id: Date.now(),
-  //         title: taskTitle,
-  //         description: taskDescription,
-  //         dueDate: taskDate,
-  //         tag: taskTag,
-  //         colorTag: taskTag.color,
-  //         project: taskProjectName,
-  //         projectColor: taskProjectColor,
-  //       }
-  //       const updateUser = [...listOfTasks, newTask]
-  //       setListOfTasks(updateUser)
-  //       dispatch(ChangeTitleInput(''))
-  //       dispatch(ChangeDescriptionInput(''))
-  //     }
-  //   }
-  // })
+  // const [tagColor, setTagColor] = useState('#FFFFFF')
 
   //Add a new tasks
-  const handleTaskSubmit = (e) => {
-    e.preventDefault();
-    if (!taskTitle) {
-      return;
-    }
-    //Create a new list base on the old + new
-    const newTask = {
-      id: Date.now(),
-      title: taskTitle,
-      description: taskDescription,
-      dueDate: taskDate,
-      tag: taskTag,
-      colorTag: taskTag.color,
-      project: taskProjectName,
-      projectColor: taskProjectColor,
-    }
-    const updateUser = [...taskItems, newTask]
-    dispatch(AddTaskItem(updateUser))
-    dispatch(ChangeTitleInput(''))
-    dispatch(ChangeDescriptionInput(''))
-  }
+  // const handleTaskSubmit = (e) => {
+  //   e.preventDefault();
+  //   if (!taskTitle) {
+  //     return;
+  //   }
+  //   //Create a new list base on the old + new
+  //   const newTask = {
+  //     id: Date.now(),
+  //     title: taskTitle,
+  //     description: taskDescription,
+  //     dueDate: taskDate,
+  //     tag: taskTag,
+  //     colorTag: taskTag.color,
+  //     project: taskProjectName,
+  //     projectColor: taskProjectColor,
+  //   }
+  //   const updateUser = [...taskItems, newTask]
+  //   dispatch(AddTaskItem(updateUser))
+  //   dispatch(ChangeTitleInput(''))
+  //   dispatch(ChangeDescriptionInput(''))
+  // }
 
   //Add a new project 
   const handleProjectSubmit = (e) => {
     e.preventDefault();
-    if (!myProject) {
+    if (!nameProject) {
       return;
     }
     //Create a new list base on the old + new
-    const newProject = { id: Date.now(), nameProject: myProject, color: projectColor };
-    const updateProject = [...listOfProjects, newProject];
-    setListOfProjects(updateProject)
-    setMyProject('')
-    setProjectColor('#FFFFFF')
+    const newProject = { id: Date.now(), nameProject: nameProject, color: projectColor };
+    const updateProject = [...projects, newProject];
+    dispatch(AddProjectItem(updateProject))
+    dispatch(ChangeProjectName(''))
+    dispatch(ChangeProjectColor('#FFFFFF'))
+    // setListOfProjects(updateProject)
+    // setMyProject('')
+    // setProjectColor('#FFFFFF')
   }
 
   //Add a new tag
   const handleTagSubmit = (e) => {
     e.preventDefault();
-    if (!myTag) {
+    if (!nameTag) {
       return;
     }
-    const newTag = { id: Date.now(), nameTag: myTag, color: tagColor };
-    const updateTag = [...listOfTags, newTag];
-    setListOfTags(updateTag);
-    setMyTag('');
-    setTagColor('#FFFFFF')
+    const newTag = { id: Date.now(), nameTag: nameTag, color: tagColor };
+    const updateTag = [...tags, newTag];
+    dispatch(AddTagItem(updateTag))
+    // setListOfTags(updateTag);
+    dispatch(ChangeTagName(''))
+    dispatch(ChangeTagColor('#FFFFFF'))
+    // setMyTag('');
+    // setTagColor('#FFFFFF')
   }
 
   // Remove list element
-  const removeListItem = (id) => {
-    const newList = listOfProjects.filter((project) => project.id !== id);
-    setListOfProjects(newList);
-  }
+  // const removeListItem = (id) => {
+  //   const newList = projects.filter((project) => project.id !== id);
+  //   dispatch(RemoveProjectItem());
+  // }
 
   // Remove task element
-  const removeTaskITem = (id) => {
-    const newTaskList = listOfProjects.filter((task) => task.id !== id);
-    dispatch(AddTaskItem(newTaskList))
-  }
+  // const removeTaskITem = (id) => {
+  //   const newTaskList = listOfProjects.filter((task) => task.id !== id);
+  //   dispatch(AddTaskItem(newTaskList))
+  // }
 
 
   //Edit task menu
 
   return (
     <section className='task-container'>
-      <h1 style={{ position: 'absolute', fontSize: '5rem', zIndex: '3', opacity: '0.5' }}>Continue with AddProject reducer</h1>
+      {/* <h1 style={{ position: 'absolute', fontSize: '5rem', zIndex: '3', opacity: '0.5' }}>Continue with AddProject reducer</h1> */}
       <div className='task-overall'>
         <div className='overall-title'>
           <div className='task-title'><h1>Tasks</h1></div>
@@ -165,7 +144,7 @@ const TaskMenu = () => {
             <h2 className='list-title'>List of Projects</h2>
           </div>
           <div className='projects-container'>
-            {listOfProjects.map((project) => {
+            {projects.map((project) => {
               const { id, nameProject, color } = project;
               return (
                 <button key={id} className='list-projects' >
@@ -175,7 +154,7 @@ const TaskMenu = () => {
                   </a>
                   <div className='project-settings-btn' >
                     <span title='Edit' onClick={() => console.log(`${nameProject} Project edited`)}><EditListIcon /></span>
-                    <span title='Delete' onClick={() => removeListItem(id)} ><DeleteListIcon /></span>
+                    <span title='Delete' onClick={() => dispatch(RemoveProjectItem(id))} ><DeleteListIcon /></span>
                     {/* <ProjectSettingsIcon /> */}
                   </div>
                 </button>
@@ -194,7 +173,7 @@ const TaskMenu = () => {
                       className='default-colorPicker'
                       value={projectColor}
                       onChange={(e) => {
-                        setProjectColor(e.target.value)
+                        dispatch(ChangeProjectColor(e.target.value))
                       }}
                     />
                     <div className='custom-colorPicker' style={{ backgroundColor: projectColor }}>
@@ -205,9 +184,11 @@ const TaskMenu = () => {
                     name='nameProject'
                     type="text"
                     className='myInputAddProject'
-                    value={myProject}
-                    onChange={(e) => setMyProject(e.target.value)}
                     placeholder='Project name'
+                    value={nameProject}
+                    onChange={(e) => {
+                      dispatch(ChangeProjectName(e.target.value))
+                    }}
                   />
                 </form>
                 <button className='cancel-projects-btn' onClick={() => dispatch(ShowAddProjectEdit())}>
@@ -230,7 +211,7 @@ const TaskMenu = () => {
             <h2 className='list-title'>Tags</h2>
           </div>
           <div className='tags-container'>
-            {listOfTags.map((tag) => {
+            {tags.map((tag) => {
               const { id, nameTag, color } = tag;
               return (
                 <button key={id} className='myTag' style={{ backgroundColor: color }} title={nameTag}>
@@ -252,7 +233,8 @@ const TaskMenu = () => {
                       className='default-colorPicker'
                       value={tagColor}
                       onChange={(e) => {
-                        setTagColor(e.target.value)
+                        dispatch(ChangeTagColor(e.target.value))
+                        // setTagColor(e.target.value)
                       }}
                     />
                     <div className='custom-colorPicker' style={{ backgroundColor: tagColor }}>
@@ -263,8 +245,8 @@ const TaskMenu = () => {
                     name='nameTag'
                     type="text"
                     className='myInputAddTag'
-                    value={myTag}
-                    onChange={(e) => setMyTag(e.target.value)}
+                    value={nameTag}
+                    onChange={(e) => dispatch(ChangeTagName(e.target.value))}
                     placeholder='Tag name'
                   />
                 </form>
@@ -299,6 +281,7 @@ const TaskMenu = () => {
             const { id, title, description, dueDate, tag, project, projectColor } = task
             return (
               <li key={id}>
+                {/* <button onClick={() => dispatch(RemoveTaskItem(id))}>Remove</button> */}
                 <div className='task-item-overall-container'>
                   <div className='task-item-container'>
                     <input className='default-checkbox checkbox-test' type="checkbox" />
@@ -342,10 +325,10 @@ const TaskMenu = () => {
         </ul >
       </div >
       {/*Fix the component by creating an store and a selector to prop drilling*/}
-      {/* {
-        isEdit && <TaskEdit />
-      } */}
       {
+        isEdit && <TaskEdit />
+      }
+      {/* {
         isEdit && (
           <div className='task-details'>
             <div className='task-details-task'>
@@ -390,13 +373,13 @@ const TaskMenu = () => {
                   <p className='details-text'>List</p>
                   <select
                     onChange={(e) => {
-                      const selectedProject = listOfProjects.find((myProject) => myProject.id == e.target.value)
+                      const selectedProject = projects.find((projectInput) => projectInput.id == e.target.value)
                       dispatch(ChangeProjectNameInput(selectedProject.nameProject))
                       dispatch(ChangeProjectColorInput(selectedProject.color))
                     }
                     }
                   >
-                    {listOfProjects.map((listProjects) => {
+                    {projects.map((listProjects) => {
                       const { id, nameProject } = listProjects;
                       return (
                         <option key={id} value={id} >{nameProject}</option>
@@ -413,7 +396,7 @@ const TaskMenu = () => {
                     }
                     }
                   >
-                    {listOfTags.map((listTag) => {
+                    {tags.map((listTag) => {
                       const { id, nameTag } = listTag;
                       return (
                         <option key={id}>{nameTag}</option>
@@ -437,7 +420,7 @@ const TaskMenu = () => {
             </div>
           </div>
         )
-      }
+      } */}
     </section >
   )
 }

@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { task, taskInput, taskProjectInput, userProjects, userTags } from '../data'
+import { task, taskInput, projectInput, tagInput, taskProjectInput, userProjects, userTags, taskTagInput } from '../data'
 
 const initialState = {
   taskItems: task,
@@ -11,16 +11,11 @@ const initialState = {
   addTagEdit: false,
   taskInput: taskInput,
   taskProjectInput: taskProjectInput,
-  taskTag: userTags[0].nameTag
+  taskTagInput: taskTagInput,
+  // taskTag: userTags[0].nameTag,
+  projectInput: projectInput,
+  tagInput: tagInput,
 }
-
-// const [taskTitle, setTaskTitle] = useState('')
-// const [taskDescription, setTaskDescription] = useState('')
-// const [taskDate, setTaskDate] = useState('');
-// const [taskProjectName, setTaskProjectName] = useState(projects[0].nameProject)
-// const [taskProjectColor, setTaskProjectColor] = useState(projects[0].color)
-// const [taskTag, setTaskTag] = useState(tags[0].nameTag)
-// const [listOfTasks, setListOfTasks] = useState(taskItems)
 
 const taskSlice = createSlice({
   name: 'task',
@@ -47,6 +42,15 @@ const taskSlice = createSlice({
       state.taskInput.taskDate = value.payload
     },
     //Project Input
+    ChangeProjectName: (state, value) => {
+      state.projectInput.nameProject = value.payload
+    },
+    ChangeProjectColor: (state, value) => {
+      state.projectInput.projectColor = value.payload
+    },
+    // ChangeProjectInput: (state, value) => {
+    //   state.projectInput = value.payload
+    // },
     ChangeProjectNameInput: (state, value) => {
       state.taskProjectInput.taskProjectName = value.payload
     },
@@ -54,18 +58,44 @@ const taskSlice = createSlice({
       state.taskProjectInput.taskProjectColor = value.payload
     },
     //Tag input
+    ChangeTagName: (state, value) => {
+      state.tagInput.nameTag = value.payload
+    },
+    ChangeTagColor: (state, value) => {
+      state.tagInput.tagColor = value.payload
+    },
     ChangeTagInput: (state, value) => {
       state.taskTag = value.payload
+    },
+    ChangeTagNameInput: (state, value) => {
+      state.taskTagInput.taskTagName = value.payload
+    },
+    ChangeTagColorInput: (state, value) => {
+      state.taskTagInput.taskTagColor = value.payload
     },
     //Task List
     AddTaskItem: (state, value) => {
       state.taskItems = value.payload
     },
-    AddProject: (state, value) => {
+    RemoveTaskItem: (state, value) => {
+      state.taskItems = state.taskItems.filter((myTask) => myTask.id !== value.payload)
+    },
+    //Project List
+    AddProjectItem: (state, value) => {
       state.projects = value.payload
+    },
+    RemoveProjectItem: (state, value) => {
+      state.projects = state.projects.filter((myProject) => myProject.id !== value.payload)
+    },
+    //Tag List
+    AddTagItem: (state, value) => {
+      state.tags = value.payload
+    },
+    RemoveTagItem: (state, value) => {
+      state.tags = state.tags.filter((myProject) => myProject.id !== value.payload)
     }
   }
 });
 
-export const { ShowTaskEdit, ShowAddProjectEdit, ShowAddTagEdit, ChangeTitleInput, ChangeDescriptionInput, ChangeDateInput, ChangeProjectNameInput, ChangeProjectColorInput, ChangeTagInput, AddTaskItem, AddProject } = taskSlice.actions;
+export const { ShowTaskEdit, ShowAddProjectEdit, ShowAddTagEdit, ChangeTitleInput, ChangeDescriptionInput, ChangeDateInput, ChangeProjectName, ChangeProjectColor, ChangeProjectNameInput, ChangeProjectColorInput, ChangeTagName, ChangeTagColor, ChangeTagInput, ChangeTagNameInput, ChangeTagColorInput, AddTaskItem, RemoveTaskItem, AddProjectItem, RemoveProjectItem, AddTagItem, RemoveTagItem, } = taskSlice.actions;
 export default taskSlice.reducer;

@@ -27,6 +27,16 @@ export const taskInput = {
   taskTitle: '',
   taskDescription: '',
   taskDate: '',
+};
+
+export const projectInput = {
+  nameProject: '',
+  projectColor: '#FFFFFF'
+};
+
+export const tagInput = {
+  nameTag: '',
+  tagColor: '#FFFFFF'
 }
 
 export const userProjects = [
@@ -34,7 +44,6 @@ export const userProjects = [
     id: 0,
     nameProject: 'Default',
     color: '#eb896c',
-    // number: 0,
   },
   {
     id: 1,
@@ -58,7 +67,6 @@ export const taskProjectInput = {
   taskProjectColor: userProjects[0].color
 }
 
-
 export const userTags = [
   {
     id: 0,
@@ -81,6 +89,11 @@ export const userTags = [
     color: '#db842b',
   },
 ];
+
+export const taskTagInput = {
+  taskTagName: userTags[0].nameTag,
+  taskTagColor: userTags[0].color,
+}
 
 export const user = [
   { id: 1, name: 'Michael' },
