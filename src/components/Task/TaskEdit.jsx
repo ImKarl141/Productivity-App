@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { ShowTaskEdit, ChangeTitleInput, ChangeDescriptionInput, ChangeDateInput, ChangeProjectNameInput, ChangeProjectColorInput, ChangeTagInput, ChangeTagNameInput, ChangeTagColorInput, AddTaskItem, } from '../../features/taskSlice';
 import { AddTaskIcon } from '../../icons';
-import '../Task.css'
+// import '../Task.css'
 
 const TaskEdit = () => {
   const { taskItems, projects, tags, taskInput, taskProjectInput, taskTagInput } = useSelector((store) => store.task);
@@ -9,8 +9,8 @@ const TaskEdit = () => {
   // Inputs
   const { taskTitle, taskDescription, taskDate } = taskInput
   const { taskProjectName, taskProjectColor } = taskProjectInput
-  // const { nameProject, projectColor } = projectInput
   const { taskTagName, taskTagColor } = taskTagInput
+  // const { nameProject, projectColor } = projectInput
 
   const dispatch = useDispatch();
 

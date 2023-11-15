@@ -5,15 +5,16 @@ import { useState } from 'react';
 import './Task.css'
 import { AddTaskIcon, AllTasksIcon, CurrentTasksIcon, CompletedTasksIcon, AddProjectIcon, AddTagsIcon, EnterTaskIcon, CalendarIconTask, ProjectSettingsIcon, CancelIcon, TagSettingsIcon, EditListIcon, DeleteListIcon } from '../icons';
 import TaskEdit from './Task/TaskEdit';
-
+import ProjectEdit from './Task/ProjectEdit';
+import TagEdit from './Task/TagEdit';
 //taskItems and destructuring
 
 const TaskMenu = () => {
   const { taskItems, isEdit, addProjectEdit, projects, tags, addTagEdit, taskInput, taskProjectInput, taskTag, projectInput, tagInput } = useSelector((store) => store.task);
 
   // Inputs
-  const { taskTitle, taskDescription, taskDate } = taskInput
-  const { taskProjectName, taskProjectColor } = taskProjectInput
+  // const { taskTitle, taskDescription, taskDate } = taskInput
+  // const { taskProjectName, taskProjectColor } = taskProjectInput
   const { nameProject, projectColor } = projectInput
   const { nameTag, tagColor } = tagInput
 
@@ -61,37 +62,37 @@ const TaskMenu = () => {
   // }
 
   //Add a new project 
-  const handleProjectSubmit = (e) => {
-    e.preventDefault();
-    if (!nameProject) {
-      return;
-    }
-    //Create a new list base on the old + new
-    const newProject = { id: Date.now(), nameProject: nameProject, color: projectColor };
-    const updateProject = [...projects, newProject];
-    dispatch(AddProjectItem(updateProject))
-    dispatch(ChangeProjectName(''))
-    dispatch(ChangeProjectColor('#FFFFFF'))
-    // setListOfProjects(updateProject)
-    // setMyProject('')
-    // setProjectColor('#FFFFFF')
-  }
+  // const handleProjectSubmit = (e) => {
+  //   e.preventDefault();
+  //   if (!nameProject) {
+  //     return;
+  //   }
+  //   //Create a new list base on the old + new
+  //   const newProject = { id: Date.now(), nameProject: nameProject, color: projectColor };
+  //   const updateProject = [...projects, newProject];
+  //   dispatch(AddProjectItem(updateProject))
+  //   dispatch(ChangeProjectName(''))
+  //   dispatch(ChangeProjectColor('#FFFFFF'))
+  //   // setListOfProjects(updateProject)
+  //   // setMyProject('')
+  //   // setProjectColor('#FFFFFF')
+  // }
 
   //Add a new tag
-  const handleTagSubmit = (e) => {
-    e.preventDefault();
-    if (!nameTag) {
-      return;
-    }
-    const newTag = { id: Date.now(), nameTag: nameTag, color: tagColor };
-    const updateTag = [...tags, newTag];
-    dispatch(AddTagItem(updateTag))
-    // setListOfTags(updateTag);
-    dispatch(ChangeTagName(''))
-    dispatch(ChangeTagColor('#FFFFFF'))
-    // setMyTag('');
-    // setTagColor('#FFFFFF')
-  }
+  // const handleTagSubmit = (e) => {
+  //   e.preventDefault();
+  //   if (!nameTag) {
+  //     return;
+  //   }
+  //   const newTag = { id: Date.now(), nameTag: nameTag, color: tagColor };
+  //   const updateTag = [...tags, newTag];
+  //   dispatch(AddTagItem(updateTag))
+  //   // setListOfTags(updateTag);
+  //   dispatch(ChangeTagName(''))
+  //   dispatch(ChangeTagColor('#FFFFFF'))
+  //   // setMyTag('');
+  //   // setTagColor('#FFFFFF')
+  // }
 
   // Remove list element
   // const removeListItem = (id) => {
@@ -162,6 +163,9 @@ const TaskMenu = () => {
             })}
           </div>
           {
+            addProjectEdit && <ProjectEdit />
+          }
+          {/* {
             addProjectEdit && (
               <div className='cancel-btn-container'>
                 <form className='project-form' onSubmit={handleProjectSubmit}>
@@ -196,7 +200,7 @@ const TaskMenu = () => {
                 </button>
               </div>
             )
-          }
+          } */}
           {
             !addProjectEdit && (
               <button className='addBtn add-project-btn' onClick={() => dispatch(ShowAddProjectEdit())} >
@@ -222,6 +226,9 @@ const TaskMenu = () => {
             })}
           </div>
           {
+            addTagEdit && <TagEdit />
+          }
+          {/* {
             addTagEdit && (
               <div className='cancel-btn-container'>
                 <form className='tag-form' onSubmit={handleTagSubmit}>
@@ -255,7 +262,7 @@ const TaskMenu = () => {
                 </button>
               </div>
             )
-          }
+          } */}
           {/* <div className='tags-container'>
 
           </div> */}
