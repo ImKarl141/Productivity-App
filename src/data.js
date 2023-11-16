@@ -3,7 +3,11 @@ export const task = [
     id: 0,
     title: `Make dinner`,
     description: `Prepare the dinner for my Sister's birthday And the buy of a awesome`,
-    subtask: [],
+    subtask: [
+      {
+
+      }
+    ],
     dueDate: '12-23-2023',
     tag: 'Vacation',
     tagColor: '',
@@ -22,6 +26,29 @@ export const task = [
     projectColor: '#d22828',
   }
 ];
+
+export const subtaskTest = [
+  {
+    id: 0,
+    subtask: 'Make bed',
+  },
+  {
+    id: 1,
+    subtask: 'Buy milk',
+  },
+  {
+    id: 2,
+    subtask: 'Cook food',
+  },
+  {
+    id: 3,
+    subtask: 'Buy milk',
+  }
+];
+
+export const subtaskInput = {
+  subtask: ''
+}
 
 export const taskInput = {
   taskTitle: '',
@@ -164,3 +191,4 @@ export const userNotes = [
   //   noteTag: '',
   // }
 ]
+

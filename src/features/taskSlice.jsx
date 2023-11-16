@@ -1,20 +1,23 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { task, taskInput, projectInput, tagInput, taskProjectInput, userProjects, userTags, taskTagInput } from '../data'
+import { task, taskInput, projectInput, tagInput, taskProjectInput, userProjects, userTags, taskTagInput, subtaskTest, subtaskInput } from '../data'
 
 const initialState = {
   taskItems: task,
+  subtaskTest: subtaskTest,
   isEdit: false,
   userName: 'Carlos',
   projects: userProjects,
   tags: userTags,
   addProjectEdit: false,
   addTagEdit: false,
+  addSubtaskEdit: false,
   taskInput: taskInput,
   taskProjectInput: taskProjectInput,
   taskTagInput: taskTagInput,
   // taskTag: userTags[0].nameTag,
   projectInput: projectInput,
   tagInput: tagInput,
+  subtaskInput: subtaskInput,
 }
 
 const taskSlice = createSlice({
@@ -30,6 +33,10 @@ const taskSlice = createSlice({
     },
     ShowAddTagEdit: (state) => {
       state.addTagEdit = !state.addTagEdit;
+    },
+    ShowSubtaskEdit: (state) => {
+      state.addSubtaskEdit = !state.addSubtaskEdit;
+      // console.log(state.addSubtaskEdit);
     },
     //Task input
     ChangeTitleInput: (state, value) => {
@@ -97,5 +104,5 @@ const taskSlice = createSlice({
   }
 });
 
-export const { ShowTaskEdit, ShowAddProjectEdit, ShowAddTagEdit, ChangeTitleInput, ChangeDescriptionInput, ChangeDateInput, ChangeProjectName, ChangeProjectColor, ChangeProjectNameInput, ChangeProjectColorInput, ChangeTagName, ChangeTagColor, ChangeTagInput, ChangeTagNameInput, ChangeTagColorInput, AddTaskItem, RemoveTaskItem, AddProjectItem, RemoveProjectItem, AddTagItem, RemoveTagItem, } = taskSlice.actions;
+export const { ShowTaskEdit, ShowAddProjectEdit, ShowAddTagEdit, ShowSubtaskEdit, ChangeTitleInput, ChangeDescriptionInput, ChangeDateInput, ChangeProjectName, ChangeProjectColor, ChangeProjectNameInput, ChangeProjectColorInput, ChangeTagName, ChangeTagColor, ChangeTagInput, ChangeTagNameInput, ChangeTagColorInput, AddTaskItem, RemoveTaskItem, AddProjectItem, RemoveProjectItem, AddTagItem, RemoveTagItem, } = taskSlice.actions;
 export default taskSlice.reducer;

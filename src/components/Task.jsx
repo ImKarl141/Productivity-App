@@ -8,7 +8,7 @@ import TagEdit from './Task/TagEdit';
 //taskItems and destructuring
 
 const TaskMenu = () => {
-  const { taskItems, isEdit, addProjectEdit, projects, tags, addTagEdit, } = useSelector((store) => store.task);
+  const { taskItems, isEdit, addProjectEdit, projects, tags, addTagEdit } = useSelector((store) => store.task);
 
   const dispatch = useDispatch();
   //Edit task menu
