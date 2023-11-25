@@ -17,7 +17,6 @@
     "@fullcalendar/timegrid": "^6.1.9",
     "@reduxjs/toolkit": "^1.9.6",
     "axios": "^1.6.2",
-    "mysql": "^2.18.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-redux": "^8.1.3",
