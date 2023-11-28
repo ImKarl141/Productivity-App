@@ -3,11 +3,33 @@ import { ShowTaskEdit, ShowAddProjectEdit, ShowAddTagEdit, RemoveProjectItem, } 
 import './Task.css'
 import { AddTaskIcon, AllTasksIcon, CurrentTasksIcon, CompletedTasksIcon, AddProjectIcon, AddTagsIcon, EnterTaskIcon, CalendarIconTask, ProjectSettingsIcon, CancelIcon, TagSettingsIcon, EditListIcon, DeleteListIcon } from '../icons';
 import TaskEdit from './Task/TaskEdit';
+import ListProjects from './Task/ListProjects';
+import ListTags from './Task/ListTags';
+import ListTaskCurrent from './Task/ListTaskCurrent';
 import ProjectEdit from './Task/ProjectEdit';
 import TagEdit from './Task/TagEdit';
+import { useEffect, useState } from "react";
+import axios from "axios";
+
 //taskItems and destructuring
 
 const TaskMenu = () => {
+
+  // const [dbProjects, setDbProjects] = useState([]);
+
+  // useEffect(() => {
+  //   const fetchProjectList = async () => {
+  //     try {
+  //       const resp = await axios.get("http://localhost:8800/ProjectList")
+  //       setDbProjects(resp.data);
+  //       console.log("Projects fetched successfully");
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //   }
+  //   fetchProjectList();
+  // }, [])
+
   const { taskItems, isEdit, addProjectEdit, projects, tags, addTagEdit } = useSelector((store) => store.task);
 
   const dispatch = useDispatch();
@@ -44,23 +66,23 @@ const TaskMenu = () => {
           </a>
         </div>
         {/* List of projects */}
-        <div className='overall-list'>
+        <ListProjects />
+        {/* <div className='overall-list'>
           <div className='list-title'>
             <h2 className='list-title'>List of Projects</h2>
           </div>
           <div className='projects-container'>
-            {projects.map((project) => {
-              const { id, nameProject, color } = project;
+            {dbProjects.map((project) => {
+              const { id, project_name, project_color } = project;
               return (
                 <button key={id} className='list-projects' >
                   <a className='project-title-container' title='Project name' id={id} href={`#${id}`}>
-                    <div className='project-color' style={{ backgroundColor: color }}></div>
-                    <p className='myTask-text'>{nameProject}</p>
+                    <div className='project-color' style={{ backgroundColor: project_color }}></div>
+                    <p className='myTask-text'>{project_name}</p>
                   </a>
                   <div className='project-settings-btn' >
-                    <span title='Edit' onClick={() => console.log(`${nameProject} Project edited`)}><EditListIcon /></span>
+                    <span title='Edit' onClick={() => console.log(`${project_name} Project edited`)}><EditListIcon /></span>
                     <span title='Delete' onClick={() => dispatch(RemoveProjectItem(id))} ><DeleteListIcon /></span>
-                    {/* <ProjectSettingsIcon /> */}
                   </div>
                 </button>
               )
@@ -78,8 +100,9 @@ const TaskMenu = () => {
               </button>
             )
           }
-        </div>
-        <div className='overall-tags'>
+        </div> */}
+        <ListTags />
+        {/* <div className='overall-tags'>
           <div className='list-title'>
             <h2 className='list-title'>Tags</h2>
           </div>
@@ -105,9 +128,10 @@ const TaskMenu = () => {
               </button>
             )
           }
-        </div>
+        </div> */}
       </div>
-      <div className='task-focus'>
+      <ListTaskCurrent />
+      {/* <div className='task-focus'>
         <div className='task-focus-add' >
           <label htmlFor='title-task' className='addBtn add-task-btn' onClick={() => dispatch(ShowTaskEdit())}>
             <AddTaskIcon />
@@ -119,7 +143,6 @@ const TaskMenu = () => {
             const { id, title, description, dueDate, tag, project, projectColor } = task
             return (
               <li key={id}>
-                {/* <button onClick={() => dispatch(RemoveTaskItem(id))}>Remove</button> */}
                 <div className='task-item-overall-container'>
                   <div className='task-item-container'>
                     <input className='default-checkbox checkbox-test' type="checkbox" />
@@ -142,7 +165,6 @@ const TaskMenu = () => {
                           <span className='next-item' title='Project'>
                             <span className='project-color' style={{ backgroundColor: projectColor }}></span>
                             {project}
-                            {/* Find a way to grab the color, maybe with get element by name or something. I need to grab the color of that element */}
                           </span>
                         )
                       }
@@ -161,8 +183,7 @@ const TaskMenu = () => {
             )
           })}
         </ul >
-      </div >
-      {/*Fix the component by creating an store and a selector to prop drilling*/}
+      </div > */}
       {
         isEdit && <TaskEdit />
       }

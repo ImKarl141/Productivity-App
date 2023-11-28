@@ -1,11 +1,20 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { task, taskInput, projectInput, tagInput, taskProjectInput, userProjects, userTags, taskTagInput, subtaskTest, subtaskInput } from '../data'
+import { useEffect, useState } from "react";
+import axios from "axios";
+
+// const [dbProjects, setDbProjects] = useState([]);
+
+
 
 const initialState = {
   taskItems: task,
   subtaskTest: subtaskTest,
   isEdit: false,
   userName: 'Carlos',
+  dbTasks: [1],
+  dbProjects: [],
+  dbTags: [],
   projects: userProjects,
   tags: userTags,
   addProjectEdit: false,
@@ -24,6 +33,15 @@ const taskSlice = createSlice({
   name: 'task',
   initialState,
   reducers: {
+    SetTaskList: (state, value) => {
+      state.dbTasks = value.payload;
+    },
+    SetProjectList: (state, value) => {
+      state.dbProjects = value.payload;
+    },
+    SetTagList: (state, value) => {
+      state.dbTags = value.payload;
+    },
     ShowTaskEdit: (state) => {
       state.isEdit = !state.isEdit;
     },
@@ -104,5 +122,5 @@ const taskSlice = createSlice({
   }
 });
 
-export const { ShowTaskEdit, ShowAddProjectEdit, ShowAddTagEdit, ShowSubtaskEdit, ChangeTitleInput, ChangeDescriptionInput, ChangeDateInput, ChangeProjectName, ChangeProjectColor, ChangeProjectNameInput, ChangeProjectColorInput, ChangeTagName, ChangeTagColor, ChangeTagInput, ChangeTagNameInput, ChangeTagColorInput, AddTaskItem, RemoveTaskItem, AddProjectItem, RemoveProjectItem, AddTagItem, RemoveTagItem, } = taskSlice.actions;
+export const { SetTaskList, SetProjectList, SetTagList, ShowTaskEdit, ShowAddProjectEdit, ShowAddTagEdit, ShowSubtaskEdit, ChangeTitleInput, ChangeDescriptionInput, ChangeDateInput, ChangeProjectName, ChangeProjectColor, ChangeProjectNameInput, ChangeProjectColorInput, ChangeTagName, ChangeTagColor, ChangeTagInput, ChangeTagNameInput, ChangeTagColorInput, AddTaskItem, RemoveTaskItem, AddProjectItem, RemoveProjectItem, AddTagItem, RemoveTagItem, } = taskSlice.actions;
 export default taskSlice.reducer;

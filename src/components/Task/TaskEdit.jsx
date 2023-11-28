@@ -1,10 +1,12 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { ShowTaskEdit, ShowSubtaskEdit, ChangeTitleInput, ChangeDescriptionInput, ChangeDateInput, ChangeProjectNameInput, ChangeProjectColorInput, ChangeTagInput, ChangeTagNameInput, ChangeTagColorInput, AddTaskItem, } from '../../features/taskSlice';
 import { AddTaskIcon } from '../../icons';
+import axios from 'axios';
+import { useState } from 'react';
 // import '../Task.css'
 
 const TaskEdit = () => {
-  const { taskItems, subtaskTest, projects, tags, taskInput, taskProjectInput, taskTagInput, addSubtaskEdit, subtaskInput } = useSelector((store) => store.task);
+  const { taskItems, subtaskTest, projects, dbProjects, dbTags, tags, taskInput, taskProjectInput, taskTagInput, addSubtaskEdit, subtaskInput } = useSelector((store) => store.task);
 
   // Inputs
   const { taskTitle, taskDescription, taskDate } = taskInput
@@ -12,31 +14,47 @@ const TaskEdit = () => {
   const { taskTagName, taskTagColor } = taskTagInput
   const { subtask } = subtaskInput
 
+  const [inputTask, setInputTask] = useState({
+    task_title: '',
+    task_desc: '',
+    task_date: null,
+    task_project: null,
+    task_tag: null,
+  })
+
   // const { nameProject, projectColor } = projectInput
 
   const dispatch = useDispatch();
 
-  const handleTaskSubmit = (e) => {
+  // const handleTaskSubmit = (e) => {
+  //   e.preventDefault();
+  //   if (!taskTitle) {
+  //     return;
+  //   }
+  //   //Create a new list base on the old + new
+  //   const newTask = {
+  //     id: Date.now(),
+  //     title: taskTitle,
+  //     description: taskDescription,
+  //     subtask: [],
+  //     dueDate: taskDate,
+  //     tag: taskTagName,
+  //     colorTag: taskTagColor,
+  //     project: taskProjectName,
+  //     projectColor: taskProjectColor,
+  //   }
+  //   const updateUser = [...taskItems, newTask]
+  //   dispatch(AddTaskItem(updateUser))
+  //   dispatch(ChangeTitleInput(''))
+  //   dispatch(ChangeDescriptionInput(''))
+  // }
+  const handleTaskSubmit = async (e) => {
     e.preventDefault();
-    if (!taskTitle) {
-      return;
+    try {
+      await axios.post('http://localhost:8800/TaskCurrent',)
+    } catch (err) {
+      console.log(err);
     }
-    //Create a new list base on the old + new
-    const newTask = {
-      id: Date.now(),
-      title: taskTitle,
-      description: taskDescription,
-      subtask: [],
-      dueDate: taskDate,
-      tag: taskTagName,
-      colorTag: taskTagColor,
-      project: taskProjectName,
-      projectColor: taskProjectColor,
-    }
-    const updateUser = [...taskItems, newTask]
-    dispatch(AddTaskItem(updateUser))
-    dispatch(ChangeTitleInput(''))
-    dispatch(ChangeDescriptionInput(''))
   }
 
   const handleSubtaskSubmit = (e) => {
@@ -97,10 +115,10 @@ const TaskEdit = () => {
               }
               }
             >
-              {projects.map((listProjects) => {
-                const { id, nameProject } = listProjects;
+              {dbProjects.map((listProjects) => {
+                const { id, project_name } = listProjects;
                 return (
-                  <option key={id} value={id} >{nameProject}</option>
+                  <option key={id} value={id} >{project_name}</option>
                 )
               })}
             </select>
@@ -114,10 +132,10 @@ const TaskEdit = () => {
               }
               }
             >
-              {tags.map((listTag) => {
-                const { id, nameTag } = listTag;
+              {dbTags.map((listTag) => {
+                const { id, tag_name } = listTag;
                 return (
-                  <option key={id}>{nameTag}</option>
+                  <option key={id}>{tag_name}</option>
                 )
               })}
             </select>
@@ -126,7 +144,7 @@ const TaskEdit = () => {
       </div>
       <div className='task-details-subtask'>
         <h1>Subtask:</h1>
-        {
+        {/* {
           subtaskTest.map((mySubtask) => {
             const { id, subtask } = mySubtask
             return (
@@ -136,7 +154,7 @@ const TaskEdit = () => {
               </div>
             )
           })
-        }
+        } */}
         <button className='add-subtask-btn'
           onClick={() => dispatch(ShowSubtaskEdit())}
         >

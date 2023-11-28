@@ -5,12 +5,7 @@ import { AddTaskIcon, AllTasksIcon, CurrentTasksIcon, CompletedTasksIcon, AddPro
 const ProjectEdit = () => {
   const { taskItems, isEdit, addProjectEdit, projects, tags, addTagEdit, taskInput, taskProjectInput, taskTag, projectInput, tagInput } = useSelector((store) => store.task);
 
-  // Inputs
-  // const { taskTitle, taskDescription, taskDate } = taskInput
-  // const { taskProjectName, taskProjectColor } = taskProjectInput
   const { nameProject, projectColor } = projectInput
-  // const { nameTag, tagColor } = tagInput
-
   const dispatch = useDispatch();
 
   const handleProjectSubmit = (e) => {
@@ -18,18 +13,15 @@ const ProjectEdit = () => {
     if (!nameProject) {
       return;
     }
-    //Create a new list base on the old + new
     const newProject = { id: Date.now(), nameProject: nameProject, color: projectColor };
     const updateProject = [...projects, newProject];
     dispatch(AddProjectItem(updateProject))
     dispatch(ChangeProjectName(''))
     dispatch(ChangeProjectColor('#FFFFFF'))
-    // setListOfProjects(updateProject)
-    // setMyProject('')
-    // setProjectColor('#FFFFFF')
   }
   return (
     <div className='cancel-btn-container'>
+      {/* <h1 className="test-element">Hello friend!</h1> */}
       <form className='project-form' onSubmit={handleProjectSubmit}>
         <div className='color-picker-container'>
           <input
