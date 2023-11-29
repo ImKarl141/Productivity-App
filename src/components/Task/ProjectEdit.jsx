@@ -1,24 +1,48 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { ShowTaskEdit, ShowAddProjectEdit, ShowAddTagEdit, ChangeTitleInput, ChangeDescriptionInput, ChangeDateInput, ChangeProjectName, ChangeProjectColor, ChangeProjectNameInput, ChangeProjectColorInput, ChangeTagName, ChangeTagColor, AddTaskItem, RemoveTaskItem, AddProjectItem, RemoveProjectItem, AddTagItem, RemoveTagItem } from '../../features/taskSlice';
-import { AddTaskIcon, AllTasksIcon, CurrentTasksIcon, CompletedTasksIcon, AddProjectIcon, AddTagsIcon, EnterTaskIcon, CalendarIconTask, ProjectSettingsIcon, CancelIcon, TagSettingsIcon, EditListIcon, DeleteListIcon } from '../../icons';
+import { ShowAddProjectEdit, ChangeProjectName, ChangeProjectColor, AddProjectItem } from '../../features/taskSlice';
+import { CancelIcon } from '../../icons';
+import { useState } from 'react';
+import axios from 'axios';
 
 const ProjectEdit = () => {
-  const { taskItems, isEdit, addProjectEdit, projects, tags, addTagEdit, taskInput, taskProjectInput, taskTag, projectInput, tagInput } = useSelector((store) => store.task);
+  // const { projects, projectInput } = useSelector((store) => store.task);
 
-  const { nameProject, projectColor } = projectInput
   const dispatch = useDispatch();
 
-  const handleProjectSubmit = (e) => {
-    e.preventDefault();
-    if (!nameProject) {
-      return;
-    }
-    const newProject = { id: Date.now(), nameProject: nameProject, color: projectColor };
-    const updateProject = [...projects, newProject];
-    dispatch(AddProjectItem(updateProject))
-    dispatch(ChangeProjectName(''))
-    dispatch(ChangeProjectColor('#FFFFFF'))
+  const [projectInput, setProjectInput] = useState({
+    project_name: '',
+    project_color: '#FFFFFF',
+  })
+
+  const { project_color } = projectInput
+
+  // const handleProjectSubmit = (e) => {
+  //   e.preventDefault();
+  //   if (!nameProject) {
+  //     return;
+  //   }
+  //   const newProject = { id: Date.now(), nameProject: nameProject, color: projectColor };
+  //   const updateProject = [...projects, newProject];
+  //   dispatch(AddProjectItem(updateProject))
+  //   dispatch(ChangeProjectName(''))
+  //   dispatch(ChangeProjectColor('#FFFFFF'))
+  // }
+
+  const handleChangeInput = (e) => {
+    setProjectInput((prev) => ({ ...prev, [e.target.name]: e.target.value }))
+    console.log(projectInput);
   }
+
+  const handleProjectSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await axios.post('http://localhost:8800/ProjectList', projectInput);
+      window.location.reload();
+    } catch (err) {
+      console.log(err);
+    };
+  };
+
   return (
     <div className='cancel-btn-container'>
       {/* <h1 className="test-element">Hello friend!</h1> */}
@@ -26,27 +50,21 @@ const ProjectEdit = () => {
         <div className='color-picker-container'>
           <input
             id='color-picker-project'
-            name='color'
+            name='project_color'
             type="color"
             className='default-colorPicker'
-            value={projectColor}
-            onChange={(e) => {
-              dispatch(ChangeProjectColor(e.target.value))
-            }}
+            onChange={handleChangeInput}
           />
-          <div className='custom-colorPicker' style={{ backgroundColor: projectColor }}>
+          <div className='custom-colorPicker' style={{ backgroundColor: project_color }}>
           </div>
         </div>
         <input
           id='projectName'
-          name='nameProject'
+          name='project_name'
           type="text"
           className='myInputAddProject'
           placeholder='Project name'
-          value={nameProject}
-          onChange={(e) => {
-            dispatch(ChangeProjectName(e.target.value))
-          }}
+          onChange={handleChangeInput}
         />
       </form>
       <button className='cancel-projects-btn' onClick={() => dispatch(ShowAddProjectEdit())}>

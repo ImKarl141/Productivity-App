@@ -1,21 +1,21 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { SetTaskList, ShowTaskEdit } from "../../features/taskSlice";
-import { AddTaskIcon, EnterTaskIcon, CalendarIconTask } from '../../icons';
+import { SetTaskList, ShowTaskEdit, ShowTaskUpdate, SetCurrentEditId } from "../../features/taskSlice";
+import { AddTaskIcon, EnterTaskIcon, CalendarIconTask, DeleteListIcon } from '../../icons';
 import axios from "axios";
 
 const ListTaskCurrent = () => {
 
   const [dbTasks, setDbTasks] = useState([])
   const dispatch = useDispatch();
-  const { dbProjects, dbTags } = useSelector((store) => store.task);
+  const { isUpdate } = useSelector((store) => store.task);
 
   useEffect(() => {
     const fetchTaskList = async () => {
       try {
         const resp = await axios.get("http://localhost:8800/TaskCurrent")
         setDbTasks(resp.data)
-        dispatch(SetTaskList(dbTasks))
+        dispatch(SetTaskList(resp.data))
       } catch (err) {
         console.log(err);
       }
@@ -68,9 +68,18 @@ const ListTaskCurrent = () => {
                     }
                   </div>
                 </div>
-                <button className='task-item-btn' >
-                  <EnterTaskIcon />
-                </button>
+                {
+                  !isUpdate && (
+                    <button className='task-item-btn'
+                      onClick={() => {
+                        dispatch(ShowTaskUpdate());
+                        dispatch(SetCurrentEditId(id))
+                      }}
+                    >
+                      <EnterTaskIcon />
+                    </button>
+                  )
+                }
               </div>
             </li>
           )

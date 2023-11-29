@@ -21,6 +21,16 @@ const ListProjects = () => {
     fetchProjectList();
   }, [])
 
+  const handleDeleteProject = async (id) => {
+    // let id = 8;
+    try {
+      await axios.delete("http://localhost:8800/ProjectList/" + id)
+      window.location.reload();
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
 
   return (
     <div className='overall-list'>
@@ -38,7 +48,7 @@ const ListProjects = () => {
               </a>
               <div className='project-settings-btn' >
                 <span title='Edit' onClick={() => console.log(`${project_name} Project edited`)}><EditListIcon /></span>
-                <span title='Delete' onClick={() => dispatch(RemoveProjectItem(id))} ><DeleteListIcon /></span>
+                <span title='Delete' onClick={() => handleDeleteProject(id)} ><DeleteListIcon /></span>
               </div>
             </button>
           )

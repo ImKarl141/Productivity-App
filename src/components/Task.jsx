@@ -10,27 +10,13 @@ import ProjectEdit from './Task/ProjectEdit';
 import TagEdit from './Task/TagEdit';
 import { useEffect, useState } from "react";
 import axios from "axios";
+import TaskUpdate from './Task/TaskUpdate';
 
 //taskItems and destructuring
 
 const TaskMenu = () => {
 
-  // const [dbProjects, setDbProjects] = useState([]);
-
-  // useEffect(() => {
-  //   const fetchProjectList = async () => {
-  //     try {
-  //       const resp = await axios.get("http://localhost:8800/ProjectList")
-  //       setDbProjects(resp.data);
-  //       console.log("Projects fetched successfully");
-  //     } catch (err) {
-  //       console.log(err);
-  //     }
-  //   }
-  //   fetchProjectList();
-  // }, [])
-
-  const { taskItems, isEdit, addProjectEdit, projects, tags, addTagEdit } = useSelector((store) => store.task);
+  const { taskItems, isEdit, isUpdate, addProjectEdit, projects, tags, addTagEdit } = useSelector((store) => store.task);
 
   const dispatch = useDispatch();
   //Edit task menu
@@ -67,125 +53,14 @@ const TaskMenu = () => {
         </div>
         {/* List of projects */}
         <ListProjects />
-        {/* <div className='overall-list'>
-          <div className='list-title'>
-            <h2 className='list-title'>List of Projects</h2>
-          </div>
-          <div className='projects-container'>
-            {dbProjects.map((project) => {
-              const { id, project_name, project_color } = project;
-              return (
-                <button key={id} className='list-projects' >
-                  <a className='project-title-container' title='Project name' id={id} href={`#${id}`}>
-                    <div className='project-color' style={{ backgroundColor: project_color }}></div>
-                    <p className='myTask-text'>{project_name}</p>
-                  </a>
-                  <div className='project-settings-btn' >
-                    <span title='Edit' onClick={() => console.log(`${project_name} Project edited`)}><EditListIcon /></span>
-                    <span title='Delete' onClick={() => dispatch(RemoveProjectItem(id))} ><DeleteListIcon /></span>
-                  </div>
-                </button>
-              )
-            })}
-          </div>
-          {
-            addProjectEdit && <ProjectEdit />
-          }
-
-          {
-            !addProjectEdit && (
-              <button className='addBtn add-project-btn' onClick={() => dispatch(ShowAddProjectEdit())} >
-                <AddProjectIcon />
-                <p className='myTask-text'>Add Project</p>
-              </button>
-            )
-          }
-        </div> */}
         <ListTags />
-        {/* <div className='overall-tags'>
-          <div className='list-title'>
-            <h2 className='list-title'>Tags</h2>
-          </div>
-          <div className='tags-container'>
-            {tags.map((tag) => {
-              const { id, nameTag, color } = tag;
-              return (
-                <button key={id} className='myTag' style={{ backgroundColor: color }} title={nameTag}>
-                  <span>{nameTag}</span>
-                  <TagSettingsIcon />
-                </button>
-              )
-            })}
-          </div>
-          {
-            addTagEdit && <TagEdit />
-          }
-          {
-            !addTagEdit && (
-              <button className='addBtn add-tags-btn' onClick={() => dispatch(ShowAddTagEdit())}>
-                <AddTagsIcon />
-                <p className='myTask-text'>Add Tag</p>
-              </button>
-            )
-          }
-        </div> */}
       </div>
       <ListTaskCurrent />
-      {/* <div className='task-focus'>
-        <div className='task-focus-add' >
-          <label htmlFor='title-task' className='addBtn add-task-btn' onClick={() => dispatch(ShowTaskEdit())}>
-            <AddTaskIcon />
-            <p className='myTask-text'>Add Task</p>
-          </label>
-        </div>
-        <ul className='list-tasks'>
-          {taskItems.map((task) => {
-            const { id, title, description, dueDate, tag, project, projectColor } = task
-            return (
-              <li key={id}>
-                <div className='task-item-overall-container'>
-                  <div className='task-item-container'>
-                    <input className='default-checkbox checkbox-test' type="checkbox" />
-                    <span className='checkmark'></span>
-                    <div className='task-item-text'>
-                      <span>{title}:</span>
-                      <span className='task-item-description'>{description}</span>
-                    </div>
-                    <div className='task-item-details'>
-                      {
-                        dueDate && (
-                          <>
-                            <span title='Due date'><CalendarIconTask /></span>
-                            <span title='Due date' className='next-item'>{dueDate}</span>
-                          </>
-                        )
-                      }
-                      {
-                        project && (
-                          <span className='next-item' title='Project'>
-                            <span className='project-color' style={{ backgroundColor: projectColor }}></span>
-                            {project}
-                          </span>
-                        )
-                      }
-                      {
-                        tag && (
-                          <span title='Tag'>{tag}</span>
-                        )
-                      }
-                    </div>
-                  </div>
-                  <button className='task-item-btn' >
-                    <EnterTaskIcon />
-                  </button>
-                </div>
-              </li>
-            )
-          })}
-        </ul >
-      </div > */}
       {
         isEdit && <TaskEdit />
+      }
+      {
+        isUpdate && <TaskUpdate />
       }
     </section >
   )

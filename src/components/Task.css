@@ -515,6 +515,7 @@ input[type=date]::after {
 
 
 
+
 .detailsBtn {
   font-family: Nunito;
   font-size: 0.8rem;
@@ -532,6 +533,10 @@ input[type=date]::after {
 .saveBtn {
   grid-column: span 2;
   background-color: var(--white);
+}
+
+.cancelBtn {
+  grid-column: span 2;
 }
 
 .deleteBtn {

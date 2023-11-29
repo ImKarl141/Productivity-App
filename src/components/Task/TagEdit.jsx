@@ -1,33 +1,42 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { ShowTaskEdit, ShowAddProjectEdit, ShowAddTagEdit, ChangeTitleInput, ChangeDescriptionInput, ChangeDateInput, ChangeProjectName, ChangeProjectColor, ChangeProjectNameInput, ChangeProjectColorInput, ChangeTagName, ChangeTagColor, AddTaskItem, RemoveTaskItem, AddProjectItem, RemoveProjectItem, AddTagItem, RemoveTagItem } from '../../features/taskSlice';
 import { AddTaskIcon, AllTasksIcon, CurrentTasksIcon, CompletedTasksIcon, AddProjectIcon, AddTagsIcon, EnterTaskIcon, CalendarIconTask, ProjectSettingsIcon, CancelIcon, TagSettingsIcon, EditListIcon, DeleteListIcon } from '../../icons';
+import axios from 'axios';
+import { useState } from 'react';
 
 
 const TagEdit = () => {
 
-  const { taskItems, isEdit, addProjectEdit, projects, tags, addTagEdit, taskInput, taskProjectInput, taskTag, projectInput, tagInput } = useSelector((store) => store.task);
+  // const { taskItems, isEdit, addProjectEdit, projects, tags, addTagEdit, taskInput, taskProjectInput, taskTag, projectInput, tagInput } = useSelector((store) => store.task);
 
   // Inputs
   // const { taskTitle, taskDescription, taskDate } = taskInput
   // const { taskProjectName, taskProjectColor } = taskProjectInput
   // const { nameProject, projectColor } = projectInput
-  const { nameTag, tagColor } = tagInput
+  // const { nameTag, tagColor } = tagInput
 
+  const [tagInput, setTagInput] = useState({
+    tag_name: '',
+    tag_color: '#FFFFFF',
+  })
+
+  const { tag_color } = tagInput;
   const dispatch = useDispatch();
 
-  const handleTagSubmit = (e) => {
+  const handleChangeInput = (e) => {
+    setTagInput((prev) => ({ ...prev, [e.target.name]: e.target.value }))
+    console.log(tagInput);
+  }
+
+  const handleTagSubmit = async (e) => {
     e.preventDefault();
-    if (!nameTag) {
-      return;
+    try {
+      await axios.post("http://localhost:8800/TagList", tagInput);
+      window.location.reload();
+    } catch (err) {
+      console.log(err);
     }
-    const newTag = { id: Date.now(), nameTag: nameTag, color: tagColor };
-    const updateTag = [...tags, newTag];
-    dispatch(AddTagItem(updateTag))
-    // setListOfTags(updateTag);
-    dispatch(ChangeTagName(''))
-    dispatch(ChangeTagColor('#FFFFFF'))
-    // setMyTag('');
-    // setTagColor('#FFFFFF')
+
   }
 
   return (
@@ -36,26 +45,21 @@ const TagEdit = () => {
         <div className='color-picker-container'>
           <input
             id='color-picker-tag'
-            name='color'
+            name='tag_color'
             type="color"
             className='default-colorPicker'
-            value={tagColor}
-            onChange={(e) => {
-              dispatch(ChangeTagColor(e.target.value))
-              // setTagColor(e.target.value)
-            }}
+            onChange={handleChangeInput}
           />
-          <div className='custom-colorPicker' style={{ backgroundColor: tagColor }}>
+          <div className='custom-colorPicker' style={{ backgroundColor: tag_color }}>
           </div>
         </div>
         <input
           id='tagName'
-          name='nameTag'
+          name='tag_name'
+          placeholder='Tag name'
           type="text"
           className='myInputAddTag'
-          value={nameTag}
-          onChange={(e) => dispatch(ChangeTagName(e.target.value))}
-          placeholder='Tag name'
+          onChange={handleChangeInput}
         />
       </form>
       <button className='cancel-tags-btn' onClick={() => dispatch(ShowAddTagEdit())}>

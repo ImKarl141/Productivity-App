@@ -21,37 +21,33 @@ const TaskEdit = () => {
     task_project: null,
     task_tag: null,
   })
+  const { task_title } = inputTask;
 
   // const { nameProject, projectColor } = projectInput
 
   const dispatch = useDispatch();
 
-  // const handleTaskSubmit = (e) => {
-  //   e.preventDefault();
-  //   if (!taskTitle) {
-  //     return;
-  //   }
-  //   //Create a new list base on the old + new
-  //   const newTask = {
-  //     id: Date.now(),
-  //     title: taskTitle,
-  //     description: taskDescription,
-  //     subtask: [],
-  //     dueDate: taskDate,
-  //     tag: taskTagName,
-  //     colorTag: taskTagColor,
-  //     project: taskProjectName,
-  //     projectColor: taskProjectColor,
-  //   }
-  //   const updateUser = [...taskItems, newTask]
-  //   dispatch(AddTaskItem(updateUser))
-  //   dispatch(ChangeTitleInput(''))
-  //   dispatch(ChangeDescriptionInput(''))
-  // }
+
+  // Change of inputs
+  const handleChangeInput = (e) => {
+    setInputTask((prev) => ({ ...prev, [e.target.name]: e.target.value }))
+    // console.log(e.target.value)
+  }
+
+  const handleChangeInputDate = (e) => {
+    const [year, month, day] = e.target.value.split('-')
+    setInputTask((prev) => ({ ...prev, [e.target.name]: `${month}-${day}-${year}` }))
+  }
+
+  // Submit inputs to endpoint
   const handleTaskSubmit = async (e) => {
     e.preventDefault();
+    if (!task_title) {
+      return
+    }
     try {
-      await axios.post('http://localhost:8800/TaskCurrent',)
+      await axios.post('http://localhost:8800/TaskCurrent', inputTask)
+      window.location.reload();
     } catch (err) {
       console.log(err);
     }
@@ -72,25 +68,23 @@ const TaskEdit = () => {
         <form className='taskForm' onSubmit={handleTaskSubmit}>
           <input
             id='title-task'
-            name='taskTitle'
+            name='task_title'
             className='myInput'
             type="text"
             placeholder='Title name'
-            value={taskTitle}
-            onChange={(e) => dispatch(ChangeTitleInput(e.target.value))
-            }
+            onChange={handleChangeInput}
+          // value={taskT}
+          // onChange={(e) => dispatch(ChangeTitleInput(e.target.value))}
           />
           <textarea
             id='description'
-            name='taskDescription'
+            name='task_desc'
             type="text"
             placeholder='Description'
             className='myInput myInput-description'
-            value={taskDescription}
-            onChange={(e) => {
-              dispatch(ChangeDescriptionInput(e.target.value))
-            }
-            }
+            onChange={handleChangeInput}
+          // value={taskDescription}
+          // onChange={(e) => {dispatch(ChangeDescriptionInput(e.target.value))}}
           />
 
           <div className='task-details-info'>
@@ -98,22 +92,19 @@ const TaskEdit = () => {
             <input
               className='myInput-date'
               type="date"
-              name='dueDate'
-              onChange={(e) => {
-                const [year, month, day] = e.target.value.split('-')
-                dispatch(ChangeDateInput(`${month}-${day}-${year}`))
-              }}
+              name='task_date'
+              onChange={handleChangeInputDate}
+            // onChange={(e) => {
+            //   const [year, month, day] = e.target.value.split('-')
+            //   dispatch(ChangeDateInput(`${month}-${day}-${year}`))
+            // }}
             />
           </div>
           <div className='task-details-info'>
             <p className='details-text'>List</p>
             <select
-              onChange={(e) => {
-                const selectedProject = projects.find((projectInput) => projectInput.id == e.target.value)
-                dispatch(ChangeProjectNameInput(selectedProject.nameProject))
-                dispatch(ChangeProjectColorInput(selectedProject.color))
-              }
-              }
+              name='task_project'
+              onChange={handleChangeInput}
             >
               {dbProjects.map((listProjects) => {
                 const { id, project_name } = listProjects;
@@ -126,16 +117,13 @@ const TaskEdit = () => {
           <div className='task-details-info'>
             <p className='details-text'>Tags</p>
             <select
-              name='Tags'
-              onChange={(e) => {
-                dispatch(ChangeTagNameInput(e.target.value))
-              }
-              }
+              name='task_tag'
+              onChange={handleChangeInput}
             >
               {dbTags.map((listTag) => {
                 const { id, tag_name } = listTag;
                 return (
-                  <option key={id}>{tag_name}</option>
+                  <option key={id} value={id}>{tag_name}</option>
                 )
               })}
             </select>
@@ -144,17 +132,6 @@ const TaskEdit = () => {
       </div>
       <div className='task-details-subtask'>
         <h1>Subtask:</h1>
-        {/* {
-          subtaskTest.map((mySubtask) => {
-            const { id, subtask } = mySubtask
-            return (
-              <div key={id}>
-                <input id={subtask + id} type="checkbox" />
-                <label htmlFor={subtask + id}>{subtask}</label>
-              </div>
-            )
-          })
-        } */}
         <button className='add-subtask-btn'
           onClick={() => dispatch(ShowSubtaskEdit())}
         >
@@ -171,9 +148,9 @@ const TaskEdit = () => {
         }
       </div>
       <div className='task-details-button'>
-        <button className='detailsBtn saveBtn' onClick={handleTaskSubmit}>Save Changes</button>
-        <button className='detailsBtn' onClick={() => dispatch(ShowTaskEdit())}>Cancel Task</button>
-        <button className='detailsBtn deleteBtn' >Delete Task</button>
+        <button className='detailsBtn saveBtn' onClick={handleTaskSubmit}>Create Task</button>
+        <button className='detailsBtn cancelBtn' onClick={() => dispatch(ShowTaskEdit())}>Cancel Task</button>
+        {/* <button className='detailsBtn deleteBtn' >Delete Task</button> */}
       </div>
     </div>
   )

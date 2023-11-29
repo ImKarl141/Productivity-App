@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ShowAddTagEdit, SetTagList } from "../../features/taskSlice";
-import { AddTagsIcon, TagSettingsIcon } from '../../icons';
+import { AddTagsIcon, TagSettingsIcon, DeleteListIcon } from '../../icons';
 import axios from "axios";
 import TagEdit from "./TagEdit";
 
@@ -24,6 +24,15 @@ const ListTags = () => {
     fetchTagList();
   }, [])
 
+  const handleDeleteProject = async (id) => {
+    try {
+      await axios.delete("http://localhost:8800/TagList/" + id)
+      window.location.reload();
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   const { addTagEdit, dbTags } = useSelector((store) => store.task);
 
   return (
@@ -35,7 +44,7 @@ const ListTags = () => {
         {dbTags.map((tag) => {
           const { id, tag_name, tag_color } = tag;
           return (
-            <button key={id} className='myTag' style={{ backgroundColor: tag_color }} title={tag_name}>
+            <button onClick={() => handleDeleteProject(id)} key={id} className='myTag' style={{ backgroundColor: tag_color }} title={tag_name}>
               <span>{tag_name}</span>
               <TagSettingsIcon />
             </button>

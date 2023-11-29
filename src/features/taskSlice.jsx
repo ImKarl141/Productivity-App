@@ -11,6 +11,8 @@ const initialState = {
   taskItems: task,
   subtaskTest: subtaskTest,
   isEdit: false,
+  isUpdate: false,
+  currentEditId: '',
   userName: 'Carlos',
   dbTasks: [1],
   dbProjects: [],
@@ -23,7 +25,6 @@ const initialState = {
   taskInput: taskInput,
   taskProjectInput: taskProjectInput,
   taskTagInput: taskTagInput,
-  // taskTag: userTags[0].nameTag,
   projectInput: projectInput,
   tagInput: tagInput,
   subtaskInput: subtaskInput,
@@ -42,8 +43,16 @@ const taskSlice = createSlice({
     SetTagList: (state, value) => {
       state.dbTags = value.payload;
     },
+    SetCurrentEditId: (state, value) => {
+      state.currentEditId = value.payload;
+    },
     ShowTaskEdit: (state) => {
       state.isEdit = !state.isEdit;
+      state.isUpdate = false;
+    },
+    ShowTaskUpdate: (state) => {
+      state.isUpdate = !state.isUpdate;
+      state.isEdit = false;
     },
     ShowAddProjectEdit: (state) => {
       state.addProjectEdit = !state.addProjectEdit;
@@ -122,5 +131,5 @@ const taskSlice = createSlice({
   }
 });
 
-export const { SetTaskList, SetProjectList, SetTagList, ShowTaskEdit, ShowAddProjectEdit, ShowAddTagEdit, ShowSubtaskEdit, ChangeTitleInput, ChangeDescriptionInput, ChangeDateInput, ChangeProjectName, ChangeProjectColor, ChangeProjectNameInput, ChangeProjectColorInput, ChangeTagName, ChangeTagColor, ChangeTagInput, ChangeTagNameInput, ChangeTagColorInput, AddTaskItem, RemoveTaskItem, AddProjectItem, RemoveProjectItem, AddTagItem, RemoveTagItem, } = taskSlice.actions;
+export const { SetTaskList, SetProjectList, SetTagList, SetCurrentEditId, ShowTaskEdit, ShowTaskUpdate, ShowAddProjectEdit, ShowAddTagEdit, ShowSubtaskEdit, ChangeTitleInput, ChangeDescriptionInput, ChangeDateInput, ChangeProjectName, ChangeProjectColor, ChangeProjectNameInput, ChangeProjectColorInput, ChangeTagName, ChangeTagColor, ChangeTagInput, ChangeTagNameInput, ChangeTagColorInput, AddTaskItem, RemoveTaskItem, AddProjectItem, RemoveProjectItem, AddTagItem, RemoveTagItem, } = taskSlice.actions;
 export default taskSlice.reducer;
