@@ -18,14 +18,14 @@ app.use(cors())
 
 
 //Create 
-app.post("/task_list", (req, resp) => {
-  const q = "INSERT INTO TaskCurrent (`task_title`, `task_desc`, `taskDate`, `task_project`, `task_tag`) VALUES (?)";
+app.post("/TaskCurrent", (req, resp) => {
+  const q = "INSERT INTO `TaskCurrent` (`task_title`, `task_desc`, `task_date`, `task_project`, `task_tag`) VALUES (?)";
   const values = [
-    req.body.title,
-    req.body.desc,
-    req.body.taskDate,
-    req.body.taskProject,
-    req.body.taskTag,
+    req.body.task_title,
+    req.body.task_desc,
+    req.body.task_date,
+    req.body.task_project,
+    req.body.task_tag,
   ];
   db.query(q, [values], (err, data) => {
     if (err) {
@@ -34,8 +34,8 @@ app.post("/task_list", (req, resp) => {
   });
 });
 
-app.post("/projects_list", (req, resp) => {
-  const q = "INSERT INTO ProjectList (`project_name`, `project_color`) VALUES (?)";
+app.post("/ProjectList", (req, resp) => {
+  const q = "INSERT INTO `ProjectList` (`project_name`, `project_color`) VALUES (?)";
   const values = [
     req.body.project_name,
     req.body.project_color,
@@ -46,8 +46,8 @@ app.post("/projects_list", (req, resp) => {
   })
 })
 
-app.post("/tags_list", (req, resp) => {
-  const q = "INSERT INTO TagList (`tag_name`, `tag_color`) VALUES (?)"
+app.post("/TagList", (req, resp) => {
+  const q = "INSERT INTO `TagList` (`tag_name`, `tag_color`) VALUES (?)"
   const values = [
     req.body.tag_name,
     req.body.tag_color,
@@ -84,8 +84,6 @@ app.get("/TagList", (req, resp) => {
 })
 
 app.get("/TaskCurrent", (req, resp) => {
-  // const q = "SELECT t.id, t.task_title, t.task_desc, t.task_date, p.project_name, p.project_color, t.task_tag FROM `ProjectList` p RIGHT JOIN `TaskCurrent` t ON p.id = t.task_project";
-
   const q = "SELECT t.id, t.task_title, t.task_desc, t.task_date, p.project_name, p.project_color, tg.tag_name, tg.tag_color FROM `TaskCurrent` t LEFT JOIN `ProjectList` p ON t.task_project = p.id LEFT JOIN `TagList` tg ON t.task_tag = tg.id";
   db.query(q, (err, data) => {
     if (err) {
@@ -97,9 +95,57 @@ app.get("/TaskCurrent", (req, resp) => {
 
 //Update
 
+app.put("/TaskCurrent/:id", (req, resp) => {
+  const taskId = req.params.id;
+  const q = "UPDATE TaskCurrent SET `task_title` = ?, `task_desc` = ?, `task_date` = ?, `task_project` = ?, `task_tag` = ? WHERE id = ?"
+  const values = [
+    req.body.task_title,
+    req.body.task_desc,
+    req.body.task_date,
+    req.body.task_project,
+    req.body.task_tag,
+  ];
+
+  db.query(q, [...values, taskId], (err, data) => {
+    if (err) return resp.json(err);
+    return resp.json("Task updated successfully");
+  })
+})
+
 
 //Delete
 
+app.delete("/ProjectList/:id", (req, resp) => {
+  const projectId = req.params.id;
+  const q = "DELETE FROM ProjectList WHERE id = ?";
+
+  db.query(q, [projectId], (err, data) => {
+    if (err) return resp.json(err);
+    return resp.json("Project deleted successfully");
+  });
+})
+
+app.delete("/TagList/:id", (req, resp) => {
+  const tagId = req.params.id;
+  const q = "DELETE FROM TagList WHERE id = ?";
+
+  db.query(q, [tagId], (err, data) => {
+    if (err) return resp.json(err);
+    return resp.json("Tag deleted successfully");
+  })
+})
+
+app.delete("/TaskCurrent/:id", (req, resp) => {
+  const taskId = req.params.id;
+  const q = "DELETE FROM TaskCurrent WHERE id = ?";
+
+  db.query(q, [taskId], (err, data) => {
+    if (err) return resp.json(err);
+    return resp.json("Task deleted successfully");
+  })
+})
+
+////////////////////////////////////////////////////////////////////////
 
 app.listen(8800, () => {
   console.log("Connected to the server!");
