@@ -12,27 +12,77 @@ const TaskUpdate = () => {
   // console.log(currentEditId);
 
   const temp_task = dbTasks.find(myTask => myTask.id === currentEditId)
+  const { project_name, tag_name } = temp_task;
+  // console.log(temp_task);
+
+  //Default value of project and tag in case the assign fail.
+  // if (project_name) {
+  //   console.log("Project");
+  // } else {
+  //   console.log("Not project");
+  // }
+
+  // if (tag_name) {
+  //   console.log("Tag");
+  // } else {
+  //   console.log("Not tag");
+  // }
+
+  //Assign the id for selecting the proper project/tag. If the task doesn't have one then assign an empty value.
+
+  //Formatting date of task. If the task doesn't have a one then omit the formatting.
+  // console.log(temp_task);
+  const formatDate = (date) => {
+    try {
+      const [month, day, year] = date.split("-")
+      return `${year}-${month}-${day}`
+    } catch {
+      console.log("Date not found");
+      return
+    }
+  }
 
   const [inputTask, setInputTask] = useState({
     task_title: temp_task.task_title,
     task_desc: temp_task.task_desc,
     task_date: temp_task.task_date,
-    task_project: temp_task.task_project,
-    task_tag: temp_task.task_tag,
+    task_project: project_name ?
+      dbProjects.find(project => project.project_name === project_name).id : '',
+    task_tag: tag_name ?
+      dbTags.find(tag => tag.tag_name === tag_name).id : '',
   })
 
+
+
+
+
   const { task_title, task_desc, task_date, task_project, task_tag } = inputTask;
-  // const { nameProject, projectColor } = projectInput
+  // const projectId = dbProjects.find(project => project.project_name === task_project).id
+  // console.log(projectId);
+
+
+  // console.log(task_project);
+  // console.log(task_tag);
+
 
 
 
   // Change of inputs
   const handleChangeInput = (e) => {
     setInputTask((prev) => ({ ...prev, [e.target.name]: e.target.value }))
-    // console.log(inputTask);
+    console.log(inputTask);
+    console.log('Value changed');
   }
 
   const handleChangeInputDate = (e) => {
+    // if (e.target.value) {
+    //   const [year, month, day] = e.target.value.split('-')
+    //   setInputTask((prev) => ({ ...prev, [e.target.name]: `${month}-${day}-${year}` }))
+    // } else {
+    //   e.target.value = 'null';
+    //   console.log(e.target.value);
+    //   // setInputTask((prev) => ({ ...prev, [e.target.name]: e.target.value }))
+    // }
     const [year, month, day] = e.target.value.split('-')
     setInputTask((prev) => ({ ...prev, [e.target.name]: `${month}-${day}-${year}` }))
   }
@@ -48,14 +98,6 @@ const TaskUpdate = () => {
     }
   }
 
-  const handleSubtaskUpdate = (e) => {
-    e.preventDefault();
-    if (!subtask) {
-      return;
-    }
-    console.log('Form sended');
-  }
-
   const handleDeleteTask = async (id) => {
     try {
       await axios.delete("http://localhost:8800/TaskCurrent/" + id)
@@ -65,13 +107,20 @@ const TaskUpdate = () => {
     }
   }
 
-
-  // const formatDate = (date) => {
-  //   const [month, day, year] = date.split("-")
-  //   return `${year}-${month}-${day}`
+  // const formatTagInput = (input) => {
+  //   const tagId = dbTags.find(tag => tag.tag_name === input).id
+  //   return tagId
   // }
 
-
+  // const formatProjectInput = (input) => {
+  //   try {
+  //     const projectId = dbProjects.find(project => project.project_name === input).id
+  //     return projectId
+  //   } catch {
+  //     const projectId = dbProjects.find(project => project.project_name === task_project).id
+  //     return projectId
+  //   }
+  // }
 
   return (
     <div className='task-details'>
@@ -106,7 +155,7 @@ const TaskUpdate = () => {
               type="date"
               name='task_date'
               // value={task_date}
-              // value={formatDate(task_date)}
+              value={formatDate(task_date)}
               onChange={handleChangeInputDate}
             />
           </div>
@@ -114,9 +163,11 @@ const TaskUpdate = () => {
             <p className='details-text'>List</p>
             <select
               name='task_project'
-              onChange={handleChangeInput}
               value={task_project}
+              // value={formatProjectInput(task_project)}
+              onChange={handleChangeInput}
             >
+              <option value={''}></option>
               {dbProjects.map((listProjects) => {
                 const { id, project_name } = listProjects;
                 return (
@@ -129,8 +180,10 @@ const TaskUpdate = () => {
             <p className='details-text'>Tags</p>
             <select
               name='task_tag'
+              value={task_tag}
               onChange={handleChangeInput}
             >
+              <option value={''}></option>
               {dbTags.map((listTag) => {
                 const { id, tag_name } = listTag;
                 return (
@@ -151,7 +204,7 @@ const TaskUpdate = () => {
         </button>
         {
           addSubtaskEdit && (
-            <form onSubmit={handleSubtaskSubmit} >
+            <form >
               <label htmlFor="text">Input</label>
               <input id='text' type="text" />
             </form>
