@@ -5,8 +5,6 @@ import { useState } from 'react';
 import axios from 'axios';
 
 const ProjectEdit = () => {
-  // const { projects, projectInput } = useSelector((store) => store.task);
-
   const dispatch = useDispatch();
 
   const [projectInput, setProjectInput] = useState({
@@ -15,18 +13,6 @@ const ProjectEdit = () => {
   })
 
   const { project_color } = projectInput
-
-  // const handleProjectSubmit = (e) => {
-  //   e.preventDefault();
-  //   if (!nameProject) {
-  //     return;
-  //   }
-  //   const newProject = { id: Date.now(), nameProject: nameProject, color: projectColor };
-  //   const updateProject = [...projects, newProject];
-  //   dispatch(AddProjectItem(updateProject))
-  //   dispatch(ChangeProjectName(''))
-  //   dispatch(ChangeProjectColor('#FFFFFF'))
-  // }
 
   const handleChangeInput = (e) => {
     setProjectInput((prev) => ({ ...prev, [e.target.name]: e.target.value }))
@@ -45,7 +31,6 @@ const ProjectEdit = () => {
 
   return (
     <div className='cancel-btn-container'>
-      {/* <h1 className="test-element">Hello friend!</h1> */}
       <form className='project-form' onSubmit={handleProjectSubmit}>
         <div className='color-picker-container'>
           <input

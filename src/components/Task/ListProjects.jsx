@@ -1,13 +1,24 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { SetProjectList, RemoveProjectItem, ShowAddProjectEdit } from "../../features/taskSlice";
+import { SetProjectList, RemoveProjectItem, ShowAddProjectEdit, SetCurrentProjectId, ShowProjectUpdate } from "../../features/taskSlice";
 import { AddProjectIcon, EditListIcon, DeleteListIcon } from '../../icons';
 import axios from "axios";
 import ProjectEdit from "./ProjectEdit";
+import ProjectUpdate from "./ProjectUpdate";
 
 const ListProjects = () => {
   const dispatch = useDispatch();
-  const { addProjectEdit, dbProjects } = useSelector((store) => store.task);
+  const { addProjectEdit, dbProjects, isProjectUpdate, currentProjectId } = useSelector((store) => store.task);
+  // console.log(isProjectUpdate);
+  // const [updateItem, setUpdateItem] = useState(
+  //   dbProjects.map((project) => {
+  //     const { id } = project;
+  //     return (
+  //       { item }
+  //     )
+  //   })
+  // )
+
 
   useEffect(() => {
     const fetchProjectList = async () => {
@@ -31,6 +42,13 @@ const ListProjects = () => {
     }
   }
 
+  const showElement = (id) => {
+    const myElement = document.getElementById(id)
+    myElement.value = <div>Value changed</div>
+    setAlive(!alive);
+    console.log(myElement);
+  }
+
 
   return (
     <div className='overall-list'>
@@ -40,18 +58,27 @@ const ListProjects = () => {
       <div className='projects-container'>
         {dbProjects.map((project) => {
           const { id, project_name, project_color } = project;
-          return (
-            <button key={id} className='list-projects' >
-              <a className='project-title-container' title='Project name' id={id} href={`#${id}`}>
-                <div className='project-color' style={{ backgroundColor: project_color }}></div>
-                <p className='myTask-text'>{project_name}</p>
-              </a>
-              <div className='project-settings-btn' >
-                <span title='Edit' onClick={() => console.log(`${project_name} Project edited`)}><EditListIcon /></span>
-                <span title='Delete' onClick={() => handleDeleteProject(id)} ><DeleteListIcon /></span>
+          if (currentProjectId !== id) {
+            return (
+              <button key={id} className='list-projects' >
+                <a className='project-title-container' title='Project name' id={id} href={`#${id}`}>
+                  <div className='project-color' style={{ backgroundColor: project_color }}></div>
+                  <p className='myTask-text'>{project_name}</p>
+                </a>
+                <div className='project-settings-btn' >
+                  <span title='Edit' onClick={() => dispatch(SetCurrentProjectId(id))}><EditListIcon /></span>
+                  <span title='Delete' onClick={() => handleDeleteProject(id)} ><DeleteListIcon /></span>
+                </div>
+              </button>
+            )
+          } else {
+            return (
+              <div key={id}>
+                <input type="text" placeholder="New project" />
+                <button onClick={() => dispatch(SetCurrentProjectId(''))}>reset</button>
               </div>
-            </button>
-          )
+            )
+          }
         })}
       </div>
       {
@@ -66,7 +93,7 @@ const ListProjects = () => {
           </button>
         )
       }
-    </div>
+    </div >
   )
 }
 export default ListProjects

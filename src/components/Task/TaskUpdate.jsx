@@ -47,9 +47,9 @@ const TaskUpdate = () => {
     task_desc: temp_task.task_desc,
     task_date: temp_task.task_date,
     task_project: project_name ?
-      dbProjects.find(project => project.project_name === project_name).id : '',
+      dbProjects.find(project => project.project_name === project_name).id : undefined,
     task_tag: tag_name ?
-      dbTags.find(tag => tag.tag_name === tag_name).id : '',
+      dbTags.find(tag => tag.tag_name === tag_name).id : undefined,
   })
 
 
@@ -69,22 +69,27 @@ const TaskUpdate = () => {
 
   // Change of inputs
   const handleChangeInput = (e) => {
-    setInputTask((prev) => ({ ...prev, [e.target.name]: e.target.value }))
+    e.target.value ? setInputTask((prev) => ({ ...prev, [e.target.name]: e.target.value })) :
+      setInputTask((prev) => ({ ...prev, [e.target.name]: undefined }));
+    console.log(typeof (e.target.value));
     console.log(inputTask);
-    console.log('Value changed');
+    // setInputTask((prev) => ({ ...prev, [e.target.name]: e.target.value }))
+    // console.log(inputTask);
+  }
+
+  const handleClearValues = (name) => { //onclick make values undefined
+    setInputTask((prev) => ({ ...prev, [name]: undefined }))
   }
 
   const handleChangeInputDate = (e) => {
-    // if (e.target.value) {
-    //   const [year, month, day] = e.target.value.split('-')
-    //   setInputTask((prev) => ({ ...prev, [e.target.name]: `${month}-${day}-${year}` }))
-    // } else {
-    //   e.target.value = 'null';
-    //   console.log(e.target.value);
-    //   // setInputTask((prev) => ({ ...prev, [e.target.name]: e.target.value }))
-    // }
-    const [year, month, day] = e.target.value.split('-')
-    setInputTask((prev) => ({ ...prev, [e.target.name]: `${month}-${day}-${year}` }))
+    // e.target.value ? console.log('Date added') :
+    //   console.log('Empty value');
+    if (e.target.value) {
+      setInputTask((prev) => ({ ...prev, [e.target.name]: `${month}-${day}-${year}` }))
+      const [year, month, day] = e.target.value.split('-')
+    } else {
+      setInputTask((prev) => ({ ...prev, [e.target.name]: '' }))
+    }
   }
 
   // Submit inputs to endpoint
@@ -106,21 +111,6 @@ const TaskUpdate = () => {
       console.log(err);
     }
   }
-
-  // const formatTagInput = (input) => {
-  //   const tagId = dbTags.find(tag => tag.tag_name === input).id
-  //   return tagId
-  // }
-
-  // const formatProjectInput = (input) => {
-  //   try {
-  //     const projectId = dbProjects.find(project => project.project_name === input).id
-  //     return projectId
-  //   } catch {
-  //     const projectId = dbProjects.find(project => project.project_name === task_project).id
-  //     return projectId
-  //   }
-  // }
 
   return (
     <div className='task-details'>
@@ -167,7 +157,7 @@ const TaskUpdate = () => {
               // value={formatProjectInput(task_project)}
               onChange={handleChangeInput}
             >
-              <option value={''}></option>
+              <option value={null}></option>
               {dbProjects.map((listProjects) => {
                 const { id, project_name } = listProjects;
                 return (
@@ -183,7 +173,7 @@ const TaskUpdate = () => {
               value={task_tag}
               onChange={handleChangeInput}
             >
-              <option value={''}></option>
+              <option></option>
               {dbTags.map((listTag) => {
                 const { id, tag_name } = listTag;
                 return (

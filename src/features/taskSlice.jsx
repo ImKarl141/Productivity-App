@@ -11,8 +11,10 @@ const initialState = {
   taskItems: task,
   subtaskTest: subtaskTest,
   isEdit: false,
-  isUpdate: false,
+  isTaskUpdate: false,
+  isProjectUpdate: false,
   currentEditId: '',
+  currentProjectId: '',
   userName: 'Carlos',
   dbTasks: [1],
   dbProjects: [],
@@ -46,17 +48,26 @@ const taskSlice = createSlice({
     SetCurrentEditId: (state, value) => {
       state.currentEditId = value.payload;
     },
+    SetCurrentProjectId: (state, value) => {
+      state.currentProjectId = value.payload;
+    },
     ShowTaskEdit: (state) => {
       state.isEdit = !state.isEdit;
-      state.isUpdate = false;
+      state.isTaskUpdate = false;
     },
     ShowTaskUpdate: (state) => {
-      state.isUpdate = !state.isUpdate;
+      state.isTaskUpdate = !state.isTaskUpdate;
       state.isEdit = false;
     },
     ShowAddProjectEdit: (state) => {
       state.addProjectEdit = !state.addProjectEdit;
+      state.isProjectUpdate = false;
       // console.log(`Your state is ${state.addProjectEdit}`)
+    },
+    ShowProjectUpdate: (state) => {
+      state.isProjectUpdate = !state.isProjectUpdate;
+      state.addProjectEdit = false;
+
     },
     ShowAddTagEdit: (state) => {
       state.addTagEdit = !state.addTagEdit;
@@ -131,5 +142,5 @@ const taskSlice = createSlice({
   }
 });
 
-export const { SetTaskList, SetProjectList, SetTagList, SetCurrentEditId, ShowTaskEdit, ShowTaskUpdate, ShowAddProjectEdit, ShowAddTagEdit, ShowSubtaskEdit, ChangeTitleInput, ChangeDescriptionInput, ChangeDateInput, ChangeProjectName, ChangeProjectColor, ChangeProjectNameInput, ChangeProjectColorInput, ChangeTagName, ChangeTagColor, ChangeTagInput, ChangeTagNameInput, ChangeTagColorInput, AddTaskItem, RemoveTaskItem, AddProjectItem, RemoveProjectItem, AddTagItem, RemoveTagItem, } = taskSlice.actions;
+export const { SetTaskList, SetProjectList, SetTagList, SetCurrentEditId, SetCurrentProjectId, ShowTaskEdit, ShowTaskUpdate, ShowAddProjectEdit, ShowProjectUpdate, ShowAddTagEdit, ShowSubtaskEdit, ChangeTitleInput, ChangeDescriptionInput, ChangeDateInput, ChangeProjectName, ChangeProjectColor, ChangeProjectNameInput, ChangeProjectColorInput, ChangeTagName, ChangeTagColor, ChangeTagInput, ChangeTagNameInput, ChangeTagColorInput, AddTaskItem, RemoveTaskItem, AddProjectItem, RemoveProjectItem, AddTagItem, RemoveTagItem, } = taskSlice.actions;
 export default taskSlice.reducer;

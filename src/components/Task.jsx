@@ -16,7 +16,7 @@ import TaskUpdate from './Task/TaskUpdate';
 
 const TaskMenu = () => {
 
-  const { taskItems, isEdit, isUpdate, addProjectEdit, projects, tags, addTagEdit } = useSelector((store) => store.task);
+  const { taskItems, isEdit, isTaskUpdate, addProjectEdit, projects, tags, addTagEdit } = useSelector((store) => store.task);
 
   const dispatch = useDispatch();
   //Edit task menu
@@ -60,7 +60,7 @@ const TaskMenu = () => {
         isEdit && <TaskEdit />
       }
       {
-        isUpdate && <TaskUpdate />
+        isTaskUpdate && <TaskUpdate />
       }
     </section >
   )

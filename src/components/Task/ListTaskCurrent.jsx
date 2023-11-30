@@ -8,7 +8,7 @@ const ListTaskCurrent = () => {
 
   const [dbTasks, setDbTasks] = useState([])
   const dispatch = useDispatch();
-  const { isUpdate } = useSelector((store) => store.task);
+  const { isTaskUpdate } = useSelector((store) => store.task);
 
   useEffect(() => {
     const fetchTaskList = async () => {
@@ -44,32 +44,36 @@ const ListTaskCurrent = () => {
                     <span>{task_title}:</span>
                     <span className='task-item-description'>{task_desc}</span>
                   </div>
-                  <div className='task-item-details'>
-                    {
-                      task_date && (
-                        <>
-                          <span title='Due date'><CalendarIconTask /></span>
-                          <span title='Due date' className='next-item'>{task_date}</span>
-                        </>
-                      )
-                    }
-                    {
-                      project_name && (
-                        <span className='next-item' title='Project'>
-                          <span className='project-color' style={{ backgroundColor: `${project_color}` }}></span>
-                          {project_name}
-                        </span>
-                      )
-                    }
-                    {
-                      tag_name && (
-                        <span title='Tag' style={{ color: `${tag_color}` }}>{tag_name}</span>
-                      )
-                    }
-                  </div>
+                  {
+                    (task_date || project_name || tag_name) && (
+                      <div className='task-item-details'>
+                        {
+                          task_date && (
+                            <>
+                              <span title='Due date'><CalendarIconTask /></span>
+                              <span title='Due date' className='next-item'>{task_date}</span>
+                            </>
+                          )
+                        }
+                        {
+                          project_name && (
+                            <span className='next-item' title='Project'>
+                              <span className='project-color' style={{ backgroundColor: `${project_color}` }}></span>
+                              {project_name}
+                            </span>
+                          )
+                        }
+                        {
+                          tag_name && (
+                            <span title='Tag' style={{ color: `${tag_color}` }}>{tag_name}</span>
+                          )
+                        }
+                      </div>
+                    )
+                  }
                 </div>
                 {
-                  !isUpdate && (
+                  !isTaskUpdate && (
                     <button className='task-item-btn'
                       onClick={() => {
                         dispatch(ShowTaskUpdate());
