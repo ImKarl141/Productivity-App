@@ -13,8 +13,11 @@ const initialState = {
   isEdit: false,
   isTaskUpdate: false,
   isProjectUpdate: false,
+  isTagUpdate: false,
+  isTagDelete: false,
   currentEditId: '',
   currentProjectId: '',
+  currentTagId: '',
   userName: 'Carlos',
   dbTasks: [1],
   dbProjects: [],
@@ -71,6 +74,12 @@ const taskSlice = createSlice({
     },
     ShowAddTagEdit: (state) => {
       state.addTagEdit = !state.addTagEdit;
+    },
+    ShowTagUpdate: (state) => {
+      state.isTagUpdate = !state.isTagUpdate;
+    },
+    ShowTagDelete: (state) => {
+      state.isTagDelete = !state.isTagDelete;
     },
     ShowSubtaskEdit: (state) => {
       state.addSubtaskEdit = !state.addSubtaskEdit;
@@ -142,5 +151,5 @@ const taskSlice = createSlice({
   }
 });
 
-export const { SetTaskList, SetProjectList, SetTagList, SetCurrentEditId, SetCurrentProjectId, ShowTaskEdit, ShowTaskUpdate, ShowAddProjectEdit, ShowProjectUpdate, ShowAddTagEdit, ShowSubtaskEdit, ChangeTitleInput, ChangeDescriptionInput, ChangeDateInput, ChangeProjectName, ChangeProjectColor, ChangeProjectNameInput, ChangeProjectColorInput, ChangeTagName, ChangeTagColor, ChangeTagInput, ChangeTagNameInput, ChangeTagColorInput, AddTaskItem, RemoveTaskItem, AddProjectItem, RemoveProjectItem, AddTagItem, RemoveTagItem, } = taskSlice.actions;
+export const { SetTaskList, SetProjectList, SetTagList, SetCurrentEditId, SetCurrentProjectId, ShowTaskEdit, ShowTaskUpdate, ShowAddProjectEdit, ShowProjectUpdate, ShowAddTagEdit, ShowTagUpdate, ShowTagDelete, ShowSubtaskEdit, ChangeTitleInput, ChangeDescriptionInput, ChangeDateInput, ChangeProjectName, ChangeProjectColor, ChangeProjectNameInput, ChangeProjectColorInput, ChangeTagName, ChangeTagColor, ChangeTagInput, ChangeTagNameInput, ChangeTagColorInput, AddTaskItem, RemoveTaskItem, AddProjectItem, RemoveProjectItem, AddTagItem, RemoveTagItem, } = taskSlice.actions;
 export default taskSlice.reducer;

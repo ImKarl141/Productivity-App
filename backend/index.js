@@ -112,6 +112,20 @@ app.put("/TaskCurrent/:id", (req, resp) => {
   })
 })
 
+app.put("/ProjectList/:id", (req, resp) => {
+  const projectId = req.params.id;
+  const q = "UPDATE ProjectList SET `project_name` = ?, `project_color` = ? WHERE id = ?"
+  const values = [
+    req.body.project_name,
+    req.body.project_color
+  ];
+
+  db.query(q, [...values, projectId], (err, data) => {
+    if (err) return resp.json(err);
+    return resp.json("Project updated successfully");
+  })
+})
+
 
 //Delete
 

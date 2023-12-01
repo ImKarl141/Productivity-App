@@ -1,28 +1,34 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { ShowAddProjectEdit, ChangeProjectName, ChangeProjectColor, AddProjectItem } from '../../features/taskSlice';
-import { CancelIcon } from '../../icons';
+import { ShowAddProjectEdit, ChangeProjectName, ChangeProjectColor, AddProjectItem, SetCurrentProjectId } from '../../features/taskSlice';
+import { CancelIcon, AcceptUpdateIcon, CancelUpdateIcon } from '../../icons';
 import { useState } from 'react';
 import axios from 'axios';
 
 const ProjectUpdate = () => {
   const dispatch = useDispatch();
+  const { currentProjectId, dbProjects } = useSelector((store) => store.task)
+  // const currentProject = dbProjects.find(project => project.id === currentProjectId)
+  // console.log(currentProject);
 
   const [projectInput, setProjectInput] = useState({
-    project_name: '',
-    project_color: '#FFFFFF',
+    project_name: currentProjectId ?
+      dbProjects.find(project => project.id === currentProjectId).project_name : '',
+    project_color: currentProjectId ?
+      dbProjects.find(project => project.id === currentProjectId).project_color : ''
   })
 
-  const { project_color } = projectInput
+  console.log(projectInput);
+  const { project_name, project_color } = projectInput
 
   const handleChangeInput = (e) => {
     setProjectInput((prev) => ({ ...prev, [e.target.name]: e.target.value }))
-    console.log(projectInput);
+    // console.log(projectInput);
   }
 
   const handleProjectSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:8800/ProjectList', projectInput);
+      await axios.put('http://localhost:8800/ProjectList/' + currentProjectId, projectInput);
       window.location.reload();
     } catch (err) {
       console.log(err);
@@ -38,6 +44,7 @@ const ProjectUpdate = () => {
             name='project_color'
             type="color"
             className='default-colorPicker'
+            // value={change}
             //Make the value the same as the dbProject based on the id
             onChange={handleChangeInput}
           />
@@ -48,16 +55,20 @@ const ProjectUpdate = () => {
           id='projectName'
           name='project_name'
           type="text"
-          className='myInputAddProject'
+          className='myInputUpdateProject'
           placeholder='Project name'
+          value={project_name}
           //Make the value the same as the dbProject based on the id
           onChange={handleChangeInput}
         />
       </form>
-      <button className='cancel-projects-btn' onClick={() => dispatch(ShowAddProjectEdit())}>
-        <CancelIcon />
+      <button className='cancel-projects-btn' onClick={() => dispatch(SetCurrentProjectId(''))}>
+        <CancelUpdateIcon />
       </button>
-    </div>
+      <button className='accept-projects-btn' onClick={handleProjectSubmit}>
+        <AcceptUpdateIcon />
+      </button>
+    </div >
   )
 }
 export default ProjectUpdate;

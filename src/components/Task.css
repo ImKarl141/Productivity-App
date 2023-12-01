@@ -175,6 +175,15 @@
   border-radius: 0.2rem; 
 }
 
+.myInputUpdateProject {
+  font-family: Nunito;
+  color: var(--black);
+  padding: 0.13rem 2.8rem 0.13rem 0.13rem;
+  background-color: var(--pomodoroLight);
+  border: 0.15rem solid var(--pomodoroDark);
+  border-radius: 0.2rem; 
+}
+
 .project-form {
   display: grid;
   grid-template-columns: 1.5rem 1fr;
@@ -184,7 +193,8 @@
   margin: 0.2rem 0rem;
 }
 
-.myInputAddProject:focus {
+.myInputAddProject:focus,
+.myInputUpdateProject:focus {
   outline: none;
 }
 
@@ -739,6 +749,14 @@ a {
   color: var(--black);
 }
 
+.test-icon {
+  margin: 0;
+  padding: 0;
+  height: 1.2rem;
+  width: 1.2rem;
+  color: var(--black);
+}
+
 .task-icons-02 {
   height: 1rem;
   width: 1.2rem;
@@ -751,19 +769,8 @@ a {
   color: var(--black);
 }
 
-.tagSettings-icon {
-  height: 1.2rem;
-  width: 1.2rem;
-  color: var(--black);
-}
 
-.tagsSettings-icon {
-  width: 1rem;
-  color: var(--black);
-  position: absolute;
-  bottom: 0.3rem;
-  right: -0.1rem;
-}
+
 
 /* Tasks icons end */
 
@@ -888,7 +895,8 @@ a {
   background-color: var(--pomodoroDark);
 }
 
-.myInputAddProject::placeholder {
+.myInputAddProject::placeholder,
+.myInputUpdateProject::placeholder {
   font-family: Nunito;
   color: var(--blackLight);
 }
@@ -901,15 +909,91 @@ a {
 .tags-container {
   display: grid;
   align-items: center;
+  grid-template-columns: repeat(3, 1fr);
   justify-items: stretch;
   margin: 0.6rem;
   grid-column-gap: 0.2rem;
-  grid-row-gap: 0.2rem;
+  grid-row-gap: 0.4rem;
   overflow: auto;
-  grid-template-columns: repeat(3, auto);
   /* grid-template-columns: 1fr 1fr 1fr; */
   /* padding: 0.2rem 0.6rem; */
 }
+
+.tag-buttons {
+  display: flex;
+  /* align-items: stretch; */
+  justify-content: space-between;
+  padding-bottom: 0.2rem;
+}
+
+.tag-edit-delete {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.tag-edit-btn{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0.6;
+}
+
+.tag-edit-btn:hover {
+  opacity: 1;
+}
+
+.myTag {
+  display: grid;
+  position: relative;
+  font-family: Nunito;
+  color: var(--black);
+  font-weight: 600;
+  font-size: 0.8rem;
+  justify-content: start;
+  align-items: center;
+  padding: 0.3rem 0.6rem;
+  border-radius: 0.25rem ;
+  background-color: var(--pomodoroDark);
+  max-width: 4rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  opacity: 0.7;
+  cursor: pointer;
+}
+
+/* .myTag span {
+  opacity: 1;
+} */
+
+.tag-name {
+  margin-right: 0.13rem;
+}
+
+.tagsSettings-icon {
+  width: 1.2rem;
+  color: var(--black);
+  position: absolute;
+  bottom: 0.3rem;
+  right: -0.1rem;
+}
+
+.editTag-icon,
+.deleteTag-icon {
+  width: 1.2rem;
+  color: var(--black);
+  position: absolute;
+  bottom: 0.3rem;
+  right: 0rem;
+}
+
+.tagSettings-icon {
+  height: 1.2rem;
+  width: 1.2rem;
+  color: var(--black);
+}
+
 
 .projects-container {
   display: grid;
@@ -928,17 +1012,25 @@ a {
   opacity: 0.8;
 } */
 
-.add-tags-btn {
+/* .add-tags-btn {
   display: flex;
   align-items: center;
   padding: 0.2rem 0.6rem;
   margin: 0rem 0.4rem;
-  /* width: 100%; */
-  /* border: 0.1rem solid var(--black); */
   border-radius: 0.5rem ;
-  /* width: 100%; */
-  /* padding: 0.3rem; */
-  /* margin: 0.5rem; */
+  background-color: var(--pomodoroDark);
+  opacity: 0.8;
+} */
+
+.add-tags-btn {
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  justify-content: start;
+  align-items: center;
+  flex: 1;
+  padding: 0.2rem 0.6rem;
+  margin: 0rem 0.4rem;
+  border-radius: 0.5rem ;
   background-color: var(--pomodoroLight);
   opacity: 0.8;
 }
@@ -949,7 +1041,8 @@ a {
 }
 
 .cancel-tags-btn,
-.cancel-projects-btn {
+.cancel-projects-btn,
+.accept-projects-btn {
   display: flex;
   position: absolute;
   align-items: center;
@@ -965,30 +1058,33 @@ a {
   top: 0.5rem;
 }
 
+.accept-projects-btn {
+  right: 0.8rem;
+  top: 0.5rem;
+}
+
 .cancel-tags-btn {
   right: 0.8rem;
   top: 0.45rem;
 }
 
-.myTag {
-  display: grid;
-  font-family: Nunito;
+
+
+.tagsSettings-icon {
+  width: 1.2rem;
   color: var(--black);
-  font-weight: 600;
-  font-size: 0.8rem;
-  position: relative;
-  /* align-items: center;
-  justify-content: space-between; */
-  padding: 0.3rem 0.6rem;
-  border-radius: 0.25rem ;
-  background-color: var(--pomodoroDark);
-  opacity: 0.9;
-  /* max-width: 6rem; */
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  opacity: 0.5;
+  position: absolute;
+  bottom: 0.3rem;
+  right: -0.1rem;
 }
+
+/* .tag-icon {
+  width: 4rem;
+  color: var(--black);
+  position: absolute;
+  bottom: -0.6rem;
+  transform: rotate(-45deg);
+} */
 
 .myTag span {
   white-space: nowrap;
@@ -1061,3 +1157,4 @@ a {
   position: relative;
 }
 /* Tags end */
+

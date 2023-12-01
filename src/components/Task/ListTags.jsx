@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { ShowAddTagEdit, SetTagList } from "../../features/taskSlice";
-import { AddTagsIcon, TagSettingsIcon, DeleteListIcon } from '../../icons';
+import { ShowAddTagEdit, SetTagList, ShowTagUpdate, ShowTagDelete } from "../../features/taskSlice";
+import { AddTagsIcon, TagSettingsIcon, EditListIcon, DeleteListIcon, TagIcon, EditTagIcon, DeleteTagIcon } from '../../icons';
 import axios from "axios";
 import TagEdit from "./TagEdit";
 
@@ -33,7 +33,7 @@ const ListTags = () => {
     }
   }
 
-  const { addTagEdit, dbTags } = useSelector((store) => store.task);
+  const { addTagEdit, dbTags, isTagUpdate, isTagDelete } = useSelector((store) => store.task);
 
   return (
     <div className='overall-tags'>
@@ -44,10 +44,24 @@ const ListTags = () => {
         {dbTags.map((tag) => {
           const { id, tag_name, tag_color } = tag;
           return (
-            <button onClick={() => handleDeleteProject(id)} key={id} className='myTag' style={{ backgroundColor: tag_color }} title={tag_name}>
-              <span>{tag_name}</span>
-              <TagSettingsIcon />
-            </button>
+            <a className='myTag' key={id} style={{ backgroundColor: tag_color }} title={tag_name}>
+              <span className="tag-name">{tag_name}</span>
+              {/* <TagIcon /> */}
+              {
+                isTagUpdate && (
+                  <span title="settings" onClick={() => console.log("Tag settings")}>
+                    <EditTagIcon />
+                  </span>
+                )
+              }
+              {
+                isTagDelete && (
+                  <span title="settings" onClick={() => console.log("Tag settings")}>
+                    <DeleteTagIcon />
+                  </span>
+                )
+              }
+            </a>
           )
         })}
       </div>
@@ -56,10 +70,34 @@ const ListTags = () => {
       }
       {
         !addTagEdit && (
-          <button className='addBtn add-tags-btn' onClick={() => dispatch(ShowAddTagEdit())}>
-            <AddTagsIcon />
-            <p className='myTask-text'>Add Tag</p>
-          </button>
+          <div className="tag-buttons">
+            <button className='addBtn add-tags-btn' onClick={() => dispatch(ShowAddTagEdit())}>
+              <AddTagsIcon />
+              <p className='myTask-text'>Add Tag</p>
+            </button>
+            <div className="tag-edit-delete">
+              {
+                !isTagUpdate && (
+                  <>
+                    <span className="tag-edit-btn" onClick={() => dispatch(ShowTagUpdate())}>
+                      <EditListIcon />
+                    </span>
+                    <span className="tag-edit-btn" onClick={() => dispatch(ShowTagDelete())}>
+                      <DeleteListIcon />
+                    </span>
+                  </>
+                )
+              }
+              {
+                isTagUpdate && (
+                  <span className="tag-edit-btn" onClick={() => dispatch(ShowTagUpdate())}>
+                    Cancel
+                  </span>
+                )
+              }
+
+            </div>
+          </div>
         )
       }
     </div>

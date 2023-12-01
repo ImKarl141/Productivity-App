@@ -42,14 +42,6 @@ const ListProjects = () => {
     }
   }
 
-  const showElement = (id) => {
-    const myElement = document.getElementById(id)
-    myElement.value = <div>Value changed</div>
-    setAlive(!alive);
-    console.log(myElement);
-  }
-
-
   return (
     <div className='overall-list'>
       <div className='list-title'>
@@ -73,10 +65,7 @@ const ListProjects = () => {
             )
           } else {
             return (
-              <div key={id}>
-                <input type="text" placeholder="New project" />
-                <button onClick={() => dispatch(SetCurrentProjectId(''))}>reset</button>
-              </div>
+              <ProjectUpdate key={id} />
             )
           }
         })}
