@@ -54,6 +54,9 @@ const taskSlice = createSlice({
     SetCurrentProjectId: (state, value) => {
       state.currentProjectId = value.payload;
     },
+    SetCurrentTagId: (state, value) => {
+      state.currentTagId = value.payload;
+    },
     ShowTaskEdit: (state) => {
       state.isEdit = !state.isEdit;
       state.isTaskUpdate = false;
@@ -77,9 +80,16 @@ const taskSlice = createSlice({
     },
     ShowTagUpdate: (state) => {
       state.isTagUpdate = !state.isTagUpdate;
+      state.isTagDelete = false;
     },
     ShowTagDelete: (state) => {
       state.isTagDelete = !state.isTagDelete;
+      state.isTagUpdate = false;
+    },
+    ShowTagCancel: (state) => {
+      state.isTagUpdate = false;
+      state.isTagDelete = false;
+      state.currentTagId = '';
     },
     ShowSubtaskEdit: (state) => {
       state.addSubtaskEdit = !state.addSubtaskEdit;
@@ -151,5 +161,5 @@ const taskSlice = createSlice({
   }
 });
 
-export const { SetTaskList, SetProjectList, SetTagList, SetCurrentEditId, SetCurrentProjectId, ShowTaskEdit, ShowTaskUpdate, ShowAddProjectEdit, ShowProjectUpdate, ShowAddTagEdit, ShowTagUpdate, ShowTagDelete, ShowSubtaskEdit, ChangeTitleInput, ChangeDescriptionInput, ChangeDateInput, ChangeProjectName, ChangeProjectColor, ChangeProjectNameInput, ChangeProjectColorInput, ChangeTagName, ChangeTagColor, ChangeTagInput, ChangeTagNameInput, ChangeTagColorInput, AddTaskItem, RemoveTaskItem, AddProjectItem, RemoveProjectItem, AddTagItem, RemoveTagItem, } = taskSlice.actions;
+export const { SetTaskList, SetProjectList, SetTagList, SetCurrentEditId, SetCurrentProjectId, SetCurrentTagId, ShowTaskEdit, ShowTaskUpdate, ShowAddProjectEdit, ShowProjectUpdate, ShowAddTagEdit, ShowTagUpdate, ShowTagDelete, ShowTagCancel, ShowSubtaskEdit, ChangeTitleInput, ChangeDescriptionInput, ChangeDateInput, ChangeProjectName, ChangeProjectColor, ChangeProjectNameInput, ChangeProjectColorInput, ChangeTagName, ChangeTagColor, ChangeTagInput, ChangeTagNameInput, ChangeTagColorInput, AddTaskItem, RemoveTaskItem, AddProjectItem, RemoveProjectItem, AddTagItem, RemoveTagItem, } = taskSlice.actions;
 export default taskSlice.reducer;

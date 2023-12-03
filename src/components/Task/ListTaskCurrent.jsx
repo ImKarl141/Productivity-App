@@ -65,7 +65,7 @@ const ListTaskCurrent = () => {
                         }
                         {
                           tag_name && (
-                            <span title='Tag' style={{ color: `${tag_color}` }}>{tag_name}</span>
+                            <span title='Tag'>{tag_name}</span>
                           )
                         }
                       </div>

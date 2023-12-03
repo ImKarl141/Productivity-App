@@ -40,7 +40,7 @@ const TagEdit = () => {
   }
 
   return (
-    <div className='cancel-btn-container'>
+    <div className='form-container'>
       <form className='tag-form' onSubmit={handleTagSubmit}>
         <div className='color-picker-container'>
           <input

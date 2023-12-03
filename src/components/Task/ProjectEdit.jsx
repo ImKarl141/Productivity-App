@@ -30,7 +30,7 @@ const ProjectEdit = () => {
   };
 
   return (
-    <div className='cancel-btn-container'>
+    <div className='form-container'>
       <form className='project-form' onSubmit={handleProjectSubmit}>
         <div className='color-picker-container'>
           <input

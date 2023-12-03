@@ -1,14 +1,19 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { ShowAddTagEdit, SetTagList, ShowTagUpdate, ShowTagDelete } from "../../features/taskSlice";
+import { ShowAddTagEdit, SetTagList, ShowTagUpdate, ShowTagDelete, ShowTagCancel, SetCurrentTagId } from "../../features/taskSlice";
 import { AddTagsIcon, TagSettingsIcon, EditListIcon, DeleteListIcon, TagIcon, EditTagIcon, DeleteTagIcon } from '../../icons';
 import axios from "axios";
 import TagEdit from "./TagEdit";
+import TagUpdate from "./TagUpdate";
+
 
 const ListTags = () => {
 
+  const { addTagEdit, dbTags, isTagUpdate, isTagDelete, currentTagId } = useSelector((store) => store.task);
   // const [dbTags, setDbTags] = useState([]);
+  console.log(currentTagId);
   const dispatch = useDispatch();
+  // console.log(`isUpdate: ${isTagUpdate}, isDelete: ${isTagUpdate}`);
 
   useEffect(() => {
     const fetchTagList = async () => {
@@ -24,7 +29,7 @@ const ListTags = () => {
     fetchTagList();
   }, [])
 
-  const handleDeleteProject = async (id) => {
+  const handleDeleteTag = async (id) => {
     try {
       await axios.delete("http://localhost:8800/TagList/" + id)
       window.location.reload();
@@ -32,8 +37,6 @@ const ListTags = () => {
       console.log(err);
     }
   }
-
-  const { addTagEdit, dbTags, isTagUpdate, isTagDelete } = useSelector((store) => store.task);
 
   return (
     <div className='overall-tags'>
@@ -43,26 +46,32 @@ const ListTags = () => {
       <div className='tags-container'>
         {dbTags.map((tag) => {
           const { id, tag_name, tag_color } = tag;
-          return (
-            <a className='myTag' key={id} style={{ backgroundColor: tag_color }} title={tag_name}>
-              <span className="tag-name">{tag_name}</span>
-              {/* <TagIcon /> */}
-              {
-                isTagUpdate && (
-                  <span title="settings" onClick={() => console.log("Tag settings")}>
-                    <EditTagIcon />
-                  </span>
-                )
-              }
-              {
-                isTagDelete && (
-                  <span title="settings" onClick={() => console.log("Tag settings")}>
-                    <DeleteTagIcon />
-                  </span>
-                )
-              }
-            </a>
-          )
+          if (currentTagId !== id) {
+            return (
+              <a className='myTag' key={id} style={{ backgroundColor: tag_color }} title={tag_name}>
+                <span className="tag-name">{tag_name}</span>
+                {/* <TagIcon /> */}
+                {
+                  isTagUpdate && (
+                    <div title="settings" onClick={() => dispatch(SetCurrentTagId(id))}>
+                      <EditTagIcon />
+                    </div>
+                  )
+                }
+                {
+                  isTagDelete && (
+                    <span title="settings" onClick={() => handleDeleteTag(id)}>
+                      <DeleteTagIcon />
+                    </span>
+                  )
+                }
+              </a>
+            )
+          } else {
+            return (
+              <TagUpdate key={id} />
+            )
+          }
         })}
       </div>
       {
@@ -77,7 +86,7 @@ const ListTags = () => {
             </button>
             <div className="tag-edit-delete">
               {
-                !isTagUpdate && (
+                (!isTagUpdate && !isTagDelete) && (
                   <>
                     <span className="tag-edit-btn" onClick={() => dispatch(ShowTagUpdate())}>
                       <EditListIcon />
@@ -89,8 +98,8 @@ const ListTags = () => {
                 )
               }
               {
-                isTagUpdate && (
-                  <span className="tag-edit-btn" onClick={() => dispatch(ShowTagUpdate())}>
+                (isTagUpdate || isTagDelete) && (
+                  <span className="tag-edit-btn" onClick={() => dispatch(ShowTagCancel())}>
                     Cancel
                   </span>
                 )

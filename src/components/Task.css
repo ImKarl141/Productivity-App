@@ -915,9 +915,12 @@ a {
   grid-column-gap: 0.2rem;
   grid-row-gap: 0.4rem;
   overflow: auto;
-  /* grid-template-columns: 1fr 1fr 1fr; */
-  /* padding: 0.2rem 0.6rem; */
 }
+
+/* .tags-container {
+  display: grid;
+  grid-template-rows: auto;
+} */
 
 .tag-buttons {
   display: flex;
@@ -987,6 +990,10 @@ a {
   bottom: 0.3rem;
   right: 0rem;
 }
+
+/* .editTag-icon {
+  background-color: red;
+} */
 
 .tagSettings-icon {
   height: 1.2rem;
@@ -1059,7 +1066,7 @@ a {
 }
 
 .accept-projects-btn {
-  right: 0.8rem;
+  right: 2.2rem;
   top: 0.5rem;
 }
 
@@ -1152,9 +1159,10 @@ a {
   margin: 0.2rem 0rem; */
 }
 /* style={{ display: 'grid', position: 'relative' }} */
-.cancel-btn-container {
+.form-container {
   display: grid;
   position: relative;
+  /* background-color: red; */
 }
 /* Tags end */
 

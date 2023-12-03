@@ -36,7 +36,7 @@ const ProjectUpdate = () => {
   };
 
   return (
-    <div className='cancel-btn-container'>
+    <div className='form-container'>
       <form className='project-form' onSubmit={handleProjectSubmit}>
         <div className='color-picker-container'>
           <input
@@ -46,6 +46,7 @@ const ProjectUpdate = () => {
             className='default-colorPicker'
             // value={change}
             //Make the value the same as the dbProject based on the id
+            // value={project_color}
             onChange={handleChangeInput}
           />
           <div className='custom-colorPicker' style={{ backgroundColor: project_color }}>

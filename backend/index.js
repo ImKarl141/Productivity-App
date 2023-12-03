@@ -126,6 +126,20 @@ app.put("/ProjectList/:id", (req, resp) => {
   })
 })
 
+app.put("/TagList/:id", (req, resp) => {
+  const tagId = req.params.id;
+  const q = "UPDATE TagList SET `tag_name` = ?, `tag_color` = ? WHERE id = ?"
+  const values = [
+    req.body.tag_name,
+    req.body.tag_color
+  ]
+
+  db.query(q, [...values, tagId], (err, data) => {
+    if (err) return resp.json(err);
+    return resp.json("Tag updated successfully");
+  })
+})
+
 
 //Delete
 
