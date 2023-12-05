@@ -563,6 +563,9 @@ input[type=date]::after {
   opacity: 0.85;
 }
 
+
+
+
 /* .myInput {
   accent-color: var(--pomodoroDark);
   width: 1.2rem;
@@ -929,9 +932,10 @@ a {
   padding-bottom: 0.2rem;
 }
 
-.tag-edit-delete {
+.tag-edit {
   display: flex;
   gap: 0.4rem;
+  padding-right: 2rem;
 }
 
 .tag-edit-btn{
@@ -939,7 +943,22 @@ a {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  opacity: 0.6;
+  opacity: 0.7;
+}
+
+.tag-cancel-btn {
+  font-family: Nunito;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--black);
+  padding: 0.2rem 0.8rem;
+  opacity: 0.8;
+  cursor: pointer;
+  background-color: var(--pomodoroDark);
+}
+
+.tag-cancel-btn:hover {
+  opacity: 1;
 }
 
 .tag-edit-btn:hover {

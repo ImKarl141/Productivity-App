@@ -8,6 +8,8 @@ const initialState = {
   noteItems: userNotes,
   isEdit: false,
   tag: userTags,
+  dbNotes: [],
+  dbDefaultColors: []
 }
 
 const noteSlice = createSlice({

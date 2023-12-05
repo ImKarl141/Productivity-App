@@ -84,7 +84,7 @@ const ListTags = () => {
               <AddTagsIcon />
               <p className='myTask-text'>Add Tag</p>
             </button>
-            <div className="tag-edit-delete">
+            <div className="tag-edit">
               {
                 (!isTagUpdate && !isTagDelete) && (
                   <>
@@ -99,7 +99,7 @@ const ListTags = () => {
               }
               {
                 (isTagUpdate || isTagDelete) && (
-                  <span className="tag-edit-btn" onClick={() => dispatch(ShowTagCancel())}>
+                  <span className="tag-cancel-btn" onClick={() => dispatch(ShowTagCancel())}>
                     Cancel
                   </span>
                 )

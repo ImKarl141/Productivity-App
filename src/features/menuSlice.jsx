@@ -3,9 +3,9 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   menuToggle: {
     Menu: true,
-    Task: true,
+    Task: false,
     Calendar: false,
-    Notes: false,
+    Notes: true,
   },
   isActive: {
     Task: false
