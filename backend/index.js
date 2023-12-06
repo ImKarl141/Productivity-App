@@ -114,7 +114,6 @@ app.get("/TaskCurrent", (req, resp) => {
 
 //Note component
 app.get('/NoteList', (req, resp) => {
-  // const q = "SELECT t.id, t.task_title, t.task_desc, t.task_date, p.project_name, p.project_color, tg.tag_name, tg.tag_color FROM `TaskCurrent` t LEFT JOIN `ProjectList` p ON t.task_project = p.id LEFT JOIN `TagList` tg ON t.task_tag = tg.id";
   const q = "SELECT n.id, n.note_name, n.note_desc, dc.color_name, dc.color_value FROM `NoteList` n LEFT JOIN `DefaultColors` dc ON n.note_color = dc.id";
   // const q = "SELECT * FROM NoteList";
   db.query(q, (err, data) => {
@@ -138,6 +137,8 @@ app.get('/DefaultColors', (req, resp) => {
 ////////////////////////////////////////////////////////////////////////
 
 //Update
+
+//Task Component
 
 app.put("/TaskCurrent/:id", (req, resp) => {
   const taskId = req.params.id;
@@ -184,9 +185,26 @@ app.put("/TagList/:id", (req, resp) => {
   })
 })
 
+//Note Component
+app.put("/NoteList/:id", (req, resp) => {
+  const noteId = req.params.id;
+  const q = "UPDATE NoteList SET `note_name` = ?, `note_desc` = ?, `note_color` = ? WHERE id = ?";
+  const values = [
+    req.body.note_name,
+    req.body.note_desc,
+    req.body.note_color
+  ];
+
+  db.query(q, [...values, noteId], (err, data) => {
+    if (err) return resp.json(err);
+    return resp.json("Note updated successfully");
+  })
+})
+
 
 //Delete
 
+//Task Component
 app.delete("/ProjectList/:id", (req, resp) => {
   const projectId = req.params.id;
   const q = "DELETE FROM ProjectList WHERE id = ?";
@@ -214,6 +232,17 @@ app.delete("/TaskCurrent/:id", (req, resp) => {
   db.query(q, [taskId], (err, data) => {
     if (err) return resp.json(err);
     return resp.json("Task deleted successfully");
+  })
+})
+
+//Note Component
+app.delete("/NoteList/:id", (req, resp) => {
+  const noteId = req.params.id;
+  const q = "DELETE FROM NoteList WHERE id = ?";
+
+  db.query(q, [noteId], (err, data) => {
+    if (err) return resp.json(err);
+    return resp.json("Note deleted successfully");
   })
 })
 
