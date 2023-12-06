@@ -19,10 +19,16 @@ const noteSlice = createSlice({
     ShowNoteEdit: (state) => {
       state.isEdit = !state.isEdit;
     },
+    SetNoteList: (state, value) => {
+      state.dbNotes = value.payload;
+    },
+    SetNoteColors: (state, value) => {
+      state.dbDefaultColors = value.payload;
+    }
   }
 })
 
 
-export const { ShowNoteEdit, ShowNoteSettings } = noteSlice.actions;
+export const { ShowNoteEdit, ShowNoteSettings, SetNoteList, SetNoteColors } = noteSlice.actions;
 export default noteSlice.reducer;
 

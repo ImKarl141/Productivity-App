@@ -1,55 +1,38 @@
-import { useState } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import { AddNoteIcon, NoteListIcon, TaskNoteIcon, DeleteNoteIcon, PinNoteIcon } from "../../icons"
-import { ShowNoteEdit, ShowNoteSettings } from "../../features/NoteSlice"
+import { useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import { NoteListIcon } from "../../icons"
+import { SetNoteList, ShowNoteEdit } from "../../features/NoteSlice"
+import axios from "axios"
+
 
 const NoteEdit = () => {
-  const { isEdit, isSettings, noteItems, tag } = useSelector((store) => store.note);
-  // console.log(isEdit);
+  const { noteItems, tag, dbNotes, listOfTags, dbDefaultColors } = useSelector((store) => store.note);
+
+  const [inputNote, setInputNote] = useState({
+    note_name: '',
+    note_desc: null,
+    note_color: null,
+  });
+
+  const { note_name } = inputNote;
+
   const dispatch = useDispatch();
 
-  //Create new Notes.
-  const [noteTitle, setNoteTitle] = useState('')
-  const [noteContent, setNoteContent] = useState('')
-
-  //list of existing notes 
-  const [listOfNotes, setListOfNotes] = useState(noteItems)
-  const [listOfTags, setListOfTags] = useState(tag)
-
-  //Tag colors and name
-  const [tagColor, setTagColor] = useState(listOfTags[0].color)
-  const [tagName, setTagName] = useState(listOfTags[0].nameTag)
-
-  //display note settings 
-  const [noteMenu, setNoteMenu] = useState(false)
-
-  const handleNoteSubmit = (e) => {
+  const handleNoteSubmit = async (e) => {
     e.preventDefault();
-    if (!noteTitle) {
+    if (!note_name) {
       return;
     }
-    //Create new note
-    const newNote = {
-      id: Date.now(),
-      noteTitle: noteTitle,
-      noteContent: noteContent,
-      noteTag: tagName,
-      noteTagColor: tagColor,
-      isSettings: noteMenu,
+    try {
+      await axios.post('http://localhost:8800/NoteList', inputNote)
+      window.location.reload();
+    } catch (err) {
+      console.log(err);
     }
-    //merge with existing note list
-    const updateNote = [...listOfNotes, newNote]
-
-    setListOfNotes(updateNote)
-    setNoteTitle('');
-    setNoteContent('');
-    console.log(listOfNotes);
   }
 
-  //display note settings 
-  const HandleNoteSettings = (e) => {
-    e.preventDefault();
-    console.log(e.target.value);
+  const handleChangeInput = (e) => {
+    setInputNote((prev) => ({ ...prev, [e.target.name]: e.target.value }))
   }
 
   return (
@@ -57,21 +40,17 @@ const NoteEdit = () => {
       <form className='noteForm' onSubmit={handleNoteSubmit}>
         <input
           id='note-title'
+          name="note_name"
           type="text"
           placeholder='Title'
           className='myInput'
-          value={noteTitle}
-          onChange={(e) => {
-            setNoteTitle(e.target.value)
-          }}
+          onChange={handleChangeInput}
         />
         <textarea
+          name="note_desc"
           placeholder='Note content'
           className='myInput myInput-content '
-          value={noteContent}
-          onChange={(e) => {
-            setNoteContent(e.target.value)
-          }}
+          onChange={handleChangeInput}
         >
         </textarea>
       </form>
@@ -81,17 +60,14 @@ const NoteEdit = () => {
             <NoteListIcon />
           </button>
           <select
-            onChange={(e) => {
-              const selectedTag = listOfTags.find((myTag) => myTag.id == e.target.value)
-              setTagName(selectedTag.nameTag)
-              setTagColor(selectedTag.color)
-            }}
+            name="note_color"
+            onChange={handleChangeInput}
           >
             {
-              listOfTags.map((myTags) => {
-                const { id, nameTag } = myTags;
+              dbDefaultColors.map((color) => {
+                const { id, color_name, color_value } = color;
                 return (
-                  <option key={id} value={id} >{nameTag}</option>
+                  <option key={id} value={id} style={{ backgroundColor: color_value }}>{color_name}</option>
                 )
               })
             }
@@ -101,7 +77,7 @@ const NoteEdit = () => {
           <button
             onClick={handleNoteSubmit}
             className='notes-btn btn-save'>
-            Save chan
+            Save changes
           </button>
           <button
             className='notes-btn'

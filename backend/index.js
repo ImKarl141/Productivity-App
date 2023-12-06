@@ -18,6 +18,8 @@ app.use(cors())
 
 
 //Create 
+
+//Task Component
 app.post("/TaskCurrent", (req, resp) => {
   const q = "INSERT INTO `TaskCurrent` (`task_title`, `task_desc`, `task_date`, `task_project`, `task_tag`) VALUES (?)";
   const values = [
@@ -58,9 +60,27 @@ app.post("/TagList", (req, resp) => {
   })
 })
 
+//Note Component 
+app.post('/NoteList', (req, resp) => {
+  const q = "INSERT INTO NoteList (`note_name`, `note_desc`, `note_color`) VALUES (?)";
+  const values = [
+    req.body.note_name,
+    req.body.note_desc,
+    req.body.note_color,
+  ]
+
+  db.query(q, [values], (err, data) => {
+    if (err) return resp.json(err);
+    return resp.json("Note send it!");
+  })
+
+})
+
 ////////////////////////////////////////////////////////////////////////
 
 //Read
+
+//Task component
 app.get("/", (req, resp) => {
   resp.json("Hello from the backend of todo!")
 });
@@ -91,6 +111,30 @@ app.get("/TaskCurrent", (req, resp) => {
     } return resp.json(data);
   })
 })
+
+//Note component
+app.get('/NoteList', (req, resp) => {
+  // const q = "SELECT t.id, t.task_title, t.task_desc, t.task_date, p.project_name, p.project_color, tg.tag_name, tg.tag_color FROM `TaskCurrent` t LEFT JOIN `ProjectList` p ON t.task_project = p.id LEFT JOIN `TagList` tg ON t.task_tag = tg.id";
+  const q = "SELECT n.id, n.note_name, n.note_desc, dc.color_name, dc.color_value FROM `NoteList` n LEFT JOIN `DefaultColors` dc ON n.note_color = dc.id";
+  // const q = "SELECT * FROM NoteList";
+  db.query(q, (err, data) => {
+    if (err) {
+      return resp.json(err);
+    }
+    return resp.json(data);
+  })
+})
+
+app.get('/DefaultColors', (req, resp) => {
+  const q = "SELECT * FROM DefaultColors";
+  db.query(q, (err, data) => {
+    if (err) {
+      return resp.json(err);
+    }
+    return resp.json(data);
+  })
+})
+
 ////////////////////////////////////////////////////////////////////////
 
 //Update

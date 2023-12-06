@@ -6,15 +6,16 @@ import axios from "axios";
 
 const ListTaskCurrent = () => {
 
-  const [dbTasks, setDbTasks] = useState([])
+  const { isTaskUpdate, dbTasks } = useSelector((store) => store.task);
+  // console.log(dbTasks);
+  // const [dbTask, setDbTasks] = useState([])
   const dispatch = useDispatch();
-  const { isTaskUpdate } = useSelector((store) => store.task);
 
   useEffect(() => {
     const fetchTaskList = async () => {
       try {
         const resp = await axios.get("http://localhost:8800/TaskCurrent")
-        setDbTasks(resp.data)
+        // setDbTasks(resp.data)
         dispatch(SetTaskList(resp.data))
       } catch (err) {
         console.log(err);
