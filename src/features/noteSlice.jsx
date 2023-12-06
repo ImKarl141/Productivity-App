@@ -9,7 +9,9 @@ const initialState = {
   isEdit: false,
   tag: userTags,
   dbNotes: [],
-  dbDefaultColors: []
+  dbDefaultColors: [],
+  currentEditId: '',
+  isColorUpdate: false,
 }
 
 const noteSlice = createSlice({
@@ -24,11 +26,18 @@ const noteSlice = createSlice({
     },
     SetNoteColors: (state, value) => {
       state.dbDefaultColors = value.payload;
+    },
+    SetCurrentEditId: (state, value) => {
+      state.currentEditId = value.payload;
+      // console.log(state.currentEditId);
+    },
+    SetColorUpdate: (state) => {
+      state.isColorUpdate = !state.isColorUpdate;
     }
   }
 })
 
 
-export const { ShowNoteEdit, ShowNoteSettings, SetNoteList, SetNoteColors } = noteSlice.actions;
+export const { ShowNoteEdit, ShowNoteSettings, SetNoteList, SetNoteColors, SetCurrentEditId } = noteSlice.actions;
 export default noteSlice.reducer;
 

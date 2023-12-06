@@ -25,6 +25,9 @@ const TagUpdate = () => {
 
   const handleTagSubmit = async (e) => {
     e.preventDefault();
+    if (!tag_name) {
+      return;
+    }
     try {
       await axios.put('http://localhost:8800/TagList/' + currentTagId, tagInput);
       window.location.reload();

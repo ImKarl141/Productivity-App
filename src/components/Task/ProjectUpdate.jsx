@@ -26,6 +26,9 @@ const ProjectUpdate = () => {
   }
 
   const handleProjectSubmit = async (e) => {
+    if (!project_name) {
+      return;
+    }
     e.preventDefault();
     try {
       await axios.put('http://localhost:8800/ProjectList/' + currentProjectId, projectInput);

@@ -95,6 +95,9 @@ const TaskUpdate = () => {
   // Submit inputs to endpoint
   const handleTaskUpdate = async (e) => {
     e.preventDefault();
+    if (!task_title) {
+      return;
+    }
     try {
       await axios.put('http://localhost:8800/TaskCurrent/' + currentEditId, inputTask)
       window.location.reload();

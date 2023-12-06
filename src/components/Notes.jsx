@@ -1,15 +1,17 @@
 import { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { AddNoteIcon, NoteListIcon, TaskNoteIcon, DeleteNoteIcon, PinNoteIcon } from '../icons'
+import { AddNoteIcon, NoteListIcon, TaskNoteIcon, DeleteNoteIcon, PinNoteIcon, EditNoteIcon } from '../icons'
 import './Notes.css'
-import { ShowNoteEdit, ShowNoteSettings, SetNoteList, SetNoteColors } from '../features/NoteSlice'
+import { ShowNoteEdit, ShowNoteSettings, SetNoteList, SetNoteColors, SetCurrentEditId } from '../features/NoteSlice'
 import NoteEdit from './Note/NoteEdit'
 import axios from 'axios'
+import NoteUpdate from './Note/NoteUpdate'
+
 
 
 const NotesMenu = () => {
-  const { isEdit, noteItems, tag, dbNotes, dbDefaultColors } = useSelector((store) => store.note);
-  console.log(dbNotes);
+  const { isEdit, noteItems, tag, dbNotes, dbDefaultColors, currentEditId } = useSelector((store) => store.note);
+  // console.log(dbNotes);
   const dispatch = useDispatch();
 
 
@@ -41,6 +43,19 @@ const NotesMenu = () => {
     console.log(e.target.value);
   }
 
+  const handleDeleteItem = async (id) => {
+    try {
+      await axios.delete("http://localhost:8800/NoteList/" + id);
+      window.location.reload();
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  const handleNoteEdit = (id) => {
+    // dispatch(SetCurrentEditId(id))
+  }
+
   //Add Tags from the list, figure out how to share the listOfTags into this component.
 
   return (
@@ -61,17 +76,37 @@ const NotesMenu = () => {
           {
             dbNotes.map((note) => {
               const { id, note_name, note_desc, color_name, color_value } = note;
-              return (
-                <div className='note-card' key={id}>
-                  <span className='note-card-title'>{note_name}</span>
-                  <span className='note-card-content'>{note_desc}</span>
-                  <span className='note-tag' title={color_name} style={{ backgroundColor: color_value }}>
-                  </span>
-                  <button className='noteDelete-btn' title='Delete Note' onClick={() => console.log(`${note_name} Note deleted`)}><DeleteNoteIcon /></button>
-                  <button className='noteMakeTask-btn' title='Make a task' onClick={() => console.log(`${note_name} Task created`)}><TaskNoteIcon /></button>
-                  <button className='notePin-btn' title='Pin note' onClick={() => console.log(`${note_name} Note pinned`)}><PinNoteIcon /></button>
-                </div>
-              )
+              {
+                if (currentEditId === id) {
+                  return (
+                    <NoteUpdate key={id} />
+                    // <form key={id} className='note-card'>
+                    //   <input type="text"
+                    //     className='input-title'
+                    //     value={note_name}
+                    //   />
+                    //   <textarea type="text"
+                    //     className='input-content'
+                    //     value={note_desc}
+                    //   />
+                    // </form>
+                  )
+                } else {
+                  return (
+                    <div className='note-card' key={id}>
+                      <span className='note-card-title' >{note_name}</span>
+                      <span className='note-card-content' >{note_desc}</span>
+                      <span className='note-tag' title={color_name} style={{ backgroundColor: color_value }}>
+                      </span>
+                      <button className='noteEdit-btn' title='Edit Note' onClick={() => dispatch(SetCurrentEditId(id))}><EditNoteIcon /></button>
+                      <button className='noteDelete-btn' title='Delete Note' onClick={() => handleDeleteItem(id)}><DeleteNoteIcon /></button>
+                      <button className='noteMakeTask-btn' title='Make a task' onClick={() => console.log(`${note_name} Task created`)}><TaskNoteIcon /></button>
+                      <button className='notePin-btn' title='Pin note' onClick={() => console.log(`${note_name} Note pinned`)}><PinNoteIcon /></button>
+                    </div>
+                  )
+                }
+              }
+
             })
           }
         </div>

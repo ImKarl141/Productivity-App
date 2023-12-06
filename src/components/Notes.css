@@ -166,10 +166,6 @@
 }
 
 .note-card {
-  /* display: flex;
-  flex-direction: column;
-  justify-content: start;
-  align-items: start; */
   display: grid;
   grid-template-rows: auto 1fr;
   align-content: start;
@@ -192,6 +188,46 @@
   margin: 0;
   padding: 0;
   text-align: start;
+  cursor: pointer;
+}
+
+.input-title,
+.input-content {
+  font-family: Nunito;
+  color: var(--blackMedium);
+  margin: 0;
+  padding: 0;
+  text-align: start;
+  background-color: transparent;
+  border: none;
+}
+
+.input-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 0rem 1.6rem 0rem 0rem;
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.input-content {
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-bottom: 2.2rem;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+  resize: none;
+}
+
+.input-title:focus,
+.input-content:focus {
+  outline: none;
+}
+
+
+
+.note-card:hover .note-tag {
+  width: 7.5rem;
 }
 
 .note-card-title {
@@ -208,14 +244,15 @@
   text-overflow: ellipsis;
 }
 
-.note-tag {
+.note-tag,
+.note-tag-edit {
   display: flex;
   align-items: center;
   justify-content: end;
   position: absolute;
   background-color: red;
-  /* width: 13rem; */
-  width: 9.5rem;
+  /* width: 9.5rem; */
+  /* width: 7rem; */
   padding: 0rem 0.3rem;
   left: 0;
   bottom: 0;
@@ -224,8 +261,18 @@
   /* border-radius: 0.6rem; */
   border-bottom-left-radius: 0.6rem;
   border-top-left-radius: 0.6rem;
+  border-top-right-radius: 0.6rem;
+  border-bottom-right-radius: 0.6rem;
   transition: 0.2s opacity;
   opacity: 1;
+}
+
+.note-tag {
+  width: 13rem
+}
+
+.note-tag-edit {
+  width: 9.8rem;
 }
 
 /* .note-card:hover .note-tag {
@@ -252,27 +299,55 @@
 
 .noteDelete-btn,
 .noteMakeTask-btn,
-.notePin-btn {
+.notePin-btn,
+.noteEdit-btn {
   display: flex;
   position: absolute;
   opacity: 0;
-  /* background-color: red; */
 }
 
+.noteAccept-btn,
+.noteCancel-btn {
+  display: flex;
+  position: absolute;
+  opacity: 0.5;
+}
+
+.select-color {
+  position: absolute;
+  background-color: transparent;
+  border: none;
+  bottom: 0.48rem;
+  right: 4rem;
+}
+
+
 .notePin-btn {
-  justify-content: cen;
+  justify-content: center;
 }
 
 .noteDelete-btn,
-.noteMakeTask-btn {
+.noteMakeTask-btn,
+.noteEdit-btn {
   bottom: 0.65rem;
 }
 
+.noteAccept-btn,
+.noteCancel-btn  {
+  bottom: 0.8rem;
+}
+
 .noteMakeTask-btn {
+  right: 4rem;
+}
+
+.noteEdit-btn,
+.noteAccept-btn {
   right: 2rem;
 }
 
-.noteDelete-btn {
+.noteDelete-btn,
+.noteCancel-btn {
   right: 0.3rem;
 }
 
@@ -291,7 +366,8 @@
 
 .deleteNote-icon,
 .taskNote-icon,
-.pinNote-icon {
+.pinNote-icon,
+.editNote-icon {
   width: 1.5rem;
   height: 1.5rem;
   color: var(--black);
