@@ -11,7 +11,7 @@ const ListTags = () => {
 
   const { addTagEdit, dbTags, isTagUpdate, isTagDelete, currentTagId } = useSelector((store) => store.task);
   // const [dbTags, setDbTags] = useState([]);
-  console.log(currentTagId);
+  // console.log(currentTagId);
   const dispatch = useDispatch();
   // console.log(`isUpdate: ${isTagUpdate}, isDelete: ${isTagUpdate}`);
 

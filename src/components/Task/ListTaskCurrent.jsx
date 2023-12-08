@@ -35,8 +35,9 @@ const ListTaskCurrent = () => {
       <ul className='list-tasks'>
         {dbTasks.map((myTask) => {
           const { id, task_title, task_desc, task_date, project_name, project_color, tag_name, tag_color } = myTask
+          // console.log(id);
           return (
-            <li key={id}>
+            <li key={`${id}`}>
               <div className='task-item-overall-container'>
                 <div className='task-item-container'>
                   <input className='default-checkbox checkbox-test' type="checkbox" />

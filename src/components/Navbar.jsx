@@ -18,6 +18,7 @@ import { showCalendar, showTask, showMenuOptions, showNotes } from '../features/
 
 //option dispatch
 import { showOption, showSettings, showUser } from '../features/optionSlice';
+import PomodoroTimer from './Timer';
 
 const Navbar = () => {
   const [isTask, setIsTask] = useState(false)
@@ -71,7 +72,8 @@ const Navbar = () => {
             </>
           )}
         </div>
-        <div className="pomodoro-minibar">
+        <PomodoroTimer />
+        {/* <div className="pomodoro-minibar">
           <div className='timer-stage2-clock'>
             <img className='timer-icon2' src={timerMini} alt="Timer mini icon" />
           </div>
@@ -81,10 +83,9 @@ const Navbar = () => {
             </button>
             <button className='play-buttons'>
               <StopIcon />
-              {/* <img className='play-option' src={stopIcon} alt="stop" /> */}
             </button>
           </div>
-        </div>
+        </div> */}
         <div className="option-bar">
           <button className='icon-button' onClick={() => dispatch(showOption())}>
             {/* <img className='logo' src={optionsMenu} alt="my icon" /> */}

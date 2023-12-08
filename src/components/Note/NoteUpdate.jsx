@@ -8,23 +8,31 @@ import { SetCurrentEditId } from "../../features/NoteSlice";
 const NoteUpdate = () => {
   const { dbNotes, currentEditId, dbDefaultColors } = useSelector((store) => store.note);
   const dispatch = useDispatch();
-  // console.log(currentEditId);
+  const tempNote = dbNotes.find(note => note.id === currentEditId);
+  const { color_value } = tempNote;
+  const noValue = "No Color";
+  // console.log(color_value);
+
 
 
   //Get the color value in hex
-  const colorValue = dbNotes.find(note => note.id === currentEditId).color_value;
+  const colorValue = color_value;
 
   const [inputNote, setInputNote] = useState({
     note_name: dbNotes.find(note => note.id === currentEditId).note_name,
     note_desc: dbNotes.find(note => note.id === currentEditId).note_desc,
     //Iterate over the DefaultColors table to find the id of the color that matches the value
-    note_color: dbDefaultColors.find(color => color.color_value == colorValue).id,
+    note_color: colorValue ? dbDefaultColors.find(color => color.color_value == colorValue).id : undefined,
   })
 
-  const { note_name, note_desc } = inputNote
+  const { note_name, note_desc, note_color } = inputNote
+  // console.log(inputNote);
 
   const handleChangeInput = (e) => {
-    setInputNote((prev) => ({ ...prev, [e.target.name]: e.target.value }))
+    e.target.value ? setInputNote((prev) => ({ ...prev, [e.target.name]: e.target.value })) :
+      setInputNote((prev) => ({ ...prev, [e.target.name]: undefined }));
+    // e.target.value ? console.log("Is value") : console.log("No value");
+    // setInputNote((prev) => ({ ...prev, [e.target.name]: e.target.value }))
     console.log(inputNote);
   }
 
@@ -34,9 +42,9 @@ const NoteUpdate = () => {
 
   const handleNoteSubmit = async (e) => {
     e.preventDefault();
-    // if (!note_name) {
-    //   return;
-    // }
+    if (!note_name) {
+      return;
+    }
     try {
       await axios.put("http://localhost:8800/NoteList/" + currentEditId, inputNote)
       window.location.reload()
@@ -75,7 +83,13 @@ const NoteUpdate = () => {
       >
         <CancelUpdateIcon />
       </button>
-      <select className="select-color">
+      <select
+        className="select-color"
+        name="note_color"
+        value={note_color}
+        onChange={handleChangeInput}
+      >
+        <option value=''>Without Color</option>
         {
           dbDefaultColors.map(color => {
             const { id, color_name, color_value } = color;

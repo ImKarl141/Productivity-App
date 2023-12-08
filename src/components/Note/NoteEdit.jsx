@@ -63,6 +63,7 @@ const NoteEdit = () => {
             name="note_color"
             onChange={handleChangeInput}
           >
+            <option value={null}>Without color</option>
             {
               dbDefaultColors.map((color) => {
                 const { id, color_name, color_value } = color;

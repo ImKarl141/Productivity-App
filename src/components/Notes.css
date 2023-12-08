@@ -250,7 +250,7 @@
   align-items: center;
   justify-content: end;
   position: absolute;
-  background-color: red;
+  background-color: transparent;
   /* width: 9.5rem; */
   /* width: 7rem; */
   padding: 0rem 0.3rem;
