@@ -4,21 +4,21 @@ import { MenuIcon, OptionsIcon, PlayPauseIcon, StopIcon, TaskIcon, CalendarIcon,
 import TaskMenu from './Task';
 import CalendarMenu from './Calendar'
 import NotesMenu from './Notes'
-
+import { showOption, showSettings, showUser } from '../features/optionSlice';
+import MiniBarTimer from './MiniBarTimer';
+import Timer from './Timer';
 import './Navbar.css'
-
+import { showCalendar, showTask, showMenuOptions, showNotes } from '../features/menuSlice';
 import timerMini from '../images/timer-stage2-icon.svg'
+
 // import playIcon from '../images/play-icon.svg'
 // import pauseIcon from '../images/pause-icon.svg'
 // import stopIcon from '../images/stop-icon.svg'
 
 //menu dispatch
-import { showCalendar, showTask, showMenuOptions, showNotes } from '../features/menuSlice';
 
 
 //option dispatch
-import { showOption, showSettings, showUser } from '../features/optionSlice';
-import PomodoroTimer from './Timer';
 
 const Navbar = () => {
   const [isTask, setIsTask] = useState(false)
@@ -72,7 +72,17 @@ const Navbar = () => {
             </>
           )}
         </div>
-        <PomodoroTimer />
+        {/*Minibar display */}
+        {/* {
+          Task && (
+            <MiniBarTimer />
+          )
+        } */}
+        {/*Minibar timer when a Windows is displayed otherwise display timer in full size*/}
+        {
+          (Task || Calendar || Notes) ? <MiniBarTimer /> : <Timer />
+        }
+
         {/* <div className="pomodoro-minibar">
           <div className='timer-stage2-clock'>
             <img className='timer-icon2' src={timerMini} alt="Timer mini icon" />
