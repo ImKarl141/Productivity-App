@@ -1,22 +1,19 @@
 import { useEffect, useState } from "react"
-import { PlayPauseIcon, StopIcon, ResetTimer } from "../icons"
+import { PlayPauseIcon, StopIcon, ResetTimer, CoffeeIcon } from "../icons"
 import timerMini from '../images/timer-stage2-icon.svg'
 
-const PomodoroTimer = () => {
-
-  // const [isPlaying, setIsPlaying] = useState(true)
+const Timer = () => {
   const [defaultValues, setDefaultValues] = useState({
     hours: '00',
     minutes: '00',
-    seconds: 3,
+    seconds: 10,
     isPlaying: false,
   });
-
 
   const [timer, setTimer] = useState({
     hours: '00',
     minutes: '00',
-    seconds: 3,
+    seconds: 10,
     isPlaying: false,
   });
 
@@ -69,35 +66,49 @@ const PomodoroTimer = () => {
     return (
       <div>
         <span>Timer finished</span>
-        <button onClick={() => setIsFinish(false)}>Close</button>
+        <button onClick={() => resetTimer()}>Close</button>
       </div>
     )
   }
 
   return (
-    <div className="pomodoro-minibar">
-      {
-        isFinish && <FinishTimer />
-      }
-      {
-        seconds <= 9 ? <span>{`${hours}:${minutes}:0${seconds}`}</span> : <span>{`${hours}:${minutes}:${seconds}`}</span>
-      }
-      <div className='timer-stage2-clock'>
-        <img className='timer-icon2' src={timerMini} alt="Timer mini icon" />
+    <div className="pomodoro-fullbar-container">
+      <div className="pomodoro-timer">
+        <div className="timer-clock-full">
+          {
+            9 >= seconds > 1 ? <span className="timer-text">{`0${seconds}`}</span> :
+              <span className="timer-text-full">{`${seconds}`}</span>
+          }
+          <div className="tick-main">
+            <span className="tick-vertical-main"></span>
+            <div className="tick-container">
+              <span className="tick-horizontal-main"></span>
+              <span className="tick-horizontal-main"></span>
+            </div>
+            <span className="tick-vertical-main"></span>
+          </div>
+          <div className="tick">
+            <span className="tick-vertical"></span>
+            <div className="tick-container">
+              <span className="tick-horizontal"></span>
+              <span className="tick-horizontal"></span>
+            </div>
+            <span className="tick-vertical"></span>
+          </div>
+        </div>
+        <div className="timer-btn-full">
+          <button className='play-buttons-full' title="Play/Pause" onClick={() => playTimer()}>
+            <PlayPauseIcon />
+          </button>
+          <button className='play-buttons-full' title="Stop" onClick={() => stopTimer()}>
+            <StopIcon />
+          </button>
+          <button className="play-buttons-full" title="Reset" onClick={() => resetTimer()}>
+            <ResetTimer />
+          </button>
+        </div>
       </div>
-      <div className='timer-stage2-clock'>
-        <button className='play-buttons' title="Play/Pause" onClick={() => playTimer()}>
-          <PlayPauseIcon />
-        </button>
-        <button className='play-buttons' title="Stop" onClick={() => stopTimer()}>
-          <StopIcon />
-          {/* <img className='play-option' src={stopIcon} alt="stop" /> */}
-        </button>
-        <button className="play-buttons" title="reset" onClick={() => resetTimer()}>
-          <ResetTimer />
-        </button>
-      </div>
-    </div >
+    </div>
   )
 }
-export default PomodoroTimer
+export default Timer
