@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react"
-import { PlayPauseIcon, StopIcon, ResetTimer, CoffeeIcon } from "../icons"
+import { PlayPauseIcon, StopIcon, ResetTimer, CoffeeIcon, AddTaskTimerIcon, TaskDetailsIcon } from "../icons"
 import timerMini from '../images/timer-stage2-icon.svg'
+import details from '../images/kebab.svg'
+import ListTimerTask from "./Timer/ListTimerTask"
+
 
 const Timer = () => {
   const [defaultValues, setDefaultValues] = useState({
@@ -106,6 +109,27 @@ const Timer = () => {
           <button className="play-buttons-full" title="Reset" onClick={() => resetTimer()}>
             <ResetTimer />
           </button>
+        </div>
+      </div>
+      <div className="pomodoro-task">
+        <ListTimerTask />
+        {/* <div className="listTask-timer">
+          <div className="listTask-title">
+            <input className="default-checkboxList" type="checkbox" />
+            <span className="checkmarkList"></span>
+            <div className="text-container">
+              <span className="list-text">Title of task pretty long asadasdadadasdaasdsadasdada asadasdadadasdaasdsadasdada asadasdadadasdaasdsadasdada asadasdadadasdaasdsadasdada</span>
+            </div>
+          </div>
+          <div className="listTask-details">
+            <span>0/?</span>
+            <button className="details-task-btn" >
+              <img className="details-task-img" src={details} alt="" />
+            </button>
+          </div>
+        </div> */}
+        <div className="add-task-timer">
+          <span className="add-timerText">Add Task</span>
         </div>
       </div>
     </div>

@@ -8,6 +8,7 @@ import { showOption, showSettings, showUser } from '../features/optionSlice';
 import MiniBarTimer from './MiniBarTimer';
 import Timer from './Timer';
 import './Navbar.css'
+import './Timer.css'
 import { showCalendar, showTask, showMenuOptions, showNotes } from '../features/menuSlice';
 import timerMini from '../images/timer-stage2-icon.svg'
 
