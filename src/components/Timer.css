@@ -210,6 +210,8 @@
   /* margin: 0 4rem; */
   max-width: 40rem;
   min-width: 30rem;
+  min-height: 45rem;
+  max-height: 50rem;
   /* z-index: 3; */
   background-color: var(--pomodoroLight);
   border-radius: 0.2rem;
@@ -221,6 +223,12 @@
   min-height: 20rem;
 }
 
+.pomodoro-task {
+  display: grid;
+  gap: 8rem;
+  align-items: center;
+}
+
 .listTask-timer {
   display: flex;
   width: var(--timerSizeFull);
@@ -229,7 +237,7 @@
   align-items: center;
   background-color: var(--pomodoroDark);
   margin-bottom: 2rem;
-  padding: 0 0.6rem;
+  padding: 0.6rem 0.6rem;
 }
 
 .listTask-title {
@@ -268,6 +276,12 @@
   width: 3rem;
   height: 3rem;
   color: var(--gray02);
+}
+
+.numbersUpDown-icon {
+  width: 1.2rem;
+  height: 1.2rem;
+  color: var(--black);
 }
 
 .details-task-img {
@@ -392,7 +406,77 @@
 }
 
 .currentTimerList-container {
-  height: 19rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  height: 8.8rem;
+  /* border: 0.2rem solid black; */
   overflow: auto;
 }
+
+.listTask-timer {
+  display: flex;
+  width: var(--timerSizeFull);
+  height: 5rem;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--pomodoroDark);
+  margin: 0;
+  padding: 0.6rem 0.6rem;
+}
+
+.taskTimer-details-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: space-between;
+}
+
+.taskTimer-form {
+  display: flex; 
+  align-items: start;
+  justify-content: space-between;
+}
+
+.taskTimer-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.taskTimer-title {
+  background-color: var(--pomodoroDark);
+  padding: 0.6rem 0.4rem;
+  border: 0rem none;
+  border-radius: 0.2rem;
+  color: var(--black);
+}
+
+.taskTimer-title::placeholder {
+  color: var(--blackLight);
+}
+
+.taskTimer-title:focus {
+  outline: none;
+}
+
+.taskTimer-number {
+  width: 2rem;
+}
+
+.details-number {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.details-numberUpDown {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+
 

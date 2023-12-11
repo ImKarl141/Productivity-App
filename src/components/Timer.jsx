@@ -3,9 +3,17 @@ import { PlayPauseIcon, StopIcon, ResetTimer, CoffeeIcon, AddTaskTimerIcon, Task
 import timerMini from '../images/timer-stage2-icon.svg'
 import details from '../images/kebab.svg'
 import ListTimerTask from "./Timer/ListTimerTask"
+import axios from "axios"
+import { useDispatch, useSelector } from "react-redux"
+import { SetTaskList } from "../features/taskSlice"
+import ListTimerEdit from "./Timer/ListTimerEdit"
 
 
 const Timer = () => {
+  const { dbTasks } = useSelector((store) => store.task);
+  const dispatch = useDispatch();
+
+
   const [defaultValues, setDefaultValues] = useState({
     hours: '00',
     minutes: '00',
@@ -34,6 +42,19 @@ const Timer = () => {
     console.log(timer);
     setIsFinish(true);
   }, [timer])
+
+  useEffect(() => {
+    const fetchTaskList = async () => {
+      try {
+        const resp = await axios.get("http://localhost:8800/TaskCurrent")
+        // setDbTasks(resp.data)
+        dispatch(SetTaskList(resp.data))
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    fetchTaskList();
+  }, [])
 
   const updateTime = () => {
     if (isPlaying) {
@@ -113,24 +134,7 @@ const Timer = () => {
       </div>
       <div className="pomodoro-task">
         <ListTimerTask />
-        {/* <div className="listTask-timer">
-          <div className="listTask-title">
-            <input className="default-checkboxList" type="checkbox" />
-            <span className="checkmarkList"></span>
-            <div className="text-container">
-              <span className="list-text">Title of task pretty long asadasdadadasdaasdsadasdada asadasdadadasdaasdsadasdada asadasdadadasdaasdsadasdada asadasdadadasdaasdsadasdada</span>
-            </div>
-          </div>
-          <div className="listTask-details">
-            <span>0/?</span>
-            <button className="details-task-btn" >
-              <img className="details-task-img" src={details} alt="" />
-            </button>
-          </div>
-        </div> */}
-        <div className="add-task-timer">
-          <span className="add-timerText">Add Task</span>
-        </div>
+        <ListTimerEdit />
       </div>
     </div>
   )

@@ -1,19 +1,18 @@
 import { useSelector } from "react-redux"
 import details from '../../images/kebab.svg'
 
-
-
-
 const ListTimerTask = () => {
   const { isTaskUpdate, dbTasks } = useSelector((store) => store.task);
-  console.log(dbTasks);
+
+
+
   return (
     <div className="currentTimerList-container">
       {
         dbTasks.map((task) => {
           const { id, task_title } = task
           return (
-            <div key={id} className="listTask-timer">
+            <div key={`${id}`} className="listTask-timer">
               <div className="listTask-title">
                 <input className="default-checkboxList" type="checkbox" />
                 <span className="checkmarkList"></span>
