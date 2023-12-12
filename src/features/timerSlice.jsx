@@ -1,9 +1,32 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  isTimerTaskAdd: false,
-  isTimerTaskEdit: false,
   defaultTimer: 25,
+  isTimerTaskAdd: true,
+  isTimerTaskEdit: false,
+  isSubtaskTimer: true,
+  subtasksTest: [
+    {
+      id: 1,
+      title: "Make dinner"
+    },
+    {
+      id: 2,
+      title: "Buy PC"
+    },
+    {
+      id: 3,
+      title: "Drive the bike"
+    },
+    {
+      id: 4,
+      title: "Buy some food"
+    },
+    {
+      id: 5,
+      title: "Visit my parents"
+    }
+  ]
 }
 
 

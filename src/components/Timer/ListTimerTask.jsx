@@ -14,9 +14,9 @@ const ListTimerTask = () => {
           return (
             <div key={`${id}`} className="listTask-timer">
               <div className="listTask-title">
-                <input className="default-checkboxList" type="checkbox" />
+                <input id={id} className="default-checkboxList" type="checkbox" />
                 <span className="checkmarkList"></span>
-                <span className="list-text">{task_title}</span>
+                <label htmlFor={id} className="list-text">{task_title}</label>
               </div>
               <div className="listTask-details">
                 <span>0/?</span>

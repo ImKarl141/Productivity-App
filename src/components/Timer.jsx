@@ -17,16 +17,24 @@ const Timer = () => {
   const [defaultValues, setDefaultValues] = useState({
     hours: '00',
     minutes: '00',
-    seconds: 10,
+    seconds: 300,
     isPlaying: false,
   });
 
   const [timer, setTimer] = useState({
     hours: '00',
     minutes: '00',
-    seconds: 10,
+    seconds: 300,
     isPlaying: false,
   });
+
+  const [pomodoro, setPomodoro] = useState({
+    current: 0,
+    finished: 3,
+  })
+
+  const amountHours = pomodoro.finished * 2
+  // console.log(amountHours);
 
   const { hours, minutes, seconds, isPlaying } = timer;
   const [isFinish, setIsFinish] = useState(false)
@@ -97,7 +105,48 @@ const Timer = () => {
 
   return (
     <div className="pomodoro-fullbar-container">
-      <div className="pomodoro-timer">
+      <div className="timer-container">
+        <div className="pomodoro-timer">
+          <div className="timer-clock-full">
+            {
+              9 >= seconds > 1 ? <span className="timer-text">{`0${seconds}`}</span> :
+                <span className="timer-text-full">{`${seconds}`}</span>
+            }
+            <div className="tick-main">
+              <span className="tick-vertical-main"></span>
+              <div className="tick-container">
+                <span className="tick-horizontal-main"></span>
+                <span className="tick-horizontal-main"></span>
+              </div>
+              <span className="tick-vertical-main"></span>
+            </div>
+            <div className="tick">
+              <span className="tick-vertical"></span>
+              <div className="tick-container">
+                <span className="tick-horizontal"></span>
+                <span className="tick-horizontal"></span>
+              </div>
+              <span className="tick-vertical"></span>
+            </div>
+          </div>
+          <div className="timer-btn-full">
+            <button className='play-buttons-full' title="Play/Pause" onClick={() => playTimer()}>
+              <PlayPauseIcon />
+            </button>
+            <button className='play-buttons-full' title="Stop" onClick={() => stopTimer()}>
+              <StopIcon />
+            </button>
+            <button className="play-buttons-full" title="Reset" onClick={() => resetTimer()}>
+              <ResetTimer />
+            </button>
+          </div>
+        </div>
+        <div className="pomodoro-task">
+          <ListTimerTask />
+          <ListTimerEdit />
+        </div>
+      </div>
+      {/* <div className="pomodoro-timer">
         <div className="timer-clock-full">
           {
             9 >= seconds > 1 ? <span className="timer-text">{`0${seconds}`}</span> :
@@ -135,6 +184,11 @@ const Timer = () => {
       <div className="pomodoro-task">
         <ListTimerTask />
         <ListTimerEdit />
+      </div> */}
+      <div className="pomodoro-stats">
+        <span>Total Pomos: 0/{amountHours}</span>
+        <span>|</span>
+        <span>Finishing at: {amountHours}:00pm 1.4hrs</span>
       </div>
     </div>
   )

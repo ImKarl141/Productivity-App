@@ -1,20 +1,46 @@
 import { useDispatch, useSelector } from "react-redux"
 import { SetTimerListAdd } from "../../features/timerSlice";
-import { NumberUpIcon, NumberDownIcon } from "../../icons";
+import { NumberUpIcon, NumberDownIcon, AddSubtaskIcon } from "../../icons";
+import { useState } from "react";
 
 
 
 const ListTimerEdit = () => {
   const dispatch = useDispatch();
-  const { isTimerTaskAdd } = useSelector((store) => store.timer);
+  const { isTimerTaskAdd, isSubtaskTimer, subtasksTest } = useSelector((store) => store.timer);
+  if (!subtasksTest) {
+    console.log("Empty");
+  }
+
+  const [number, setNumber] = useState(1)
+  // console.log(typeof (number));
+
+  const increaseNumber = () => {
+    setNumber(number + 1)
+  }
+
+  const decreaseNumber = () => {
+    if (number > 0) {
+      setNumber(number - 1)
+    }
+  }
+
 
   const handleTaskSubmit = (e) => {
     e.preventDefault();
   }
 
+  const handleChangeNumber = (e) => {
+    if (e.target.value) {
+      setNumber(parseInt(e.target.value))
+    } else {
+      setNumber(0)
+    }
+  }
+
 
   return (
-    <div>
+    <div className="taskTimerAdd-container">
       {
         !isTimerTaskAdd && (
           <div className="add-task-timer" onClick={() => dispatch(SetTimerListAdd())}>
@@ -29,23 +55,82 @@ const ListTimerEdit = () => {
               <div className="taskTimer-details">
                 <input className="taskTimer-title" type="text" placeholder="Task title" />
                 <div className="details-pomodoro">
-                  <span>Pomodoros</span>
+                  <span>Estimated Pomodoros</span>
                   <div className="details-number">
-                    <span>1/2</span>
+                    <input
+                      className="taskTimer-number"
+                      type="number"
+                      min={0}
+                      step={1}
+                      value={number}
+                      onChange={handleChangeNumber}
+                    />
+                    {/* <span>{number}</span> */}
                     <div className="details-numberUpDown">
-                      <NumberUpIcon />
-                      <NumberDownIcon />
+                      <button onClick={() => increaseNumber()}>
+                        <NumberUpIcon />
+                      </button>
+                      <button onClick={() => decreaseNumber()}>
+                        <NumberDownIcon />
+                      </button>
                     </div>
                   </div>
                 </div>
               </div>
-              <div className="taskTimer-subtask">
-                <span>Subtasks</span>
-              </div>
+              {
+                (subtasksTest.length > 0) && (
+                  <div className="subtaskList">
+                    {
+                      subtasksTest.map((subtask) => {
+                        const { id, title } = subtask
+                        return (
+                          <div key={id} className="taskTimer-subtask">
+                            <input className="subtask-checkbox" id={id} type="checkbox" />
+                            <label
+                              className="subtask-title"
+                              htmlFor={id}
+                              title={title}
+                            >
+                              {title}
+                            </label>
+                          </div>
+                        )
+                      })
+                    }
+                  </div>
+                )
+              }
+
+              {/* <div className="subtaskList">
+                {
+                  isSubtaskTimer && (
+                    subtasksTest.map((subtask) => {
+                      const { id, title } = subtask
+                      return (
+                        <div key={id} className="taskTimer-subtask">
+                          <input className="subtask-checkbox" id={id} type="checkbox" />
+                          <label
+                            className="subtask-title"
+                            htmlFor={id}
+                            title={title}
+                          >
+                            {title}
+                          </label>
+                        </div>
+                      )
+                    })
+                  )
+                }
+              </div> */}
             </form>
             <div className="taskTimer-btn">
-              <button onClick={() => dispatch(SetTimerListAdd())}>Cancel</button>
-              <button>Save</button>
+              <button className="taskTimerDetails-btn">
+                Task Details
+              </button>
+              <div className="taskTimerAddCancel-btn">
+                <button className="taskTimerCancel-btn" onClick={() => dispatch(SetTimerListAdd())}>Cancel</button>
+                <button className="taskTimerAdd-btn">Save</button>
+              </div>
             </div>
           </div>
         )
