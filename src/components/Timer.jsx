@@ -8,6 +8,8 @@ import { useDispatch, useSelector } from "react-redux"
 import { SetTaskList } from "../features/taskSlice"
 import ListTimerAdd from "./Timer/ListTimerAdd"
 import ListTimerEdit from "./Timer/ListTimerEdit"
+import TimerClock from "./Timer/TimerClock"
+
 
 
 const Timer = () => {
@@ -108,7 +110,8 @@ const Timer = () => {
   return (
     <div className="pomodoro-fullbar-container">
       <div className="timer-container">
-        <div className="pomodoro-timer">
+        <TimerClock />
+        {/* <div className="pomodoro-timer">
           <div className="timer-clock-full">
             {
               9 >= seconds > 1 ? <span className="timer-text">{`0${seconds}`}</span> :
@@ -142,7 +145,7 @@ const Timer = () => {
               <ResetTimer />
             </button>
           </div>
-        </div>
+        </div> */}
         <div className="pomodoro-task">
           {
             isTimerTaskEdit && (

@@ -686,11 +686,17 @@ body::-webkit-scrollbar-thumb {
   /* opacity: 1; */
 } 
 
-
 .taskTimer-subtask input:checked ~ .subtask-title {
   opacity: 0.4;
   text-decoration: line-through;
 }
+
+/*Text styling*/
+label::selection {
+  background-color: var(--white);
+  color: var(--black);
+}
+
 
 
 
