@@ -6,11 +6,13 @@ import ListTimerTask from "./Timer/ListTimerTask"
 import axios from "axios"
 import { useDispatch, useSelector } from "react-redux"
 import { SetTaskList } from "../features/taskSlice"
+import ListTimerAdd from "./Timer/ListTimerAdd"
 import ListTimerEdit from "./Timer/ListTimerEdit"
 
 
 const Timer = () => {
   const { dbTasks } = useSelector((store) => store.task);
+  const { isTimerTaskEdit } = useSelector((store) => store.timer);
   const dispatch = useDispatch();
 
 
@@ -142,8 +144,13 @@ const Timer = () => {
           </div>
         </div>
         <div className="pomodoro-task">
+          {
+            isTimerTaskEdit && (
+              <ListTimerEdit />
+            )
+          }
           <ListTimerTask />
-          <ListTimerEdit />
+          <ListTimerAdd />
         </div>
       </div>
       {/* <div className="pomodoro-timer">

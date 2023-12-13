@@ -104,7 +104,7 @@ app.get("/TagList", (req, resp) => {
 })
 
 app.get("/TaskCurrent", (req, resp) => {
-  const q = "SELECT t.id, t.task_title, t.task_desc, t.task_date, p.project_name, p.project_color, tg.tag_name, tg.tag_color FROM `TaskCurrent` t LEFT JOIN `ProjectList` p ON t.task_project = p.id LEFT JOIN `TagList` tg ON t.task_tag = tg.id";
+  const q = "SELECT t.id, t.task_title, t.task_desc, t.task_date, t.focus_amount, p.project_name, p.project_color, tg.tag_name, tg.tag_color FROM `TaskCurrent` t LEFT JOIN `ProjectList` p ON t.task_project = p.id LEFT JOIN `TagList` tg ON t.task_tag = tg.id";
   db.query(q, (err, data) => {
     if (err) {
       return resp.json(err);
@@ -142,13 +142,14 @@ app.get('/DefaultColors', (req, resp) => {
 
 app.put("/TaskCurrent/:id", (req, resp) => {
   const taskId = req.params.id;
-  const q = "UPDATE TaskCurrent SET `task_title` = ?, `task_desc` = ?, `task_date` = ?, `task_project` = ?, `task_tag` = ? WHERE id = ?"
+  const q = "UPDATE TaskCurrent SET `task_title` = ?, `task_desc` = ?, `task_date` = ?, `task_project` = ?, `task_tag` = ?, `focus_amount` = ? WHERE id = ?"
   const values = [
     req.body.task_title,
     req.body.task_desc,
     req.body.task_date,
     req.body.task_project,
     req.body.task_tag,
+    req.body.focus_amount,
   ];
 
   db.query(q, [...values, taskId], (err, data) => {
@@ -198,6 +199,21 @@ app.put("/NoteList/:id", (req, resp) => {
   db.query(q, [...values, noteId], (err, data) => {
     if (err) return resp.json(err);
     return resp.json("Note updated successfully");
+  })
+})
+
+//Timer Component
+// await axios.patch("http://localhost:8800/TaskCurrent/" + currentTimerId, timerInput)
+app.patch("/TaskCurrent/:id", (req, resp) => {
+  const timerId = req.params.id;
+  const q = "UPDATE `TaskCurrent` SET `task_title` = ?, `focus_amount` = ? WHERE id = ?"
+  const values = [
+    req.body.task_title,
+    req.body.focus_amount,
+  ]
+  db.query(q, [...values, timerId], (err, data) => {
+    if (err) return resp.json(err);
+    return resp.json("Task updated successfully from timer")
   })
 })
 
@@ -251,3 +267,34 @@ app.delete("/NoteList/:id", (req, resp) => {
 app.listen(8800, () => {
   console.log("Connected to the server!");
 })
+
+
+
+
+
+// app.patch("/TaskCurrent/:id", (req, resp) => {
+//   const timerId = req.params.id;
+//   const q = "UPDATE TaskCurrent SET `task_title` = ?, `focus_amount` = ? WHERE id = ?"
+//   const values = [
+//     req.body.task_title,
+//     req.body.focus_amount,
+//   ];
+
+//   db.query(q, [...values, timerId], (err, data) => {
+//     if (err) return resp.json(err);
+//     return resp.json("TImer updated successfully");
+//   })
+// })
+// app.patch("/TaskCurrent/: id", (req, resp) => {
+//   const timerId = req.params.id;
+//   const q = "UPDATE TaskCurrent SET `task_title` = ?, `focus_amount` = ? WHERE id = ?"
+//   const values = [
+//     req.body.task_title,
+//     req.body.focus_amount,
+//   ];
+//   db.query(q, [...values, timerId], (err, data) => {
+//     if (err) return resp.json("Error");
+//     return resp.json("Note updated successfully");
+//   })
+
+// })

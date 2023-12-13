@@ -2,9 +2,10 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   defaultTimer: 25,
-  isTimerTaskAdd: true,
+  isTimerTaskAdd: false,
   isTimerTaskEdit: false,
   isSubtaskTimer: true,
+  currentTimerId: '',
   subtasksTest: [
     {
       id: 1,
@@ -37,11 +38,17 @@ const timerSlice = createSlice({
     SetTimerListAdd: (state) => {
       state.isTimerTaskAdd = !state.isTimerTaskAdd;
     },
-    SetTimerListEdit: (state) => {
-      state.isTimerTaskEdit = !isTimerTaskEdit;
+    SetTimerListEdit: (state, value) => {
+      state.isTimerTaskEdit = !state.isTimerTaskEdit;
+      state.currentTimerId = value.payload;
     },
+    SetCurrentEditTimer: (state, value) => {
+      state.currentTimerId = value.payload;
+      state.isTimerTaskEdit = true
+      // console.log(state.currentEditTimer);
+    }
   }
 });
 
-export const { SetTimerListAdd, SetTimerListEdit } = timerSlice.actions;
+export const { SetTimerListAdd, SetTimerListEdit, SetCurrentEditTimer } = timerSlice.actions;
 export default timerSlice.reducer;

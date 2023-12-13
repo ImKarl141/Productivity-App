@@ -47,9 +47,6 @@ const ProjectUpdate = () => {
             name='project_color'
             type="color"
             className='default-colorPicker'
-            // value={change}
-            //Make the value the same as the dbProject based on the id
-            // value={project_color}
             onChange={handleChangeInput}
           />
           <div className='custom-colorPicker' style={{ backgroundColor: project_color }}>

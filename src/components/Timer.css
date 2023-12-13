@@ -426,7 +426,7 @@ body::-webkit-scrollbar-thumb {
   background-color: var(--pomodoroDark);
   /* width: 100%; */
   height: 3rem;
-  cursor: pointer;
+  /* cursor: pointer; */
   padding: 0rem 0.4rem;
   /* height: 60px; */
   /* margin-right: 2rem; */
