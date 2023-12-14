@@ -8,81 +8,70 @@ const TimerClock = () => {
   const [defaultValues, setDefaultValues] = useState({
     hours: '00',
     minutes: 25,
-    seconds: 59,
+    seconds: 0,
     isPlaying: false,
   });
 
   //Values for timer clock
   const [timer, setTimer] = useState({
     hours: '00',
-    minutes: 10,
-    seconds: 5,
+    minutes: 0,
+    seconds: 2,
     isPlaying: false,
   });
 
   const { hours, minutes, seconds, isPlaying } = timer;
-
-  //Activate Notification when timer is finished 
   const [isFinish, setIsFinish] = useState(false)
 
+
+
   //Update the value every second when timer state change, when finished
+
   useEffect(() => {
-    //If minute and seconds are set to 0 then stop the updating 
-    if (seconds >= 1) {
-      const myInterval = setInterval(() => {
-        updateTime();
-      }, 1000);
-      return () => clearInterval(myInterval);
-    }
-    // console.log(timer);
+    const myInterval = setInterval(() => {
+      updateTime();
+    }, 1000);
+    return () => clearInterval(myInterval);
     console.log("Timer finished");
-    //Activate notification
     setIsFinish(true);
   }, [timer])
 
-  //Logic for updating the timer value
-  //Start with the minutes state. Remove a number every time seconds reaches 0. If minutes are < 1 then set it to 0. If minutes are 0 and timer is 0 then stop the timer automatically  
-
-  const mySeconds = () => {
-    if (minutes > 1) { //Decrease minutes by 1 and when seconds reaches 0 reset to 59
-      if (seconds >= 1) {
-        const newSecond = { ...timer, seconds: timer.seconds - 1 }
-        setTimer(newSecond)
-      } else {
-        const newMinute = { ...timer, minutes: timer.minutes - 1 }
-        setTimer(newMinute)
-        const newSecond = { ...timer, seconds: timer.seconds = 59 }
-        setTimer(newSecond)
-      }
-    } else { //Set minutes to 0 and decrease seconds, when reaches 0 the exit 
-      const newMinute = { ...timer, minutes: timer.minutes = 0 }
-      setTimer(newMinute)
-      if (seconds >= 1) {
-        const newSecond = { ...timer, seconds: timer.seconds - 1 }
-        setTimer(newSecond)
-      } else {
-        const newSecond = { ...timer, seconds: timer.seconds = 0 }
-        setTimer(newSecond)
-        return;
-      }
-    }
-  }
-
-
   const updateTime = () => {
-    //Logic for decreasing seconds
-    //Verify if minutes is 1: Hide minutes and only show seconds
-    //Verify if seconds is 0 and minutes is greater or equal than 1 : decrease minute state by 1
-
     if (isPlaying) {
-      const newValue = { ...timer, seconds: timer.seconds - 1 }
-      setTimer(newValue)
-      console.log(timer);
+      if (minutes >= 1) {
+        // console.log("More than one minute");
+        if (seconds >= 1) { //Decrease only seconds
+          const newValue = { ...timer, seconds: timer.seconds - 1 };
+          setTimer(newValue);
+        } else { //Decrease minutes and set Seconds to 59
+          const newValue = { ...timer, minutes: timer.minutes - 1, seconds: 59 };
+          setTimer(newValue);
+        }
+      } else { //No minutes
+        if (seconds >= 1) { //Decrease only seconds
+          const newValue = { ...timer, seconds: timer.seconds - 1 };
+          setTimer(newValue);
+        } else {
+          const newValue = { ...timer, isPlaying: !isPlaying }
+          setTimer(newValue)
+          setIsFinish(true)
+          //Activate Notification when timer is finished 
+          myAlert();
+        }
+      }
     } else {
       return;
     }
   }
 
+  const myAlert = () => {
+    console.log("Timer finished");
+    // alert("Finished")
+    // resetTimer();
+  }
+
+  //Clock's buttons 
+  //Start and pause timer
   const playTimer = () => {
     const newValue = { ...timer, isPlaying: !isPlaying }
     setTimer(newValue)
@@ -93,6 +82,7 @@ const TimerClock = () => {
     const newValue = { ...timer, seconds: 0, isPlaying: false }
     setTimer(newValue)
     console.log("Timer was stopped");
+    alert("Timer was stopped")
   }
 
   //Reset the timer to the default values (those are set in the user settings)
@@ -101,9 +91,7 @@ const TimerClock = () => {
     setTimer(defaultValues)
     setIsFinish(false)
     console.log("Timer was reset");
-  }
 
-  const minutesSeconds = () => {
   }
 
   return (
@@ -133,8 +121,27 @@ const TimerClock = () => {
           </div>
           <span className="tick-vertical"></span>
         </div>
+        <div className="timer-btn-full">
+          {
+            isFinish && (
+              <button className="play-buttons-full" title="Reset" onClick={() => resetTimer()}>
+                <ResetTimer />
+              </button>
+            )
+          }
+          {
+            !isFinish && (
+              <button className='play-buttons-full' title="Play/Pause" onClick={() => playTimer()}>
+                <PlayPauseIcon />
+              </button>
+            )
+          }
+          <button className='play-buttons-full' title="Stop" onClick={() => stopTimer()}>
+            <StopIcon />
+          </button>
+        </div>
       </div>
-      <div className="timer-btn-full">
+      {/* <div className="timer-btn-full">
         <button className='play-buttons-full' title="Play/Pause" onClick={() => playTimer()}>
           <PlayPauseIcon />
         </button>
@@ -144,7 +151,7 @@ const TimerClock = () => {
         <button className="play-buttons-full" title="Reset" onClick={() => resetTimer()}>
           <ResetTimer />
         </button>
-      </div>
+      </div> */}
     </div>
   )
 }
