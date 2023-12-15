@@ -2,40 +2,78 @@ import { useDispatch, useSelector } from "react-redux"
 import { SetTimerListAdd } from "../../features/timerSlice";
 import { NumberUpIcon, NumberDownIcon, AddSubtaskIcon } from "../../icons";
 import { useState } from "react";
+import axios from "axios";
 
 
 
 const ListTimerAdd = () => {
   const dispatch = useDispatch();
-  const { isTimerTaskAdd, isSubtaskTimer, subtasksTest } = useSelector((store) => store.timer);
+  const { isTimerTaskAdd, isSubtaskTimer, subtasksTest, currentTimerId } = useSelector((store) => store.timer);
 
-  const [number, setNumber] = useState(1)
-  // console.log(typeof (number));
+  const [timerInput, setTimerInput] = useState({
+    task_title: '',
+    task_desc: '',
+    task_date: null,
+    task_project: null,
+    task_tag: null,
+    focus_amount: 1,
+  })
+
+  const { task_title, focus_amount } = timerInput;
 
   const increaseNumber = () => {
-    setNumber(number + 1)
+    // const amount = focus_amount;
+    setTimerInput({ ...timerInput, focus_amount: focus_amount + 1 })
   }
 
   const decreaseNumber = () => {
-    if (number > 0) {
-      setNumber(number - 1)
+    if (focus_amount > 1) {
+      setTimerInput({ ...timerInput, focus_amount: focus_amount - 1 })
     }
   }
 
-  const handleTaskSubmit = (e) => {
-    e.preventDefault();
+  // const handleTimerSubmit = async (e) => {
+  //   e.preventDefault();
+  //   if (!task_title) {
+  //     return
+  //   }
+  //   try {
+  //     await axios.post("http://localhost:8800/TaskCurrent", timerInput)
+  //     window.location.reload();
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // }
+
+  const handleTimerSubmit = async (e) => {
+    // e.preventDefault();
+    if (!task_title) {
+      return
+    }
+    try {
+      await axios.post("http://localhost:8800/TaskCurrent", timerInput);
+      window.location.reload();
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  const handleChangeInput = (e) => {
+    setTimerInput((prev) => ({ ...prev, [e.target.name]: e.target.value }))
   }
 
   const handleChangeNumber = (e) => {
     if (e.target.value) {
-      setNumber(parseInt(e.target.value))
+      setTimerInput((prev) => ({ ...prev, [e.target.name]: parseInt(e.target.value) }))
+      // setNumber(parseInt(e.target.value))
     } else {
-      setNumber(0)
+      setTimerInput((prev) => ({ ...prev, [e.target.name]: 1 }))
     }
   }
 
   return (
     <div className="taskTimerAdd-container">
+
       {
         !isTimerTaskAdd && (
           <div className="add-task-timer" onClick={() => dispatch(SetTimerListAdd())}>
@@ -46,26 +84,47 @@ const ListTimerAdd = () => {
       {
         isTimerTaskAdd && (
           <div className="taskTimer-details-container">
-            <form className="taskTimer-form" onSubmit={handleTaskSubmit}>
+            <form
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  handleTimerSubmit();
+                }
+              }}
+              className="taskTimer-form"
+              onSubmit={handleTimerSubmit}
+            >
               <div className="taskTimer-details">
-                <input className="taskTimer-title" type="text" placeholder="Task title" />
+                <input
+                  name="task_title"
+                  className="taskTimer-title"
+                  type="text"
+                  placeholder="Task title"
+                  onChange={handleChangeInput}
+                />
                 <div className="details-pomodoro">
                   <span>Estimated Pomodoros</span>
                   <div className="details-number">
                     <input
+                      name="focus_amount"
                       className="taskTimer-number"
                       type="number"
                       min={0}
                       step={1}
-                      value={number}
+                      value={focus_amount}
                       onChange={handleChangeNumber}
                     />
                     {/* <span>{number}</span> */}
                     <div className="details-numberUpDown">
-                      <button onClick={() => increaseNumber()}>
+                      <button
+                        type="button"
+                        onClick={() => increaseNumber()}
+                      >
                         <NumberUpIcon />
                       </button>
-                      <button onClick={() => decreaseNumber()}>
+                      <button
+                        type="button"
+                        onClick={() => decreaseNumber()}
+                      >
                         <NumberDownIcon />
                       </button>
                     </div>
@@ -95,28 +154,6 @@ const ListTimerAdd = () => {
                   </div>
                 )
               }
-
-              {/* <div className="subtaskList">
-                {
-                  isSubtaskTimer && (
-                    subtasksTest.map((subtask) => {
-                      const { id, title } = subtask
-                      return (
-                        <div key={id} className="taskTimer-subtask">
-                          <input className="subtask-checkbox" id={id} type="checkbox" />
-                          <label
-                            className="subtask-title"
-                            htmlFor={id}
-                            title={title}
-                          >
-                            {title}
-                          </label>
-                        </div>
-                      )
-                    })
-                  )
-                }
-              </div> */}
             </form>
             <div className="taskTimer-btn">
               <button className="taskTimerDetails-btn">
@@ -124,7 +161,7 @@ const ListTimerAdd = () => {
               </button>
               <div className="taskTimerAddCancel-btn">
                 <button className="taskTimerCancel-btn" onClick={() => dispatch(SetTimerListAdd())}>Cancel</button>
-                <button className="taskTimerAdd-btn">Save</button>
+                <button className="taskTimerAdd-btn" onClick={handleTimerSubmit}>Save</button>
               </div>
             </div>
           </div>

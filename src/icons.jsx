@@ -866,10 +866,9 @@ export const PomodoroIcon = () => {
     <svg
       viewBox="0 0 64 64"
       xmlns="http://www.w3.org/2000/svg"
-      xmlns:xlink="http://www.w3.org/1999/xlink"
+      // xmlns:xlink="http://www.w3.org/1999/xlink"
       aria-hidden="true"
       role="img"
-      class="iconify iconify--emojione"
       className="pomo-icon"
       preserveAspectRatio="xMidYMid meet"
       fill="#000000">

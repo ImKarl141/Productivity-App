@@ -27,7 +27,8 @@ const initialState = {
       id: 5,
       title: "Visit my parents"
     }
-  ]
+  ],
+  checkedItems: [28],
 }
 
 
@@ -46,9 +47,12 @@ const timerSlice = createSlice({
       state.currentTimerId = value.payload;
       state.isTimerTaskEdit = true
       // console.log(state.currentEditTimer);
-    }
+    },
+    SetCheckedTask: (state, value) => {
+      state.checkedItems.push(value.payload);
+    },
   }
 });
 
-export const { SetTimerListAdd, SetTimerListEdit, SetCurrentEditTimer } = timerSlice.actions;
+export const { SetTimerListAdd, SetTimerListEdit, SetCurrentEditTimer, SetCheckedTask } = timerSlice.actions;
 export default timerSlice.reducer;

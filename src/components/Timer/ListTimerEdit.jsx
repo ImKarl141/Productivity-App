@@ -61,6 +61,15 @@ const ListTimerUpdate = () => {
     }
   }
 
+  const handleTimerDelete = async (id) => {
+    try {
+      await axios.delete("http://localhost:8800/TaskCurrent/" + id);
+      window.location.reload();
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   return (
     <div className="taskTimerAdd-container">
       <div className="taskTimer-details-container">
@@ -149,8 +158,8 @@ const ListTimerUpdate = () => {
           }
         </form>
         <div className="taskTimer-btn">
-          <button className="taskTimerDetails-btn">
-            Task Details
+          <button className="taskTimerDetails-btn" onClick={() => handleTimerDelete(currentTimerId)}>
+            Delete
           </button>
           <div className="taskTimerAddCancel-btn">
             <button className="taskTimerCancel-btn" onClick={() => dispatch(SetTimerListEdit(''))}>Cancel</button>
@@ -158,19 +167,6 @@ const ListTimerUpdate = () => {
           </div>
         </div>
       </div>
-      {/* {
-        !isTimerTaskEdit && (
-          <div className="add-task-timer" onClick={() => dispatch(SetTimerListAdd())}>
-            <span className="add-timerText">Add Task</span>
-          </div>
-        )
-      } */}
-      {/* {
-        isTimerTaskEdit && (
-          
-        )
-      } */}
-
     </div >
   )
 }

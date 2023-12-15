@@ -15,18 +15,15 @@ const TimerClock = () => {
   //Values for timer clock
   const [timer, setTimer] = useState({
     hours: '00',
-    minutes: 0,
-    seconds: 2,
+    minutes: 25,
+    seconds: 0,
     isPlaying: false,
   });
 
   const { hours, minutes, seconds, isPlaying } = timer;
   const [isFinish, setIsFinish] = useState(false)
 
-
-
   //Update the value every second when timer state change, when finished
-
   useEffect(() => {
     const myInterval = setInterval(() => {
       updateTime();
@@ -41,19 +38,19 @@ const TimerClock = () => {
       if (minutes >= 1) {
         // console.log("More than one minute");
         if (seconds >= 1) { //Decrease only seconds
-          const newValue = { ...timer, seconds: timer.seconds - 1 };
-          setTimer(newValue);
+          // const newValue = { ...timer, seconds: timer.seconds - 1 };
+          setTimer({ ...timer, seconds: timer.seconds - 1 });
         } else { //Decrease minutes and set Seconds to 59
-          const newValue = { ...timer, minutes: timer.minutes - 1, seconds: 59 };
-          setTimer(newValue);
+          // const newValue = { ...timer, minutes: timer.minutes - 1, seconds: 59 };
+          setTimer({ ...timer, minutes: timer.minutes - 1, seconds: 59 });
         }
       } else { //No minutes
         if (seconds >= 1) { //Decrease only seconds
-          const newValue = { ...timer, seconds: timer.seconds - 1 };
-          setTimer(newValue);
+          // const newValue = { ...timer, seconds: timer.seconds - 1 };
+          setTimer({ ...timer, seconds: timer.seconds - 1 });
         } else {
-          const newValue = { ...timer, isPlaying: !isPlaying }
-          setTimer(newValue)
+          // const newValue = { ...timer, isPlaying: !isPlaying }
+          setTimer({ ...timer, isPlaying: !isPlaying })
           setIsFinish(true)
           //Activate Notification when timer is finished 
           myAlert();
@@ -63,6 +60,8 @@ const TimerClock = () => {
       return;
     }
   }
+
+
 
   const myAlert = () => {
     console.log("Timer finished");
@@ -79,8 +78,9 @@ const TimerClock = () => {
 
   //Set all the values to 0
   const stopTimer = () => {
-    const newValue = { ...timer, seconds: 0, isPlaying: false }
+    const newValue = { ...timer, minutes: 0, seconds: 0, isPlaying: false }
     setTimer(newValue)
+    setIsFinish(true)
     console.log("Timer was stopped");
     alert("Timer was stopped")
   }
@@ -141,17 +141,6 @@ const TimerClock = () => {
           </button>
         </div>
       </div>
-      {/* <div className="timer-btn-full">
-        <button className='play-buttons-full' title="Play/Pause" onClick={() => playTimer()}>
-          <PlayPauseIcon />
-        </button>
-        <button className='play-buttons-full' title="Stop" onClick={() => stopTimer()}>
-          <StopIcon />
-        </button>
-        <button className="play-buttons-full" title="Reset" onClick={() => resetTimer()}>
-          <ResetTimer />
-        </button>
-      </div> */}
     </div>
   )
 }
