@@ -28,7 +28,7 @@ const initialState = {
       title: "Visit my parents"
     }
   ],
-  checkedItems: [28],
+  checkedItems: [0],
 }
 
 
@@ -49,7 +49,12 @@ const timerSlice = createSlice({
       // console.log(state.currentEditTimer);
     },
     SetCheckedTask: (state, value) => {
-      state.checkedItems.push(value.payload);
+      if (state.checkedItems.includes(value.payload)) {
+        const valueIndex = state.checkedItems.indexOf(value.payload);
+        state.checkedItems.splice(valueIndex, 1)
+      } else {
+        state.checkedItems.push(value.payload)
+      }
     },
   }
 });

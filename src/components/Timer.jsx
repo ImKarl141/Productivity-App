@@ -16,6 +16,7 @@ const Timer = () => {
   const { dbTasks } = useSelector((store) => store.task);
   const { isTimerTaskEdit } = useSelector((store) => store.timer);
   const dispatch = useDispatch();
+  const temporalText = "Task title"
 
   //Get the focus_amount of every task
   const amountHours = dbTasks.reduce((acc, currentObj) => acc + currentObj.focus_amount, 0)
@@ -45,12 +46,13 @@ const Timer = () => {
       <div className="timer-container">
         <TimerClock />
         <div className="current-focus-task">
+          <span className="pomo-container"><PomodoroIcon /> #1</span>
           {/*Show the title only when an task is selected in the list*/}
           <div className="current-focus-title">
-            <span>Current task: </span>
-            <span className="focus-title">Title of the task</span>
+            <span>Current task: {temporalText}</span>
+            {/* <span className="focus-title">Title of the task</span> */}
+            <img className="details-timer-img" src={details} alt="" />
           </div>
-          <span className="pomo-container"><PomodoroIcon /> #1</span>
         </div>
         <div className="pomodoro-task">
           {
