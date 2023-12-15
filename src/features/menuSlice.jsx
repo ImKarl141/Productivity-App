@@ -2,8 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   menuToggle: {
-    Menu: false,
-    Task: false,
+    Menu: true,
+    Task: true,
     Calendar: false,
     Notes: false,
   },

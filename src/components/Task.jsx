@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { ShowTaskEdit, ShowAddProjectEdit, ShowAddTagEdit, RemoveProjectItem, } from '../features/taskSlice';
+import { ShowTaskEdit, ShowAddProjectEdit, ShowAddTagEdit, RemoveProjectItem, SetCurrentView } from '../features/taskSlice';
 import './Task.css'
 import { AddTaskIcon, AllTasksIcon, CurrentTasksIcon, CompletedTasksIcon, AddProjectIcon, AddTagsIcon, EnterTaskIcon, CalendarIconTask, ProjectSettingsIcon, CancelIcon, TagSettingsIcon, EditListIcon, DeleteListIcon } from '../icons';
 import TaskEdit from './Task/TaskEdit';
@@ -16,7 +16,8 @@ import TaskUpdate from './Task/TaskUpdate';
 
 const TaskMenu = () => {
 
-  const { taskItems, isEdit, isTaskUpdate, addProjectEdit, projects, tags, addTagEdit } = useSelector((store) => store.task);
+  const { taskItems, isEdit, isTaskUpdate, addProjectEdit, projects, tags, addTagEdit, currentView } = useSelector((store) => store.task);
+  // console.log(currentView);
 
   const dispatch = useDispatch();
   //Edit task menu
@@ -29,21 +30,21 @@ const TaskMenu = () => {
           <div className='task-title'><h1>Tasks</h1></div>
         </div>
         <div className='overall-myTask'>
-          <a className='myTask-container-main box' id='All' href='#All'>
+          <a className='myTask-container-main box' id='All' href='#All' onClick={() => dispatch(SetCurrentView("all"))}>
             <div className='myTask-container'>
               <AllTasksIcon />
               <p className='myTask-text'>All</p>
             </div>
             <div className='task-number'><span>{taskItems.length}</span></div>
           </a>
-          <a className='myTask-container-main box' id='Current' href='#Current'>
+          <a className='myTask-container-main box' id='Current' href='#Current' onClick={() => dispatch(SetCurrentView("current"))}>
             <div className='myTask-container'>
               <CurrentTasksIcon />
               <p className='myTask-text'>Current</p>
             </div>
             <div className='task-number'>0</div>
           </a>
-          <a className='myTask-container-main box' id='Completed' href='#Completed'>
+          <a className='myTask-container-main box' id='Completed' href='#Completed' onClick={() => dispatch(SetCurrentView("completed"))}>
             <div className='myTask-container'>
               <CompletedTasksIcon />
               <p className='myTask-text'>Completed</p>

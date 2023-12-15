@@ -37,7 +37,7 @@ const TaskUpdate = () => {
       const [month, day, year] = date.split("-")
       return `${year}-${month}-${day}`
     } catch {
-      console.log("Date not found");
+      // console.log("Date not found");
       return
     }
   }
@@ -45,11 +45,12 @@ const TaskUpdate = () => {
   const [inputTask, setInputTask] = useState({
     task_title: temp_task.task_title,
     task_desc: temp_task.task_desc,
-    task_date: temp_task.task_date,
+    task_date: temp_task.task_date ? temp_task.task_date : null,
     task_project: project_name ?
       dbProjects.find(project => project.project_name === project_name).id : undefined,
     task_tag: tag_name ?
       dbTags.find(tag => tag.tag_name === tag_name).id : undefined,
+    focus_amount: temp_task.focus_amount,
   })
 
 
@@ -71,8 +72,8 @@ const TaskUpdate = () => {
   const handleChangeInput = (e) => {
     e.target.value ? setInputTask((prev) => ({ ...prev, [e.target.name]: e.target.value })) :
       setInputTask((prev) => ({ ...prev, [e.target.name]: undefined }));
-    console.log(typeof (e.target.value));
-    console.log(inputTask);
+    // console.log(typeof (e.target.value));
+    // console.log(inputTask);
     // setInputTask((prev) => ({ ...prev, [e.target.name]: e.target.value }))
     // console.log(inputTask);
   }
@@ -85,8 +86,8 @@ const TaskUpdate = () => {
     // e.target.value ? console.log('Date added') :
     //   console.log('Empty value');
     if (e.target.value) {
-      setInputTask((prev) => ({ ...prev, [e.target.name]: `${month}-${day}-${year}` }))
       const [year, month, day] = e.target.value.split('-')
+      setInputTask((prev) => ({ ...prev, [e.target.name]: `${month}-${day}-${year}` }))
     } else {
       setInputTask((prev) => ({ ...prev, [e.target.name]: '' }))
     }
