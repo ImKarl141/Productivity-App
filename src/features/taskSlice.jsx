@@ -33,6 +33,7 @@ const initialState = {
   projectInput: projectInput,
   tagInput: tagInput,
   subtaskInput: subtaskInput,
+  currentCheckedId: '',
   currentView: {
     all: true,
     current: false,
@@ -44,6 +45,9 @@ const taskSlice = createSlice({
   name: 'task',
   initialState,
   reducers: {
+    SetCurrentCheckedId: (state, value) => {
+      state.currentCheckedId = value.payload;
+    },
     SetCurrentView: (state, value) => {
       if (value.payload === "all") {
         state.currentView.all = true;
@@ -184,5 +188,5 @@ const taskSlice = createSlice({
   }
 });
 
-export const { SetCurrentView, SetTaskList, SetProjectList, SetTagList, SetCurrentEditId, SetCurrentProjectId, SetCurrentTagId, ShowTaskEdit, ShowTaskUpdate, ShowAddProjectEdit, ShowProjectUpdate, ShowAddTagEdit, ShowTagUpdate, ShowTagDelete, ShowTagCancel, ShowSubtaskEdit, ChangeTitleInput, ChangeDescriptionInput, ChangeDateInput, ChangeProjectName, ChangeProjectColor, ChangeProjectNameInput, ChangeProjectColorInput, ChangeTagName, ChangeTagColor, ChangeTagInput, ChangeTagNameInput, ChangeTagColorInput, AddTaskItem, RemoveTaskItem, AddProjectItem, RemoveProjectItem, AddTagItem, RemoveTagItem, } = taskSlice.actions;
+export const { SetCurrentCheckedId, SetCurrentView, SetTaskList, SetProjectList, SetTagList, SetCurrentEditId, SetCurrentProjectId, SetCurrentTagId, ShowTaskEdit, ShowTaskUpdate, ShowAddProjectEdit, ShowProjectUpdate, ShowAddTagEdit, ShowTagUpdate, ShowTagDelete, ShowTagCancel, ShowSubtaskEdit, ChangeTitleInput, ChangeDescriptionInput, ChangeDateInput, ChangeProjectName, ChangeProjectColor, ChangeProjectNameInput, ChangeProjectColorInput, ChangeTagName, ChangeTagColor, ChangeTagInput, ChangeTagNameInput, ChangeTagColorInput, AddTaskItem, RemoveTaskItem, AddProjectItem, RemoveProjectItem, AddTagItem, RemoveTagItem, } = taskSlice.actions;
 export default taskSlice.reducer;

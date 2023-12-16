@@ -208,10 +208,11 @@ app.put("/NoteList/:id", (req, resp) => {
 // await axios.patch("http://localhost:8800/TaskCurrent/" + currentTimerId, timerInput)
 app.patch("/TaskCurrent/:id", (req, resp) => {
   const timerId = req.params.id;
-  const q = "UPDATE `TaskCurrent` SET `task_title` = ?, `focus_amount` = ? WHERE id = ?"
+  const q = "UPDATE `TaskCurrent` SET `task_title` = ?, `focus_amount` = ?, `is_checked` = ? WHERE id = ?"
   const values = [
     req.body.task_title,
     req.body.focus_amount,
+    req.body.is_checked,
   ]
   db.query(q, [...values, timerId], (err, data) => {
     if (err) return resp.json(err);
