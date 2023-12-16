@@ -73,7 +73,6 @@ const ListTimerAdd = () => {
 
   return (
     <div className="taskTimerAdd-container">
-
       {
         !isTimerTaskAdd && (
           <div className="add-task-timer" onClick={() => dispatch(SetTimerListAdd())}>

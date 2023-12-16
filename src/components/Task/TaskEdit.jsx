@@ -1,11 +1,12 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { ShowTaskEdit, ShowSubtaskEdit, ChangeTitleInput, ChangeDescriptionInput, ChangeDateInput, ChangeProjectNameInput, ChangeProjectColorInput, ChangeTagInput, ChangeTagNameInput, ChangeTagColorInput, AddTaskItem, } from '../../features/taskSlice';
+import { ShowTaskEdit, ShowSubtaskEdit, ChangeTitleInput, ChangeDescriptionInput, ChangeDateInput, ChangeProjectNameInput, ChangeProjectColorInput, ChangeTagInput, ChangeTagNameInput, ChangeTagColorInput, AddTaskItem } from '../../features/taskSlice';
 import { AddTaskIcon } from '../../icons';
 import axios from 'axios';
-import { useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 // import '../Task.css'
 
 const TaskEdit = () => {
+  const dispatch = useDispatch();
   const { taskItems, subtaskTest, projects, dbProjects, dbTags, tags, taskInput, taskProjectInput, taskTagInput, addSubtaskEdit, subtaskInput } = useSelector((store) => store.task);
 
   // Inputs
@@ -14,6 +15,8 @@ const TaskEdit = () => {
   const { taskTagName, taskTagColor } = taskTagInput
   const { subtask } = subtaskInput
 
+  const [remainText, setRemainText] = useState(256)
+
   const [inputTask, setInputTask] = useState({
     task_title: '',
     task_desc: '',
@@ -21,17 +24,29 @@ const TaskEdit = () => {
     task_project: null,
     task_tag: null,
   })
-  const { task_title } = inputTask;
+
+
+
+  const { task_title, task_desc } = inputTask;
+
+  const prevNumber = useRef(0)
 
   // const { nameProject, projectColor } = projectInput
 
-  const dispatch = useDispatch();
+
+  useEffect(() => {
+    setRemainText(remainText - 1)
+  }, [task_desc])
 
 
   // Change of inputs
   const handleChangeInput = (e) => {
     setInputTask((prev) => ({ ...prev, [e.target.name]: e.target.value }))
-    // console.log(e.target.value)
+  }
+
+  const handleChangeDesc = (e) => {
+    setInputTask((prev) => ({ ...prev, [e.target.name]: e.target.value }))
+    // setRemainText(remainText - task_desc.length)
   }
 
   const handleChangeInputDate = (e) => {
@@ -63,29 +78,38 @@ const TaskEdit = () => {
 
   return (
     <div className='task-details'>
+      {/* <div className='test'>Hello</div> */}
       <div className='task-details-task'>
         <h1>Task:</h1>
         <form className='taskForm' onSubmit={handleTaskSubmit}>
           <input
             id='title-task'
             name='task_title'
-            className='myInput'
+            // className='myInput'
+            className={task_title.length >= 45 ? 'myInput errorTitle' : 'myInput'}
             type="text"
             placeholder='Title name'
+            value={task_title}
+            maxLength={45}
             onChange={handleChangeInput}
           // value={taskT}
           // onChange={(e) => dispatch(ChangeTitleInput(e.target.value))}
           />
-          <textarea
-            id='description'
-            name='task_desc'
-            type="text"
-            placeholder='Description'
-            className='myInput myInput-description'
-            onChange={handleChangeInput}
-          // value={taskDescription}
-          // onChange={(e) => {dispatch(ChangeDescriptionInput(e.target.value))}}
-          />
+          <div className='descForm-container'>
+            <textarea
+              id='description'
+              name='task_desc'
+              type="text"
+              placeholder='Description'
+              className='myInput myInput-description'
+              // className={task_title.length >= 45 ? 'myInput-description errorDesc' : 'myInput-description'}
+              onChange={handleChangeDesc}
+              maxLength={255}
+            // value={taskDescription}
+            // onChange={(e) => {dispatch(ChangeDescriptionInput(e.target.value))}}
+            />
+            <span className='text-indicator'>{remainText} characters left</span>
+          </div>
 
           <div className='task-details-info'>
             <p className='details-text'>Due date</p>

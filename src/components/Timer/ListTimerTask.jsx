@@ -19,7 +19,7 @@ const ListTimerTask = () => {
       {
         dbTasks.map((task) => {
           const { id, task_title, focus_amount } = task
-          // console.log(focus_amount);
+          //Check if the timer is in current editing. When task is editing a window for editing is display the the Task is hidden from the list
           if (id !== currentTimerId) {
             if (!(checkedItems.includes(id))) {
               return (
@@ -39,6 +39,20 @@ const ListTimerTask = () => {
                     <button className="details-task-btn" title="Task settings" onClick={() => dispatch(SetCurrentEditTimer(id))}>
                       <img className="details-task-img" src={details} alt="" />
                     </button>
+                    {/* {
+                      id === currentTimerId && (
+                        <button className="details-task-btn" title="Task settings" onClick={() => dispatch(SetCurrentEditTimer(id))}>
+                          <img className="details-task-img" src={details} alt="" />
+                        </button>
+                      )
+                    }
+                    {
+                      id !== currentTimerId && (
+                        <button className="details-task-btn" title="Task settings" onClick={() => dispatch(SetCurrentEditTimer(id))}>
+                          <img className="details-task-img-hidden" src={details} alt="" />
+                        </button>
+                      )
+                    } */}
                   </div>
                 </div>
               )

@@ -426,14 +426,62 @@
   /* width: 110%; */
 }
 
+.errorTitle {
+  color: #bb1b1b;
+  caret-color: var(--black);
+  animation: test 0.13s 3;
+}
+
+.myInput.errorTitle {
+  border: 0.15rem solid #bb1b1b;
+}
+
+.descForm-container {
+  display: grid;
+  position: relative;
+}
+
 .myInput-description {
   margin: 0.2rem 0rem;
   padding: 0.5rem;
   resize: none;
-  /* width: 110%; */
+  /* width: fit-content; */
   overflow: auto;
   height: 10rem;
 }
+
+.text-indicator {
+  position: absolute;
+  font-weight: 700;
+  font-size: 0.8rem;
+  bottom: 0.4rem;
+  right: 0.7rem;
+  opacity: 0.8;
+}
+
+
+.test {
+  color: var(--black);
+  animation: test 0.13s 3;
+}
+
+@keyframes test {
+  0% { 
+    transform: translateX(0) ;
+  }
+  25% { 
+    transform: translateX(5px);
+   }
+  50% { 
+    transform: translateX(-5px);
+   }
+  75% { 
+    transform: translateX(5px);
+   }
+  100% { 
+    transform: translateX(0);
+   }
+ }
 
 .myInput::placeholder {
   font-family: Nunito;
@@ -443,7 +491,6 @@
 .myInput:focus {
   outline: none;
 }
-
 
 .details-text {
   display: grid;
