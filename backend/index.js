@@ -114,7 +114,7 @@ app.get("/TaskCurrent", (req, resp) => {
 
 //Note component
 app.get('/NoteList', (req, resp) => {
-  const q = "SELECT n.id, n.note_name, n.note_desc, dc.color_name, dc.color_value FROM `NoteList` n LEFT JOIN `DefaultColors` dc ON n.note_color = dc.id";
+  const q = "SELECT n.id, n.note_name, n.note_desc, n.is_pinned, dc.color_name, dc.color_value FROM `NoteList` n LEFT JOIN `DefaultColors` dc ON n.note_color = dc.id";
   // const q = "SELECT * FROM NoteList";
   db.query(q, (err, data) => {
     if (err) {
@@ -215,6 +215,19 @@ app.patch("/TaskCurrent/:id", (req, resp) => {
     req.body.is_checked,
   ]
   db.query(q, [...values, timerId], (err, data) => {
+    if (err) return resp.json(err);
+    return resp.json("Task updated successfully from timer")
+  })
+})
+
+//Note Component 
+app.patch("/NoteList/:id", (req, resp) => {
+  const noteId = req.params.id;
+  const q = "UPDATE `NoteList` SET `is_pinned` = ? WHERE id = ?"
+  const values = [
+    req.body.current
+  ]
+  db.query(q, [...values, noteId], (err, data) => {
     if (err) return resp.json(err);
     return resp.json("Task updated successfully from timer")
   })

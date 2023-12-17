@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { AddNoteIcon, NoteListIcon, TaskNoteIcon, DeleteNoteIcon, PinNoteIcon, EditNoteIcon } from '../icons'
 import './Notes.css'
@@ -38,9 +38,28 @@ const NotesMenu = () => {
   }, [])
 
   //display note settings 
-  const HandleNoteSettings = (e) => {
-    e.preventDefault();
-    console.log(e.target.value);
+  // const HandleNoteSettings = (e) => {
+  //   e.preventDefault();
+  //   console.log(e.target.value);
+  // }
+
+  // const [isPinned, setIsPinned] = useState(false)
+  const isPinned = useRef(false)
+
+  const handleNotePin = async (pin, id) => {
+
+    if (!pin) {
+      isPinned.current = true;
+    } else {
+      isPinned.current = false;
+    }
+    // console.log(isPinned);
+    try {
+      await axios.patch("http://localhost:8800/NoteList/" + id, isPinned)
+      window.location.reload()
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   const handleDeleteItem = async (id) => {
@@ -62,21 +81,13 @@ const NotesMenu = () => {
     <section className="notes-container">
       <div className="notes-overall">
         <div className='note-input-container' >
-          {
-            isEdit ?
-              <NoteEdit /> :
-              <div className='note-placeholder' onClick={() => dispatch(ShowNoteEdit())}>
-                <AddNoteIcon />
-                <span>Create a note...</span>
-              </div>
-          }
         </div>
         <div className='note-list'>
           {/*Map through the list of notes*/}
           {
             dbNotes.map((note) => {
-              const { id, note_name, note_desc, color_name, color_value } = note;
-              {
+              const { id, note_name, note_desc, color_name, color_value, is_pinned } = note;
+              if (is_pinned) {
                 if (currentEditId === id) {
                   return (
                     <NoteUpdate key={id} />
@@ -101,12 +112,60 @@ const NotesMenu = () => {
                       <button className='noteEdit-btn' title='Edit Note' onClick={() => dispatch(SetCurrentEditId(id))}><EditNoteIcon /></button>
                       <button className='noteDelete-btn' title='Delete Note' onClick={() => handleDeleteItem(id)}><DeleteNoteIcon /></button>
                       <button className='noteMakeTask-btn' title='Make a task' onClick={() => console.log(`${note_name} Task created`)}><TaskNoteIcon /></button>
-                      <button className='notePin-btn' title='Pin note' onClick={() => console.log(`${note_name} Note pinned`)}><PinNoteIcon /></button>
+                      <button
+                        // id={id}
+                        className='notePinned-btn'
+                        title='Pin note'
+                        onClick={() => handleNotePin(is_pinned, id)}
+                      >
+                        <PinNoteIcon />
+                      </button>
                     </div>
                   )
                 }
               }
-
+            })
+          }
+          {
+            dbNotes.map((note) => {
+              const { id, note_name, note_desc, color_name, color_value, is_pinned } = note;
+              if (!is_pinned) {
+                if (currentEditId === id) {
+                  return (
+                    <NoteUpdate key={id} />
+                    // <form key={id} className='note-card'>
+                    //   <input type="text"
+                    //     className='input-title'
+                    //     value={note_name}
+                    //   />
+                    //   <textarea type="text"
+                    //     className='input-content'
+                    //     value={note_desc}
+                    //   />
+                    // </form>
+                  )
+                } else {
+                  return (
+                    <div className='note-card' key={id}>
+                      <span className='note-card-title' >{note_name}</span>
+                      <span className='note-card-content' >{note_desc}</span>
+                      <span className='note-tag' title={color_name} style={{ backgroundColor: color_value }}>
+                      </span>
+                      <button className='noteEdit-btn' title='Edit Note' onClick={() => dispatch(SetCurrentEditId(id))}><EditNoteIcon /></button>
+                      <button className='noteDelete-btn' title='Delete Note' onClick={() => handleDeleteItem(id)}><DeleteNoteIcon /></button>
+                      <button className='noteMakeTask-btn' title='Make a task' onClick={() => console.log(`${note_name} Task created`)}><TaskNoteIcon /></button>
+                      <button
+                        // id={id}
+                        className='notePin-btn'
+                        title='Pin note'
+                        onClick={() => handleNotePin(is_pinned, id)}
+                      >
+                        <PinNoteIcon />
+                      </button>
+                    </div>
+                  )
+                }
+              }
             })
           }
         </div>
