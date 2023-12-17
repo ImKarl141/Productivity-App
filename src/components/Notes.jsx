@@ -81,6 +81,14 @@ const NotesMenu = () => {
     <section className="notes-container">
       <div className="notes-overall">
         <div className='note-input-container' >
+          {
+            isEdit ?
+              <NoteEdit /> :
+              <div className='note-placeholder' onClick={() => dispatch(ShowNoteEdit())}>
+                <AddNoteIcon />
+                <span>Create a note...</span>
+              </div>
+          }
         </div>
         <div className='note-list'>
           {/*Map through the list of notes*/}

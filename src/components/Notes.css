@@ -237,6 +237,8 @@
 }
 
 .note-card-content {
+  /* color: red; */
+  white-space: pre-wrap;
   font-size: 0.8rem;
   font-weight: 600;
   margin-bottom: 2.2rem;
@@ -417,6 +419,21 @@
   font-family: Nunito;
   font-weight: 700;
 }
+
+/*Scrollbar styling*/
+.note-card-content::-webkit-scrollbar,
+.input-content::-webkit-scrollbar {
+  background-color: var(--pomodoroLight);
+  width: 0.6rem;
+}
+.note-card-content::-webkit-scrollbar-thumb,
+.input-content::-webkit-scrollbar-thumb {
+  background-color: var(--blackLight);
+  border-radius: 0.6rem;
+  /* width: 0.02rem; */
+  /* display : none; */
+}
+
 
 
 

@@ -66,6 +66,7 @@ const NoteUpdate = () => {
         className='input-content'
         value={note_desc}
         onChange={handleChangeInput}
+        maxLength={500}
       />
       <span className='note-tag-edit' title={dbNotes.find(note => note.id === currentEditId).color_name} style={{ backgroundColor: colorValue }}></span>
       <button

@@ -407,18 +407,34 @@
   overflow: auto; */
 }
 
+/*Scrollbar styling*/
 .currentTimerList-container::-webkit-scrollbar,
-.subtaskList::-webkit-scrollbar {
+.subtaskList::-webkit-scrollbar{
   background-color: var(--pomodoroDark);
   width: 0.6rem;
-  /* display : none; */
 }
+.notes-overall::-webkit-scrollbar {
+  background-color: var(--pomodoroLight);
+  border-left: 0.14rem solid var(--pomodoroDark);
+  width: 0.6rem;
+}
+
+.myInput-content::-webkit-scrollbar{
+  background-color: var(--pomodoroLight);
+  border-left: 0.14rem solid var(--pomodoroDark);
+  /* border-right: 0.1rem solid var(--pomodoroDark); */
+  width: 0.45rem;
+}
+
 .currentTimerList-container::-webkit-scrollbar-thumb,
-.subtaskList::-webkit-scrollbar-thumb {
+.subtaskList::-webkit-scrollbar-thumb,
+.notes-overall::-webkit-scrollbar-thumb {
   background-color: var(--blackLight);
   border-radius: 0.6rem;
-  /* width: 0.02rem; */
-  /* display : none; */
+}
+.myInput-content::-webkit-scrollbar-thumb {
+  background-color: var(--blackLight);
+  border-radius: 0.6rem;
 }
 
 body::-webkit-scrollbar {
