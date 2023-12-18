@@ -54,19 +54,17 @@ const TaskUpdate = () => {
   })
 
 
-
-
-
   const { task_title, task_desc, task_date, task_project, task_tag } = inputTask;
-  // const projectId = dbProjects.find(project => project.project_name === task_project).id
-  // console.log(projectId);
 
+  const [remainText, setRemainText] = useState(255)
 
-  // console.log(task_project);
-  // console.log(task_tag);
-
-
-
+  useEffect(() => {
+    try {
+      setRemainText(255 - task_desc.length)
+    } catch (err) {
+      setRemainText(255)
+    }
+  }, [task_desc])
 
   // Change of inputs
   const handleChangeInput = (e) => {
@@ -128,20 +126,24 @@ const TaskUpdate = () => {
             type="text"
             placeholder='Title name'
             value={task_title}
+            maxLength={45}
             onChange={handleChangeInput}
           // value={taskT}
           // onChange={(e) => dispatch(ChangeTitleInput(e.target.value))}
           />
-          <textarea
-            id='description'
-            name='task_desc'
-            type="text"
-            placeholder='Description'
-            className='myInput myInput-description'
-            value={task_desc}
-            onChange={handleChangeInput}
-          />
-
+          <div className='descForm-container'>
+            <textarea
+              id='description'
+              name='task_desc'
+              type="text"
+              placeholder='Description'
+              className='myInput myInput-description'
+              value={task_desc}
+              maxLength={255}
+              onChange={handleChangeInput}
+            />
+            <span className='text-indicator'>{remainText} characters left</span>
+          </div>
           <div className='task-details-info'>
             <p className='details-text'>Due date</p>
             <input

@@ -25,17 +25,13 @@ const TaskEdit = () => {
     task_tag: null,
   })
 
-
-
   const { task_title, task_desc } = inputTask;
-
-  const prevNumber = useRef(0)
 
   // const { nameProject, projectColor } = projectInput
 
-
+  //Update the remain text in the description form
   useEffect(() => {
-    setRemainText(remainText - 1)
+    setRemainText(255 - task_desc.length)
   }, [task_desc])
 
 
