@@ -16,6 +16,8 @@ const NoteEdit = () => {
 
   const { note_name } = inputNote;
 
+  const [remainText, setRemainText] = useState(255)
+
   const dispatch = useDispatch();
 
   const handleNoteSubmit = async (e) => {
@@ -53,6 +55,7 @@ const NoteEdit = () => {
           onChange={handleChangeInput}
         >
         </textarea>
+        <span className='text-indicator-note'>{remainText} characters left</span>
       </form>
       <div className='note-buttons'>
         <div className='note-buttons'>

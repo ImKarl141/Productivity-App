@@ -12,6 +12,99 @@
   padding: 0.2rem 0.2rem;
 }
 
+.noteCard-onTop-container {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  z-index: 5;
+  align-items: center;
+  justify-content: center;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  margin: 0.4rem;
+  border-radius: 0.4rem;
+  background-color: #cc666696;
+  /* background-color: #bb5f5f73; */
+  /* opacity: 0.8;  */
+}
+
+.noteCard-onTop {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  font-family: Nunito;
+  color: var(--black);
+  font-size: 0.9rem;
+  font-weight:600;
+  width: 35rem;
+  text-align:start;
+  background-color: var(--pomodoroDark);
+  border-radius: 0.4rem;
+  /* --pomodoroLight: #cc6666; */
+  /* --pomodoroDark: #BB5F5F; */
+  white-space: nowrap;
+}
+
+.noteCard-onTop-title {
+  border-bottom: 0.2rem solid var(--pomodoroLight);
+  padding: 0.4rem 1rem;
+  font-size: 1rem;
+  font-weight:700;
+}
+
+.noteCard-onTop-desc{
+  white-space: pre-wrap;
+  overflow-x: hidden;
+  overflow-y: auto;
+  text-overflow: ellipsis;
+  min-height: 6rem;
+  max-height: 10rem;
+  /* height: 10rem; */
+  /* min-height: 10rem; */
+  padding: 0.4rem 1rem 0.2rem 1rem;
+  border-bottom: 0.2rem solid var(--pomodoroLight);
+}
+
+.noteCard-onTop-btn {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  padding: 0.6rem;
+  gap: 0.6rem;
+}
+
+.noteCard-onTop-btn button {
+  font-family: Nunito;
+  font-size: 0.9rem;
+  font-weight: 700;
+  background-color: var(--black);
+  padding: 0.2rem 0.8rem;
+  background-color: var(--pomodoroLight);
+}
+
+.noteCard-closeBtn {
+  color: var(--black);
+}
+
+.noteCard-onTop-btn button:hover {
+  background-color: var(--pomodoroLight);
+  opacity: 0.8;
+}
+
+
+/* display: flex;
+  font-family: Nunito;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--blackMedium);
+  border: 0.2rem solid var(--pomodoroDark);
+  border-radius: 0.4rem;
+  background-color: var(--pomodoroLight);
+  padding: 0.2rem 0.6rem; */
+
 .notes-overall {
   display: grid;
   align-items: start;
@@ -84,12 +177,14 @@
 .noteForm {
   display: grid;
   width: 30rem;
+  position: relative;
   /* grid-row-gap: 0rem; */
 }
 
 .note-buttons {
   display: flex;
   justify-content: space-between;
+
 }
 
 .note-buttons-send {
@@ -138,8 +233,20 @@
 .myInput-content {
   font-weight: 500;
   height: 4rem;
+  padding-bottom: 1.2rem;
   resize: none;
 }
+
+.text-indicator-note {
+  position: absolute;
+  font-weight: 700;
+  font-size: 0.8rem;
+  bottom: 0.2rem;
+  right: 0.9rem;
+  opacity: 0.4;
+  pointer-events: none;
+}
+
 
 .note-edit span {
   color: var(--black);
@@ -422,21 +529,19 @@
 
 /*Scrollbar styling*/
 .note-card-content::-webkit-scrollbar,
-.input-content::-webkit-scrollbar {
+.input-content::-webkit-scrollbar,
+.noteCard-onTop-desc::-webkit-scrollbar {
   background-color: var(--pomodoroLight);
   width: 0.6rem;
 }
 .note-card-content::-webkit-scrollbar-thumb,
-.input-content::-webkit-scrollbar-thumb {
+.input-content::-webkit-scrollbar-thumb,
+.noteCard-onTop-desc::-webkit-scrollbar-thumb {
   background-color: var(--blackLight);
   border-radius: 0.6rem;
   /* width: 0.02rem; */
   /* display : none; */
 }
-
-
-
-
 
 /* .note-item-add,
 .note-item {
@@ -465,5 +570,3 @@
   background-color: var(--pomodoroDark);
   top: 0.5rem;
 } */
-
-

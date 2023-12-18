@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { AddNoteIcon, NoteListIcon, TaskNoteIcon, DeleteNoteIcon, PinNoteIcon, EditNoteIcon } from '../icons'
 import './Notes.css'
-import { ShowNoteEdit, ShowNoteSettings, SetNoteList, SetNoteColors, SetCurrentEditId } from '../features/NoteSlice'
+import { ShowNoteEdit, ShowNoteSettings, SetNoteList, SetNoteColors, SetCurrentEditId, SetNoteCardView } from '../features/NoteSlice'
 import NoteEdit from './Note/NoteEdit'
 import axios from 'axios'
 import NoteUpdate from './Note/NoteUpdate'
@@ -10,10 +10,9 @@ import NoteUpdate from './Note/NoteUpdate'
 
 
 const NotesMenu = () => {
-  const { isEdit, noteItems, tag, dbNotes, dbDefaultColors, currentEditId } = useSelector((store) => store.note);
+  const { isEdit, noteItems, tag, dbNotes, dbDefaultColors, currentEditId, isNoteCardView, noteCardId } = useSelector((store) => store.note);
   // console.log(dbNotes);
   const dispatch = useDispatch();
-
 
   //Fetching note list from database
   useEffect(() => {
@@ -79,6 +78,21 @@ const NotesMenu = () => {
 
   return (
     <section className="notes-container">
+      {
+        isNoteCardView && (
+          <div className='noteCard-onTop-container' onClick={() => dispatch(SetNoteCardView())}>
+            <div className='noteCard-onTop'>
+              <span className='noteCard-onTop-title'>{dbNotes.find(note => note.id === noteCardId).note_name}</span>
+              <span className='noteCard-onTop-desc'>{dbNotes.find(note => note.id === noteCardId).note_desc}</span>
+              <div className='noteCard-onTop-btn'>
+                <button>Delete</button>
+                <button className='noteCard-closeBtn'>Close</button>
+              </div>
+            </div>
+
+          </div>
+        )
+      }
       <div className="notes-overall">
         <div className='note-input-container' >
           {
@@ -113,8 +127,8 @@ const NotesMenu = () => {
                 } else {
                   return (
                     <div className='note-card' key={id}>
-                      <span className='note-card-title' >{note_name}</span>
-                      <span className='note-card-content' >{note_desc}</span>
+                      <span className='note-card-title' onClick={() => dispatch(SetNoteCardView(id))}>{note_name}</span>
+                      <span className='note-card-content' onClick={() => dispatch(SetNoteCardView(id))} >{note_desc}</span>
                       <span className='note-tag' title={color_name} style={{ backgroundColor: color_value }}>
                       </span>
                       <button className='noteEdit-btn' title='Edit Note' onClick={() => dispatch(SetCurrentEditId(id))}><EditNoteIcon /></button>
@@ -155,8 +169,8 @@ const NotesMenu = () => {
                 } else {
                   return (
                     <div className='note-card' key={id}>
-                      <span className='note-card-title' >{note_name}</span>
-                      <span className='note-card-content' >{note_desc}</span>
+                      <span className='note-card-title' onClick={() => dispatch(SetNoteCardView(id))} >{note_name}</span>
+                      <span className='note-card-content' onClick={() => dispatch(SetNoteCardView(id))} >{note_desc}</span>
                       <span className='note-tag' title={color_name} style={{ backgroundColor: color_value }}>
                       </span>
                       <button className='noteEdit-btn' title='Edit Note' onClick={() => dispatch(SetCurrentEditId(id))}><EditNoteIcon /></button>

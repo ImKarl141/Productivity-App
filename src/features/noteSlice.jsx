@@ -12,12 +12,19 @@ const initialState = {
   dbDefaultColors: [],
   currentEditId: '',
   isColorUpdate: false,
+  isNoteCardView: false,
+  noteCardId: '',
 }
 
 const noteSlice = createSlice({
   name: 'notes',
   initialState,
   reducers: {
+    SetNoteCardView: (state, value) => {
+      state.isNoteCardView = !state.isNoteCardView;
+      state.noteCardId = value.payload;
+      // console.log(state.isNoteCardView);
+    },
     ShowNoteEdit: (state) => {
       state.isEdit = !state.isEdit;
     },
@@ -38,6 +45,6 @@ const noteSlice = createSlice({
 })
 
 
-export const { ShowNoteEdit, ShowNoteSettings, SetNoteList, SetNoteColors, SetCurrentEditId } = noteSlice.actions;
+export const { SetNoteCardView, ShowNoteEdit, ShowNoteSettings, SetNoteList, SetNoteColors, SetCurrentEditId } = noteSlice.actions;
 export default noteSlice.reducer;
 
