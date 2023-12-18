@@ -27,6 +27,7 @@
   margin: 0.4rem;
   border-radius: 0.4rem;
   background-color: #cc666696;
+  cursor: pointer;
   /* background-color: #bb5f5f73; */
   /* opacity: 0.8;  */
 }
@@ -34,6 +35,8 @@
 .noteCard-onTop {
   display: flex;
   justify-content: space-between;
+  z-index: 7;
+  cursor:alias;
   flex-direction: column;
   font-family: Nunito;
   color: var(--black);

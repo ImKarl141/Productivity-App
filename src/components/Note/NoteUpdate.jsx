@@ -59,6 +59,7 @@ const NoteUpdate = () => {
         name="note_name"
         className='input-title'
         value={note_name}
+        maxLength={45}
         onChange={handleChangeInput}
       />
       <textarea type="text"

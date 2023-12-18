@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { NoteListIcon } from "../../icons"
 import { SetNoteList, ShowNoteEdit } from "../../features/NoteSlice"
@@ -10,13 +10,13 @@ const NoteEdit = () => {
 
   const [inputNote, setInputNote] = useState({
     note_name: '',
-    note_desc: null,
+    note_desc: '',
     note_color: null,
   });
 
-  const { note_name } = inputNote;
+  const { note_name, note_desc } = inputNote;
 
-  const [remainText, setRemainText] = useState(255)
+  const [remainText, setRemainText] = useState(500)
 
   const dispatch = useDispatch();
 
@@ -33,6 +33,10 @@ const NoteEdit = () => {
     }
   }
 
+  useEffect(() => {
+    setRemainText(500 - note_desc.length)
+  }, [note_desc])
+
   const handleChangeInput = (e) => {
     setInputNote((prev) => ({ ...prev, [e.target.name]: e.target.value }))
   }
@@ -43,6 +47,7 @@ const NoteEdit = () => {
         <input
           id='note-title'
           name="note_name"
+          maxLength={45}
           type="text"
           placeholder='Title'
           className='myInput'
@@ -50,6 +55,7 @@ const NoteEdit = () => {
         />
         <textarea
           name="note_desc"
+          maxLength={500}
           placeholder='Note content'
           className='myInput myInput-content '
           onChange={handleChangeInput}

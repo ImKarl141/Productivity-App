@@ -13,40 +13,45 @@ const NotesMenu = () => {
   const { isEdit, noteItems, tag, dbNotes, dbDefaultColors, currentEditId, isNoteCardView, noteCardId } = useSelector((store) => store.note);
   // console.log(dbNotes);
   const dispatch = useDispatch();
-
-  //Fetching note list from database
-  useEffect(() => {
-    const fetchNoteList = async () => {
-      try {
-        const resp = await axios.get('http://localhost:8800/NoteList');
-        dispatch(SetNoteList(resp.data))
-      } catch (err) {
-        console.log(err);
-      }
-    }
-    const fetchNoteColors = async () => {
-      try {
-        const resp = await axios.get("http://localhost:8800/DefaultColors");
-        dispatch(SetNoteColors(resp.data));
-      } catch (err) {
-        console.log(err);
-      }
-    }
-    fetchNoteList();
-    fetchNoteColors();
-  }, [])
-
-  //display note settings 
-  // const HandleNoteSettings = (e) => {
-  //   e.preventDefault();
-  //   console.log(e.target.value);
-  // }
-
-  // const [isPinned, setIsPinned] = useState(false)
   const isPinned = useRef(false)
 
-  const handleNotePin = async (pin, id) => {
+  //Fetching note list from database
+  // useEffect(() => {
+  //   const fetchNoteList = async () => {
+  //     try {
+  //       const resp = await axios.get('http://localhost:8800/NoteList');
+  //       dispatch(SetNoteList(resp.data))
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //   }
+  //   const fetchNoteColors = async () => {
+  //     try {
+  //       const resp = await axios.get("http://localhost:8800/DefaultColors");
+  //       dispatch(SetNoteColors(resp.data));
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //   }
+  //   fetchNoteList();
+  //   fetchNoteColors();
+  // }, [])
 
+  useEffect(() => {
+    const fetchNoteData = async () => {
+      try {
+        const resp_note = await axios.get('http://localhost:8800/NoteList');
+        const resp_color = await axios.get("http://localhost:8800/DefaultColors");
+        dispatch(SetNoteList(resp_note.data))
+        dispatch(SetNoteColors(resp_color.data));
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    fetchNoteData();
+  }, [])
+
+  const handleNotePin = async (pin, id) => {
     if (!pin) {
       isPinned.current = true;
     } else {
@@ -70,10 +75,6 @@ const NotesMenu = () => {
     }
   }
 
-  const handleNoteEdit = (id) => {
-    // dispatch(SetCurrentEditId(id))
-  }
-
   //Add Tags from the list, figure out how to share the listOfTags into this component.
 
   return (
@@ -81,15 +82,14 @@ const NotesMenu = () => {
       {
         isNoteCardView && (
           <div className='noteCard-onTop-container' onClick={() => dispatch(SetNoteCardView())}>
-            <div className='noteCard-onTop'>
+            <div className='noteCard-onTop' onClick={(e) => e.stopPropagation()}>
               <span className='noteCard-onTop-title'>{dbNotes.find(note => note.id === noteCardId).note_name}</span>
               <span className='noteCard-onTop-desc'>{dbNotes.find(note => note.id === noteCardId).note_desc}</span>
               <div className='noteCard-onTop-btn'>
                 <button>Delete</button>
-                <button className='noteCard-closeBtn'>Close</button>
+                <button className='noteCard-closeBtn' onClick={() => dispatch(SetNoteCardView())}>Close</button>
               </div>
             </div>
-
           </div>
         )
       }
