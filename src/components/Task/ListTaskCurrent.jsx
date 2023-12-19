@@ -40,18 +40,18 @@ const ListTaskCurrent = () => {
 
   // console.log(tempValues);
 
-  useEffect(() => {
-    const fetchTaskList = async () => {
-      try {
-        const resp = await axios.get("http://localhost:8800/TaskCurrent")
-        // setDbTasks(resp.data)
-        dispatch(SetTaskList(resp.data))
-      } catch (err) {
-        console.log(err);
-      }
-    }
-    fetchTaskList();
-  }, [])
+  // useEffect(() => {
+  //   const fetchTaskList = async () => {
+  //     try {
+  //       const resp = await axios.get("http://localhost:8800/TaskCurrent")
+  //       // setDbTasks(resp.data)
+  //       dispatch(SetTaskList(resp.data))
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //   }
+  //   fetchTaskList();
+  // }, [])
 
   const handle = (e) => {
     //Separate the string into an array. Being, in order, task_title, focus_amount and is_checked

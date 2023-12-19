@@ -238,6 +238,9 @@
 }
 
 .list-text{
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
   font-size: 1rem;
   white-space: nowrap;
   overflow: hidden;
@@ -355,7 +358,12 @@
 } */
 
 
-.listTask-title .default-checkboxList:checked ~ .list-text {
+/* .listTask-title .default-checkboxList:checked ~ .list-text {
+  text-decoration: line-through;
+  opacity: 0.6;
+} */
+
+.list-text .default-checkboxList:checked ~ .task-text {
   text-decoration: line-through;
   opacity: 0.6;
 }

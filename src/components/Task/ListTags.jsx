@@ -15,19 +15,19 @@ const ListTags = () => {
   const dispatch = useDispatch();
   // console.log(`isUpdate: ${isTagUpdate}, isDelete: ${isTagUpdate}`);
 
-  useEffect(() => {
-    const fetchTagList = async () => {
-      try {
-        const resp = await axios.get("http://localhost:8800/TagList")
-        // setDbTags(resp.data);
-        dispatch(SetTagList(resp.data))
-        // console.log("Tags fetched successfully");
-      } catch (err) {
-        console.log(err);
-      }
-    }
-    fetchTagList();
-  }, [])
+  // useEffect(() => {
+  //   const fetchTagList = async () => {
+  //     try {
+  //       const resp = await axios.get("http://localhost:8800/TagList")
+  //       // setDbTags(resp.data);
+  //       dispatch(SetTagList(resp.data))
+  //       // console.log("Tags fetched successfully");
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //   }
+  //   fetchTagList();
+  // }, [])
 
   const handleDeleteTag = async (id) => {
     try {

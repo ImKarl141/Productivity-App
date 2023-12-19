@@ -20,17 +20,17 @@ const ListProjects = () => {
   // )
 
 
-  useEffect(() => {
-    const fetchProjectList = async () => {
-      try {
-        const resp = await axios.get("http://localhost:8800/ProjectList")
-        dispatch(SetProjectList(resp.data))
-      } catch (err) {
-        console.log(err);
-      }
-    }
-    fetchProjectList();
-  }, [])
+  // useEffect(() => {
+  //   const fetchProjectList = async () => {
+  //     try {
+  //       const resp = await axios.get("http://localhost:8800/ProjectList")
+  //       dispatch(SetProjectList(resp.data))
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //   }
+  //   fetchProjectList();
+  // }, [])
 
   const handleDeleteProject = async (id) => {
     // let id = 8;

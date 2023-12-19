@@ -1,13 +1,11 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { ShowTaskEdit, ShowAddProjectEdit, ShowAddTagEdit, RemoveProjectItem, SetCurrentView } from '../features/taskSlice';
+import { SetTaskList, SetProjectList, SetTagList, SetCurrentView } from '../features/taskSlice';
 import './Task.css'
-import { AddTaskIcon, AllTasksIcon, CurrentTasksIcon, CompletedTasksIcon, AddProjectIcon, AddTagsIcon, EnterTaskIcon, CalendarIconTask, ProjectSettingsIcon, CancelIcon, TagSettingsIcon, EditListIcon, DeleteListIcon } from '../icons';
+import { AllTasksIcon, CurrentTasksIcon, CompletedTasksIcon } from '../icons';
 import TaskEdit from './Task/TaskEdit';
 import ListProjects from './Task/ListProjects';
 import ListTags from './Task/ListTags';
 import ListTaskCurrent from './Task/ListTaskCurrent';
-import ProjectEdit from './Task/ProjectEdit';
-import TagEdit from './Task/TagEdit';
 import { useEffect, useState } from "react";
 import axios from "axios";
 import TaskUpdate from './Task/TaskUpdate';
@@ -16,11 +14,28 @@ import TaskUpdate from './Task/TaskUpdate';
 
 const TaskMenu = () => {
 
-  const { taskItems, isEdit, isTaskUpdate, addProjectEdit, projects, tags, addTagEdit, currentView } = useSelector((store) => store.task);
+  const { dbTasks, taskItems, isEdit, isTaskUpdate, addProjectEdit, projects, tags, addTagEdit, currentView } = useSelector((store) => store.task);
   // console.log(currentView);
 
   const dispatch = useDispatch();
   //Edit task menu
+
+  // Fetching data
+  useEffect(() => {
+    const fetchTaskData = async () => {
+      try {
+        const task = await axios.get("http://localhost:8800/TaskCurrent")
+        dispatch(SetTaskList(task.data))
+        const project = await axios.get("http://localhost:8800/ProjectList")
+        dispatch(SetProjectList(project.data))
+        const tag = await axios.get("http://localhost:8800/TagList")
+        dispatch(SetTagList(tag.data))
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    fetchTaskData();
+  }, [])
 
   return (
     <section className='task-container'>
