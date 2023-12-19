@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { ShowTaskEdit, ShowSubtaskEdit, ChangeTitleInput, ChangeDescriptionInput, ChangeDateInput, ChangeProjectNameInput, ChangeProjectColorInput, ChangeTagInput, ChangeTagNameInput, ChangeTagColorInput, AddTaskItem } from '../../features/taskSlice';
+import { ShowTaskEdit, ShowSubtaskEdit, SetTaskList, ChangeTitleInput, ChangeDescriptionInput, ChangeDateInput, ChangeProjectNameInput, ChangeProjectColorInput, ChangeTagInput, ChangeTagNameInput, ChangeTagColorInput, AddTaskItem } from '../../features/taskSlice';
 import { AddTaskIcon } from '../../icons';
 import axios from 'axios';
 import { useEffect, useState, useRef } from 'react';
@@ -7,7 +7,8 @@ import { useEffect, useState, useRef } from 'react';
 
 const TaskEdit = () => {
   const dispatch = useDispatch();
-  const { taskItems, subtaskTest, projects, dbProjects, dbTags, tags, taskInput, taskProjectInput, taskTagInput, addSubtaskEdit, subtaskInput } = useSelector((store) => store.task);
+  const { dbTasks, taskItems, subtaskTest, projects, dbProjects, dbTags, tags, taskInput, taskProjectInput, taskTagInput, addSubtaskEdit, subtaskInput } = useSelector((store) => store.task);
+  // console.log(dbTasks);
 
   // Inputs
   const { taskTitle, taskDescription, taskDate } = taskInput
@@ -58,7 +59,9 @@ const TaskEdit = () => {
     }
     try {
       await axios.post('http://localhost:8800/TaskCurrent', inputTask)
-      window.location.reload();
+      console.log(typeof (inputTask));
+      dispatch(SetTaskList([...dbTasks, inputTask]))
+      // window.location.reload();
     } catch (err) {
       console.log(err);
     }

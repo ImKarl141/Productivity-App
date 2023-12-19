@@ -14,7 +14,7 @@ import TaskUpdate from './Task/TaskUpdate';
 
 const TaskMenu = () => {
 
-  const { dbTasks, taskItems, isEdit, isTaskUpdate, addProjectEdit, projects, tags, addTagEdit, currentView } = useSelector((store) => store.task);
+  const { dbTasks, dbProjects, dbTags, taskItems, isEdit, isTaskUpdate, addProjectEdit, projects, tags, addTagEdit, currentView } = useSelector((store) => store.task);
   // console.log(currentView);
 
   const dispatch = useDispatch();
@@ -26,16 +26,36 @@ const TaskMenu = () => {
       try {
         const task = await axios.get("http://localhost:8800/TaskCurrent")
         dispatch(SetTaskList(task.data))
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    fetchTaskData();
+  }, [dbTasks])
+
+  useEffect(() => {
+    const fetchProjectData = async () => {
+      try {
         const project = await axios.get("http://localhost:8800/ProjectList")
         dispatch(SetProjectList(project.data))
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    fetchProjectData();
+  }, [dbProjects])
+
+  useEffect(() => {
+    const fetchTagData = async () => {
+      try {
         const tag = await axios.get("http://localhost:8800/TagList")
         dispatch(SetTagList(tag.data))
       } catch (err) {
         console.log(err);
       }
     }
-    fetchTaskData();
-  }, [])
+    fetchTagData();
+  }, [dbTags])
 
   return (
     <section className='task-container'>
