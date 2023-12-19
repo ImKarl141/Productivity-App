@@ -16,46 +16,68 @@ const TaskMenu = () => {
 
   const { dbTasks, dbProjects, dbTags, taskItems, isEdit, isTaskUpdate, addProjectEdit, projects, tags, addTagEdit, currentView } = useSelector((store) => store.task);
   // console.log(currentView);
+  // console.log(dbTasks);
+  // console.log("Updated");
 
   const dispatch = useDispatch();
   //Edit task menu
 
   // Fetching data
+  // useEffect(() => {
+  //   const fetchTaskData = async () => {
+  //     try {
+  //       const task = await axios.get("http://localhost:8800/TaskCurrent")
+  //       dispatch(SetTaskList(task.data))
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //   }
+  //   fetchTaskData();
+  // }, [])
+
+  // useEffect(() => {
+  //   const fetchProjectData = async () => {
+  //     try {
+  //       const project = await axios.get("http://localhost:8800/ProjectList")
+  //       dispatch(SetProjectList(project.data))
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //   }
+  //   fetchProjectData();
+  // }, [])
+
+  // useEffect(() => {
+  //   const fetchTagData = async () => {
+  //     try {
+  //       const tag = await axios.get("http://localhost:8800/TagList")
+  //       dispatch(SetTagList(tag.data))
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //   }
+  //   fetchTagData();
+  // }, [])
+
   useEffect(() => {
-    const fetchTaskData = async () => {
+    const fetchData = async () => {
       try {
         const task = await axios.get("http://localhost:8800/TaskCurrent")
         dispatch(SetTaskList(task.data))
-      } catch (err) {
-        console.log(err);
-      }
-    }
-    fetchTaskData();
-  }, [dbTasks])
+        // console.log(task.data);
 
-  useEffect(() => {
-    const fetchProjectData = async () => {
-      try {
         const project = await axios.get("http://localhost:8800/ProjectList")
         dispatch(SetProjectList(project.data))
-      } catch (err) {
-        console.log(err);
-      }
-    }
-    fetchProjectData();
-  }, [dbProjects])
 
-  useEffect(() => {
-    const fetchTagData = async () => {
-      try {
         const tag = await axios.get("http://localhost:8800/TagList")
         dispatch(SetTagList(tag.data))
       } catch (err) {
         console.log(err);
       }
     }
-    fetchTagData();
-  }, [dbTags])
+    fetchData();
+  }, [])
+
 
   return (
     <section className='task-container'>

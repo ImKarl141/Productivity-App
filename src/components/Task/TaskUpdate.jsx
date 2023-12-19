@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { ShowTaskEdit, ShowSubtaskEdit, ShowTaskUpdate, SetCurrentEditId } from '../../features/taskSlice';
+import { ShowTaskEdit, ShowSubtaskEdit, ShowTaskUpdate, SetCurrentEditId, SetTaskList } from '../../features/taskSlice';
 import { AddTaskIcon } from '../../icons';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
@@ -66,6 +66,15 @@ const TaskUpdate = () => {
     }
   }, [task_desc])
 
+
+  //Update local state
+  const updateChanges = async () => {
+    const resp = await axios.get('http://localhost:8800/TaskCurrent')
+    dispatch(SetTaskList(resp.data))
+    dispatch(ShowTaskUpdate())
+  }
+
+
   // Change of inputs
   const handleChangeInput = (e) => {
     e.target.value ? setInputTask((prev) => ({ ...prev, [e.target.name]: e.target.value })) :
@@ -99,16 +108,33 @@ const TaskUpdate = () => {
     }
     try {
       await axios.put('http://localhost:8800/TaskCurrent/' + currentEditId, inputTask)
-      window.location.reload();
+      // const resp = await axios.get('http://localhost:8800/TaskCurrent')
+      // dispatch(SetTaskList(resp.data))
+      updateChanges();
+      // dispatch(ShowTaskUpdate())
+      // console.log(inputTask);
+      // window.location.reload();
     } catch (err) {
       console.log(err);
     }
   }
 
+  // const updatedTask = dbTasks.map((task) => {
+  //   //The myId is an string, so parseInt or compare ignoring the datatype.
+  //   if (task.id == currentTagId) {
+  //     return { ...task, tagInput };
+  //   }
+  //   return task;
+  // });
+  // dispatch(SetTaskList(updatedTask))
+
   const handleDeleteTask = async (id) => {
     try {
       await axios.delete("http://localhost:8800/TaskCurrent/" + id)
-      window.location.reload();
+      updateChanges();
+      // const resp = await axios.get('http://localhost:8800/TaskCurrent')
+      // dispatch(SetTaskList(resp.data))
+      // window.location.reload();
     } catch (err) {
       console.log(err);
     }

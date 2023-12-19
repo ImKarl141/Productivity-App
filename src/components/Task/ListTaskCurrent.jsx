@@ -8,6 +8,7 @@ const ListTaskCurrent = () => {
 
   const { isTaskUpdate, dbTasks, currentView, currentCheckedId } = useSelector((store) => store.task);
   // console.log(currentCheckedId);
+  // console.log(dbTasks);
 
   // console.log(dbTasks);
   // const [dbTask, setDbTasks] = useState([])
@@ -32,33 +33,25 @@ const ListTaskCurrent = () => {
   //   completed: false
   // })
 
-  const [tempValues, setTempValues] = useState({
-    task_title: 'Created',
-    focus_amount: 2,
-    // is_checked: '',
-  })
+  // const [tempValues, setTempValues] = useState({
+  //   task_title: 'Created',
+  //   focus_amount: 2,
+  //   // is_checked: '',
+  // })
 
-  // console.log(tempValues);
-
-  // useEffect(() => {
-  //   const fetchTaskList = async () => {
-  //     try {
-  //       const resp = await axios.get("http://localhost:8800/TaskCurrent")
-  //       // setDbTasks(resp.data)
-  //       dispatch(SetTaskList(resp.data))
-  //     } catch (err) {
-  //       console.log(err);
-  //     }
+  // const fetchTaskData = async () => {
+  //   try {
+  //     const task = await axios.get("http://localhost:8800/TaskCurrent")
+  //     dispatch(SetTaskList(task.data))
+  //   } catch (err) {
+  //     console.log(err);
   //   }
-  //   fetchTaskList();
-  // }, [])
+  // }
 
   const handle = (e) => {
     //Separate the string into an array. Being, in order, task_title, focus_amount and is_checked
     const myArray = e.target.value.split("+");
 
-    const title = "Improved again";
-    const focus = myArray[1];
     //Change the value of is_checked. If is 0 mean false, so turn true, and vice versa.
     if (myArray[2] === "0") {
       myArray[2] = true
@@ -70,15 +63,46 @@ const ListTaskCurrent = () => {
     handleCheckedSubmit(myArray[0], myArray[1], myArray[2], e.target.id)
   }
 
+  // const handleCheckedSubmit = async (title, focus, check, myId) => {
+  //   try {
+  //     await axios.patch("http://localhost:8800/TaskCurrent/" + myId, { task_title: title, focus_amount: focus, is_checked: check });
+  //     //Find the element to be updated based on the id
+  //     const newTask = dbTasks.map((task) => {
+  //       if (task.id === myId) {
+  //         //Modify that specific object inside the list of tasks
+  //         return { ...task, is_checked: check };
+  //       }
+  //       //Return the rest of the objects inside the list of tasks
+  //       return task;
+  //     })
+  //     console.log(newTask);
+  //     //Update the local state.
+  //     dispatch(SetTaskList(newTask));
+  //     // window.location.reload();
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // }
   const handleCheckedSubmit = async (title, focus, check, myId) => {
     try {
       await axios.patch("http://localhost:8800/TaskCurrent/" + myId, { task_title: title, focus_amount: focus, is_checked: check });
-      window.location.reload();
+
+      //Update the local state of the Task List.
+      const newTask = dbTasks.map((task) => {
+        //The myId is an string, so parseInt or compare ignoring the datatype.
+        if (task.id == myId) {
+          return { ...task, is_checked: check };
+        }
+        return task;
+      });
+      dispatch(SetTaskList(newTask))
+      // window.location.reload();
     } catch (err) {
       console.log(err);
     }
-
   }
+
+
 
   return (
     <div className='task-focus'>
@@ -98,7 +122,7 @@ const ListTaskCurrent = () => {
               <li key={`${id}`}>
                 <div className='task-item-overall-container'>
                   <div className='task-item-container'>
-                    {
+                    {/* {
                       is_checked ? <input
                         name="is_checked"
                         checked
@@ -116,7 +140,15 @@ const ListTaskCurrent = () => {
                           type="checkbox"
                           onChange={handle}
                         />
-                    }
+                    } */}
+                    <input
+                      name="is_checked"
+                      id={id}
+                      value={`${task_title}+${focus_amount}+${is_checked}`}
+                      className='default-checkbox checkbox-test'
+                      type="checkbox"
+                      onChange={handle}
+                    />
                     <span className='checkmark'></span>
                     <div className='task-item-text'>
                       <span>{task_title}:</span>
@@ -176,7 +208,16 @@ const ListTaskCurrent = () => {
               <li key={`${id}`}>
                 <div className='task-item-overall-container'>
                   <div className='task-item-container'>
-                    {
+                    <input
+                      name="is_checked"
+                      checked
+                      id={id}
+                      value={`${task_title}+${focus_amount}+${is_checked}`}
+                      className='default-checkbox checkbox-test'
+                      type="checkbox"
+                      onChange={handle}
+                    />
+                    {/* {
                       is_checked ? <input
                         name="is_checked"
                         checked
@@ -194,7 +235,7 @@ const ListTaskCurrent = () => {
                           type="checkbox"
                           onChange={handle}
                         />
-                    }
+                    } */}
                     <span className='checkmark'></span>
                     <div className='task-item-text'>
                       <span>{task_title}:</span>

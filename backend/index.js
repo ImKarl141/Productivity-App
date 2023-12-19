@@ -154,7 +154,7 @@ app.put("/TaskCurrent/:id", (req, resp) => {
 
   db.query(q, [...values, taskId], (err, data) => {
     if (err) return resp.json(err);
-    return resp.json("Task updated successfully");
+    return resp.json(data);
   })
 })
 

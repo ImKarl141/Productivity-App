@@ -9,6 +9,7 @@ import ProjectUpdate from "./ProjectUpdate";
 const ListProjects = () => {
   const dispatch = useDispatch();
   const { addProjectEdit, dbProjects, isProjectUpdate, currentProjectId } = useSelector((store) => store.task);
+  // console.log(dbProjects);
   // console.log(isProjectUpdate);
   // const [updateItem, setUpdateItem] = useState(
   //   dbProjects.map((project) => {
@@ -32,11 +33,13 @@ const ListProjects = () => {
   //   fetchProjectList();
   // }, [])
 
-  const handleDeleteProject = async (id) => {
+  const handleDeleteProject = async (myId) => {
     // let id = 8;
     try {
-      await axios.delete("http://localhost:8800/ProjectList/" + id)
-      window.location.reload();
+      await axios.delete("http://localhost:8800/ProjectList/" + myId)
+      const deletedTask = dbProjects.findIndex((project) => project.id === myId)
+      console.log(deletedTask);
+      // window.location.reload();
     } catch (err) {
       console.log(err);
     }

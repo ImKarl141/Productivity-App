@@ -21,12 +21,12 @@ const TaskEdit = () => {
   const [inputTask, setInputTask] = useState({
     task_title: '',
     task_desc: '',
-    task_date: null,
+    task_date: '',
     task_project: null,
     task_tag: null,
   })
 
-  const { task_title, task_desc } = inputTask;
+  const { task_title, task_desc, task_date } = inputTask;
 
   // const { nameProject, projectColor } = projectInput
 
@@ -51,6 +51,8 @@ const TaskEdit = () => {
     setInputTask((prev) => ({ ...prev, [e.target.name]: `${month}-${day}-${year}` }))
   }
 
+
+  // const q = "SELECT t.id, t.task_title, t.task_desc, t.task_date, t.focus_amount, t.is_checked, p.project_name, p.project_color, tg.tag_name, tg.tag_color FROM `TaskCurrent` t LEFT JOIN `ProjectList` p ON t.task_project = p.id LEFT JOIN `TagList` tg ON t.task_tag = tg.id";
   // Submit inputs to endpoint
   const handleTaskSubmit = async (e) => {
     e.preventDefault();
@@ -59,9 +61,29 @@ const TaskEdit = () => {
     }
     try {
       await axios.post('http://localhost:8800/TaskCurrent', inputTask)
-      console.log(typeof (inputTask));
-      dispatch(SetTaskList([...dbTasks, inputTask]))
-      // window.location.reload();
+      // window.location.reload()
+      const resp = await axios.get('http://localhost:8800/TaskCurrent')
+      dispatch(SetTaskList(resp.data))
+      setInputTask({
+        task_title: '',
+        task_desc: '',
+        task_date: null,
+        task_project: null,
+        task_tag: null,
+      })
+
+      //Clear calendar
+      const date_input = document.getElementById('date-id');
+      date_input.value = '';
+
+      //Clear project and tag options
+      const project_input = document.getElementById('project-id');
+      project_input.value = '0';
+
+      const tag_input = document.getElementById('tag-id');
+      tag_input.value = '0';
+
+      // console.log("Reset");
     } catch (err) {
       console.log(err);
     }
@@ -100,6 +122,7 @@ const TaskEdit = () => {
               name='task_desc'
               type="text"
               placeholder='Description'
+              value={task_desc}
               className='myInput myInput-description'
               // className={task_title.length >= 45 ? 'myInput-description errorDesc' : 'myInput-description'}
               onChange={handleChangeDesc}
@@ -113,9 +136,11 @@ const TaskEdit = () => {
           <div className='task-details-info'>
             <p className='details-text'>Due date</p>
             <input
+              id='date-id'
               className='myInput-date'
               type="date"
               name='task_date'
+              // value={task_date}
               onChange={handleChangeInputDate}
             // onChange={(e) => {
             //   const [year, month, day] = e.target.value.split('-')
@@ -124,11 +149,13 @@ const TaskEdit = () => {
             />
           </div>
           <div className='task-details-info'>
-            <p className='details-text'>List</p>
+            <p className='details-text'>Project</p>
             <select
+              id='project-id'
               name='task_project'
               onChange={handleChangeInput}
             >
+              <option value=''></option>
               {dbProjects.map((listProjects) => {
                 const { id, project_name } = listProjects;
                 return (
@@ -138,11 +165,13 @@ const TaskEdit = () => {
             </select>
           </div>
           <div className='task-details-info'>
-            <p className='details-text'>Tags</p>
+            <p className='details-text'>Tag</p>
             <select
+              id='tag-id'
               name='task_tag'
               onChange={handleChangeInput}
             >
+              <option value=''></option>
               {dbTags.map((listTag) => {
                 const { id, tag_name } = listTag;
                 return (

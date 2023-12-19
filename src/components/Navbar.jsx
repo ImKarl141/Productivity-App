@@ -56,11 +56,10 @@ const Navbar = () => {
                 <TaskIcon />
                 <p className='icon-text'>Task</p>
               </button>
-              <button className={`icon-button ${Calendar ? 'button-clicked' : ''} `} onClick={() => dispatch(showCalendar())}>
+              {/* <button className={`icon-button ${Calendar ? 'button-clicked' : ''} `} onClick={() => dispatch(showCalendar())}>
                 <CalendarIcon />
-                {/* <img className='logo' src={calendarMenu} alt="Calendar icon" /> */}
                 <p className='icon-text'>Calendar</p>
-              </button>
+              </button> */}
               <button className={`icon-button ${Notes ? 'button-clicked' : ''} `} onClick={() => dispatch(showNotes())}>
                 <NotesIcon />
                 {/* <img className='logo' src={notesMenu} alt="Notes icon" /> */}
