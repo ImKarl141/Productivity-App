@@ -70,6 +70,8 @@ const TaskEdit = () => {
         task_date: null,
         task_project: null,
         task_tag: null,
+        focus_amount: 1,
+        is_checked: false,
       })
 
       //Clear calendar

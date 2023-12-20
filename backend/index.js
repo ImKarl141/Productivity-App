@@ -21,13 +21,15 @@ app.use(cors())
 
 //Task Component
 app.post("/TaskCurrent", (req, resp) => {
-  const q = "INSERT INTO `TaskCurrent` (`task_title`, `task_desc`, `task_date`, `task_project`, `task_tag`) VALUES (?)";
+  const q = "INSERT INTO `TaskCurrent` (`task_title`, `task_desc`, `task_date`, `task_project`, `task_tag`, `focus_amount`, `is_checked`) VALUES (?)";
   const values = [
     req.body.task_title,
     req.body.task_desc,
     req.body.task_date,
     req.body.task_project,
     req.body.task_tag,
+    req.body.focus_amount,
+    req.body.is_checked,
   ];
   db.query(q, [values], (err, data) => {
     if (err) {
@@ -62,7 +64,7 @@ app.post("/TagList", (req, resp) => {
 
 //Note Component 
 app.post('/NoteList', (req, resp) => {
-  const q = "INSERT INTO NoteList (`note_name`, `note_desc`, `note_color`) VALUES (?)";
+  const q = "INSERT INTO `NoteList` (`note_name`, `note_desc`, `note_color`) VALUES (?)";
   const values = [
     req.body.note_name,
     req.body.note_desc,
@@ -74,6 +76,24 @@ app.post('/NoteList', (req, resp) => {
     return resp.json("Note send it!");
   })
 
+})
+//From Note to Task
+app.post("/TaskCurrent/NewTaskFromNote", (req, resp) => {
+  const q = "INSERT INTO `TaskCurrent` (`task_title`, `task_desc`, `task_date`, `task_project`, `task_tag`, `focus_amount`, `is_checked`) VALUES (?)";
+  const values = [
+    req.body.task_title,
+    req.body.task_desc,
+    req.body.task_date,
+    req.body.task_project,
+    req.body.task_tag,
+    req.body.focus_amount,
+    req.body.is_checked,
+  ];
+  db.query(q, [values], (err, data) => {
+    if (err) {
+      return resp.json(err);
+    } return resp.json(data);
+  });
 })
 
 ////////////////////////////////////////////////////////////////////////

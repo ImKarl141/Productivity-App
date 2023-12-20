@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { AddNoteIcon, NoteListIcon, TaskNoteIcon, DeleteNoteIcon, PinNoteIcon, EditNoteIcon } from '../icons'
 import './Notes.css'
-import { ShowNoteEdit, ShowNoteSettings, SetNoteList, SetNoteColors, SetCurrentEditId, SetNoteCardView } from '../features/NoteSlice'
+import { ShowNoteEdit, ShowNoteSettings, SetNoteList, SetNoteColors, SetCurrentEditId, SetNoteCardView, DeleteNote } from '../features/NoteSlice'
 import NoteEdit from './Note/NoteEdit'
 import axios from 'axios'
 import NoteUpdate from './Note/NoteUpdate'
@@ -11,6 +11,9 @@ import NoteUpdate from './Note/NoteUpdate'
 
 const NotesMenu = () => {
   const { isEdit, noteItems, tag, dbNotes, dbDefaultColors, currentEditId, isNoteCardView, noteCardId } = useSelector((store) => store.note);
+  const { dbTasks } = useSelector((store) => store.task);
+  // console.log(dbTasks);
+
   // console.log(dbNotes);
   const dispatch = useDispatch();
   const isPinned = useRef(false)
@@ -40,8 +43,8 @@ const NotesMenu = () => {
   useEffect(() => {
     const fetchNoteData = async () => {
       try {
-        const resp_note = await axios.get('http://localhost:8800/NoteList');
         const resp_color = await axios.get("http://localhost:8800/DefaultColors");
+        const resp_note = await axios.get('http://localhost:8800/NoteList');
         dispatch(SetNoteList(resp_note.data))
         dispatch(SetNoteColors(resp_color.data));
       } catch (err) {
@@ -60,7 +63,16 @@ const NotesMenu = () => {
     // console.log(isPinned);
     try {
       await axios.patch("http://localhost:8800/NoteList/" + id, isPinned)
-      window.location.reload()
+      const newNote = dbNotes.map((note) => {
+        if (note.id == id) {
+          return { ...note, is_pinned: isPinned.current }
+        }
+        return note;
+      })
+      // console.log(newNote);
+      dispatch(SetNoteList(newNote))
+      // const resp = await axios.get("http://localhost:8800/NoteList")
+      // dispatch(SetNoteList(resp.data))
     } catch (err) {
       console.log(err);
     }
@@ -69,10 +81,42 @@ const NotesMenu = () => {
   const handleDeleteItem = async (id) => {
     try {
       await axios.delete("http://localhost:8800/NoteList/" + id);
-      window.location.reload();
+      // const indexNote = dbNotes.map((note) => {
+      //   if (note.id == id) {
+      //     console.log(note);
+      //   }
+      // })
+      const indexNote = dbNotes.findIndex(note => note.id == id);
+      dispatch(DeleteNote(indexNote))
     } catch (err) {
       console.log(err);
     }
+  }
+
+  // const selectedNote = dbNotes.find(note => note.id === 11)
+  // console.log(selectedNote);
+
+  const noteMakeTask = async (id) => {
+    const selectedNote = dbNotes.find(note => note.id === id)
+    const { note_name, note_desc } = selectedNote
+    const lastTaskId = dbTasks[dbTasks.length - 1].id
+    const newTask = {
+      id: lastTaskId + 1,
+      task_title: note_name,
+      task_desc: note_desc,
+      task_date: null,
+      task_project: null,
+      task_tag: null,
+      focus_amount: 1,
+      is_checked: false,
+    }
+    try {
+      await axios.post("http://localhost:8800/TaskCurrent/NewTaskFromNote", newTask)
+      console.log("Task created");
+    } catch (err) {
+      console.log(err);
+    }
+    handleDeleteItem(id);
   }
 
   //Add Tags from the list, figure out how to share the listOfTags into this component.
@@ -133,7 +177,7 @@ const NotesMenu = () => {
                       </span>
                       <button className='noteEdit-btn' title='Edit Note' onClick={() => dispatch(SetCurrentEditId(id))}><EditNoteIcon /></button>
                       <button className='noteDelete-btn' title='Delete Note' onClick={() => handleDeleteItem(id)}><DeleteNoteIcon /></button>
-                      <button className='noteMakeTask-btn' title='Make a task' onClick={() => console.log(`${note_name} Task created`)}><TaskNoteIcon /></button>
+                      <button className='noteMakeTask-btn' title='Make a task' onClick={() => noteMakeTask(id)}><TaskNoteIcon /></button>
                       <button
                         // id={id}
                         className='notePinned-btn'
@@ -175,7 +219,7 @@ const NotesMenu = () => {
                       </span>
                       <button className='noteEdit-btn' title='Edit Note' onClick={() => dispatch(SetCurrentEditId(id))}><EditNoteIcon /></button>
                       <button className='noteDelete-btn' title='Delete Note' onClick={() => handleDeleteItem(id)}><DeleteNoteIcon /></button>
-                      <button className='noteMakeTask-btn' title='Make a task' onClick={() => console.log(`${note_name} Task created`)}><TaskNoteIcon /></button>
+                      <button className='noteMakeTask-btn' title='Make a task' onClick={() => noteMakeTask(id)}><TaskNoteIcon /></button>
                       <button
                         // id={id}
                         className='notePin-btn'
