@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { ShowTaskEdit, ShowAddProjectEdit, ShowAddTagEdit, ChangeTitleInput, ChangeDescriptionInput, ChangeDateInput, ChangeProjectName, ChangeProjectColor, ChangeProjectNameInput, ChangeProjectColorInput, ChangeTagName, ChangeTagColor, AddTaskItem, RemoveTaskItem, AddProjectItem, RemoveProjectItem, AddTagItem, RemoveTagItem } from '../../features/taskSlice';
+import { ShowTaskEdit, ShowAddProjectEdit, ShowAddTagEdit, ChangeTitleInput, ChangeDescriptionInput, ChangeDateInput, ChangeProjectName, ChangeProjectColor, ChangeProjectNameInput, ChangeProjectColorInput, ChangeTagName, ChangeTagColor, AddTaskItem, RemoveTaskItem, AddProjectItem, RemoveProjectItem, AddTagItem, RemoveTagItem, SetTagList } from '../../features/taskSlice';
 import { AddTaskIcon, AllTasksIcon, CurrentTasksIcon, CompletedTasksIcon, AddProjectIcon, AddTagsIcon, EnterTaskIcon, CalendarIconTask, ProjectSettingsIcon, CancelIcon, TagSettingsIcon, EditListIcon, DeleteListIcon } from '../../icons';
 import axios from 'axios';
 import { useState } from 'react';
@@ -20,7 +20,7 @@ const TagEdit = () => {
     tag_color: '#FFFFFF',
   })
 
-  const { tag_color } = tagInput;
+  const { tag_name, tag_color } = tagInput;
   const dispatch = useDispatch();
 
   const handleChangeInput = (e) => {
@@ -32,7 +32,13 @@ const TagEdit = () => {
     e.preventDefault();
     try {
       await axios.post("http://localhost:8800/TagList", tagInput);
-      window.location.reload();
+      const resp = await axios.get('http://localhost:8800/TagList')
+      dispatch(SetTagList(resp.data))
+      setTagInput({
+        tag_name: '',
+        tag_color: '#FFFFFF',
+      })
+      // window.location.reload();
     } catch (err) {
       console.log(err);
     }
@@ -58,6 +64,7 @@ const TagEdit = () => {
           name='tag_name'
           placeholder='Tag name'
           type="text"
+          value={tag_name}
           className='myInputAddTag'
           onChange={handleChangeInput}
         />

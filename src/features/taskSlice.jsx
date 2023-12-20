@@ -81,6 +81,9 @@ const taskSlice = createSlice({
     SetTagList: (state, value) => {
       state.dbTags = value.payload;
     },
+    DeleteTagItem: (state, value) => {
+      state.dbTags.splice(value.payload, 1)
+    },
     SetCurrentEditId: (state, value) => {
       state.currentEditId = value.payload;
     },
@@ -194,5 +197,5 @@ const taskSlice = createSlice({
   }
 });
 
-export const { AddNewTask, SetCurrentCheckedId, SetCurrentView, SetTaskList, SetProjectList, SetTagList, DeleteProjectItem, SetCurrentEditId, SetCurrentProjectId, SetCurrentTagId, ShowTaskEdit, ShowTaskUpdate, ShowAddProjectEdit, ShowProjectUpdate, ShowAddTagEdit, ShowTagUpdate, ShowTagDelete, ShowTagCancel, ShowSubtaskEdit, ChangeTitleInput, ChangeDescriptionInput, ChangeDateInput, ChangeProjectName, ChangeProjectColor, ChangeProjectNameInput, ChangeProjectColorInput, ChangeTagName, ChangeTagColor, ChangeTagInput, ChangeTagNameInput, ChangeTagColorInput, AddTaskItem, RemoveTaskItem, AddProjectItem, RemoveProjectItem, AddTagItem, RemoveTagItem, } = taskSlice.actions;
+export const { AddNewTask, SetCurrentCheckedId, SetCurrentView, SetTaskList, SetProjectList, SetTagList, DeleteProjectItem, SetCurrentEditId, DeleteTagItem, SetCurrentProjectId, SetCurrentTagId, ShowTaskEdit, ShowTaskUpdate, ShowAddProjectEdit, ShowProjectUpdate, ShowAddTagEdit, ShowTagUpdate, ShowTagDelete, ShowTagCancel, ShowSubtaskEdit, ChangeTitleInput, ChangeDescriptionInput, ChangeDateInput, ChangeProjectName, ChangeProjectColor, ChangeProjectNameInput, ChangeProjectColorInput, ChangeTagName, ChangeTagColor, ChangeTagInput, ChangeTagNameInput, ChangeTagColorInput, AddTaskItem, RemoveTaskItem, AddProjectItem, RemoveProjectItem, AddTagItem, RemoveTagItem, } = taskSlice.actions;
 export default taskSlice.reducer;

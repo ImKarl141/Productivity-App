@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import { EditTagIcon, CancelIcon, AcceptUpdateIcon, CancelUpdateIcon } from '../../icons';
-import { ShowAddTagEdit, SetCurrentTagId } from '../../features/taskSlice';
+import { ShowAddTagEdit, SetCurrentTagId, SetTagList, SetTaskList } from '../../features/taskSlice';
 import axios from "axios";
 
 
@@ -30,7 +30,13 @@ const TagUpdate = () => {
     }
     try {
       await axios.put('http://localhost:8800/TagList/' + currentTagId, tagInput);
-      window.location.reload();
+      const tag = await axios.get('http://localhost:8800/TagList')
+      const task = await axios.get('http://localhost:8800/TaskCurrent')
+      dispatch(SetTaskList(task.data))
+      dispatch(SetTagList(tag.data))
+      dispatch(SetCurrentTagId(''))
+      // const resp = await axios.get
+      // window.location.reload();
     } catch (err) {
       console.log(err);
     };

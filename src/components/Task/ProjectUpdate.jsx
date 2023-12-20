@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { ShowAddProjectEdit, ChangeProjectName, ChangeProjectColor, AddProjectItem, SetCurrentProjectId, SetProjectList } from '../../features/taskSlice';
+import { ShowAddProjectEdit, ChangeProjectName, ChangeProjectColor, AddProjectItem, SetCurrentProjectId, SetProjectList, SetTaskList } from '../../features/taskSlice';
 import { CancelIcon, AcceptUpdateIcon, CancelUpdateIcon } from '../../icons';
 import { useState } from 'react';
 import axios from 'axios';
@@ -33,6 +33,8 @@ const ProjectUpdate = () => {
     try {
       await axios.put('http://localhost:8800/ProjectList/' + currentProjectId, projectInput);
       const resp = await axios.get('http://localhost:8800/ProjectList')
+      const task = await axios.get('http://localhost:8800/TaskCurrent')
+      dispatch(SetTaskList(task.data))
       dispatch(SetProjectList(resp.data))
       dispatch(SetCurrentProjectId(''))
     } catch (err) {

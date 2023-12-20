@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { ShowAddTagEdit, SetTagList, ShowTagUpdate, ShowTagDelete, ShowTagCancel, SetCurrentTagId } from "../../features/taskSlice";
+import { ShowAddTagEdit, SetTagList, ShowTagUpdate, ShowTagDelete, ShowTagCancel, SetCurrentTagId, SetTaskList, DeleteTagItem } from "../../features/taskSlice";
 import { AddTagsIcon, TagSettingsIcon, EditListIcon, DeleteListIcon, TagIcon, EditTagIcon, DeleteTagIcon } from '../../icons';
 import axios from "axios";
 import TagEdit from "./TagEdit";
@@ -29,10 +29,28 @@ const ListTags = () => {
   //   fetchTagList();
   // }, [])
 
-  const handleDeleteTag = async (id) => {
+  // const handleDeleteTag = async (id) => {
+  //   try {
+  //     await axios.delete("http://localhost:8800/TagList/" + id)
+  //     const resp = await axios.get("http://localhost:8800/TagList")
+  //     dispatch(SetTagList(resp.data))
+  //     // window.location.reload();
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // }
+  const updateChanges = async () => {
+    const resp = await axios.get('http://localhost:8800/TaskCurrent')
+    dispatch(SetTaskList(resp.data))
+  }
+
+  const handleDeleteTag = async (myId) => {
     try {
-      await axios.delete("http://localhost:8800/TagList/" + id)
-      window.location.reload();
+      await axios.put("http://localhost:8800/TaskCurrent/deleteTag/" + myId)
+      await axios.delete("http://localhost:8800/TagList/" + myId)
+      const tagIndex = dbTags.findIndex((tag) => tag.id === myId)
+      dispatch(DeleteTagItem(tagIndex))
+      updateChanges()
     } catch (err) {
       console.log(err);
     }

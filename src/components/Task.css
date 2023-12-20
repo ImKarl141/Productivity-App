@@ -982,7 +982,7 @@ a {
 .tag-edit {
   display: flex;
   gap: 0.4rem;
-  padding-right: 2rem;
+  padding-right: 0.8rem;
 }
 
 .tag-edit-btn{
