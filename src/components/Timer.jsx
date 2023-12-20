@@ -9,12 +9,11 @@ import { SetTaskList } from "../features/taskSlice"
 import ListTimerAdd from "./Timer/ListTimerAdd"
 import ListTimerEdit from "./Timer/ListTimerEdit"
 import TimerClock from "./Timer/TimerClock"
-
-
+import { SetCurrentTimerTask } from "../features/timerSlice"
 
 const Timer = () => {
   const { dbTasks } = useSelector((store) => store.task);
-  const { isTimerTaskEdit } = useSelector((store) => store.timer);
+  const { isTimerTaskEdit, currentTimerTask } = useSelector((store) => store.timer);
   const dispatch = useDispatch();
   const temporalText = "Task title"
 
@@ -40,7 +39,6 @@ const Timer = () => {
     fetchTaskList();
   }, [])
 
-
   return (
     <div className="pomodoro-fullbar-container">
       <div className="timer-container">
@@ -49,7 +47,7 @@ const Timer = () => {
           <span className="pomo-container"><PomodoroIcon /> #1</span>
           {/*Show the title only when an task is selected in the list*/}
           <div className="current-focus-title">
-            <span>Current task: {temporalText}</span>
+            {currentTimerTask && <span>Current task: {currentTimerTask}</span>}
             {/* <span className="focus-title">Title of the task</span> */}
             <img className="details-timer-img" src={details} alt="" />
           </div>

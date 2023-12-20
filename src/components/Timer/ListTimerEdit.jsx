@@ -3,6 +3,7 @@ import { SetTimerListEdit } from "../../features/timerSlice";
 import { NumberUpIcon, NumberDownIcon, AddSubtaskIcon } from "../../icons";
 import { useState } from "react";
 import axios from "axios";
+import { SetTaskList, DeleteTask } from "../../features/taskSlice";
 
 
 
@@ -13,9 +14,10 @@ const ListTimerUpdate = () => {
   const [timerInput, setTimerInput] = useState({
     task_title: currentTimerId ? dbTasks.find(task => task.id === currentTimerId).task_title : '',
     focus_amount: currentTimerId ? dbTasks.find(task => task.id === currentTimerId).focus_amount : null,
+    is_checked: currentTimerId ? dbTasks.find(task => task.id === currentTimerId).is_checked : false,
   })
 
-  const { task_title, focus_amount } = timerInput;
+  const { task_title, focus_amount, is_checked } = timerInput;
 
   // console.log(focus_amount);
 
@@ -31,7 +33,15 @@ const ListTimerUpdate = () => {
     }
     try {
       await axios.patch("http://localhost:8800/TaskCurrent/" + currentTimerId, timerInput);
-      window.location.reload();
+      const newTask = dbTasks.map((task) => {
+        if (task.id == currentTimerId) {
+          return { ...task, task_title: task_title, focus_amount: focus_amount, is_checked: is_checked }
+        }
+        return task
+      })
+      // window.location.reload();
+      dispatch(SetTaskList(newTask))
+      dispatch(SetTimerListEdit(''))
     } catch (err) {
       console.log(err);
     }
@@ -64,7 +74,10 @@ const ListTimerUpdate = () => {
   const handleTimerDelete = async (id) => {
     try {
       await axios.delete("http://localhost:8800/TaskCurrent/" + id);
-      window.location.reload();
+      const indexTask = dbTasks.findIndex(task => task.id == id);
+      dispatch(DeleteTask(indexTask))
+      dispatch(SetTimerListEdit(''))
+      // window.location.reload();
     } catch (err) {
       console.log(err);
     }

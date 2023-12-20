@@ -3,12 +3,15 @@ import { SetTimerListAdd } from "../../features/timerSlice";
 import { NumberUpIcon, NumberDownIcon, AddSubtaskIcon } from "../../icons";
 import { useState } from "react";
 import axios from "axios";
+import { AddNewTask } from "../../features/taskSlice";
+
 
 
 
 const ListTimerAdd = () => {
   const dispatch = useDispatch();
   const { isTimerTaskAdd, isSubtaskTimer, subtasksTest, currentTimerId } = useSelector((store) => store.timer);
+  const { dbTasks } = useSelector((store) => store.task);
 
   const [timerInput, setTimerInput] = useState({
     task_title: '',
@@ -32,19 +35,6 @@ const ListTimerAdd = () => {
     }
   }
 
-  // const handleTimerSubmit = async (e) => {
-  //   e.preventDefault();
-  //   if (!task_title) {
-  //     return
-  //   }
-  //   try {
-  //     await axios.post("http://localhost:8800/TaskCurrent", timerInput)
-  //     window.location.reload();
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // }
-
   const handleTimerSubmit = async (e) => {
     // e.preventDefault();
     if (!task_title) {
@@ -52,7 +42,20 @@ const ListTimerAdd = () => {
     }
     try {
       await axios.post("http://localhost:8800/TaskCurrent", timerInput);
-      window.location.reload();
+      const nextId = dbTasks[dbTasks.length - 1].id;
+      dispatch(AddNewTask({ ...timerInput, id: nextId + 1 }))
+
+      setTimerInput({
+        task_title: '',
+        task_desc: '',
+        task_date: null,
+        task_project: null,
+        task_tag: null,
+        focus_amount: 1,
+      })
+      // setTimerInput({
+
+      // window.location.reload();
     } catch (err) {
       console.log(err);
     }
@@ -97,6 +100,7 @@ const ListTimerAdd = () => {
                   name="task_title"
                   className="taskTimer-title"
                   type="text"
+                  value={task_title}
                   placeholder="Task title"
                   onChange={handleChangeInput}
                 />
@@ -156,7 +160,7 @@ const ListTimerAdd = () => {
             </form>
             <div className="taskTimer-btn">
               <button className="taskTimerDetails-btn">
-                Task Details
+                {/* Task Details */}
               </button>
               <div className="taskTimerAddCancel-btn">
                 <button className="taskTimerCancel-btn" onClick={() => dispatch(SetTimerListAdd())}>Cancel</button>

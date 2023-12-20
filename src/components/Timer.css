@@ -287,10 +287,13 @@
 .listTask-details {
   display: flex;
   align-items: center;
+  justify-content: end;
+  flex: 1;
   font-size: 1.4rem;
   font-weight: 600;
   position: relative;
   gap: 1rem;
+  cursor: pointer;
 }
 
 
@@ -764,9 +767,18 @@ label::selection {
 .current-focus-title {
   display: flex;
   align-items: center;
-  width: 100%;
   justify-content: end;
-  gap: 9.2rem;
+  width: 100%;
+  gap: 1rem;
+  /* gap: 3rem; */
+}
+
+.current-focus-title span {
+  text-align: start;
+  width: 20rem;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .details-timer-img {

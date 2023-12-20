@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux"
 import details from '../../images/kebab.svg'
-import { SetCurrentEditTimer, SetCheckedTask } from "../../features/timerSlice";
+import { SetCurrentEditTimer, SetCheckedTask, SetCurrentTimerTask } from "../../features/timerSlice";
 import axios from "axios";
 import { useRef } from "react";
 import { SetTaskList } from "../../features/taskSlice";
@@ -65,37 +65,6 @@ const ListTimerTask = () => {
                 <div key={`${id}`} className="listTask-timer">
                   <div className="listTask-title">
                     {/*Verify if logic is redundant*/}
-                    {/* {
-                      is_checked ? <input
-                        name="is_checked"
-                        checked
-                        id={id}
-                        value={`${task_title}+${focus_amount}+${is_checked}`}
-                        className='default-checkboxList'
-                        type="checkbox"
-                        onChange={handleCheck}
-                      /> :
-                        <input
-                          name="is_checked"
-                          id={id}
-                          value={`${task_title}+${focus_amount}+${is_checked}`}
-                          className='default-checkboxList'
-                          type="checkbox"
-                          onChange={handleCheck}
-                        />
-                    } */}
-                    {/* <input
-                      id={id}
-                      name="is_checked"
-                      // checked
-                      className="default-checkboxList"
-                      value={`${task_title}+${focus_amount}+${is_checked}`}
-                      type="checkbox"
-                      title="Mark as completed"
-                      onChange={handleCheck}
-                    />
-                    <span className="checkmarkList"></span>
-                    <label htmlFor={id} className="list-text">{task_title}</label> */}
                     <label className="list-text">
                       <input
                         id={id}
@@ -111,7 +80,7 @@ const ListTimerTask = () => {
                       {task_title}
                     </label>
                   </div>
-                  <div className="listTask-details">
+                  <div className="listTask-details" onClick={() => dispatch(SetCurrentTimerTask(task_title))}>
                     <span>0/{focus_amount}</span>
                     {/*Hide details button when editing a task*/}
                     {
@@ -128,20 +97,6 @@ const ListTimerTask = () => {
                         </button>
                       )
                     }
-                    {/* {
-                      id === currentTimerId && (
-                        <button className="details-task-btn" title="Task settings" onClick={() => dispatch(SetCurrentEditTimer(id))}>
-                          <img className="details-task-img" src={details} alt="" />
-                        </button>
-                      )
-                    }
-                    {
-                      id !== currentTimerId && (
-                        <button className="details-task-btn" title="Task settings" onClick={() => dispatch(SetCurrentEditTimer(id))}>
-                          <img className="details-task-img-hidden" src={details} alt="" />
-                        </button>
-                      )
-                    } */}
                   </div>
                 </div>
               )

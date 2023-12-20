@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { useSelector } from "react-redux"
 import { PlayPauseIcon, ResetTimer, StopIcon } from "../../icons"
+import { useTimer } from "./useTimer"
 
 const TimerClock = () => {
 
@@ -24,14 +25,27 @@ const TimerClock = () => {
   const [isFinish, setIsFinish] = useState(false)
 
   //Update the value every second when timer state change, when finished
-  useEffect(() => {
-    const myInterval = setInterval(() => {
-      updateTime();
-    }, 1000);
-    return () => clearInterval(myInterval);
-    console.log("Timer finished");
-    setIsFinish(true);
-  }, [timer])
+  // useEffect(() => {
+  //   const myInterval = setInterval(() => {
+  //     updateTime();
+  //   }, 1000);
+  //   return () => clearInterval(myInterval);
+  //   console.log("Timer finished");
+  //   setIsFinish(true);
+  // }, [timer])
+
+  // useEffect(() => {
+  //   const myTime = setTimeout(() => {
+  //     updateTime();
+  //   }, 1000);
+  //   return () => clearInterval(myTime);
+  // }, [timer])
+
+  useTimer(() => {
+    updateTime()
+  },
+    isPlaying ? 1000 : null
+  )
 
   const updateTime = () => {
     if (isPlaying) {

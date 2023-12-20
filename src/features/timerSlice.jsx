@@ -29,6 +29,7 @@ const initialState = {
     }
   ],
   checkedItems: [0],
+  currentTimerTask: 'Coding',
 }
 
 
@@ -56,8 +57,11 @@ const timerSlice = createSlice({
         state.checkedItems.push(value.payload)
       }
     },
+    SetCurrentTimerTask: (state, value) => {
+      state.currentTimerTask = value.payload
+    }
   }
 });
 
-export const { SetTimerListAdd, SetTimerListEdit, SetCurrentEditTimer, SetCheckedTask } = timerSlice.actions;
+export const { SetTimerListAdd, SetTimerListEdit, SetCurrentEditTimer, SetCheckedTask, SetCurrentTimerTask } = timerSlice.actions;
 export default timerSlice.reducer;
