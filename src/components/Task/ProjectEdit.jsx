@@ -1,10 +1,12 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { ShowAddProjectEdit, ChangeProjectName, ChangeProjectColor, AddProjectItem } from '../../features/taskSlice';
+import { ShowAddProjectEdit, ChangeProjectName, ChangeProjectColor, AddProjectItem, SetProjectList } from '../../features/taskSlice';
 import { CancelIcon } from '../../icons';
 import { useState } from 'react';
 import axios from 'axios';
 
 const ProjectEdit = () => {
+  const { dbProjects } = useSelector((store) => store.task)
+
   const dispatch = useDispatch();
 
   const [projectInput, setProjectInput] = useState({
@@ -12,7 +14,7 @@ const ProjectEdit = () => {
     project_color: '#FFFFFF',
   })
 
-  const { project_color } = projectInput
+  const { project_name, project_color } = projectInput
 
   const handleChangeInput = (e) => {
     setProjectInput((prev) => ({ ...prev, [e.target.name]: e.target.value }))
@@ -23,7 +25,14 @@ const ProjectEdit = () => {
     e.preventDefault();
     try {
       await axios.post('http://localhost:8800/ProjectList', projectInput);
-      window.location.reload();
+      const resp = await axios.get('http://localhost:8800/ProjectList')
+      dispatch(SetProjectList(resp.data))
+      setProjectInput({
+        project_name: '',
+        project_color: '#FFFFFF',
+      })
+      // dispatch(SetProjectList([...dbP]))
+      // window.location.reload();
     } catch (err) {
       console.log(err);
     };
@@ -48,6 +57,7 @@ const ProjectEdit = () => {
           name='project_name'
           type="text"
           className='myInputAddProject'
+          value={project_name}
           placeholder='Project name'
           onChange={handleChangeInput}
         />

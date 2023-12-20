@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { ShowAddProjectEdit, ChangeProjectName, ChangeProjectColor, AddProjectItem, SetCurrentProjectId } from '../../features/taskSlice';
+import { ShowAddProjectEdit, ChangeProjectName, ChangeProjectColor, AddProjectItem, SetCurrentProjectId, SetProjectList } from '../../features/taskSlice';
 import { CancelIcon, AcceptUpdateIcon, CancelUpdateIcon } from '../../icons';
 import { useState } from 'react';
 import axios from 'axios';
@@ -17,7 +17,7 @@ const ProjectUpdate = () => {
       dbProjects.find(project => project.id === currentProjectId).project_color : ''
   })
 
-  console.log(projectInput);
+  // console.log(projectInput);
   const { project_name, project_color } = projectInput
 
   const handleChangeInput = (e) => {
@@ -32,7 +32,9 @@ const ProjectUpdate = () => {
     e.preventDefault();
     try {
       await axios.put('http://localhost:8800/ProjectList/' + currentProjectId, projectInput);
-      window.location.reload();
+      const resp = await axios.get('http://localhost:8800/ProjectList')
+      dispatch(SetProjectList(resp.data))
+      dispatch(SetCurrentProjectId(''))
     } catch (err) {
       console.log(err);
     };
