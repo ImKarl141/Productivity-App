@@ -247,6 +247,17 @@ app.delete("/ProjectList/:id", (req, resp) => {
   });
 })
 
+app.put("/TaskCurrent/deleteProject/:id", (req, resp) => {
+  const taskId = req.params.id;
+  const q = "UPDATE TaskCurrent INNER JOIN ProjectList ON TaskCurrent.task_project = ProjectList.id SET TaskCurrent.task_project = NULL WHERE ProjectList.id = ?"
+
+  db.query(q, [taskId], (err, data) => {
+    if (err) return resp.json(err);
+    return resp.json(data);
+  })
+})
+
+
 app.delete("/TagList/:id", (req, resp) => {
   const tagId = req.params.id;
   const q = "DELETE FROM TagList WHERE id = ?";

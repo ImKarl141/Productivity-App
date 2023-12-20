@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { SetProjectList, RemoveProjectItem, ShowAddProjectEdit, SetCurrentProjectId, ShowProjectUpdate } from "../../features/taskSlice";
+import { SetProjectList, RemoveProjectItem, ShowAddProjectEdit, SetCurrentProjectId, ShowProjectUpdate, DeleteProjectItem, SetTaskList } from "../../features/taskSlice";
 import { AddProjectIcon, EditListIcon, DeleteListIcon } from '../../icons';
 import axios from "axios";
 import ProjectEdit from "./ProjectEdit";
@@ -9,6 +9,11 @@ import ProjectUpdate from "./ProjectUpdate";
 const ListProjects = () => {
   const dispatch = useDispatch();
   const { addProjectEdit, dbProjects, isProjectUpdate, currentProjectId } = useSelector((store) => store.task);
+
+  const updateChanges = async () => {
+    const resp = await axios.get('http://localhost:8800/TaskCurrent')
+    dispatch(SetTaskList(resp.data))
+  }
   // console.log(dbProjects);
   // console.log(isProjectUpdate);
   // const [updateItem, setUpdateItem] = useState(
@@ -33,17 +38,62 @@ const ListProjects = () => {
   //   fetchProjectList();
   // }, [])
 
+  // const handleDeleteProject = async (myId) => {
+  //   // let id = 8;
+  //   try {
+  //     await axios.delete("http://localhost:8800/ProjectList/" + myId)
+  //     const projectIndex = dbProjects.findIndex((project) => project.id === myId)
+  //     dispatch(DeleteProjectItem(projectIndex))
+  //     // console.log();
+  //     // console.log(dbProjects);
+  //     // console.log(projectIndex);
+  //     // console.log(deletedTask);
+  //     // dispatch(SetProjectList([...dbProjects, deletedTask ]))
+  //     // console.log(dbProjects.splice(projectIndex, 1));
+  //     // window.location.reload();
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // }
+  // const test = await Promise.all([
+  //   axios.delete("http://localhost:8800/ProjectList/" + myId),
+  //   axios.put("http://localhost:8800/TaskCurrent/deleteProject/" + myId),
+  // ])
+
+  // const updateChanges = async () => {
+  //   const resp = await axios.get('http://localhost:8800/TaskCurrent')
+  //   dispatch(SetTaskList(resp.data))
+  //   dispatch(ShowTaskUpdate())
+  // }
+
+
+
   const handleDeleteProject = async (myId) => {
-    // let id = 8;
     try {
+      await axios.put("http://localhost:8800/TaskCurrent/deleteProject/" + myId)
       await axios.delete("http://localhost:8800/ProjectList/" + myId)
-      const deletedTask = dbProjects.findIndex((project) => project.id === myId)
-      console.log(deletedTask);
-      // window.location.reload();
+      const projectIndex = dbProjects.findIndex((project) => project.id === myId)
+      dispatch(DeleteProjectItem(projectIndex))
+      updateChanges()
     } catch (err) {
       console.log(err);
     }
   }
+
+  // const handleDeleteProject = async (myId) => {
+  //   try {
+  //     await axios.delete("http://localhost:8800/ProjectList/" + myId);
+  //     try {
+  //       await axios.put("http://localhost:8800/TaskCurrent/deleteProject/" + myId);
+  //     } catch (err) {
+  //       console.error("Error nulling project tasks:", err);
+  //     }
+  //     const projectIndex = dbProjects.findIndex((project) => project.id === myId);
+  //     dispatch(DeleteProjectItem(projectIndex));
+  //   } catch (err) {
+  //     console.error("Error deleting project:", err);
+  //   }
+  // };
 
   return (
     <div className='overall-list'>
