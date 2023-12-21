@@ -115,37 +115,6 @@ const ListTimerTask = () => {
               return (
                 <div key={`${id}`} className="listTask-timer">
                   <div className="listTask-title">
-                    {/* {
-                      is_checked ? <input
-                        name="is_checked"
-                        checked
-                        id={id}
-                        value={`${task_title}+${focus_amount}+${is_checked}`}
-                        className='default-checkboxList'
-                        type="checkbox"
-                        onChange={handleCheck}
-                      /> :
-                        <input
-                          name="is_checked"
-                          id={id}
-                          value={`${task_title}+${focus_amount}+${is_checked}`}
-                          className='default-checkboxList'
-                          type="checkbox"
-                          onChange={handleCheck}
-                        />
-                    } */}
-                    {/* <input
-                      id={id}
-                      name="is_checked"
-                      checked
-                      className="default-checkboxList"
-                      value={`${task_title}+${focus_amount}+${is_checked}`}
-                      type="checkbox"
-                      title="Un-mark task"
-                      onChange={handleCheck}
-                    />
-                    <span className="checkmarkList"></span>
-                    <label htmlFor={id} className="list-text">{task_title}</label> */}
                     <label className="list-text">
                       <input
                         id={id}
@@ -161,7 +130,7 @@ const ListTimerTask = () => {
                       <span className="task-text">{task_title}</span>
                     </label>
                   </div>
-                  <div className="listTask-details">
+                  <div className="listTask-details" onClick={() => dispatch(SetCurrentTimerTask(task_title))}>
                     <span>0/{focus_amount}</span>
                     {
                       !isTimerTaskEdit && (

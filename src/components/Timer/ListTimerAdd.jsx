@@ -34,6 +34,11 @@ const ListTimerAdd = () => {
       setTimerInput({ ...timerInput, focus_amount: focus_amount - 1 })
     }
   }
+  try {
+    console.log(dbTasks.length);
+  } catch (err) {
+    console.log(1);
+  }
 
   const handleTimerSubmit = async (e) => {
     // e.preventDefault();
@@ -42,7 +47,7 @@ const ListTimerAdd = () => {
     }
     try {
       await axios.post("http://localhost:8800/TaskCurrent", timerInput);
-      const nextId = dbTasks[dbTasks.length - 1].id;
+      const nextId = dbTasks.length > 0 ? dbTasks[dbTasks.length - 1].id : 0;
       dispatch(AddNewTask({ ...timerInput, id: nextId + 1 }))
 
       setTimerInput({

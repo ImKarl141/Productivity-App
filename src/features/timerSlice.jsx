@@ -29,7 +29,7 @@ const initialState = {
     }
   ],
   checkedItems: [0],
-  currentTimerTask: 'Coding',
+  currentTimerTask: '',
 }
 
 
@@ -59,6 +59,7 @@ const timerSlice = createSlice({
     },
     SetCurrentTimerTask: (state, value) => {
       state.currentTimerTask = value.payload
+      console.log("Done");
     }
   }
 });

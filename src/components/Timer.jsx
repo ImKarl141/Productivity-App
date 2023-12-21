@@ -39,6 +39,7 @@ const Timer = () => {
     fetchTaskList();
   }, [])
 
+
   return (
     <div className="pomodoro-fullbar-container">
       <div className="timer-container">

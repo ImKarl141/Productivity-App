@@ -24,7 +24,8 @@ const TaskEdit = () => {
     task_date: '',
     task_project: null,
     task_tag: null,
-    subtask: '',
+    focus_amount: 1,
+    is_checked: false,
   })
 
   const { task_title, task_desc, task_date } = inputTask;
@@ -185,7 +186,7 @@ const TaskEdit = () => {
           </div>
         </form>
       </div>
-      <div className='task-details-subtask'>
+      {/* <div className='task-details-subtask'>
         <h1>Subtask:</h1>
         <button className='add-subtask-btn'
           onClick={() => dispatch(ShowSubtaskEdit())}
@@ -201,7 +202,7 @@ const TaskEdit = () => {
             </form>
           )
         }
-      </div>
+      </div> */}
       <div className='task-details-button'>
         <button className='detailsBtn saveBtn' onClick={handleTaskSubmit}>Create Task</button>
         <button className='detailsBtn cancelBtn' onClick={() => dispatch(ShowTaskEdit())}>Cancel Task</button>

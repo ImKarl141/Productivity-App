@@ -65,7 +65,6 @@ const ListTimerUpdate = () => {
   const handleChangeNumber = (e) => {
     if (e.target.value) {
       setTimerInput((prev) => ({ ...prev, [e.target.name]: parseInt(e.target.value) }))
-      // setNumber(parseInt(e.target.value))
     } else {
       setTimerInput((prev) => ({ ...prev, [e.target.name]: 1 }))
     }
@@ -77,7 +76,6 @@ const ListTimerUpdate = () => {
       const indexTask = dbTasks.findIndex(task => task.id == id);
       dispatch(DeleteTask(indexTask))
       dispatch(SetTimerListEdit(''))
-      // window.location.reload();
     } catch (err) {
       console.log(err);
     }
@@ -107,20 +105,6 @@ const ListTimerUpdate = () => {
             <div className="details-pomodoro">
               <span>Estimated Pomodoros</span>
               <div className="details-number">
-                {/* <span className="taskTimer-number">
-                  {focus_amount}
-                </span> */}
-                {/* <input type="text" value={focus_amount} /> */}
-                {/* <textarea name="" id="" cols="2" rows="2" value={focus_amount}></textarea> */}
-                {/* <textarea
-                  name=""
-                  id=""
-                  cols="2"
-                  rows="2"
-                  value={focus_amount}
-                  onChange={handleChangeNumber}
-                >
-                </textarea> */}
                 <input
                   name="focus_amount"
                   className="taskTimer-number"
@@ -146,29 +130,6 @@ const ListTimerUpdate = () => {
               </div>
             </div>
           </div>
-          {
-            (subtasksTest.length > 0) && (
-              <div className="subtaskList">
-                {
-                  subtasksTest.map((subtask) => {
-                    const { id, title } = subtask
-                    return (
-                      <div key={id} className="taskTimer-subtask">
-                        <input className="subtask-checkbox" id={id} type="checkbox" />
-                        <label
-                          className="subtask-title"
-                          htmlFor={id}
-                          title={title}
-                        >
-                          {title}
-                        </label>
-                      </div>
-                    )
-                  })
-                }
-              </div>
-            )
-          }
         </form>
         <div className="taskTimer-btn">
           <button className="taskTimerDetails-btn" onClick={() => handleTimerDelete(currentTimerId)}>
