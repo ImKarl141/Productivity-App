@@ -124,7 +124,7 @@ app.get("/TagList", (req, resp) => {
 })
 
 app.get("/TaskCurrent", (req, resp) => {
-  const q = "SELECT t.id, t.task_title, t.task_desc, t.task_date, t.focus_amount, t.is_checked, p.project_name, p.project_color, tg.tag_name, tg.tag_color FROM `TaskCurrent` t LEFT JOIN `ProjectList` p ON t.task_project = p.id LEFT JOIN `TagList` tg ON t.task_tag = tg.id";
+  const q = "SELECT t.id, t.task_title, t.task_desc, t.task_date, t.focus_amount, t.is_checked, t.subtasks, p.project_name, p.project_color, tg.tag_name, tg.tag_color FROM `TaskCurrent` t LEFT JOIN `ProjectList` p ON t.task_project = p.id LEFT JOIN `TagList` tg ON t.task_tag = tg.id";
   db.query(q, (err, data) => {
     if (err) {
       return resp.json(err);

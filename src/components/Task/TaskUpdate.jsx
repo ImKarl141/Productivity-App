@@ -13,6 +13,7 @@ const TaskUpdate = () => {
 
   const temp_task = dbTasks.find(myTask => myTask.id === currentEditId)
   const { project_name, tag_name } = temp_task;
+  // console.log(subtasks);
   // console.log(temp_task);
 
   //Default value of project and tag in case the assign fail.
@@ -51,10 +52,20 @@ const TaskUpdate = () => {
     task_tag: tag_name ?
       dbTags.find(tag => tag.tag_name === tag_name).id : undefined,
     focus_amount: temp_task.focus_amount,
+    subtasks: temp_task.subtasks ? temp_task.subtasks : '',
   })
 
 
-  const { task_title, task_desc, task_date, task_project, task_tag } = inputTask;
+
+  const { task_title, task_desc, task_date, task_project, task_tag, subtasks } = inputTask;
+  // console.log(subtasks[0].name);
+
+  const [tempSub, setTempSub] = useState({
+    //Find last last current id and increment by 1
+    id: (subtasks[subtasks.length - 1].id) + 1,
+    sub_name: '',
+    sub_check: false,
+  })
 
   const [remainText, setRemainText] = useState(255)
 
@@ -140,6 +151,27 @@ const TaskUpdate = () => {
     }
   }
 
+  const handleSubtaskSubmit = (e) => {
+    e.preventDefault();
+    setInputTask((prev) => ({ ...prev, subtasks: [...subtasks, tempSub] }))
+    // console.log("Updated");
+    //Add the tempSub to the 
+  }
+
+  const handleSubtaskInput = (e) => {
+    setTempSub((prev) => ({ ...prev, [e.target.name]: e.target.value }))
+    // console.log(tempSub);
+    // const tempSub = {
+    //   //Find last last current id and increment by 1
+    //   id: 2,
+    //   sub_name: e.target.value,
+    //   sub_check: false,
+    // }
+    const newSub = [...subtasks, tempSub]
+
+    console.log(newSub);
+  }
+
   return (
     <div className='task-details'>
       <div className='task-details-task'>
@@ -218,6 +250,7 @@ const TaskUpdate = () => {
       </div>
       <div className='task-details-subtask'>
         <h1>Subtask:</h1>
+
         <button className='add-subtask-btn'
           onClick={() => dispatch(ShowSubtaskEdit())}
         >
@@ -226,10 +259,37 @@ const TaskUpdate = () => {
         </button>
         {
           addSubtaskEdit && (
-            <form >
-              <label htmlFor="text">Input</label>
-              <input id='text' type="text" />
+            <form onSubmit={handleSubtaskSubmit}>
+              <label htmlFor="text">
+                <input
+                  id='text'
+                  type="text"
+                  name='sub_name'
+                  onChange={handleSubtaskInput}
+                />
+                Input
+              </label>
+
             </form>
+          )
+        }
+        {
+          subtasks && (
+            subtasks.map((subtask) => {
+              const { id, sub_name, sub_check } = subtask;
+              return (
+                <label key={id} className='subtask-container'>
+                  <input
+                    id={id}
+                    // className='default-checkbox'
+                    type="checkbox"
+                  // checked={sub_check}
+                  />
+                  <span></span>
+                  <span>{sub_name}</span>
+                </label>
+              )
+            })
           )
         }
       </div>

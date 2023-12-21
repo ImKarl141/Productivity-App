@@ -24,6 +24,7 @@ const TaskEdit = () => {
     task_date: '',
     task_project: null,
     task_tag: null,
+    subtask: '',
   })
 
   const { task_title, task_desc, task_date } = inputTask;
