@@ -23,42 +23,6 @@ const TaskMenu = () => {
   //Edit task menu
 
   // Fetching data
-  // useEffect(() => {
-  //   const fetchTaskData = async () => {
-  //     try {
-  //       const task = await axios.get("http://localhost:8800/TaskCurrent")
-  //       dispatch(SetTaskList(task.data))
-  //     } catch (err) {
-  //       console.log(err);
-  //     }
-  //   }
-  //   fetchTaskData();
-  // }, [])
-
-  // useEffect(() => {
-  //   const fetchProjectData = async () => {
-  //     try {
-  //       const project = await axios.get("http://localhost:8800/ProjectList")
-  //       dispatch(SetProjectList(project.data))
-  //     } catch (err) {
-  //       console.log(err);
-  //     }
-  //   }
-  //   fetchProjectData();
-  // }, [])
-
-  // useEffect(() => {
-  //   const fetchTagData = async () => {
-  //     try {
-  //       const tag = await axios.get("http://localhost:8800/TagList")
-  //       dispatch(SetTagList(tag.data))
-  //     } catch (err) {
-  //       console.log(err);
-  //     }
-  //   }
-  //   fetchTagData();
-  // }, [])
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -66,11 +30,11 @@ const TaskMenu = () => {
         dispatch(SetTaskList(task.data))
         // console.log(task.data);
 
-        const project = await axios.get("http://localhost:8800/ProjectList")
-        dispatch(SetProjectList(project.data))
+        // const project = await axios.get("http://localhost:8800/ProjectList")
+        // dispatch(SetProjectList(project.data))
 
-        const tag = await axios.get("http://localhost:8800/TagList")
-        dispatch(SetTagList(tag.data))
+        // const tag = await axios.get("http://localhost:8800/TagList")
+        // dispatch(SetTagList(tag.data))
       } catch (err) {
         console.log(err);
       }

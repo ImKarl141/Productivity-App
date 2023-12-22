@@ -1,20 +1,20 @@
 import { useEffect, useState } from "react"
-import { PlayPauseIcon, StopIcon, ResetTimer, CoffeeIcon, AddTaskTimerIcon, TaskDetailsIcon, PomodoroIcon } from "../icons"
+import { PlayPauseIcon, StopIcon, ResetTimer, CoffeeIcon, AddTaskTimerIcon, TaskDetailsIcon, PomodoroIcon, ClearAllTasksIcon, ClearFinishedTasksIcon } from "../icons"
 import timerMini from '../images/timer-stage2-icon.svg'
 import details from '../images/kebab.svg'
 import ListTimerTask from "./Timer/ListTimerTask"
 import axios from "axios"
 import { useDispatch, useSelector } from "react-redux"
-import { SetTaskList } from "../features/taskSlice"
+import { SetTaskList, ClearAllTasks, ClearFinishedTasks } from "../features/taskSlice"
 import ListTimerAdd from "./Timer/ListTimerAdd"
 import ListTimerEdit from "./Timer/ListTimerEdit"
 import TimerClock from "./Timer/TimerClock"
-import { SetCurrentTimerTask } from "../features/timerSlice"
+import { SetCurrentTimerTask, SetTimerTaskSettings } from "../features/timerSlice"
 import MiniBarTimer from "./MiniBarTimer"
 
 const Timer = () => {
   const { dbTasks } = useSelector((store) => store.task);
-  const { isTimerTaskEdit, currentTimerTask } = useSelector((store) => store.timer);
+  const { isTimerTaskEdit, currentTimerTask, isTimerTaskSettings } = useSelector((store) => store.timer);
   const { menuToggle } = useSelector((store) => store.menu);
   const { Menu, Task, Calendar, Notes } = menuToggle;
   const dispatch = useDispatch();
@@ -43,6 +43,41 @@ const Timer = () => {
   }, [])
 
 
+  const clearFinished = () => {
+    const finishedTaskId = dbTasks.filter(task => task.is_checked == true)
+    finishedTaskId.map((task) => {
+      handleClearFinished(task.id);
+    })
+    const newTask = dbTasks.filter((task) => {
+      if (!task.is_checked) {
+        return { ...task }
+      } else {
+        return
+      }
+    })
+    dispatch(SetTaskList(newTask))
+  }
+  const handleClearFinished = async (id) => {
+    try {
+      await axios.delete("http://localhost:8800/TaskCurrent/" + id)
+    } catch (err) {
+      console.log();
+    }
+  }
+
+
+  const handleClearAll = async () => {
+    // console.log("All tasks deleted");
+    try {
+      await axios.post("http://localhost:8800/TaskCurrent/ClearAll")
+      dispatch(SetTaskList([]))
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+
+
   return (
     <div>
       {
@@ -55,7 +90,7 @@ const Timer = () => {
                 <span className="pomo-container"><PomodoroIcon /> #1</span>
                 {/*Show the title only when an task is selected in the list*/}
                 <div className="current-focus-title">
-                  {currentTimerTask && <span>Current task: {currentTimerTask}</span>}
+                  {currentTimerTask && <span className="currentTask">Current task: {currentTimerTask}</span>}
                 </div>
               </div>
             </div>
@@ -68,9 +103,26 @@ const Timer = () => {
                 <span className="pomo-container"><PomodoroIcon /> #1</span>
                 {/*Show the title only when an task is selected in the list*/}
                 <div className="current-focus-title">
-                  {currentTimerTask && <span>Current task: {currentTimerTask}</span>}
+                  {currentTimerTask && <span className="currentTask">Current task: {currentTimerTask}</span>}
                   {/* <span className="focus-title">Title of the task</span> */}
-                  <img className="details-timer-img" src={details} alt="" />
+                  <img className="details-timer-img" src={details} alt="" onClick={() => dispatch(SetTimerTaskSettings())} />
+                  {
+                    isTimerTaskSettings && (
+                      <div className="timerTaskSettings-container">
+                        {/* <div className="timerTaskSettingsTitle">
+                          <span>Clear</span>
+                        </div> */}
+                        <div className="timerTaskSettings" onClick={() => clearFinished()}>
+                          <ClearFinishedTasksIcon />
+                          <span>Clear Finished Tasks</span>
+                        </div>
+                        <div className="timerTaskSettings" onClick={() => handleClearAll()}>
+                          <ClearAllTasksIcon />
+                          <span>Clear All tasks</span>
+                        </div>
+                      </div>
+                    )
+                  }
                 </div>
               </div>
               <div className="pomodoro-task">

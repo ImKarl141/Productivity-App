@@ -187,6 +187,12 @@ const taskSlice = createSlice({
     AddProjectItem: (state, value) => {
       state.projects = value.payload
     },
+    ClearAllTasks: (state) => {
+      console.log("All Tasks deleted");
+    },
+    ClearFinishedTasks: (state) => {
+      console.log("Finished Tasks deleted");
+    },
     RemoveProjectItem: (state, value) => {
       state.projects = state.projects.filter((myProject) => myProject.id !== value.payload)
     },
@@ -200,5 +206,5 @@ const taskSlice = createSlice({
   }
 });
 
-export const { AddNewTask, DeleteTask, SetCurrentCheckedId, SetCurrentView, SetTaskList, SetProjectList, SetTagList, DeleteProjectItem, SetCurrentEditId, DeleteTagItem, SetCurrentProjectId, SetCurrentTagId, ShowTaskEdit, ShowTaskUpdate, ShowAddProjectEdit, ShowProjectUpdate, ShowAddTagEdit, ShowTagUpdate, ShowTagDelete, ShowTagCancel, ShowSubtaskEdit, ChangeTitleInput, ChangeDescriptionInput, ChangeDateInput, ChangeProjectName, ChangeProjectColor, ChangeProjectNameInput, ChangeProjectColorInput, ChangeTagName, ChangeTagColor, ChangeTagInput, ChangeTagNameInput, ChangeTagColorInput, AddTaskItem, RemoveTaskItem, AddProjectItem, RemoveProjectItem, AddTagItem, RemoveTagItem, } = taskSlice.actions;
+export const { AddNewTask, DeleteTask, SetCurrentCheckedId, SetCurrentView, SetTaskList, SetProjectList, SetTagList, DeleteProjectItem, SetCurrentEditId, DeleteTagItem, SetCurrentProjectId, SetCurrentTagId, ShowTaskEdit, ShowTaskUpdate, ShowAddProjectEdit, ShowProjectUpdate, ShowAddTagEdit, ShowTagUpdate, ShowTagDelete, ShowTagCancel, ShowSubtaskEdit, ChangeTitleInput, ChangeDescriptionInput, ChangeDateInput, ChangeProjectName, ChangeProjectColor, ChangeProjectNameInput, ChangeProjectColorInput, ChangeTagName, ChangeTagColor, ChangeTagInput, ChangeTagNameInput, ChangeTagColorInput, AddTaskItem, RemoveTaskItem, AddProjectItem, ClearAllTasks, ClearFinishedTasks, RemoveProjectItem, AddTagItem, RemoveTagItem, } = taskSlice.actions;
 export default taskSlice.reducer;

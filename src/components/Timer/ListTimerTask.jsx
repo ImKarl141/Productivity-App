@@ -45,6 +45,7 @@ const ListTimerTask = () => {
         return task; // Keep original object for other elements
       });
       dispatch(SetTaskList(newTask))
+      // console.log("Checked");
       // window.location.reload();
     } catch (err) {
       console.log(err);

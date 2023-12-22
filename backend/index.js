@@ -308,6 +308,24 @@ app.delete("/TaskCurrent/:id", (req, resp) => {
   })
 })
 
+app.delete("/TaskCurrent/ClearFinished", (req, resp) => {
+  const q = "DELETE FROM `TaskCurrent` WHERE is_checked = 1"
+  db.query(q, (err, data) => {
+    if (err) return resp.json(err);
+    return resp.json("All checked tasks deleted successfully");
+  })
+})
+
+app.post("/TaskCurrent/ClearAll", (req, resp) => {
+  // const q = "DELETE FROM `TaskCurrent` WHERE is_checked = 1"
+  const q = "TRUNCATE TABLE `TaskCurrent`"
+  db.query(q, (err, data) => {
+    if (err) return resp.json(err);
+    return resp.json("All checked tasks deleted successfully");
+  })
+})
+
+
 //Note Component
 app.delete("/NoteList/:id", (req, resp) => {
   const noteId = req.params.id;

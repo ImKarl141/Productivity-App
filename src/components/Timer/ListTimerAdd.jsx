@@ -20,6 +20,7 @@ const ListTimerAdd = () => {
     task_project: null,
     task_tag: null,
     focus_amount: 1,
+    is_checked: 0,
   })
 
   const { task_title, focus_amount } = timerInput;
@@ -58,8 +59,9 @@ const ListTimerAdd = () => {
         task_project: null,
         task_tag: null,
         focus_amount: 1,
+        is_checked: false,
       })
-      // setTimerInput({
+      // console.log("Task created");
 
       // window.location.reload();
     } catch (err) {
