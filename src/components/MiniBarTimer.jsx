@@ -79,23 +79,12 @@ const MiniBarTimer = () => {
       {
         isFinish && <FinishTimer />
       }
-      {/* <>
-        {
-          seconds <= 9 ? <span>{`${hours}:${minutes}:0${seconds}`}</span> : <span>{`${hours}:${minutes}:${seconds}`}</span>
-        }
-        <div className='timer-stage2-clock'>
-          <img className='timer-icon2' src={timerMini} alt="Timer mini icon" />
-        </div>
-      </> */}
       <div className="timer-container">
         <div className="timer-clock-mini">
           {
             9 >= seconds > 1 ? <span className="timer-text-mini">{`0${seconds}`}</span> :
               <span className="timer-text-mini">{`${seconds}`}</span>
           }
-          {/* <button className="play-buttons" title="Reset" onClick={() => resetTimer()}>
-            <ResetTimer />
-          </button> */}
         </div>
       </div>
       <div className='timer-btn-mini'>
@@ -110,13 +99,6 @@ const MiniBarTimer = () => {
         <button className="play-buttons" title="Reset" onClick={() => resetTimer()}>
           <ResetTimer />
         </button>
-        {/*Break buttons */}
-        {/* <button className="play-buttons" title="Short Break" >
-          <CoffeeIcon />
-        </button>
-        <button className="play-buttons long-break" title="Long Break" >
-          <CoffeeIcon />
-        </button> */}
       </div>
     </div >
   )

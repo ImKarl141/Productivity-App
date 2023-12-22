@@ -10,10 +10,13 @@ import ListTimerAdd from "./Timer/ListTimerAdd"
 import ListTimerEdit from "./Timer/ListTimerEdit"
 import TimerClock from "./Timer/TimerClock"
 import { SetCurrentTimerTask } from "../features/timerSlice"
+import MiniBarTimer from "./MiniBarTimer"
 
 const Timer = () => {
   const { dbTasks } = useSelector((store) => store.task);
   const { isTimerTaskEdit, currentTimerTask } = useSelector((store) => store.timer);
+  const { menuToggle } = useSelector((store) => store.menu);
+  const { Menu, Task, Calendar, Notes } = menuToggle;
   const dispatch = useDispatch();
   const temporalText = "Task title"
 
@@ -41,33 +44,52 @@ const Timer = () => {
 
 
   return (
-    <div className="pomodoro-fullbar-container">
-      <div className="timer-container">
-        <TimerClock />
-        <div className="current-focus-task">
-          <span className="pomo-container"><PomodoroIcon /> #1</span>
-          {/*Show the title only when an task is selected in the list*/}
-          <div className="current-focus-title">
-            {currentTimerTask && <span>Current task: {currentTimerTask}</span>}
-            {/* <span className="focus-title">Title of the task</span> */}
-            <img className="details-timer-img" src={details} alt="" />
+    <div>
+      {
+        (Task || Calendar || Notes) ?
+          // <MiniBarTimer />
+          <div className="pomodoro-fullbarMini-container">
+            <div className="timerMini-container">
+              <TimerClock />
+              <div className="current-focus-task">
+                <span className="pomo-container"><PomodoroIcon /> #1</span>
+                {/*Show the title only when an task is selected in the list*/}
+                <div className="current-focus-title">
+                  {currentTimerTask && <span>Current task: {currentTimerTask}</span>}
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
-        <div className="pomodoro-task">
-          {
-            isTimerTaskEdit && (
-              <ListTimerEdit />
-            )
-          }
-          <ListTimerTask />
-          <ListTimerAdd />
-        </div>
-      </div>
-      <div className="pomodoro-stats">
-        <span>Total Pomos: 0/{amountHours}</span>
-        <span>|</span>
-        <span>Finishing at: {hour}:{minute}{amPm} {amountHours * 0.5} hours</span>
-      </div>
+          :
+          <div className="pomodoro-fullbar-container">
+            <div className="timer-container">
+              <TimerClock />
+              <div className="current-focus-task">
+                <span className="pomo-container"><PomodoroIcon /> #1</span>
+                {/*Show the title only when an task is selected in the list*/}
+                <div className="current-focus-title">
+                  {currentTimerTask && <span>Current task: {currentTimerTask}</span>}
+                  {/* <span className="focus-title">Title of the task</span> */}
+                  <img className="details-timer-img" src={details} alt="" />
+                </div>
+              </div>
+              <div className="pomodoro-task">
+                {
+                  isTimerTaskEdit && (
+                    <ListTimerEdit />
+                  )
+                }
+                <ListTimerTask />
+                <ListTimerAdd />
+              </div>
+            </div>
+            <div className="pomodoro-stats">
+              <span>Total Pomos: 0/{amountHours}</span>
+              <span>|</span>
+              <span>Finishing at: {hour}:{minute}{amPm} {amountHours * 0.5} hours</span>
+            </div>
+          </div>
+      }
     </div>
   )
 }

@@ -48,8 +48,8 @@ const TimerClockSettings = () => {
 
 
   return (
-    <div className="timerAmount-container">
-      <div className="timerSettings">
+    <div className="timerAmount-container" onClick={() => dispatch(ShowTimerSettings())}>
+      <div className="timerSettings" onClick={(e) => e.stopPropagation()}>
         <span onClick={() => dispatch(ShowTimerSettings())}>
           <CloseTimerSettings />
         </span>

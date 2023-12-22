@@ -79,9 +79,10 @@ const Navbar = () => {
           )
         } */}
         {/*Minibar timer when a Windows is displayed otherwise display timer in full size*/}
-        {
+        {/* {
           (Task || Calendar || Notes) ? <MiniBarTimer /> : <Timer />
-        }
+        } */}
+        <Timer />
 
         {/* <div className="pomodoro-minibar">
           <div className='timer-stage2-clock'>

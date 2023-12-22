@@ -8,7 +8,9 @@ import TimerClockSettings from "./TimerClockSettings"
 
 const TimerClock = () => {
   const { isTimerSettings, isEnglish } = useSelector((store) => store.timer)
-  console.log(isEnglish);
+  const { menuToggle } = useSelector((store) => store.menu);
+  const { Menu, Task, Calendar, Notes } = menuToggle;
+  // console.log(isEnglish);
   const dispatch = useDispatch()
 
   //Default values to load then timer is reset
@@ -152,59 +154,108 @@ const TimerClock = () => {
   }
 
   return (
-    <div className="pomodoro-timer">
+    <div>
       {
-        isTimerSettings && <TimerClockSettings />
+        (Task || Calendar || Notes) ?
+          <div className="pomodoro-timerMini">
+            <div className="timer-clock-mini">
+              {
+                minutes <= 9 ? <span className="timer-text-mini">{`0${minutes}`}</span> :
+                  <span className="timer-text-mini">{`${minutes}`}</span>
+              }
+              <div className="tick-main">
+                <span className="tick-verticalMini-main"></span>
+                <div className="tick-container">
+                  <span className="tick-horizontalMini-main"></span>
+                  <span className="tick-horizontalMini-main"></span>
+                </div>
+                <span className="tick-verticalMini-main"></span>
+              </div>
+              <div className="tick">
+                <span className="tick-verticalMini"></span>
+                <div className="tick-container">
+                  <span className="tick-horizontalMini"></span>
+                  <span className="tick-horizontalMini"></span>
+                </div>
+                <span className="tick-verticalMini"></span>
+              </div>
+            </div>
+            <div className="timer-btn-mini">
+              {
+                isFinish && (
+                  <button className="play-buttons-full" title="Reset" onClick={() => resetTimer()}>
+                    <ResetTimer />
+                  </button>
+                )
+              }
+              {
+                !isFinish && (
+                  <button className='play-buttons-full' title="Play/Pause" onClick={() => playTimer()}>
+                    <PlayPauseIcon />
+                  </button>
+                )
+              }
+              <button className='play-buttons-full' title="Stop" onClick={() => stopTimer()}>
+                <StopIcon />
+              </button>
+            </div>
+          </div>
+          :
+          <div className="pomodoro-timer">
+            {
+              isTimerSettings && <TimerClockSettings />
+            }
+            <button className="timerSettings-btn" onClick={() => dispatch(ShowTimerSettings())}>
+              <TimerSettings />
+            </button>
+            <div className="timer-clock-full">
+              {
+                minutes <= 9 ? <span className="timer-text-full">{`0${minutes}:`}</span> :
+                  <span className="timer-text-full">{`${minutes}:`}</span>
+              }
+              {
+                seconds <= 9 ? <span className="timer-text-full">{`0${seconds}`}</span> : <span className="timer-text-full">{`${seconds}`}</span>
+              }
+              <div className="tick-main">
+                <span className="tick-vertical-main"></span>
+                <div className="tick-container">
+                  <span className="tick-horizontal-main"></span>
+                  <span className="tick-horizontal-main"></span>
+                </div>
+                <span className="tick-vertical-main"></span>
+              </div>
+              <div className="tick">
+                <span className="tick-vertical"></span>
+                <div className="tick-container">
+                  <span className="tick-horizontal"></span>
+                  <span className="tick-horizontal"></span>
+                </div>
+                <span className="tick-vertical"></span>
+              </div>
+              <div className="timer-btn-full">
+                {
+                  isFinish && (
+                    <button className="play-buttons-full" title="Reset" onClick={() => resetTimer()}>
+                      <ResetTimer />
+                    </button>
+                  )
+                }
+                {
+                  !isFinish && (
+                    <button className='play-buttons-full' title="Play/Pause" onClick={() => playTimer()}>
+                      <PlayPauseIcon />
+                    </button>
+                  )
+                }
+                <button className='play-buttons-full' title="Stop" onClick={() => stopTimer()}>
+                  <StopIcon />
+                </button>
+              </div>
+            </div>
+          </div>
       }
-      <button className="timerSettings-btn" onClick={() => dispatch(ShowTimerSettings())}>
-        <TimerSettings />
-      </button>
-      <div className="timer-clock-full">
-        {/*If the values are 0, display it as 00*/}
-        {
-          minutes <= 9 ? <span className="timer-text-full">{`0${minutes}:`}</span> :
-            <span className="timer-text-full">{`${minutes}:`}</span>
-        }
-        {
-          seconds <= 9 ? <span className="timer-text-full">{`0${seconds}`}</span> : <span className="timer-text-full">{`${seconds}`}</span>
-        }
-        <div className="tick-main">
-          <span className="tick-vertical-main"></span>
-          <div className="tick-container">
-            <span className="tick-horizontal-main"></span>
-            <span className="tick-horizontal-main"></span>
-          </div>
-          <span className="tick-vertical-main"></span>
-        </div>
-        <div className="tick">
-          <span className="tick-vertical"></span>
-          <div className="tick-container">
-            <span className="tick-horizontal"></span>
-            <span className="tick-horizontal"></span>
-          </div>
-          <span className="tick-vertical"></span>
-        </div>
-        <div className="timer-btn-full">
-          {
-            isFinish && (
-              <button className="play-buttons-full" title="Reset" onClick={() => resetTimer()}>
-                <ResetTimer />
-              </button>
-            )
-          }
-          {
-            !isFinish && (
-              <button className='play-buttons-full' title="Play/Pause" onClick={() => playTimer()}>
-                <PlayPauseIcon />
-              </button>
-            )
-          }
-          <button className='play-buttons-full' title="Stop" onClick={() => stopTimer()}>
-            <StopIcon />
-          </button>
-        </div>
-      </div>
     </div>
+
   )
 }
 export default TimerClock
