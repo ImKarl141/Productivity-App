@@ -1,9 +1,15 @@
 import { useEffect, useState } from "react"
-import { useSelector } from "react-redux"
-import { PlayPauseIcon, ResetTimer, StopIcon } from "../../icons"
+import { useDispatch, useSelector } from "react-redux"
+import { TimerSettings, PlayPauseIcon, ResetTimer, StopIcon, NumberDownIcon, NumberUpIcon } from "../../icons"
 import { useTimer } from "./useTimer"
+import { ShowTimerSettings, ToggleLanguage } from "../../features/timerSlice"
+import TimerClockSettings from "./TimerClockSettings"
+
 
 const TimerClock = () => {
+  const { isTimerSettings, isEnglish } = useSelector((store) => store.timer)
+  console.log(isEnglish);
+  const dispatch = useDispatch()
 
   //Default values to load then timer is reset
   const [defaultValues, setDefaultValues] = useState({
@@ -20,6 +26,14 @@ const TimerClock = () => {
     seconds: 0,
     isPlaying: false,
   });
+
+  const [timerInput, setTimerInput] = useState({
+    focus: 25,
+    short: 5,
+    long: 15,
+  })
+
+  const { focus, short, long } = timerInput
 
   const { hours, minutes, seconds, isPlaying } = timer;
   const [isFinish, setIsFinish] = useState(false)
@@ -108,8 +122,43 @@ const TimerClock = () => {
 
   }
 
+  const handleChangeNumber = (e) => {
+    if (e.target.value) {
+      setTimerInput((prev) => ({ ...prev, [e.target.name]: parseInt(e.target.value) }))
+    } else {
+      setTimerInput((prev) => ({ ...prev, [e.target.name]: 1 }))
+    }
+  }
+
+  const increaseNumber = (name) => {
+    // const amount = focus_amount;
+    if (name === "focus") {
+      setTimerInput({ ...timerInput, focus: focus + 1 })
+    } else if (name === "short") {
+      setTimerInput({ ...timerInput, short: short + 1 })
+    } else if (name === "long") {
+      setTimerInput({ ...timerInput, long: long + 1 })
+    }
+  }
+
+  const decreaseNumber = (name) => {
+    if (name === "focus" && focus > 1) {
+      setTimerInput({ ...timerInput, focus: focus - 1 })
+    } else if (name === "short" && short > 1) {
+      setTimerInput({ ...timerInput, short: short - 1 })
+    } else if (name === "long" && long > 1) {
+      setTimerInput({ ...timerInput, long: long - 1 })
+    }
+  }
+
   return (
     <div className="pomodoro-timer">
+      {
+        isTimerSettings && <TimerClockSettings />
+      }
+      <button className="timerSettings-btn" onClick={() => dispatch(ShowTimerSettings())}>
+        <TimerSettings />
+      </button>
       <div className="timer-clock-full">
         {/*If the values are 0, display it as 00*/}
         {

@@ -98,20 +98,16 @@ const Navbar = () => {
         </div> */}
         <div className="option-bar">
           <button className='icon-button' onClick={() => dispatch(showOption())}>
-            {/* <img className='logo' src={optionsMenu} alt="my icon" /> */}
             <OptionsIcon />
           </button>
           {Options && (
             <>
               <button className={`icon-button ${Settings ? 'button-clicked' : ''} `} onClick={() => dispatch(showSettings())}>
                 <UserIcon />
-                {/* <img className='logo' src={userMenu} alt="my icon" /> */}
                 <p className='icon-text'>User Settings</p>
               </button>
               <button className={`icon-button ${logInOut ? 'button-clicked' : ''} `} onClick={() => dispatch(showUser())}>
                 <LoginIcon />
-                {/* <img className='logo' src={loginMenu} alt="my icon" /> */}
-                {/* <p className='icon-text'>Calendar</p> */}
               </button>
             </>
           )}

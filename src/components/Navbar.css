@@ -73,5 +73,11 @@ button:hover {
   font-weight: 500;
 }
 
+.appOptions-icon {
+  width: 2rem;
+  height: 2rem;
+  color: var(--black);
+}
+
 
 

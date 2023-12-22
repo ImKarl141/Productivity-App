@@ -34,11 +34,12 @@ const ListTimerAdd = () => {
       setTimerInput({ ...timerInput, focus_amount: focus_amount - 1 })
     }
   }
-  try {
-    console.log(dbTasks.length);
-  } catch (err) {
-    console.log(1);
-  }
+
+  // try {
+  //   console.log(dbTasks.length);
+  // } catch (err) {
+  //   console.log(1);
+  // }
 
   const handleTimerSubmit = async (e) => {
     // e.preventDefault();

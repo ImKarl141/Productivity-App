@@ -30,6 +30,8 @@ const initialState = {
   ],
   checkedItems: [0],
   currentTimerTask: '',
+  isTimerSettings: false,
+  isEnglish: true,
 }
 
 
@@ -60,9 +62,15 @@ const timerSlice = createSlice({
     SetCurrentTimerTask: (state, value) => {
       state.currentTimerTask = value.payload
       console.log("Done");
-    }
+    },
+    ShowTimerSettings: (state) => {
+      state.isTimerSettings = !state.isTimerSettings
+    },
+    ToggleLanguage: (state) => {
+      state.isEnglish = !state.isEnglish
+    },
   }
 });
 
-export const { SetTimerListAdd, SetTimerListEdit, SetCurrentEditTimer, SetCheckedTask, SetCurrentTimerTask } = timerSlice.actions;
+export const { SetTimerListAdd, SetTimerListEdit, SetCurrentEditTimer, SetCheckedTask, SetCurrentTimerTask, ShowTimerSettings, ToggleLanguage } = timerSlice.actions;
 export default timerSlice.reducer;

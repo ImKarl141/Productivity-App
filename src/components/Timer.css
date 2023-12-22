@@ -237,6 +237,116 @@
   gap: 0.6rem;
 }
 
+.timerAmount-container{
+  display: flex;
+  /* flex-direction: column; */
+  align-items: start;
+  justify-content: center;
+  position: fixed;
+  z-index: 8;
+  background-color: var(--blackLight);
+  /* opacity: 0.8; */
+  top: 0rem;
+  bottom: 0;
+  left: 0rem;
+  right: 0rem;
+  gap: 2rem;
+}
+
+.timerSettings{
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  position: relative;
+  /* width: 20rem; */
+  background-color: var(--blackLight);
+  background-color: var(--pomodoroLight);
+  margin-top: 6rem;
+  /* padding: 0.6rem; */
+  border-radius: 0.4rem;
+}
+
+.closeTimerSettings-btn{
+  position: absolute;
+  right: 0;
+  top: -2rem;
+  width: 1.6rem;
+  height: 1.6rem;
+  border-radius: 2rem;
+  color: var(--black);
+  background-color: var(--pomodoroLight);
+  cursor: pointer;
+}
+
+.timerAmount,
+.timerSound{
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: center;
+  gap: 0.4rem;
+  cursor: default;
+  padding: 0.6rem 0rem 0.6rem 0rem;
+}
+
+.timerAmount{
+  padding: 0.6rem 1rem 0.6rem 0.6rem;
+  border-right: 0.3rem solid var(--blackLight);
+}
+
+.timerSound{
+  padding: 0.6rem 0.6rem 0.6rem 0.9rem;
+}
+
+.alarm-sound{
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+}
+
+.timerLabel-container {
+  display: flex;
+  /* flex-direction: column; */
+  align-items: start;
+  justify-content: start;
+  gap: 1rem;
+}
+
+.timer-label {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: center;
+}
+
+.timer-input{
+  height: 1.2rem;
+  width: 4rem;
+}
+
+.timer-input:focus{
+  outline: none;
+}
+
+
+.timerSettings-btn{
+  position: absolute;
+  right: 2rem;
+  top: 1rem;
+  opacity: 0.7;
+}
+
+.timerSettings-icon {
+  width: 1.8rem;
+  height: 1.8rem;
+  color: var(--black);
+}
+
+.timerSettings-btn:hover {
+  background-color: transparent;
+  opacity: 1;
+}
+
 .list-text{
   display: flex;
   align-items: center;
