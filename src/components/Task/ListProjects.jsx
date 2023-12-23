@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { SetProjectList, RemoveProjectItem, ShowAddProjectEdit, SetCurrentProjectId, ShowProjectUpdate, DeleteProjectItem, SetTaskList } from "../../features/taskSlice";
+import { SetProjectList, RemoveProjectItem, ShowAddProjectEdit, SetCurrentProjectId, ShowProjectUpdate, DeleteProjectItem, SetTaskList, SetCurrentProjectView, SetCurrentTagView } from "../../features/taskSlice";
 import { AddProjectIcon, EditListIcon, DeleteListIcon } from '../../icons';
 import axios from "axios";
 import ProjectEdit from "./ProjectEdit";
@@ -8,65 +8,12 @@ import ProjectUpdate from "./ProjectUpdate";
 
 const ListProjects = () => {
   const dispatch = useDispatch();
-  const { addProjectEdit, dbProjects, isProjectUpdate, currentProjectId } = useSelector((store) => store.task);
+  const { addProjectEdit, dbProjects, isProjectUpdate, currentProjectId, currentProjectView } = useSelector((store) => store.task);
 
   const updateChanges = async () => {
     const resp = await axios.get('http://localhost:8800/TaskCurrent')
     dispatch(SetTaskList(resp.data))
   }
-  // console.log(dbProjects);
-  // console.log(isProjectUpdate);
-  // const [updateItem, setUpdateItem] = useState(
-  //   dbProjects.map((project) => {
-  //     const { id } = project;
-  //     return (
-  //       { item }
-  //     )
-  //   })
-  // )
-
-
-  // useEffect(() => {
-  //   const fetchProjectList = async () => {
-  //     try {
-  //       const resp = await axios.get("http://localhost:8800/ProjectList")
-  //       dispatch(SetProjectList(resp.data))
-  //     } catch (err) {
-  //       console.log(err);
-  //     }
-  //   }
-  //   fetchProjectList();
-  // }, [])
-
-  // const handleDeleteProject = async (myId) => {
-  //   // let id = 8;
-  //   try {
-  //     await axios.delete("http://localhost:8800/ProjectList/" + myId)
-  //     const projectIndex = dbProjects.findIndex((project) => project.id === myId)
-  //     dispatch(DeleteProjectItem(projectIndex))
-  //     // console.log();
-  //     // console.log(dbProjects);
-  //     // console.log(projectIndex);
-  //     // console.log(deletedTask);
-  //     // dispatch(SetProjectList([...dbProjects, deletedTask ]))
-  //     // console.log(dbProjects.splice(projectIndex, 1));
-  //     // window.location.reload();
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // }
-  // const test = await Promise.all([
-  //   axios.delete("http://localhost:8800/ProjectList/" + myId),
-  //   axios.put("http://localhost:8800/TaskCurrent/deleteProject/" + myId),
-  // ])
-
-  // const updateChanges = async () => {
-  //   const resp = await axios.get('http://localhost:8800/TaskCurrent')
-  //   dispatch(SetTaskList(resp.data))
-  //   dispatch(ShowTaskUpdate())
-  // }
-
-
 
   const handleDeleteProject = async (myId) => {
     try {
@@ -80,21 +27,6 @@ const ListProjects = () => {
     }
   }
 
-  // const handleDeleteProject = async (myId) => {
-  //   try {
-  //     await axios.delete("http://localhost:8800/ProjectList/" + myId);
-  //     try {
-  //       await axios.put("http://localhost:8800/TaskCurrent/deleteProject/" + myId);
-  //     } catch (err) {
-  //       console.error("Error nulling project tasks:", err);
-  //     }
-  //     const projectIndex = dbProjects.findIndex((project) => project.id === myId);
-  //     dispatch(DeleteProjectItem(projectIndex));
-  //   } catch (err) {
-  //     console.error("Error deleting project:", err);
-  //   }
-  // };
-
   return (
     <div className='overall-list'>
       <div className='list-title'>
@@ -105,11 +37,11 @@ const ListProjects = () => {
           const { id, project_name, project_color } = project;
           if (currentProjectId !== id) {
             return (
-              <button key={id} className='list-projects' >
-                <a className='project-title-container' title='Project name' id={id} href={`#${id}`}>
+              <button key={id} className='list-projects' style={{ backgroundColor: project_name === currentProjectView ? "var(--pomodoroDark)" : "transparent" }}>
+                <div id={id} className='project-title-container' title='Project name' onClick={() => dispatch(SetCurrentProjectView(project_name))}>
                   <div className='project-color' style={{ backgroundColor: project_color }}></div>
                   <p className='myTask-text'>{project_name}</p>
-                </a>
+                </div>
                 <div className='project-settings-btn' >
                   <span title='Edit' onClick={() => dispatch(SetCurrentProjectId(id))}><EditListIcon /></span>
                   <span title='Delete' onClick={() => handleDeleteProject(id)} ><DeleteListIcon /></span>
