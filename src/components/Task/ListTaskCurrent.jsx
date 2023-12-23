@@ -69,24 +69,47 @@ const ListTaskCurrent = () => {
           all && (
             <>
               {/*Not checked tasks*/}
-              {dbTasks.map((myTask) => {
-                const { id, task_title, task_desc, focus_amount, task_date, project_name, project_color, tag_name, tag_color, is_checked } = myTask
-                if (!is_checked) {
-                  return (
-                    <RegularTaskItem key={id} {...myTask} />
-                  )
-                }
-              })}
+              {
+                currentProjectView
+                  ? dbTasks.map((myTask) => {
+                    const { id, task_title, task_desc, focus_amount, task_date, project_name, project_color, tag_name, tag_color, is_checked } = myTask
+                    if (!is_checked && project_name === currentProjectView) {
+                      return (
+                        <RegularTaskItem key={id} {...myTask} />
+                      )
+                    }
+                  })
+                  : dbTasks.map((myTask) => {
+                    const { id, task_title, task_desc, focus_amount, task_date, project_name, project_color, tag_name, tag_color, is_checked } = myTask
+                    if (!is_checked) {
+                      return (
+                        <RegularTaskItem key={id} {...myTask} />
+                      )
+                    }
+                  })
+              }
               {/*Checked tasks*/}
-              {dbTasks.map((myTask) => {
-                const { id, task_title, task_desc, focus_amount, task_date, project_name, project_color, tag_name, tag_color, is_checked } = myTask
-                // console.log(typeof (task_date));
-                if (is_checked) {
-                  return (
-                    <CheckedTaskItem key={id} {...myTask} />
-                  )
-                }
-              })}
+              {
+                currentProjectView
+                  ? dbTasks.map((myTask) => {
+                    const { id, task_title, task_desc, focus_amount, task_date, project_name, project_color, tag_name, tag_color, is_checked } = myTask
+                    // console.log(typeof (task_date));
+                    if (is_checked && project_name === currentProjectView) {
+                      return (
+                        <CheckedTaskItem key={id} {...myTask} />
+                      )
+                    }
+                  })
+                  : dbTasks.map((myTask) => {
+                    const { id, task_title, task_desc, focus_amount, task_date, project_name, project_color, tag_name, tag_color, is_checked } = myTask
+                    // console.log(typeof (task_date));
+                    if (is_checked) {
+                      return (
+                        <CheckedTaskItem key={id} {...myTask} />
+                      )
+                    }
+                  })
+              }
             </>
           )
         }
@@ -128,27 +151,6 @@ const ListTaskCurrent = () => {
             })
           )
         }
-        {/*All*/}
-        {/*Not checked tasks*/}
-        {/* {dbTasks.map((myTask) => {
-          const { id, task_title, task_desc, focus_amount, task_date, project_name, project_color, tag_name, tag_color, is_checked } = myTask
-          if (!is_checked) {
-            return (
-              <RegularTaskItem key={id} {...myTask} />
-            )
-          }
-        })} */}
-        {/*Checked tasks*/}
-        {/* {dbTasks.map((myTask) => {
-          const { id, task_title, task_desc, focus_amount, task_date, project_name, project_color, tag_name, tag_color, is_checked } = myTask
-          if (is_checked) {
-            return (
-              <CheckedTaskItem key={id} {...myTask} />
-            )
-          }
-        })} */}
-        {/*Current*/}
-        {/*Checked*/}
       </ul >
     </div >
   )

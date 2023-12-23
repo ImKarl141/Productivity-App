@@ -69,21 +69,33 @@ const TaskMenu = () => {
           <div className='task-title'><h1>Tasks</h1></div>
         </div>
         <div className='overall-myTask'>
-          <div className='myTask-container-main box' style={{ backgroundColor: all && "var(--pomodoroDark)" }} onClick={() => dispatch(SetCurrentView("all"))}>
+          <div
+            className='myTask-container-main box'
+            style={{ backgroundColor: all && "var(--pomodoroDark)" }}
+            onClick={() => dispatch(SetCurrentView("all"))}
+          >
             <div className='myTask-container'>
               <AllTasksIcon />
               <p className='myTask-text'>All</p>
             </div>
             <div className='task-number'><span>{dbTasks ? dbTasks.length : 0}</span></div>
           </div>
-          <div className='myTask-container-main box' style={{ backgroundColor: current && "var(--pomodoroDark)" }} onClick={() => dispatch(SetCurrentView("current"))}>
+          <div
+            className='myTask-container-main box'
+            style={{ backgroundColor: current && "var(--pomodoroDark)" }}
+            onClick={() => dispatch(SetCurrentView("current"))}
+          >
             <div className='myTask-container'>
               <CurrentTasksIcon />
               <p className='myTask-text'>Current</p>
             </div>
             <div className='task-number'>{dbTasks ? dbTasks.filter(task => task.task_date == `${month}-${day}-${year}`).length : 0}</div>
           </div>
-          <div className='myTask-container-main box' style={{ backgroundColor: completed && "var(--pomodoroDark)" }} onClick={() => dispatch(SetCurrentView("completed"))}>
+          <div
+            className='myTask-container-main box'
+            style={{ backgroundColor: completed && "var(--pomodoroDark)" }}
+            onClick={() => dispatch(SetCurrentView("completed"))}
+          >
             <div className='myTask-container'>
               <CompletedTasksIcon />
               <p className='myTask-text'>Completed</p>
