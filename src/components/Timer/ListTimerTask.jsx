@@ -35,16 +35,17 @@ const ListTimerTask = () => {
 
   const handleCheckedSubmit = async (title, focus, check, myId) => {
     try {
-      const resp = await axios.patch("http://localhost:8800/TaskCurrent/" + myId, { task_title: title, focus_amount: focus, is_checked: check });
+      await axios.patch("http://localhost:8800/TaskCurrent/" + myId, { task_title: title, focus_amount: focus, is_checked: check });
+      const resp = await axios.get("http://localhost:8800/TaskCurrent/");
 
       //Update the local state of the Task List.
-      const newTask = dbTasks.map((task) => {
-        if (task.id == myId) {
-          return { ...task, is_checked: check }; // Spread existing properties and override name
-        }
-        return task; // Keep original object for other elements
-      });
-      dispatch(SetTaskList(newTask))
+      // const newTask = dbTasks.map((task) => {
+      //   if (task.id == myId) {
+      //     return { ...task, is_checked: check }; // Spread existing properties and override name
+      //   }
+      //   return task; // Keep original object for other elements
+      // });
+      dispatch(SetTaskList(resp.data))
       // console.log("Checked");
       // window.location.reload();
     } catch (err) {

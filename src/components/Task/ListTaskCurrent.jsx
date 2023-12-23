@@ -8,7 +8,8 @@ import CheckedTaskItem from "./CheckedTaskItem";
 
 const ListTaskCurrent = () => {
 
-  const { isTaskUpdate, dbTasks, currentView, currentCheckedId } = useSelector((store) => store.task);
+  const { isTaskUpdate, dbTasks, currentView, currentCheckedId, currentProjectView } = useSelector((store) => store.task);
+  // console.log(currentProjectView);
   // console.log(currentCheckedId);
   // console.log(dbTasks);
 
@@ -40,14 +41,15 @@ const ListTaskCurrent = () => {
       await axios.patch("http://localhost:8800/TaskCurrent/" + myId, { task_title: title, focus_amount: focus, is_checked: check });
 
       //Update the local state of the Task List.
-      const newTask = dbTasks.map((task) => {
-        //The myId is an string, so parseInt or compare ignoring the datatype.
-        if (task.id == myId) {
-          return { ...task, is_checked: check };
-        }
-        return task;
-      });
-      dispatch(SetTaskList(newTask))
+      // const newTask = dbTasks.map((task) => {
+      //   //The myId is an string, so parseInt or compare ignoring the datatype.
+      //   if (task.id == myId) {
+      //     return { ...task, is_checked: check };
+      //   }
+      //   return task;
+      // });
+      const resp = await axios.get("http://localhost:8800/TaskCurrent/");
+      dispatch(SetTaskList(resp.data))
       // window.location.reload();
     } catch (err) {
       console.log(err);
@@ -57,7 +59,7 @@ const ListTaskCurrent = () => {
   return (
     <div className='task-focus'>
       <div className='task-focus-add' >
-        <label htmlFor='title-task' className='addBtn add-task-btn' onClick={() => dispatch(ShowTaskEdit())}>
+        <label className='addBtn add-task-btn' onClick={() => dispatch(ShowTaskEdit())}>
           <AddTaskIcon />
           <p className='myTask-text'>Add Task</p>
         </label>
@@ -90,12 +92,40 @@ const ListTaskCurrent = () => {
         }
         {
           current && (
-            <div>Current</div>
+            <>
+              {/*Not checked tasks*/}
+              {dbTasks.map((myTask) => {
+                const { id, task_title, task_desc, focus_amount, task_date, project_name, project_color, tag_name, tag_color, is_checked } = myTask
+                if (!is_checked && task_date === "12-23-2023") {
+                  return (
+                    <RegularTaskItem key={id} {...myTask} />
+                  )
+                }
+              })}
+              {/*Checked tasks*/}
+              {dbTasks.map((myTask) => {
+                const { id, task_title, task_desc, focus_amount, task_date, project_name, project_color, tag_name, tag_color, is_checked } = myTask
+                // console.log(typeof (task_date));
+                if (is_checked && task_date === "12-23-2023") {
+                  return (
+                    <CheckedTaskItem key={id} {...myTask} />
+                  )
+                }
+              })}
+            </>
           )
         }
         {
           completed && (
-            <div>Completed</div>
+            dbTasks.map((myTask) => {
+              const { id, task_title, task_desc, focus_amount, task_date, project_name, project_color, tag_name, tag_color, is_checked } = myTask
+              // console.log(typeof (task_date));
+              if (is_checked) {
+                return (
+                  <CheckedTaskItem key={id} {...myTask} />
+                )
+              }
+            })
           )
         }
         {/*All*/}

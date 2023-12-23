@@ -27,14 +27,16 @@ const CheckedTaskItem = (props) => {
       await axios.patch("http://localhost:8800/TaskCurrent/" + myId, { task_title: title, focus_amount: focus, is_checked: check });
 
       //Update the local state of the Task List.
-      const newTask = dbTasks.map((task) => {
-        //The myId is an string, so parseInt or compare ignoring the datatype.
-        if (task.id == myId) {
-          return { ...task, is_checked: check };
-        }
-        return task;
-      });
-      dispatch(SetTaskList(newTask))
+      // const newTask = dbTasks.map((task) => {
+      //   //The myId is an string, so parseInt or compare ignoring the datatype.
+      //   if (task.id == myId) {
+      //     return { ...task, is_checked: check };
+      //   }
+      //   return task;
+      // });
+      const resp = await axios.get("http://localhost:8800/TaskCurrent/");
+      dispatch(SetTaskList(resp.data))
+      // dispatch(SetTaskList(newTask))
       // window.location.reload();
     } catch (err) {
       console.log(err);
