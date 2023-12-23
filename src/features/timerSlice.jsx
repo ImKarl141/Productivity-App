@@ -33,6 +33,7 @@ const initialState = {
   isTimerSettings: false,
   isTimerTaskSettings: false,
   isEnglish: true,
+  amountPomo: 0,
 }
 
 

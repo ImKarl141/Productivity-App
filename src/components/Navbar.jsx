@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { MenuIcon, OptionsIcon, PlayPauseIcon, StopIcon, TaskIcon, CalendarIcon, NotesIcon, UserIcon, LoginIcon, LogoutIcon, FooterIcon } from '../icons';
+import { MenuIcon, OptionsIcon, TaskIcon, NotesIcon, UserIcon, LoginIcon } from '../icons';
 import TaskMenu from './Task';
 import CalendarMenu from './Calendar'
 import NotesMenu from './Notes'

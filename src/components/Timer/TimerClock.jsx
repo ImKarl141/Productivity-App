@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { TimerSettings, PlayPauseIcon, ResetTimer, StopIcon, NumberDownIcon, NumberUpIcon } from "../../icons"
+import { TimerSettings, PlayPauseFullIcon, PlayPauseMiniIcon, ResetTimer, SkipFullIcon, SkipMiniIcon, NumberDownIcon, NumberUpIcon } from "../../icons"
 import { useTimer } from "./useTimer"
 import { ShowTimerSettings, ToggleLanguage } from "../../features/timerSlice"
 import TimerClockSettings from "./TimerClockSettings"
@@ -23,7 +23,7 @@ const TimerClock = () => {
 
   //Values for timer clock
   const [timer, setTimer] = useState({
-    hours: '00',
+    // hours: '00',
     minutes: 25,
     seconds: 0,
     isPlaying: false,
@@ -37,25 +37,8 @@ const TimerClock = () => {
 
   const { focus, short, long } = timerInput
 
-  const { hours, minutes, seconds, isPlaying } = timer;
+  const { minutes, seconds, isPlaying } = timer;
   const [isFinish, setIsFinish] = useState(false)
-
-  //Update the value every second when timer state change, when finished
-  // useEffect(() => {
-  //   const myInterval = setInterval(() => {
-  //     updateTime();
-  //   }, 1000);
-  //   return () => clearInterval(myInterval);
-  //   console.log("Timer finished");
-  //   setIsFinish(true);
-  // }, [timer])
-
-  // useEffect(() => {
-  //   const myTime = setTimeout(() => {
-  //     updateTime();
-  //   }, 1000);
-  //   return () => clearInterval(myTime);
-  // }, [timer])
 
   useTimer(() => {
     updateTime()
@@ -191,12 +174,12 @@ const TimerClock = () => {
               {
                 !isFinish && (
                   <button className='play-buttons-full' title="Play/Pause" onClick={() => playTimer()}>
-                    <PlayPauseIcon />
+                    <PlayPauseFullIcon />
                   </button>
                 )
               }
               <button className='play-buttons-full' title="Stop" onClick={() => stopTimer()}>
-                <StopIcon />
+                <SkipFullIcon />
               </button>
             </div>
           </div>
@@ -243,12 +226,12 @@ const TimerClock = () => {
                 {
                   !isFinish && (
                     <button className='play-buttons-full' title="Play/Pause" onClick={() => playTimer()}>
-                      <PlayPauseIcon />
+                      <PlayPauseFullIcon />
                     </button>
                   )
                 }
                 <button className='play-buttons-full' title="Stop" onClick={() => stopTimer()}>
-                  <StopIcon />
+                  <SkipFullIcon />
                 </button>
               </div>
             </div>

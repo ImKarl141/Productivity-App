@@ -125,7 +125,8 @@
   margin-left: 0.2rem;
 }
 
-.next-item {
+.next-item,
+.next-item-date {
   display: grid;
   grid-template-columns: auto auto;
   grid-column-gap: 0.2rem;
@@ -760,6 +761,7 @@ a {
   justify-content: space-between;
   border: 0 none;
   border-radius: 0.2rem;
+  cursor: pointer;
 }
 
 .myTask-container {
@@ -778,12 +780,15 @@ a {
   border-radius: 0.2rem;
 }
 
-.myTask-container-main:hover  .task-number {
+/* .myTask-container-main:hover  .task-number {
+  background-color: var(--pomodoroDark);
+} */
+
+.myTask-container-main:hover {
   background-color: var(--pomodoroDark);
 }
+
 /* Tasks toggle end */
-
-
 /* Tasks icons start */
 .add-task {
   width: 1.2rem;

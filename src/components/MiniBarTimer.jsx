@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { PlayPauseIcon, StopIcon, ResetTimer, CoffeeIcon } from "../icons"
+import { ResetTimer, CoffeeIcon, PlayPauseMiniIcon, SkipMiniIcon } from "../icons"
 import timerMini from '../images/timer-stage2-icon.svg'
 
 const MiniBarTimer = () => {
@@ -89,10 +89,10 @@ const MiniBarTimer = () => {
       </div>
       <div className='timer-btn-mini'>
         <button className='play-buttons' title="Play/Pause" onClick={() => playTimer()}>
-          <PlayPauseIcon />
+          <PlayPauseMiniIcon />
         </button>
         <button className='play-buttons' title="Stop" onClick={() => stopTimer()}>
-          <StopIcon />
+          <SkipMiniIcon />
           {/* <img className='play-option' src={stopIcon} alt="stop" /> */}
         </button>
         {/* Place the reset after the timer is done */}

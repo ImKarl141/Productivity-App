@@ -122,25 +122,6 @@ const ListTaskCurrent = () => {
               <li key={`${id}`}>
                 <div className='task-item-overall-container'>
                   <div className='task-item-container'>
-                    {/* {
-                      is_checked ? <input
-                        name="is_checked"
-                        checked
-                        id={id}
-                        value={`${task_title}+${focus_amount}+${is_checked}`}
-                        className='default-checkbox checkbox-test'
-                        type="checkbox"
-                        onChange={handle}
-                      /> :
-                        <input
-                          name="is_checked"
-                          id={id}
-                          value={`${task_title}+${focus_amount}+${is_checked}`}
-                          className='default-checkbox checkbox-test'
-                          type="checkbox"
-                          onChange={handle}
-                        />
-                    } */}
                     <input
                       name="is_checked"
                       id={id}
@@ -161,7 +142,7 @@ const ListTaskCurrent = () => {
                             task_date && (
                               <>
                                 <span title='Due date'><CalendarIconTask /></span>
-                                <span title='Due date' className='next-item'>{task_date}</span>
+                                <span title='Due date' className='next-item-date'>{task_date}</span>
                               </>
                             )
                           }

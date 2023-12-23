@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react"
-import { PlayPauseIcon, StopIcon, ResetTimer, CoffeeIcon, AddTaskTimerIcon, TaskDetailsIcon, PomodoroIcon, ClearAllTasksIcon, ClearFinishedTasksIcon } from "../icons"
+import { useEffect, useRef, useState } from "react"
+import { PomodoroIcon, ClearAllTasksIcon, ClearFinishedTasksIcon } from "../icons"
 import timerMini from '../images/timer-stage2-icon.svg'
 import details from '../images/kebab.svg'
 import ListTimerTask from "./Timer/ListTimerTask"
@@ -23,10 +23,34 @@ const Timer = () => {
   //Get the focus_amount of every task
   const amountHours = dbTasks.reduce((acc, currentObj) => acc + currentObj.focus_amount, 0)
 
+  // const hour = 12;
+  // const minute = 10;
+  // const amPm = "am"
   const now = new Date();
-  const hour = 12;
-  const minute = 10;
-  const amPm = "am"
+
+  const [currentTime, setCurrentTime] = useState({
+    hours: now.getHours(),
+    minutes: now.getHours(),
+    ampm: 'am'
+  })
+
+  const { hours, minutes, ampm } = currentTime
+
+  const updateTime = () => {
+    const now = new Date();
+    setCurrentTime({
+      hours: now.getHours(),
+      minutes: now.getHours(),
+      ampm: hours < 12 ? "am" : "pm"
+    })
+    // hours.current = 
+    // minutes.current = now.getMinutes();
+    // ampm.current = hours < 12 ? "am" : "pm";
+  }
+
+  // setInterval(() => {
+  //   updateTime();
+  // }, 500)
 
   //Task fetching
   useEffect(() => {
@@ -136,9 +160,10 @@ const Timer = () => {
               </div>
             </div>
             <div className="pomodoro-stats">
-              <span>Total Pomos: 0/{amountHours}</span>
+              <span>Total Pomodoros: 0/{amountHours}</span>
               <span>|</span>
-              <span>Finishing at: {hour}:{minute}{amPm} {amountHours * 0.5} hours</span>
+              {/* <span>Finishing in: {hours}:{minutes <= 9 ? `0${minutes}` : minutes}{ampm} {amountHours * 0.5} hours</span> */}
+              <span>Finishing in: {amountHours * 0.5} hours</span>
             </div>
           </div>
       }

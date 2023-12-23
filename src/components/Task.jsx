@@ -20,6 +20,10 @@ const TaskMenu = () => {
   // console.log("Updated");
 
   const dispatch = useDispatch();
+
+  const { all, current, completed } = currentView;
+  // console.log(all);
+
   //Edit task menu
 
   // Fetching data
@@ -30,17 +34,19 @@ const TaskMenu = () => {
         dispatch(SetTaskList(task.data))
         // console.log(task.data);
 
-        // const project = await axios.get("http://localhost:8800/ProjectList")
-        // dispatch(SetProjectList(project.data))
+        const project = await axios.get("http://localhost:8800/ProjectList")
+        dispatch(SetProjectList(project.data))
 
-        // const tag = await axios.get("http://localhost:8800/TagList")
-        // dispatch(SetTagList(tag.data))
+        const tag = await axios.get("http://localhost:8800/TagList")
+        dispatch(SetTagList(tag.data))
       } catch (err) {
         console.log(err);
       }
     }
     fetchData();
   }, [])
+
+  const test = false;
 
 
   return (
@@ -51,27 +57,27 @@ const TaskMenu = () => {
           <div className='task-title'><h1>Tasks</h1></div>
         </div>
         <div className='overall-myTask'>
-          <a className='myTask-container-main box' id='All' href='#All' onClick={() => dispatch(SetCurrentView("all"))}>
+          <div className='myTask-container-main box' style={{ backgroundColor: all && "var(--pomodoroDark)" }} onClick={() => dispatch(SetCurrentView("all"))}>
             <div className='myTask-container'>
               <AllTasksIcon />
               <p className='myTask-text'>All</p>
             </div>
-            <div className='task-number'><span>{taskItems.length}</span></div>
-          </a>
-          <a className='myTask-container-main box' id='Current' href='#Current' onClick={() => dispatch(SetCurrentView("current"))}>
+            <div className='task-number'><span>{dbTasks.length}</span></div>
+          </div>
+          <div className='myTask-container-main box' style={{ backgroundColor: current && "var(--pomodoroDark)" }} onClick={() => dispatch(SetCurrentView("current"))}>
             <div className='myTask-container'>
               <CurrentTasksIcon />
               <p className='myTask-text'>Current</p>
             </div>
             <div className='task-number'>0</div>
-          </a>
-          <a className='myTask-container-main box' id='Completed' href='#Completed' onClick={() => dispatch(SetCurrentView("completed"))}>
+          </div>
+          <div className='myTask-container-main box' style={{ backgroundColor: completed && "var(--pomodoroDark)" }} onClick={() => dispatch(SetCurrentView("completed"))}>
             <div className='myTask-container'>
               <CompletedTasksIcon />
               <p className='myTask-text'>Completed</p>
             </div>
             <div className='task-number'>0</div>
-          </a>
+          </div>
         </div>
         {/* List of projects */}
         <ListProjects />

@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux"
-import { TimerSettings, PlayPauseIcon, ResetTimer, StopIcon, NumberDownIcon, NumberUpIcon, CloseTimerSettings } from "../../icons"
+import { NumberDownIcon, NumberUpIcon, CloseTimerSettings } from "../../icons"
 import { useState } from "react"
 import { ShowTimerSettings } from "../../features/timerSlice"
 
