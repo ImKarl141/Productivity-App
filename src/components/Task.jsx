@@ -64,7 +64,6 @@ const TaskMenu = () => {
 
   return (
     <section className='task-container'>
-      {/* <h1 style={{ position: 'absolute', fontSize: '5rem', zIndex: '3', opacity: '0.5' }}>Continue with AddProject reducer</h1> */}
       <div className='task-overall'>
         <div className='overall-title'>
           <div className='task-title'><h1>Tasks</h1></div>
