@@ -22,7 +22,17 @@ const TaskMenu = () => {
   const dispatch = useDispatch();
 
   const { all, current, completed } = currentView;
-  // console.log(all);
+
+  const myDate = new Date().toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "numeric",
+    day: "numeric",
+  })
+  const currentDate = myDate.split("/")
+  // console.log(currentDate);
+  const [month, day, year] = currentDate
+
+  // console.log(dbTasks.filter(task => task.is_checked == true).length);
 
   //Edit task menu
 
@@ -46,7 +56,10 @@ const TaskMenu = () => {
     fetchData();
   }, [])
 
-  const test = false;
+  // const test = false;
+  // console.log(dbTasks);
+
+  // console.log(dbTasks.filter(task => task.task_date == "12-22-2023").length);
 
 
   return (
@@ -62,21 +75,21 @@ const TaskMenu = () => {
               <AllTasksIcon />
               <p className='myTask-text'>All</p>
             </div>
-            <div className='task-number'><span>{dbTasks.length}</span></div>
+            <div className='task-number'><span>{dbTasks ? dbTasks.length : 0}</span></div>
           </div>
           <div className='myTask-container-main box' style={{ backgroundColor: current && "var(--pomodoroDark)" }} onClick={() => dispatch(SetCurrentView("current"))}>
             <div className='myTask-container'>
               <CurrentTasksIcon />
               <p className='myTask-text'>Current</p>
             </div>
-            <div className='task-number'>0</div>
+            <div className='task-number'>{dbTasks ? dbTasks.filter(task => task.task_date == `${month}-${day}-${year}`).length : 0}</div>
           </div>
           <div className='myTask-container-main box' style={{ backgroundColor: completed && "var(--pomodoroDark)" }} onClick={() => dispatch(SetCurrentView("completed"))}>
             <div className='myTask-container'>
               <CompletedTasksIcon />
               <p className='myTask-text'>Completed</p>
             </div>
-            <div className='task-number'>0</div>
+            <div className='task-number'>{dbTasks.filter(task => task.is_checked == true).length}</div>
           </div>
         </div>
         {/* List of projects */}
