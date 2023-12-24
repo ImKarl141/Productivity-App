@@ -214,8 +214,13 @@ const taskSlice = createSlice({
       // console.log(state.currentProjectView);
     },
     SetCurrentTagView: (state, value) => {
-      state.currentTagView = value.payload
-      console.log(state.currentTagView);
+      if (state.currentTagView === value.payload) {
+        state.currentTagView = ''
+      } else {
+        state.currentTagView = value.payload
+      }
+      // state.currentTagView = value.payload
+      // console.log(state.currentTagView);
     },
   }
 });

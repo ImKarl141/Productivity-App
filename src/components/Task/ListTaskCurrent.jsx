@@ -8,7 +8,7 @@ import CheckedTaskItem from "./CheckedTaskItem";
 
 const ListTaskCurrent = () => {
 
-  const { isTaskUpdate, dbTasks, currentView, currentCheckedId, currentProjectView } = useSelector((store) => store.task);
+  const { isTaskUpdate, dbTasks, currentView, currentCheckedId, currentProjectView, currentTagView } = useSelector((store) => store.task);
   // console.log(currentProjectView);
   // console.log(currentCheckedId);
   // console.log(dbTasks);
@@ -57,13 +57,15 @@ const ListTaskCurrent = () => {
   }
 
   useEffect(() => {
-    if (currentProjectView) {
+    if (currentProjectView || currentTagView) {
       $(`.task-item-overall-container`).show()
       $(`.task-item-overall-container:not(:contains(${currentProjectView}))`).hide()
+      $(`.task-item-overall-container:not(:contains(${currentTagView}))`).hide()
+
     } else (
       $(`.task-item-overall-container`).show()
     )
-  }, [currentProjectView, currentView])
+  }, [currentProjectView, currentView, currentTagView])
 
   // task - item - overall - container
   // $("span:contains('Red project')").hide()
@@ -109,7 +111,7 @@ const ListTaskCurrent = () => {
               {/*Not checked tasks*/}
               {dbTasks.map((myTask) => {
                 const { id, task_title, task_desc, focus_amount, task_date, project_name, project_color, tag_name, tag_color, is_checked } = myTask
-                if (!is_checked && task_date === "12-23-2023") {
+                if (!is_checked && task_date === currentDate) {
                   return (
                     <RegularTaskItem key={id} {...myTask} />
                   )
@@ -119,7 +121,7 @@ const ListTaskCurrent = () => {
               {dbTasks.map((myTask) => {
                 const { id, task_title, task_desc, focus_amount, task_date, project_name, project_color, tag_name, tag_color, is_checked } = myTask
                 // console.log(typeof (task_date));
-                if (is_checked && task_date === "12-23-2023") {
+                if (is_checked && task_date === currentDate) {
                   return (
                     <CheckedTaskItem key={id} {...myTask} />
                   )
