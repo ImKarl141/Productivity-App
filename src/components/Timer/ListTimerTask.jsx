@@ -79,7 +79,8 @@ const ListTimerTask = () => {
                         onChange={handleCheck}
                       />
                       <span className="checkmarkList"></span>
-                      {task_title}
+                      <span className="task-text">{task_title}</span>
+                      {/* {task_title} */}
                     </label>
                   </div>
                   <div className="listTask-details" onClick={() => dispatch(SetCurrentTimerTask(task_title))}>

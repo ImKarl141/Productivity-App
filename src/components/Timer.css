@@ -419,6 +419,14 @@ display: flex;
   cursor: pointer;
 }
 
+.task-text{
+  /* color: red; */
+  /* width: 10rem; */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .details-task-icon {
   width: 3rem;
   height: 3rem;
