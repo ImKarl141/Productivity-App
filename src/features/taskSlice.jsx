@@ -206,8 +206,12 @@ const taskSlice = createSlice({
       state.tags = state.tags.filter((myProject) => myProject.id !== value.payload)
     },
     SetCurrentProjectView: (state, value) => {
-      state.currentProjectView = value.payload
-      console.log(state.currentProjectView);
+      if (state.currentProjectView === value.payload) {
+        state.currentProjectView = ''
+      } else {
+        state.currentProjectView = value.payload
+      }
+      // console.log(state.currentProjectView);
     },
     SetCurrentTagView: (state, value) => {
       state.currentTagView = value.payload

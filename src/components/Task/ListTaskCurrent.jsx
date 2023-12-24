@@ -56,13 +56,14 @@ const ListTaskCurrent = () => {
     }
   }
 
-  if (currentProjectView) {
-    $(`.task-item-overall-container`).show()
-    $(`.task-item-overall-container:not(:contains(${currentProjectView}))`).hide()
-  } else {
-    console.log("No project selected");
-  }
-
+  useEffect(() => {
+    if (currentProjectView) {
+      $(`.task-item-overall-container`).show()
+      $(`.task-item-overall-container:not(:contains(${currentProjectView}))`).hide()
+    } else (
+      $(`.task-item-overall-container`).show()
+    )
+  }, [currentProjectView, currentView])
 
   // task - item - overall - container
   // $("span:contains('Red project')").hide()
