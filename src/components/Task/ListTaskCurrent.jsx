@@ -56,8 +56,20 @@ const ListTaskCurrent = () => {
     }
   }
 
+  if (currentProjectView) {
+    $(`.task-item-overall-container`).show()
+    $(`.task-item-overall-container:not(:contains(${currentProjectView}))`).hide()
+  } else {
+    console.log("No project selected");
+  }
+
+
+  // task - item - overall - container
+  // $("span:contains('Red project')").hide()
+
   return (
     <div className='task-focus'>
+      {/* <button onClick={() => $(".task-item-overall-container:contains('Red project')").hide()}>Test</button> */}
       <div className='task-focus-add' >
         <label className='addBtn add-task-btn' onClick={() => dispatch(ShowTaskEdit())}>
           <AddTaskIcon />
@@ -69,47 +81,24 @@ const ListTaskCurrent = () => {
           all && (
             <>
               {/*Not checked tasks*/}
-              {
-                currentProjectView
-                  ? dbTasks.map((myTask) => {
-                    const { id, task_title, task_desc, focus_amount, task_date, project_name, project_color, tag_name, tag_color, is_checked } = myTask
-                    if (!is_checked && project_name === currentProjectView) {
-                      return (
-                        <RegularTaskItem key={id} {...myTask} />
-                      )
-                    }
-                  })
-                  : dbTasks.map((myTask) => {
-                    const { id, task_title, task_desc, focus_amount, task_date, project_name, project_color, tag_name, tag_color, is_checked } = myTask
-                    if (!is_checked) {
-                      return (
-                        <RegularTaskItem key={id} {...myTask} />
-                      )
-                    }
-                  })
-              }
+              {dbTasks.map((myTask) => {
+                const { id, task_title, task_desc, focus_amount, task_date, project_name, project_color, tag_name, tag_color, is_checked } = myTask
+                if (!is_checked) {
+                  return (
+                    <RegularTaskItem key={id} {...myTask} />
+                  )
+                }
+              })}
               {/*Checked tasks*/}
-              {
-                currentProjectView
-                  ? dbTasks.map((myTask) => {
-                    const { id, task_title, task_desc, focus_amount, task_date, project_name, project_color, tag_name, tag_color, is_checked } = myTask
-                    // console.log(typeof (task_date));
-                    if (is_checked && project_name === currentProjectView) {
-                      return (
-                        <CheckedTaskItem key={id} {...myTask} />
-                      )
-                    }
-                  })
-                  : dbTasks.map((myTask) => {
-                    const { id, task_title, task_desc, focus_amount, task_date, project_name, project_color, tag_name, tag_color, is_checked } = myTask
-                    // console.log(typeof (task_date));
-                    if (is_checked) {
-                      return (
-                        <CheckedTaskItem key={id} {...myTask} />
-                      )
-                    }
-                  })
-              }
+              {dbTasks.map((myTask) => {
+                const { id, task_title, task_desc, focus_amount, task_date, project_name, project_color, tag_name, tag_color, is_checked } = myTask
+                // console.log(typeof (task_date));
+                if (is_checked) {
+                  return (
+                    <CheckedTaskItem key={id} {...myTask} />
+                  )
+                }
+              })}
             </>
           )
         }
