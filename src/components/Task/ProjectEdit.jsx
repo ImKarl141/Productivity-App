@@ -6,6 +6,7 @@ import axios from 'axios';
 
 const ProjectEdit = () => {
   const { dbProjects } = useSelector((store) => store.task)
+  // console.log(dbProjects);
 
   const dispatch = useDispatch();
 
@@ -16,13 +17,40 @@ const ProjectEdit = () => {
 
   const { project_name, project_color } = projectInput
 
+  const [isDuplicate, setIsDuplicate] = useState(false)
+
   const handleChangeInput = (e) => {
     setProjectInput((prev) => ({ ...prev, [e.target.name]: e.target.value }))
-    console.log(projectInput);
+    // console.log(projectInput);
   }
+
+  // const checkDuplicateProject = dbProjects.find(project => project.project_name === "Red project");
+  // console.log(checkDuplicateProject);
+
+  // const checkDuplicateProject = (myInput) => {
+  //   for (const listOfProject of dbProjects) {
+  //     if (myInput.project_name === listOfProject.project_name) {
+  //       console.log("Find duplicate");
+  //       return
+  //     }
+  //   }
+  //   console.log("No duplicate was found");
+  // }
+
+  // checkDuplicateProject({ project_name: "Red project", project_color: '#FFFFFF' });
 
   const handleProjectSubmit = async (e) => {
     e.preventDefault();
+    if (!project_name) {
+      return
+    }
+    for (const listOfProject of dbProjects) {
+      if (projectInput.project_name.trim() === listOfProject.project_name.trim()) {
+        setIsDuplicate(true)
+        console.log("Find duplicate");
+        return
+      }
+    }
     try {
       await axios.post('http://localhost:8800/ProjectList', projectInput);
       const resp = await axios.get('http://localhost:8800/ProjectList')
@@ -56,7 +84,8 @@ const ProjectEdit = () => {
           id='projectName'
           name='project_name'
           type="text"
-          className='myInputAddProject'
+          className={isDuplicate ? 'test' : 'myInputAddProject'}
+          // className='test'
           value={project_name}
           placeholder='Project name'
           onChange={handleChangeInput}

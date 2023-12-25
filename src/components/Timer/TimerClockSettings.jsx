@@ -1,19 +1,23 @@
 import { useDispatch, useSelector } from "react-redux"
 import { NumberDownIcon, NumberUpIcon, CloseTimerSettings } from "../../icons"
 import { useState } from "react"
-import { ShowTimerSettings } from "../../features/timerSlice"
-
+import { ShowTimerSettings, SetSoundVolume } from "../../features/timerSlice"
+import GuitarSound from '../../assets/guitar_Notification.mp3'
+import TimerSound from '../../assets/timer_Notification.ogg'
+import EraseSound from '../../assets/erase_Notification.wav'
+// import GuitarSound from '../../assets/guitar_Notification.mp3'
 
 const TimerClockSettings = () => {
-  const { isTimerSettings, isEnglish } = useSelector((store) => store.timer);
+  const { isTimerSettings, isEnglish, soundVolume } = useSelector((store) => store.timer);
   const dispatch = useDispatch();
-
 
   const [timerInput, setTimerInput] = useState({
     focus: 25,
     short: 5,
     long: 15,
   })
+
+  const [myVolume, setSoundVolume] = useState(soundVolume)
 
   const { focus, short, long } = timerInput
 
@@ -45,12 +49,45 @@ const TimerClockSettings = () => {
       setTimerInput({ ...timerInput, long: long - 1 })
     }
   }
+  // const [sound, setSound] = useState(undefined)
+  // console.log(sound);
+
+  // useEffect(() => {
+  //   const song = new Audio(sound)
+  //   song.play()
+  // }, [sound])
+
+  const handleSound = (e) => {
+    if (e.target.value === "EraseSound") {
+      const sound = new Audio(EraseSound);
+      sound.play()
+      sound.volume = myVolume
+    } else if (e.target.value === "TimerSound") {
+      const sound = new Audio(TimerSound);
+      sound.play()
+      sound.volume = myVolume
+    } else if (e.target.value === "GuitarSound") {
+      const sound = new Audio(GuitarSound);
+      sound.play()
+      sound.volume = myVolume
+    }
+  }
+
+  const handleSoundVolume = (e) => {
+    setSoundVolume(e.target.value / 100)
+    // dispatch(soundVolume(e.target.value / 100))
+    // console.log(e.target.value / 100);
+  }
+
 
 
   return (
     <div className="timerAmount-container" onClick={() => dispatch(ShowTimerSettings())}>
       <div className="timerSettings" onClick={(e) => e.stopPropagation()}>
-        <span onClick={() => dispatch(ShowTimerSettings())}>
+        <span onClick={() => {
+          dispatch(ShowTimerSettings())
+          dispatch(SetSoundVolume(myVolume))
+        }}>
           <CloseTimerSettings />
         </span>
         <div className="timerAmount">
@@ -145,15 +182,26 @@ const TimerClockSettings = () => {
         <div className="timerSound">
           <span>Sound</span>
           <div className="alarm-sound">
+            {/* <button onClick={() => alarm.play()}>Test sound</button> */}
             <span>Alarm Sound</span>
-            <select name="" id="">
-              <option value="">Clock</option>
-              <option value="">Bell</option>
-              <option value="">Chicken</option>
+            <select
+              className="sound-select"
+              onChange={handleSound}
+              defaultValue={''}
+            >
+              <option value="EraseSound">Erase</option>
+              <option value="TimerSound">Timer</option>
+              <option value="GuitarSound">Guitar</option>
             </select>
+            <input
+              className="volume-slide"
+              type="range"
+              defaultValue={myVolume * 100}
+              onChange={handleSoundVolume}
+            />
+            <span>{Math.round(myVolume * 100)}</span>
           </div>
         </div>
-        {/* <button onClick={() => dispatch(ToggleLanguage())}>Change language</button> */}
       </div>
     </div>
   )

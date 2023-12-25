@@ -34,6 +34,7 @@ const initialState = {
   isTimerTaskSettings: false,
   isEnglish: true,
   amountPomo: 0,
+  soundVolume: 0.8
 }
 
 
@@ -74,8 +75,11 @@ const timerSlice = createSlice({
     SetTimerTaskSettings: (state) => {
       state.isTimerTaskSettings = !state.isTimerTaskSettings
     },
+    SetSoundVolume: (state, value) => {
+      state.soundVolume = value.payload
+    }
   }
 });
 
-export const { SetTimerListAdd, SetTimerListEdit, SetCurrentEditTimer, SetCheckedTask, SetCurrentTimerTask, ShowTimerSettings, ToggleLanguage, SetTimerTaskSettings } = timerSlice.actions;
+export const { SetTimerListAdd, SetTimerListEdit, SetCurrentEditTimer, SetCheckedTask, SetCurrentTimerTask, ShowTimerSettings, ToggleLanguage, SetTimerTaskSettings, SetSoundVolume } = timerSlice.actions;
 export default timerSlice.reducer;

@@ -294,6 +294,14 @@
   gap: 0.6rem;
 }
 
+/* .volume-timer{
+  position: absolute;
+  right: -4rem;
+  bottom: 8rem;
+  rotate: -90deg;
+  z-index: 10;
+} */
+
 .pomodoro-timerMini{
 display: flex;
 }
@@ -1049,6 +1057,45 @@ label::selection {
   height: 1.5rem;
   color: var(--black);
 }
+
+.volume-slide {
+  -webkit-appearance: none;
+  appearance: none;
+  background: var(--pomodoroDark);
+  cursor: pointer;
+  width: 10rem;
+  height: 0.3rem;
+  border-radius: 2rem;
+  margin-top: 1rem;
+}
+
+.volume-slide:focus {
+  outline: none;
+}
+
+
+/* Chrome and others */
+.volume-slide::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: var(--pomodoroDark);
+  border: 0.14rem solid var(--blackLight);
+  border-radius: 0.2rem;
+  height: 1.2rem;
+  width: 0.6rem;
+}
+
+/* Firefox */
+.volume-slide::-moz-range-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: var(--pomodoroDark);
+  border: 0.14rem solid var(--blackLight);
+  border-radius: 0.2rem;
+  height: 1.2rem;
+  width: 0.6rem;
+}
+
 
 
 

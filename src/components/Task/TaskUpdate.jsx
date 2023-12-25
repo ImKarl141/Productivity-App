@@ -3,11 +3,14 @@ import { ShowTaskEdit, ShowSubtaskEdit, ShowTaskUpdate, SetCurrentEditId, SetTas
 import { AddTaskIcon } from '../../icons';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import EraseSound from '../../assets/erase_Notification.wav'
 // import '../Task.css'
 
 const TaskUpdate = () => {
   const { dbTasks, dbProjects, dbTags, addSubtaskEdit, subtaskInput, currentEditId } = useSelector((store) => store.task);
   // Inputs
+
+  const notification = new Audio(EraseSound);
   const dispatch = useDispatch();
   // console.log(currentEditId);
 
@@ -111,6 +114,7 @@ const TaskUpdate = () => {
     try {
       await axios.delete("http://localhost:8800/TaskCurrent/" + id)
       updateChanges();
+      notification.play()
       // const resp = await axios.get('http://localhost:8800/TaskCurrent')
       // dispatch(SetTaskList(resp.data))
       // window.location.reload();

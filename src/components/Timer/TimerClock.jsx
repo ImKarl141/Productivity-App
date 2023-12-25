@@ -1,17 +1,23 @@
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { TimerSettings, PlayPauseFullIcon, PlayPauseMiniIcon, ResetTimer, SkipFullIcon, SkipMiniIcon, NumberDownIcon, NumberUpIcon } from "../../icons"
 import { useTimer } from "./useTimer"
 import { ShowTimerSettings, ToggleLanguage } from "../../features/timerSlice"
 import TimerClockSettings from "./TimerClockSettings"
+import PlaySound from '../../assets/play_Button.wav'
+import StopSound from '../../assets/stop_Button.wav'
 
 
 const TimerClock = () => {
-  const { isTimerSettings, isEnglish } = useSelector((store) => store.timer)
+  const { isTimerSettings, isEnglish, soundVolume } = useSelector((store) => store.timer)
   const { menuToggle } = useSelector((store) => store.menu);
   const { Menu, Task, Calendar, Notes } = menuToggle;
   // console.log(isEnglish);
   const dispatch = useDispatch()
+
+  const playSound = new Audio(PlaySound);
+  const stopSound = new Audio(StopSound)
+
 
   //Default values to load then timer is reset
   const [defaultValues, setDefaultValues] = useState({
@@ -73,8 +79,12 @@ const TimerClock = () => {
       return;
     }
   }
+  // const soundVolume = useRef(1)
 
-
+  // const handleVolume = (e) => {
+  //   soundVolume.current = e.target.value / 100
+  //   console.log(soundVolume.current);
+  // }
 
   const myAlert = () => {
     console.log("Timer finished");
@@ -85,12 +95,20 @@ const TimerClock = () => {
   //Clock's buttons 
   //Start and pause timer
   const playTimer = () => {
+    if (!isPlaying) {
+      playSound.play();
+      playSound.volume = 0.8;
+    }
     const newValue = { ...timer, isPlaying: !isPlaying }
     setTimer(newValue)
   }
 
   //Set all the values to 0
   const stopTimer = () => {
+    stopSound.play();
+    stopSound.volume = 0.8;
+    // if (isPlaying) {
+    // }
     const newValue = { ...timer, minutes: 0, seconds: 0, isPlaying: false }
     setTimer(newValue)
     setIsFinish(true)
@@ -185,6 +203,7 @@ const TimerClock = () => {
           </div>
           :
           <div className="pomodoro-timer">
+            {/* <input className="volume-timer" type="range" onChange={handleVolume} /> */}
             {
               isTimerSettings && <TimerClockSettings />
             }

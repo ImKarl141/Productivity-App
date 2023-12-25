@@ -7,7 +7,7 @@ import { useState } from 'react';
 
 const TagEdit = () => {
 
-  // const { taskItems, isEdit, addProjectEdit, projects, tags, addTagEdit, taskInput, taskProjectInput, taskTag, projectInput, tagInput } = useSelector((store) => store.task);
+  const { dbTags } = useSelector((store) => store.task);
 
   // Inputs
   // const { taskTitle, taskDescription, taskDate } = taskInput
@@ -21,6 +21,8 @@ const TagEdit = () => {
   })
 
   const { tag_name, tag_color } = tagInput;
+  const [isDuplicate, setIsDuplicate] = useState(false)
+
   const dispatch = useDispatch();
 
   const handleChangeInput = (e) => {
@@ -30,6 +32,16 @@ const TagEdit = () => {
 
   const handleTagSubmit = async (e) => {
     e.preventDefault();
+    if (!tag_name) {
+      return
+    }
+    for (const listOfTags of dbTags) {
+      if (tagInput.tag_name.trim() === listOfTags.tag_name.trim()) {
+        setIsDuplicate(true)
+        console.log("Find duplicate");
+        return
+      }
+    }
     try {
       await axios.post("http://localhost:8800/TagList", tagInput);
       const resp = await axios.get('http://localhost:8800/TagList')
@@ -65,7 +77,8 @@ const TagEdit = () => {
           placeholder='Tag name'
           type="text"
           value={tag_name}
-          className='myInputAddTag'
+          className={isDuplicate ? 'test' : 'myInputAddTag'}
+          // className='myInputAddTag'
           onChange={handleChangeInput}
         />
       </form>
