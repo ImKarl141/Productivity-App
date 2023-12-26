@@ -1,25 +1,39 @@
 import { useDispatch, useSelector } from "react-redux"
 import { NumberDownIcon, NumberUpIcon, CloseTimerSettings } from "../../icons"
 import { useState } from "react"
-import { ShowTimerSettings, SetSoundVolume } from "../../features/timerSlice"
+import { ShowTimerSettings, SetSoundVolume, SetTimerSettings } from "../../features/timerSlice"
 import GuitarSound from '../../assets/guitar_Notification.mp3'
 import TimerSound from '../../assets/timer_Notification.ogg'
 import EraseSound from '../../assets/erase_Notification.wav'
+import axios from "axios"
 // import GuitarSound from '../../assets/guitar_Notification.mp3'
 
+
 const TimerClockSettings = () => {
-  const { isTimerSettings, isEnglish, soundVolume } = useSelector((store) => store.timer);
+  const { isTimerSettings, isEnglish, soundVolume, dbTimer } = useSelector((store) => store.timer);
   const dispatch = useDispatch();
 
+  // const {focus, short, long} = dbTimer
+
   const [timerInput, setTimerInput] = useState({
-    focus: 25,
-    short: 5,
-    long: 15,
+    focus: dbTimer.focus,
+    short: dbTimer.short,
+    long: dbTimer.long,
   })
 
   const [myVolume, setSoundVolume] = useState(soundVolume)
 
   const { focus, short, long } = timerInput
+
+  const handleSettingsSubmit = async () => {
+    const id = 1;
+    try {
+      await axios.patch("http://localhost:8800/UserSettings/" + id, timerInput)
+      dispatch(SetTimerSettings({ ...dbTimer, focus: focus, short: short, long: long }))
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
   const handleChangeNumber = (e) => {
     if (e.target.value) {
@@ -87,6 +101,7 @@ const TimerClockSettings = () => {
         <span onClick={() => {
           dispatch(ShowTimerSettings())
           dispatch(SetSoundVolume(myVolume))
+          handleSettingsSubmit();
         }}>
           <CloseTimerSettings />
         </span>

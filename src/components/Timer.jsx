@@ -9,16 +9,20 @@ import { SetTaskList, ClearAllTasks, ClearFinishedTasks } from "../features/task
 import ListTimerAdd from "./Timer/ListTimerAdd"
 import ListTimerEdit from "./Timer/ListTimerEdit"
 import TimerClock from "./Timer/TimerClock"
-import { SetCurrentTimerTask, SetTimerTaskSettings } from "../features/timerSlice"
+import { SetCurrentTimerTask, SetTimerTaskSettings, SetTimerSettings } from "../features/timerSlice"
 import MiniBarTimer from "./MiniBarTimer"
 
 const Timer = () => {
   const { dbTasks } = useSelector((store) => store.task);
-  const { isTimerTaskEdit, currentTimerTask, isTimerTaskSettings } = useSelector((store) => store.timer);
+  const { isTimerTaskEdit, currentTimerTask, isTimerTaskSettings, dbTimer } = useSelector((store) => store.timer);
   const { menuToggle } = useSelector((store) => store.menu);
   const { Menu, Task, Calendar, Notes } = menuToggle;
   const dispatch = useDispatch();
   const temporalText = "Task title"
+
+  // console.log(dbTimer);
+
+  // const { focus } = dbTimer;
 
   //Get the focus_amount of every task
   const amountHours = dbTasks.reduce((acc, currentObj) => acc + currentObj.focus_amount, 0)
@@ -36,35 +40,42 @@ const Timer = () => {
 
   const { hours, minutes, ampm } = currentTime
 
-  const updateTime = () => {
-    const now = new Date();
-    setCurrentTime({
-      hours: now.getHours(),
-      minutes: now.getHours(),
-      ampm: hours < 12 ? "am" : "pm"
-    })
-    // hours.current = 
-    // minutes.current = now.getMinutes();
-    // ampm.current = hours < 12 ? "am" : "pm";
-  }
-
-  // setInterval(() => {
-  //   updateTime();
-  // }, 500)
-
   //Task fetching
   useEffect(() => {
     const fetchTaskList = async () => {
       try {
+        //Timer
+        const respTimer = await axios.get("http://localhost:8800/UserSettings")
+        const newSetting = respTimer.data.find(setting => setting.id === 1)
+        dispatch(SetTimerSettings(newSetting))
+
+        //Task
         const resp = await axios.get("http://localhost:8800/TaskCurrent")
-        // setDbTasks(resp.data)
         dispatch(SetTaskList(resp.data))
+
       } catch (err) {
         console.log(err);
       }
     }
     fetchTaskList();
   }, [])
+
+
+
+  //Task fetching
+  // useEffect(() => {
+  //   const fetchSettings = async () => {
+  //     try {
+  //       const resp = await axios.get("http://localhost:8800/UserSettings")
+  //       const newSetting = resp.data.find(setting => setting.id === 1)
+  //       dispatch(SetTimerSettings(newSetting))
+  //       // console.log(newSetting);
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //   }
+  //   fetchSettings();
+  // }, [])
 
 
   const clearFinished = () => {
@@ -129,7 +140,7 @@ const Timer = () => {
                 <div className="current-focus-title">
                   {currentTimerTask && <span className="currentTask">Current task: {currentTimerTask}</span>}
                   {/* <span className="focus-title">Title of the task</span> */}
-                  <img className="details-timer-img" src={details} alt="" onClick={() => dispatch(SetTimerTaskSettings())} />
+                  {/* <img className="details-timer-img" src={details} alt="" onClick={() => dispatch(SetTimerTaskSettings())} /> */}
                   {
                     isTimerTaskSettings && (
                       <div className="timerTaskSettings-container">

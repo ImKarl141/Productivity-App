@@ -2,41 +2,65 @@ import { useEffect, useRef, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { TimerSettings, PlayPauseFullIcon, PlayPauseMiniIcon, ResetTimer, SkipFullIcon, SkipMiniIcon, NumberDownIcon, NumberUpIcon } from "../../icons"
 import { useTimer } from "./useTimer"
-import { ShowTimerSettings, ToggleLanguage } from "../../features/timerSlice"
+import { ShowTimerSettings, ToggleLanguage, SetTimerSettings } from "../../features/timerSlice"
 import TimerClockSettings from "./TimerClockSettings"
 import PlaySound from '../../assets/play_Button.wav'
 import StopSound from '../../assets/stop_Button.wav'
+import FinishTimer from '../../assets/clockDigital_Alarm.mp3'
+import axios from "axios"
+
 
 
 const TimerClock = () => {
-  const { isTimerSettings, isEnglish, soundVolume } = useSelector((store) => store.timer)
+  const { isTimerSettings, isEnglish, soundVolume, dbTimer } = useSelector((store) => store.timer)
   const { menuToggle } = useSelector((store) => store.menu);
   const { Menu, Task, Calendar, Notes } = menuToggle;
   // console.log(isEnglish);
   const dispatch = useDispatch()
 
   const playSound = new Audio(PlaySound);
-  const stopSound = new Audio(StopSound)
+  const stopSound = new Audio(StopSound);
+  const finishTimer = new Audio(FinishTimer);
 
 
   //Default values to load then timer is reset
   const [defaultValues, setDefaultValues] = useState({
-    hours: '00',
-    minutes: 25,
+    minutes: 15,
     seconds: 0,
     isPlaying: false,
   });
+
 
   //Values for timer clock
+  // const [timer, setTimer] = useState({
+  //   minutes: 25,
+  //   seconds: 0,
+  //   isPlaying: false,
+  // });
   const [timer, setTimer] = useState({
-    // hours: '00',
     minutes: 25,
     seconds: 0,
     isPlaying: false,
   });
 
+
+  useEffect(() => {
+    const fetchTimerSettings = async () => {
+      try {
+        const respTimer = await axios.get("http://localhost:8800/UserSettings")
+        const newSetting = respTimer.data.find(setting => setting.id === 1)
+        setTimer({ ...timer, minutes: newSetting.focus })
+        setDefaultValues({ ...defaultValues, minutes: short })
+        //Timer
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    fetchTimerSettings();
+  }, [dbTimer])
+
   const [timerInput, setTimerInput] = useState({
-    focus: 25,
+    focus: 2,
     short: 5,
     long: 15,
   })
@@ -70,7 +94,8 @@ const TimerClock = () => {
         } else {
           // const newValue = { ...timer, isPlaying: !isPlaying }
           setTimer({ ...timer, isPlaying: !isPlaying })
-          setIsFinish(true)
+          setIsFinish(true);
+          finishTimer.play();
           //Activate Notification when timer is finished 
           myAlert();
         }
@@ -87,8 +112,8 @@ const TimerClock = () => {
   // }
 
   const myAlert = () => {
-    console.log("Timer finished");
-    // alert("Finished")
+    // console.log("Timer finished");
+    alert("Finished")
     // resetTimer();
   }
 
@@ -123,35 +148,6 @@ const TimerClock = () => {
     setIsFinish(false)
     console.log("Timer was reset");
 
-  }
-
-  const handleChangeNumber = (e) => {
-    if (e.target.value) {
-      setTimerInput((prev) => ({ ...prev, [e.target.name]: parseInt(e.target.value) }))
-    } else {
-      setTimerInput((prev) => ({ ...prev, [e.target.name]: 1 }))
-    }
-  }
-
-  const increaseNumber = (name) => {
-    // const amount = focus_amount;
-    if (name === "focus") {
-      setTimerInput({ ...timerInput, focus: focus + 1 })
-    } else if (name === "short") {
-      setTimerInput({ ...timerInput, short: short + 1 })
-    } else if (name === "long") {
-      setTimerInput({ ...timerInput, long: long + 1 })
-    }
-  }
-
-  const decreaseNumber = (name) => {
-    if (name === "focus" && focus > 1) {
-      setTimerInput({ ...timerInput, focus: focus - 1 })
-    } else if (name === "short" && short > 1) {
-      setTimerInput({ ...timerInput, short: short - 1 })
-    } else if (name === "long" && long > 1) {
-      setTimerInput({ ...timerInput, long: long - 1 })
-    }
   }
 
   return (

@@ -154,6 +154,16 @@ app.get('/DefaultColors', (req, resp) => {
   })
 })
 
+//User settings
+app.get('/UserSettings', (req, resp) => {
+  const q = "SELECT * FROM `UserSettings`"
+  db.query(q, (err, data) => {
+    if (err) {
+      return resp.json(err);
+    } return resp.json(data);
+  })
+})
+
 ////////////////////////////////////////////////////////////////////////
 
 //Update
@@ -173,6 +183,22 @@ app.put("/TaskCurrent/:id", (req, resp) => {
   ];
 
   db.query(q, [...values, taskId], (err, data) => {
+    if (err) return resp.json(err);
+    return resp.json(data);
+  })
+})
+
+//User settings
+app.patch("/UserSettings/:id", (req, resp) => {
+  const userId = req.params.id;
+  const q = "UPDATE UserSettings SET `focus` = ?, `short` = ?, `long` = ? WHERE id = ?"
+  const values = [
+    req.body.focus,
+    req.body.short,
+    req.body.long,
+  ];
+
+  db.query(q, [...values, userId], (err, data) => {
     if (err) return resp.json(err);
     return resp.json(data);
   })

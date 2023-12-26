@@ -19,7 +19,7 @@ const initialState = {
   currentProjectId: '',
   currentTagId: '',
   userName: 'Carlos',
-  dbTasks: [1],
+  dbTasks: [],
   dbProjects: [],
   dbTags: [],
   projects: userProjects,
