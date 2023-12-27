@@ -25,6 +25,25 @@ const TimerClock = () => {
 
   //Default values to load then timer is reset
   const [defaultValues, setDefaultValues] = useState({
+    minutes: 25,
+    seconds: 0,
+    short: 5,
+    long: 15,
+    amount: 0,
+    isPlaying: false,
+    isShortRest: true,
+    isLongRest: false,
+  });
+
+  //Short rest when focus timer is over
+  const [shortRest, setShortRest] = useState({
+    minutes: 5,
+    seconds: 0,
+    isPlaying: false,
+  });
+
+  //Long rest 
+  const [longRest, setLongRest] = useState({
     minutes: 15,
     seconds: 0,
     isPlaying: false,
@@ -32,15 +51,16 @@ const TimerClock = () => {
 
 
   //Values for timer clock
-  // const [timer, setTimer] = useState({
-  //   minutes: 25,
-  //   seconds: 0,
-  //   isPlaying: false,
-  // });
   const [timer, setTimer] = useState({
-    minutes: 25,
+    minutes: 28,
     seconds: 0,
+    short: 5,
+    long: 15,
+    amount: 0,
+    setLong: 4, //Add to database
     isPlaying: false,
+    isShortRest: true,
+    isLongRest: false,
   });
 
 
@@ -49,8 +69,8 @@ const TimerClock = () => {
       try {
         const respTimer = await axios.get("http://localhost:8800/UserSettings")
         const newSetting = respTimer.data.find(setting => setting.id === 1)
-        setTimer({ ...timer, minutes: newSetting.focus })
-        setDefaultValues({ ...defaultValues, minutes: short })
+        setTimer({ ...timer, minutes: newSetting.focus, short: newSetting.short, long: newSetting.long, amount: newSetting.amount })
+        setDefaultValues({ ...defaultValues, minutes: newSetting.focus })
         //Timer
       } catch (err) {
         console.log(err);
@@ -65,9 +85,9 @@ const TimerClock = () => {
     long: 15,
   })
 
-  const { focus, short, long } = timerInput
-
-  const { minutes, seconds, isPlaying } = timer;
+  //Destructure timer state. This control the timer.
+  const { minutes, seconds, short, long, isPlaying, isShortRest, isLongRest, amount } = timer;
+  // console.log(long);
   const [isFinish, setIsFinish] = useState(false)
 
   useTimer(() => {
@@ -104,12 +124,6 @@ const TimerClock = () => {
       return;
     }
   }
-  // const soundVolume = useRef(1)
-
-  // const handleVolume = (e) => {
-  //   soundVolume.current = e.target.value / 100
-  //   console.log(soundVolume.current);
-  // }
 
   const myAlert = () => {
     // console.log("Timer finished");
@@ -128,6 +142,23 @@ const TimerClock = () => {
     setTimer(newValue)
   }
 
+  const restTimer = () => {
+    if (amount < 4) {
+      //Increase the value of amount
+      const newValue = { ...timer, minutes: short, seconds: 0, isPlaying: false, isShortRest: false, amount: amount + 1 }
+      setTimer(newValue)
+    } else {
+      //Reset the amount of value to 0 in order to start with the sort rest period
+      const newValue = { ...timer, minutes: long, seconds: 0, isPlaying: false, isShortRest: false, amount: 0 }
+      setTimer(newValue)
+    }
+  }
+
+  // const longRestTimer = () => {
+  //   const newValue = { ...timer, minutes: long, seconds: 0, isPlaying: false }
+  //   setTimer(newValue)
+  // }
+
   //Set all the values to 0
   const stopTimer = () => {
     stopSound.play();
@@ -144,10 +175,9 @@ const TimerClock = () => {
   //Reset the timer to the default values (those are set in the user settings)
   const resetTimer = () => {
     // const newValue = { ...timer, seconds: 0, isPlaying: false }
-    setTimer(defaultValues)
+    setTimer({ ...defaultValues, amount: amount })
     setIsFinish(false)
     console.log("Timer was reset");
-
   }
 
   return (
@@ -199,6 +229,7 @@ const TimerClock = () => {
           </div>
           :
           <div className="pomodoro-timer">
+            <span>{amount}</span>
             {/* <input className="volume-timer" type="range" onChange={handleVolume} /> */}
             {
               isTimerSettings && <TimerClockSettings />
@@ -207,6 +238,18 @@ const TimerClock = () => {
               <TimerSettings />
             </button>
             <div className="timer-clock-full">
+              <span className="clock-effect-1">
+                <span className="clock-effect-line"></span>
+              </span>
+              <span className="clock-effect-2">
+                <span className="clock-effect-line"></span>
+              </span>
+              <span className="clock-effect-3">
+                <span className="clock-effect-line"></span>
+              </span>
+              <span className="clock-effect-4">
+                <span className="clock-effect-line"></span>
+              </span>
               {
                 minutes <= 9 ? <span className="timer-text-full">{`0${minutes}:`}</span> :
                   <span className="timer-text-full">{`${minutes}:`}</span>
@@ -245,9 +288,22 @@ const TimerClock = () => {
                     </button>
                   )
                 }
-                <button className='play-buttons-full' title="Stop" onClick={() => stopTimer()}>
+                {/* <button className='play-buttons-full' title="Stop" onClick={() => stopTimer()}>
                   <SkipFullIcon />
-                </button>
+                </button> */}
+                {
+                  isShortRest
+                    ? <button className='play-buttons-full' title="Short rest" onClick={() => restTimer()}>
+                      <SkipFullIcon />
+                      {/* <span style={{ color: "black" }}>Next: Stop the timer</span> */}
+                    </button>
+
+                    : <button className='play-buttons-full' title="Stop timer" onClick={() => stopTimer()}>
+                      <SkipFullIcon />
+                      {/* <span style={{ color: "black" }}>Reset the timer</span> */}
+                    </button>
+
+                }
               </div>
             </div>
           </div>

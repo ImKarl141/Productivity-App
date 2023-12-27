@@ -74,6 +74,47 @@
   border-radius: 10rem;
 }
 
+.clock-effect-1,
+.clock-effect-2,
+.clock-effect-3,
+.clock-effect-4 {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  left: 2.5rem;
+  top: 6.9rem;
+  width: 2.8rem;
+  height: 4rem;
+  /* background-color: rgba(255, 0, 0, 0.322); */
+  background-color: var(--pomodoroLight);
+  /* opacity: 0.4; */
+  border-radius: 0.2rem;
+  z-index: 8;
+}
+
+.clock-effect-2 {
+  left: 5.6rem;
+  top: 6.9rem;
+}
+
+.clock-effect-3 {
+  left: 9.7rem;
+  top: 6.9rem;
+}
+
+.clock-effect-4 {
+  left: 12.7rem;
+  top: 6.9rem;
+}
+
+.clock-effect-line{
+  width: 2.8rem;
+  height: 0.2rem;
+  background-color: var(--pomodoroDark);
+  z-index: 10;
+}
+
 .tick-main,
 .tick {
   display: flex;
@@ -189,6 +230,7 @@
 .timer-text-full {
   font-size: 5rem;
   font-weight: 600;
+  z-index: 9;
 }
 
 .play-buttons {
@@ -312,7 +354,7 @@ display: flex;
   align-items: start;
   justify-content: center;
   position: fixed;
-  z-index: 8;
+  z-index: 12;
   background-color: var(--blackLight);
   /* opacity: 0.8; */
   top: 0rem;
