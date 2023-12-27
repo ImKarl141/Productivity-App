@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux"
 import details from '../../images/kebab.svg'
-import { SetCurrentEditTimer, SetCheckedTask, SetCurrentTimerTask } from "../../features/timerSlice";
+import { SetCurrentEditTimer, SetCheckedTask, SetCurrentTimerTask, SetTimerSettings } from "../../features/timerSlice";
 import axios from "axios";
 import { useRef } from "react";
 import { SetTaskList } from "../../features/taskSlice";
@@ -8,13 +8,7 @@ import { SetTaskList } from "../../features/taskSlice";
 const ListTimerTask = () => {
   const dispatch = useDispatch();
   const { isTaskUpdate, dbTasks } = useSelector((store) => store.task);
-  const { currentTimerId, checkedItems, isTimerTaskEdit } = useSelector((store) => store.timer)
-  // console.log(currentTimerId);
-  // console.log(checkedItems.includes(20));
-
-  // const showId = (id) => {
-  //   console.log(`This is the project with ${id} ID`);
-  // }
+  const { currentTimerId, checkedItems, isTimerTaskEdit, dbTimer } = useSelector((store) => store.timer)
 
   const isSend = useRef(true)
 
@@ -35,16 +29,8 @@ const ListTimerTask = () => {
 
   const handleCheckedSubmit = async (title, focus, check, myId) => {
     try {
-      await axios.patch("http://localhost:8800/TaskCurrent/" + myId, { task_title: title, focus_amount: focus, is_checked: check });
+      const req = await axios.patch("http://localhost:8800/TaskCurrent/" + myId, { task_title: title, focus_amount: focus, is_checked: check });
       const resp = await axios.get("http://localhost:8800/TaskCurrent/");
-
-      //Update the local state of the Task List.
-      // const newTask = dbTasks.map((task) => {
-      //   if (task.id == myId) {
-      //     return { ...task, is_checked: check }; // Spread existing properties and override name
-      //   }
-      //   return task; // Keep original object for other elements
-      // });
       dispatch(SetTaskList(resp.data))
       // console.log("Checked");
       // window.location.reload();
@@ -53,6 +39,33 @@ const ListTimerTask = () => {
     }
   }
 
+  const handleCurrentTask = async (title, taskId) => {
+    const id = 1;
+    try {
+      await axios.patch("http://localhost:8800/UserSettings/CurrentTask/" + id, { current_task: title, task_id: taskId })
+      dispatch(SetTimerSettings({ ...dbTimer, current_task: title }))
+    } catch (err) {
+      console.log(err);
+    }
+  }
+  // const handleCurrentTask = async (title) => {
+  //   const id = 1
+  //   try {
+  //     await axios.patch("http://localhost:8800/UserSettings/CurrentTask/" + id, { current_task: title })
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // }
+
+  // const handleCurrentTask = async (focus) => {
+  //   const id = 1;
+  //   try {
+  //     await axios.patch("http://localhost:8800/UserSettings/" + id, timerInput)
+  //     dispatch(SetTimerSettings({ ...dbTimer, focus: focus, short: short, long: long }))
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // }
 
   return (
     <div className="currentTimerList-container">
@@ -83,7 +96,7 @@ const ListTimerTask = () => {
                       {/* {task_title} */}
                     </label>
                   </div>
-                  <div className="listTask-details" onClick={() => dispatch(SetCurrentTimerTask(task_title))}>
+                  <div className="listTask-details" onClick={() => handleCurrentTask(task_title, id)}>
                     <span>0/{focus_amount}</span>
                     {/*Hide details button when editing a task*/}
                     {
@@ -133,7 +146,7 @@ const ListTimerTask = () => {
                       <span className="task-text">{task_title}</span>
                     </label>
                   </div>
-                  <div className="listTask-details" onClick={() => dispatch(SetCurrentTimerTask(task_title))}>
+                  <div className="listTask-details" onClick={() => handleCurrentTask(task_title)}>
                     <span>0/{focus_amount}</span>
                     {
                       !isTimerTaskEdit && (

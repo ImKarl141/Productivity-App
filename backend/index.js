@@ -124,7 +124,7 @@ app.get("/TagList", (req, resp) => {
 })
 
 app.get("/TaskCurrent", (req, resp) => {
-  const q = "SELECT t.id, t.task_title, t.task_desc, t.task_date, t.focus_amount, t.is_checked, p.project_name, p.project_color, tg.tag_name, tg.tag_color FROM `TaskCurrent` t LEFT JOIN `ProjectList` p ON t.task_project = p.id LEFT JOIN `TagList` tg ON t.task_tag = tg.id";
+  const q = "SELECT t.id, t.task_title, t.task_desc, t.task_date, t.focus_amount, t.focus_finished, t.is_checked, p.project_name, p.project_color, tg.tag_name, tg.tag_color FROM `TaskCurrent` t LEFT JOIN `ProjectList` p ON t.task_project = p.id LEFT JOIN `TagList` tg ON t.task_tag = tg.id";
   db.query(q, (err, data) => {
     if (err) {
       return resp.json(err);
@@ -203,6 +203,37 @@ app.patch("/UserSettings/:id", (req, resp) => {
     return resp.json(data);
   })
 })
+
+app.patch("/UserSettings/CurrentTask/:id", (req, resp) => {
+  const userId = req.params.id
+  const q = "UPDATE UserSettings SET `current_task` = ?, `task_id` = ? WHERE id = ?"
+  const values = [
+    req.body.current_task,
+    req.body.task_id,
+  ]
+
+  db.query(q, [...values, userId], (err, data) => {
+    if (err) return resp.json(err);
+    return resp.json(data)
+  })
+})
+
+
+
+
+// app.patch("/UserSettings/CurrentTask/:id", (req, resp) => {
+//   const userId = req.params.id;
+//   const q = "UPDATE UserSettings SET `current_task` = ? WHERE id = ?"
+//   const values = [
+//     req.body.current_task,
+//   ]
+
+//   db.query(q, [...values, userId], (err, data) => {
+//     if (err) return resp.json(err);
+//     console.log("Settings changed Successfully");
+//     return resp.json(data);
+//   })
+// })
 
 // app.patch
 
@@ -368,34 +399,3 @@ app.delete("/NoteList/:id", (req, resp) => {
 app.listen(8800, () => {
   console.log("Connected to the server!");
 })
-
-
-
-
-
-// app.patch("/TaskCurrent/:id", (req, resp) => {
-//   const timerId = req.params.id;
-//   const q = "UPDATE TaskCurrent SET `task_title` = ?, `focus_amount` = ? WHERE id = ?"
-//   const values = [
-//     req.body.task_title,
-//     req.body.focus_amount,
-//   ];
-
-//   db.query(q, [...values, timerId], (err, data) => {
-//     if (err) return resp.json(err);
-//     return resp.json("TImer updated successfully");
-//   })
-// })
-// app.patch("/TaskCurrent/: id", (req, resp) => {
-//   const timerId = req.params.id;
-//   const q = "UPDATE TaskCurrent SET `task_title` = ?, `focus_amount` = ? WHERE id = ?"
-//   const values = [
-//     req.body.task_title,
-//     req.body.focus_amount,
-//   ];
-//   db.query(q, [...values, timerId], (err, data) => {
-//     if (err) return resp.json("Error");
-//     return resp.json("Note updated successfully");
-//   })
-
-// })

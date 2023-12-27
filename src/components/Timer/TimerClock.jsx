@@ -12,15 +12,20 @@ import axios from "axios"
 
 
 const TimerClock = () => {
-  const { isTimerSettings, isEnglish, soundVolume, dbTimer } = useSelector((store) => store.timer)
+  const { isTimerSettings, isEnglish, soundVolume, dbTimer, currentTimerTask } = useSelector((store) => store.timer)
+  const { dbTasks } = useSelector((store) => store.task)
   const { menuToggle } = useSelector((store) => store.menu);
   const { Menu, Task, Calendar, Notes } = menuToggle;
   // console.log(isEnglish);
   const dispatch = useDispatch()
+  // console.log(currentTimerTask);
 
   const playSound = new Audio(PlaySound);
   const stopSound = new Audio(StopSound);
   const finishTimer = new Audio(FinishTimer);
+
+  // const currentTask = dbTimer.find(task => task.task_title === currentTimerTask)
+  // console.log(currentTask);
 
 
   //Default values to load then timer is reset
@@ -52,15 +57,16 @@ const TimerClock = () => {
 
   //Values for timer clock
   const [timer, setTimer] = useState({
-    minutes: 28,
+    minutes: 28, //from database
     seconds: 0,
-    short: 5,
-    long: 15,
-    amount: 0,
+    short: 5, //from database
+    long: 15, //from database
+    amount: 0, //from database
     setLong: 4, //Add to database
     isPlaying: false,
     isShortRest: true,
     isLongRest: false,
+    current_task: '', //from database
   });
 
 
@@ -69,7 +75,7 @@ const TimerClock = () => {
       try {
         const respTimer = await axios.get("http://localhost:8800/UserSettings")
         const newSetting = respTimer.data.find(setting => setting.id === 1)
-        setTimer({ ...timer, minutes: newSetting.focus, short: newSetting.short, long: newSetting.long, amount: newSetting.amount })
+        setTimer({ ...timer, minutes: newSetting.focus, short: newSetting.short, long: newSetting.long, amount: newSetting.amount, current_task: newSetting.current_task })
         setDefaultValues({ ...defaultValues, minutes: newSetting.focus })
         //Timer
       } catch (err) {
@@ -86,7 +92,7 @@ const TimerClock = () => {
   })
 
   //Destructure timer state. This control the timer.
-  const { minutes, seconds, short, long, isPlaying, isShortRest, isLongRest, amount } = timer;
+  const { minutes, seconds, short, long, isPlaying, isShortRest, isLongRest, amount, current_task } = timer;
   // console.log(long);
   const [isFinish, setIsFinish] = useState(false)
 
@@ -142,6 +148,7 @@ const TimerClock = () => {
     setTimer(newValue)
   }
 
+  //Skip to next 
   const restTimer = () => {
     if (amount < 4) {
       //Increase the value of amount
@@ -174,8 +181,8 @@ const TimerClock = () => {
 
   //Reset the timer to the default values (those are set in the user settings)
   const resetTimer = () => {
-    // const newValue = { ...timer, seconds: 0, isPlaying: false }
-    setTimer({ ...defaultValues, amount: amount })
+    //Save the amount value when resetting the timer, also save the rest of the info
+    setTimer({ ...defaultValues, short: short, long: long, amount: amount, current_task: current_task })
     setIsFinish(false)
     console.log("Timer was reset");
   }
@@ -229,8 +236,12 @@ const TimerClock = () => {
           </div>
           :
           <div className="pomodoro-timer">
+            {
+              current_task && <span>Current task: {current_task}</span>
+            }
             <span>{amount}</span>
             {/* <input className="volume-timer" type="range" onChange={handleVolume} /> */}
+            {/* Settings for amount of focus, rest, sound etc */}
             {
               isTimerSettings && <TimerClockSettings />
             }

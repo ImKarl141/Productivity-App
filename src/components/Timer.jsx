@@ -20,6 +20,24 @@ const Timer = () => {
   const dispatch = useDispatch();
   const temporalText = "Task title"
 
+  const current_task = dbTimer.current_task
+
+
+  // $(`.listTask-timer:contains()`)
+
+
+
+  // useEffect(() => {
+  //   if (currentProjectView || currentTagView) {
+  //     $(`.task-item-overall-container`).show()
+  //     $(`.task-item-overall-container:not(:contains(${currentProjectView}))`).hide()
+  //     $(`.task-item-overall-container:not(:contains(${currentTagView}))`).hide()
+
+  //   } else (
+  //     $(`.task-item-overall-container`).show()
+  //   )
+  // }, [currentProjectView, currentView, currentTagView])
+
   // console.log(dbTimer);
 
   // const { focus } = dbTimer;
@@ -100,7 +118,6 @@ const Timer = () => {
     }
   }
 
-
   const handleClearAll = async () => {
     // console.log("All tasks deleted");
     try {
@@ -110,8 +127,6 @@ const Timer = () => {
       console.log(err);
     }
   }
-
-
 
   return (
     <div>
@@ -125,7 +140,7 @@ const Timer = () => {
                 <span className="pomo-container"><PomodoroIcon /> #1</span>
                 {/*Show the title only when an task is selected in the list*/}
                 <div className="current-focus-title">
-                  {currentTimerTask && <span className="currentTask">Current task: {currentTimerTask}</span>}
+                  {current_task && <span className="currentTask">Current task: {current_task}</span>}
                 </div>
               </div>
             </div>
@@ -138,9 +153,9 @@ const Timer = () => {
                 <span className="pomo-container"><PomodoroIcon /> #1</span>
                 {/*Show the title only when an task is selected in the list*/}
                 <div className="current-focus-title">
-                  {currentTimerTask && <span className="currentTask">Current task: {currentTimerTask}</span>}
+                  {current_task && <span className="currentTask">Current task: {current_task}</span>}
                   {/* <span className="focus-title">Title of the task</span> */}
-                  {/* <img className="details-timer-img" src={details} alt="" onClick={() => dispatch(SetTimerTaskSettings())} /> */}
+                  <img className="details-timer-img" src={details} alt="" onClick={() => dispatch(SetTimerTaskSettings())} />
                   {
                     isTimerTaskSettings && (
                       <div className="timerTaskSettings-container">
