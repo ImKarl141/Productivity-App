@@ -76,7 +76,6 @@ const TimerClock = () => {
     const fetchTimerSettings = async () => {
       try {
         const respTimer = await axios.get("http://localhost:8800/UserSettings")
-        console.log(respTimer.data);
         const newSetting = respTimer.data.find(setting => setting.id === 1)
         setTimer({ ...timer, minutes: newSetting.focus, short: newSetting.short, long: newSetting.long, amount: newSetting.amount, current_task: newSetting.current_task, task_id: newSetting.task_id })
         setDefaultValues({ ...defaultValues, minutes: newSetting.focus })
@@ -151,6 +150,7 @@ const TimerClock = () => {
         return { ...task }
       })
       dispatch(SetTaskList(newTask))
+      // console.log(newTask);
     } catch (err) {
       console.log(err);
     }

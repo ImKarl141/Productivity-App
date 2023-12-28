@@ -36,6 +36,7 @@ const initialState = {
   amountPomo: 0,
   soundVolume: 0.8,
   dbTimer: {},
+  lastTaskId: ''
 }
 
 
@@ -81,9 +82,12 @@ const timerSlice = createSlice({
     },
     SetTimerSettings: (state, value) => {
       state.dbTimer = value.payload
-    }
+    },
+    SetLastTaskId: (state, value) => {
+      state.lastTaskId = value.payload;
+    },
   }
 });
 
-export const { SetTimerListAdd, SetTimerListEdit, SetCurrentEditTimer, SetCheckedTask, SetCurrentTimerTask, ShowTimerSettings, ToggleLanguage, SetTimerTaskSettings, SetSoundVolume, SetTimerSettings } = timerSlice.actions;
+export const { SetTimerListAdd, SetTimerListEdit, SetCurrentEditTimer, SetCheckedTask, SetCurrentTimerTask, ShowTimerSettings, ToggleLanguage, SetTimerTaskSettings, SetSoundVolume, SetTimerSettings, SetLastTaskId } = timerSlice.actions;
 export default timerSlice.reducer;

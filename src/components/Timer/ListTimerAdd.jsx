@@ -10,7 +10,7 @@ import { AddNewTask } from "../../features/taskSlice";
 
 const ListTimerAdd = () => {
   const dispatch = useDispatch();
-  const { isTimerTaskAdd, isSubtaskTimer, subtasksTest, currentTimerId, dbTimer } = useSelector((store) => store.timer);
+  const { isTimerTaskAdd, isSubtaskTimer, subtasksTest, currentTimerId, dbTimer, lastTaskId } = useSelector((store) => store.timer);
   const { dbTasks } = useSelector((store) => store.task);
 
   const [timerInput, setTimerInput] = useState({
@@ -50,7 +50,8 @@ const ListTimerAdd = () => {
     }
     try {
       await axios.post("http://localhost:8800/TaskCurrent", timerInput);
-      const nextId = dbTasks.length > 0 ? dbTasks[dbTasks.length - 1].id : dbTimer.task_id;
+      // const nextId = dbTasks.length > 0 ? dbTasks[dbTasks.length - 1].id : dbTimer.task_id;
+      const nextId = dbTasks.length > 0 ? lastTaskId : dbTimer.task_id;
       dispatch(AddNewTask({ ...timerInput, id: nextId + 1 }))
 
       setTimerInput({
@@ -63,7 +64,8 @@ const ListTimerAdd = () => {
         focus_finished: 0,
         is_checked: 0,
       })
-      // console.log("Task created");
+      console.log("Task created");
+      console.log(nextId + 1);
 
       // window.location.reload();
     } catch (err) {

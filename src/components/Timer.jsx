@@ -9,7 +9,7 @@ import { SetTaskList, ClearAllTasks, ClearFinishedTasks } from "../features/task
 import ListTimerAdd from "./Timer/ListTimerAdd"
 import ListTimerEdit from "./Timer/ListTimerEdit"
 import TimerClock from "./Timer/TimerClock"
-import { SetCurrentTimerTask, SetTimerTaskSettings, SetTimerSettings } from "../features/timerSlice"
+import { SetCurrentTimerTask, SetTimerTaskSettings, SetTimerSettings, SetLastTaskId } from "../features/timerSlice"
 import MiniBarTimer from "./MiniBarTimer"
 
 const Timer = () => {
@@ -113,8 +113,12 @@ const Timer = () => {
   const handleClearFinished = async (id) => {
     const settingsId = 1;
     const myId = 0;
+    const lastId = dbTasks.length > 0 ? dbTasks[dbTasks.length - 1].id : 0;
+    dispatch(SetLastTaskId(lastId))
     try {
       await axios.delete("http://localhost:8800/TaskCurrent/" + id)
+      await axios.patch("http://localhost:8800/UserSettings/ClearCurrentTask/" + settingsId, { current_task: null, task_id: myId })
+      dispatch(SetTimerSettings({ ...dbTimer, current_task: '', task_id: myId }))
       // const nextId = dbTasks.length > 0 ? dbTasks[dbTasks.length - 1].id : dbTimer.task_id;
       // dispatch(AddNewTask({ ...timerInput, id: nextId + 1 }))
     } catch (err) {
