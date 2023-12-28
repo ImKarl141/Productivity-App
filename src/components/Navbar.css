@@ -35,7 +35,7 @@ button:hover {
 }
 
 .button-clicked {
-  background-color: var(--pomodoroLight);
+  background-color: var(--pomodoroDark);
 }
 
 /* .main-menu {
