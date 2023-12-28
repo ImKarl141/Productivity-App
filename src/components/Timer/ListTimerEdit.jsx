@@ -1,15 +1,15 @@
 import { useDispatch, useSelector } from "react-redux"
-import { SetTimerListEdit } from "../../features/timerSlice";
+import { SetTimerListEdit, SetTimerSettings } from "../../features/timerSlice";
 import { NumberUpIcon, NumberDownIcon, AddSubtaskIcon } from "../../icons";
 import { useState } from "react";
 import axios from "axios";
-import { SetTaskList, DeleteTask } from "../../features/taskSlice";
+import { SetTaskList, DeleteTask, } from "../../features/taskSlice";
 
 
 
 const ListTimerUpdate = () => {
   const { isTaskUpdate, dbTasks } = useSelector((store) => store.task);
-  const { isTimerTaskEdit, isSubtaskTimer, subtasksTest, currentTimerId } = useSelector((store) => store.timer);
+  const { isTimerTaskEdit, isSubtaskTimer, subtasksTest, currentTimerId, dbTimer } = useSelector((store) => store.timer);
 
   const [timerInput, setTimerInput] = useState({
     task_title: currentTimerId ? dbTasks.find(task => task.id === currentTimerId).task_title : '',
@@ -71,8 +71,19 @@ const ListTimerUpdate = () => {
   }
 
   const handleTimerDelete = async (id) => {
+    const settingsId = 1
     try {
       await axios.delete("http://localhost:8800/TaskCurrent/" + id);
+      // store the last id of the Task inside the UserSettings table in order to use it when the Task list is empty. This is to retain the auto_increment of the primary key inside SQL
+      if (dbTasks.length <= 1) {
+        await axios.patch("http://localhost:8800/UserSettings/ClearCurrentTask/" + settingsId, { current_task: null, task_id: id })
+        //Update UserSettings
+        dispatch(SetTimerSettings({ ...dbTimer, current_task: '', task_id: id }))
+      } else { //Clear current_task and task_id
+        await axios.patch("http://localhost:8800/UserSettings/ClearCurrentTask/" + settingsId, { current_task: null, task_id: null })
+        //Update UserSettings
+        dispatch(SetTimerSettings({ ...dbTimer, current_task: '', task_id: '' }))
+      }
       const indexTask = dbTasks.findIndex(task => task.id == id);
       dispatch(DeleteTask(indexTask))
       dispatch(SetTimerListEdit(''))

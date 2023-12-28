@@ -111,22 +111,44 @@ const Timer = () => {
     dispatch(SetTaskList(newTask))
   }
   const handleClearFinished = async (id) => {
+    const settingsId = 1;
+    const myId = 0;
     try {
       await axios.delete("http://localhost:8800/TaskCurrent/" + id)
+      // const nextId = dbTasks.length > 0 ? dbTasks[dbTasks.length - 1].id : dbTimer.task_id;
+      // dispatch(AddNewTask({ ...timerInput, id: nextId + 1 }))
     } catch (err) {
       console.log();
     }
   }
 
   const handleClearAll = async () => {
-    // console.log("All tasks deleted");
+    const settingsId = 1;
+    const id = 0;
     try {
       await axios.post("http://localhost:8800/TaskCurrent/ClearAll")
+      await axios.patch("http://localhost:8800/UserSettings/ClearCurrentTask/" + settingsId, { current_task: null, task_id: id })
+      dispatch(SetTimerSettings({ ...dbTimer, current_task: '', task_id: id }))
       dispatch(SetTaskList([]))
     } catch (err) {
       console.log(err);
     }
   }
+
+  // const handleClearAll = async () => {
+  //   const id = 0;
+  //   const settingsId = 1
+  //   // console.log("All tasks deleted");
+  //   try {
+  //     await axios.post("http://localhost:8800/TaskCurrent/ClearAll")
+  //     await axios.patch("http://localhost:8800/UserSettings/ClearCurrentTask/" + settingsId, { current_task: null, task_id: id })
+  //     //Update UserSettings
+  //     dispatch(SetTimerSettings({ ...dbTimer, current_task: '', task_id: id }))
+  //     dispatch(SetTaskList([]))
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // }
 
   return (
     <div>

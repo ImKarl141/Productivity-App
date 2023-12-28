@@ -188,6 +188,8 @@ app.put("/TaskCurrent/:id", (req, resp) => {
   })
 })
 
+
+
 //User settings
 app.patch("/UserSettings/:id", (req, resp) => {
   const userId = req.params.id;
@@ -214,9 +216,53 @@ app.patch("/UserSettings/CurrentTask/:id", (req, resp) => {
 
   db.query(q, [...values, userId], (err, data) => {
     if (err) return resp.json(err);
+    console.log("Current Task Updated");
     return resp.json(data)
   })
 })
+
+app.patch("/UserSettings/ClearCurrentTask/:id", (req, resp) => {
+  const userId = req.params.id
+  const q = "UPDATE UserSettings SET `current_task` = ?, `task_id` = ? WHERE id = ?"
+  const values = [
+    req.body.current_task,
+    req.body.task_id,
+  ]
+
+  db.query(q, [...values, userId], (err, data) => {
+    if (err) return resp.json(err);
+    console.log("Current Task Cleared");
+    return resp.json(data)
+  })
+})
+
+app.patch("/TaskCurrent/AddPomo/:id", (req, resp) => {
+  const taskId = req.params.id
+  const q = "UPDATE TaskCurrent SET `focus_finished` = ?  WHERE id = ?"
+  const values = [
+    req.body.focus_finished,
+  ];
+
+  db.query(q, [...values, taskId], (err, data) => {
+    if (err) return resp.json(err);
+    console.log("Focus amount added");
+    return resp.json(data);
+  })
+})
+
+// app.patch("/TaskCurrent/AddPomo/:id", (req, resp) => {
+//   const taskId = req.params.id
+//   const q = "UPDATE TaskCurrent SET `focus_finished` = ? WHERE id = ?"
+//   const values = [
+//     req.body.focus_finished,
+//   ]
+
+//   db.query(q, [...values, taskId], (err, data) => {
+//     if (err) return resp.json(err);
+//     console.log("Updated");
+//     return resp.json(data)
+//   })
+// })
 
 
 

@@ -8,6 +8,7 @@ import PlaySound from '../../assets/play_Button.wav'
 import StopSound from '../../assets/stop_Button.wav'
 import FinishTimer from '../../assets/clockDigital_Alarm.mp3'
 import axios from "axios"
+import { SetTaskList } from "../../features/taskSlice"
 
 
 
@@ -67,6 +68,7 @@ const TimerClock = () => {
     isShortRest: true,
     isLongRest: false,
     current_task: '', //from database
+    task_id: undefined
   });
 
 
@@ -74,8 +76,9 @@ const TimerClock = () => {
     const fetchTimerSettings = async () => {
       try {
         const respTimer = await axios.get("http://localhost:8800/UserSettings")
+        console.log(respTimer.data);
         const newSetting = respTimer.data.find(setting => setting.id === 1)
-        setTimer({ ...timer, minutes: newSetting.focus, short: newSetting.short, long: newSetting.long, amount: newSetting.amount, current_task: newSetting.current_task })
+        setTimer({ ...timer, minutes: newSetting.focus, short: newSetting.short, long: newSetting.long, amount: newSetting.amount, current_task: newSetting.current_task, task_id: newSetting.task_id })
         setDefaultValues({ ...defaultValues, minutes: newSetting.focus })
         //Timer
       } catch (err) {
@@ -92,8 +95,8 @@ const TimerClock = () => {
   })
 
   //Destructure timer state. This control the timer.
-  const { minutes, seconds, short, long, isPlaying, isShortRest, isLongRest, amount, current_task } = timer;
-  // console.log(long);
+  const { minutes, seconds, short, long, isPlaying, isShortRest, isLongRest, amount, current_task, task_id } = timer;
+  // console.log(task_id);
   const [isFinish, setIsFinish] = useState(false)
 
   useTimer(() => {
@@ -119,11 +122,10 @@ const TimerClock = () => {
           setTimer({ ...timer, seconds: timer.seconds - 1 });
         } else {
           // const newValue = { ...timer, isPlaying: !isPlaying }
-          setTimer({ ...timer, isPlaying: !isPlaying })
-          setIsFinish(true);
-          finishTimer.play();
-          //Activate Notification when timer is finished 
-          myAlert();
+          setTimer({ ...timer, isPlaying: !isPlaying, minutes: short, isShortRest: false }) // Once the focus finished set to short/long rest
+          handleTaskPomo(); //Add +1 to focus_finished
+          finishTimer.play(); // Alarm sound
+          myAlert(); //Activate Notification when timer is finished
         }
       }
     } else {
@@ -137,6 +139,36 @@ const TimerClock = () => {
     // resetTimer();
   }
 
+
+  const handleTaskPomo = async () => {
+    const focus_finished = dbTasks.find(task => task.id === task_id).focus_finished
+    try {
+      await axios.patch("http://localhost:8800/TaskCurrent/AddPomo/" + task_id, { focus_finished: focus_finished + 1 })
+      const newTask = dbTasks.map((task) => {
+        if (task.id === task_id) {
+          return { ...task, focus_finished: focus_finished + 1 }
+        }
+        return { ...task }
+      })
+      dispatch(SetTaskList(newTask))
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  // const handleTaskPomo = async () => {
+  //   const focus_finished = dbTasks.find(task => task.id === task_id).focus_finished
+  //   const id = task_id
+  //   // focus_finished
+  //   //Add +1 to the focus_finished column inside the TaskCurrent table
+  //   try {
+  //     await axios.patch("http://localhost:8800/TaskCurrent/AddPomo/" + id, { focus_finished: focus_finished + 1 })
+  //     // dispatch(SetTimerSettings({ ...dbTimer, current_task: title }))
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // }
+
   //Clock's buttons 
   //Start and pause timer
   const playTimer = () => {
@@ -148,8 +180,9 @@ const TimerClock = () => {
     setTimer(newValue)
   }
 
-  //Skip to next 
+  //Skip to next restTimer
   const restTimer = () => {
+    handleTaskPomo();
     if (amount < 4) {
       //Increase the value of amount
       const newValue = { ...timer, minutes: short, seconds: 0, isPlaying: false, isShortRest: false, amount: amount + 1 }
@@ -182,8 +215,10 @@ const TimerClock = () => {
   //Reset the timer to the default values (those are set in the user settings)
   const resetTimer = () => {
     //Save the amount value when resetting the timer, also save the rest of the info
-    setTimer({ ...defaultValues, short: short, long: long, amount: amount, current_task: current_task })
+    setTimer({ ...defaultValues, short: short, long: long, amount: amount, current_task: current_task, task_id: task_id })
+
     setIsFinish(false)
+    console.log(timer);
     console.log("Timer was reset");
   }
 
@@ -236,6 +271,7 @@ const TimerClock = () => {
           </div>
           :
           <div className="pomodoro-timer">
+            <button onClick={() => handleTaskPomo()}>Test</button>
             {
               current_task && <span>Current task: {current_task}</span>
             }

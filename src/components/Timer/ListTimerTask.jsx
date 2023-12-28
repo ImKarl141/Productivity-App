@@ -71,7 +71,7 @@ const ListTimerTask = () => {
     <div className="currentTimerList-container">
       {
         dbTasks.map((task) => {
-          const { id, task_title, focus_amount, is_checked } = task
+          const { id, task_title, focus_amount, is_checked, focus_finished } = task
           //Check if the timer is in current editing. When task is editing a window for editing is display the the Task is hidden from the list
           if (id !== currentTimerId) {
             //Not checked items
@@ -97,11 +97,14 @@ const ListTimerTask = () => {
                     </label>
                   </div>
                   <div className="listTask-details" onClick={() => handleCurrentTask(task_title, id)}>
-                    <span>0/{focus_amount}</span>
+                    <span>{focus_finished}/{focus_amount}</span>
                     {/*Hide details button when editing a task*/}
                     {
                       !isTimerTaskEdit && (
-                        <button className="details-task-btn" title="Task settings" onClick={() => dispatch(SetCurrentEditTimer(id))}>
+                        <button className="details-task-btn" title="Task settings" onClick={(e) => {
+                          e.stopPropagation();
+                          dispatch(SetCurrentEditTimer(id));
+                        }}>
                           <img className="details-task-img" src={details} alt="" />
                         </button>
                       )
@@ -123,7 +126,7 @@ const ListTimerTask = () => {
       {/*Display the checked elements at the end*/}
       {
         dbTasks.map((task) => {
-          const { id, task_title, focus_amount, is_checked } = task
+          const { id, task_title, focus_amount, is_checked, focus_finished } = task
           // console.log(focus_amount);
           if (id !== currentTimerId) {
             // Checked items
@@ -146,11 +149,14 @@ const ListTimerTask = () => {
                       <span className="task-text">{task_title}</span>
                     </label>
                   </div>
-                  <div className="listTask-details" onClick={() => handleCurrentTask(task_title)}>
-                    <span>0/{focus_amount}</span>
+                  <div className="listTask-details" onClick={() => handleCurrentTask(task_title, id)}>
+                    <span>{focus_finished}/{focus_amount}</span>
                     {
                       !isTimerTaskEdit && (
-                        <button className="details-task-btn" title="Task settings" onClick={() => dispatch(SetCurrentEditTimer(id))}>
+                        <button className="details-task-btn" title="Task settings" onClick={(e) => {
+                          e.stopPropagation();
+                          dispatch(SetCurrentEditTimer(id));
+                        }}>
                           <img className="details-task-img" src={details} alt="" />
                         </button>
                       )
