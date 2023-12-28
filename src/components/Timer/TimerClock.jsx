@@ -31,29 +31,43 @@ const TimerClock = () => {
 
   //Default values to load then timer is reset
   const [defaultValues, setDefaultValues] = useState({
-    minutes: 25,
+    // minutes: 25,
+    // seconds: 0,
+    // short: 5,
+    // long: 15,
+    // amount: 0,
+    // isPlaying: false,
+    // isShortRest: true,
+    // isLongRest: false,
+    minutes: 26, //from database
     seconds: 0,
-    short: 5,
-    long: 15,
-    amount: 0,
+    short: 5, //from database
+    long: 15, //from database
+    amount: 0, //from database
+    setLong: 4, //from database
     isPlaying: false,
     isShortRest: true,
     isLongRest: false,
+    current_task: '', //from database
+    task_id: undefined
   });
 
   //Short rest when focus timer is over
-  const [shortRest, setShortRest] = useState({
-    minutes: 5,
-    seconds: 0,
-    isPlaying: false,
-  });
+  // const [shortRest, setShortRest] = useState({
+  //   minutes: 5,
+  //   seconds: 0,
+  //   isPlaying: false,
+  // });
 
   //Long rest 
-  const [longRest, setLongRest] = useState({
-    minutes: 15,
-    seconds: 0,
-    isPlaying: false,
-  });
+  // const [longRest, setLongRest] = useState({
+  //   minutes: 15,
+  //   seconds: 0,
+  //   isPlaying: false,
+  // });
+
+  const [shortRest, setShortRest] = useState(false)
+  const [longRest, setLongRest] = useState(false)
 
 
   //Values for timer clock
@@ -63,7 +77,7 @@ const TimerClock = () => {
     short: 5, //from database
     long: 15, //from database
     amount: 0, //from database
-    setLong: 4, //Add to database
+    setLong: 4, //from database
     isPlaying: false,
     isShortRest: true,
     isLongRest: false,
@@ -77,8 +91,26 @@ const TimerClock = () => {
       try {
         const respTimer = await axios.get("http://localhost:8800/UserSettings")
         const newSetting = respTimer.data.find(setting => setting.id === 1)
-        setTimer({ ...timer, minutes: newSetting.focus, short: newSetting.short, long: newSetting.long, amount: newSetting.amount, current_task: newSetting.current_task, task_id: newSetting.task_id })
-        setDefaultValues({ ...defaultValues, minutes: newSetting.focus })
+        setTimer({
+          ...timer,
+          minutes: newSetting.focus,
+          short: newSetting.short,
+          long: newSetting.long,
+          amount: newSetting.amount,
+          setLong: newSetting.setLong,
+          current_task: newSetting.current_task,
+          task_id: newSetting.task_id
+        })
+        setDefaultValues({
+          ...defaultValues,
+          minutes: newSetting.focus,
+          short: newSetting.short,
+          long: newSetting.long,
+          amount: newSetting.amount,
+          setLong: newSetting.setLong,
+          current_task: newSetting.current_task,
+          task_id: newSetting.task_id
+        })
         //Timer
       } catch (err) {
         console.log(err);
@@ -122,7 +154,8 @@ const TimerClock = () => {
         } else {
           // const newValue = { ...timer, isPlaying: !isPlaying }
           setTimer({ ...timer, isPlaying: !isPlaying, minutes: short, isShortRest: false }) // Once the focus finished set to short/long rest
-          handleTaskPomo(); //Add +1 to focus_finished
+          // handleTaskPomo(); //Add +1 to focus_finished
+          shortRest || longRest ? () => { setShortRest(false); setLongRest(false) } : restTimer(); //If in short/long rest do not execute restTimer
           finishTimer.play(); // Alarm sound
           myAlert(); //Activate Notification when timer is finished
         }
@@ -131,6 +164,11 @@ const TimerClock = () => {
       return;
     }
   }
+
+  // const resetRest = () => {
+  //   setShortRest(false) 
+  //   setLongRest(false)
+  // }
 
   const myAlert = () => {
     // console.log("Timer finished");
@@ -185,10 +223,13 @@ const TimerClock = () => {
     handleTaskPomo();
     if (amount < 4) {
       //Increase the value of amount
+      //Short rest
       const newValue = { ...timer, minutes: short, seconds: 0, isPlaying: false, isShortRest: false, amount: amount + 1 }
+      setShortRest(true)
       setTimer(newValue)
     } else {
       //Reset the amount of value to 0 in order to start with the sort rest period
+      //Long rest
       const newValue = { ...timer, minutes: long, seconds: 0, isPlaying: false, isShortRest: false, amount: 0 }
       setTimer(newValue)
     }
@@ -205,6 +246,8 @@ const TimerClock = () => {
     stopSound.volume = 0.8;
     // if (isPlaying) {
     // }
+    setShortRest(false)
+    setLongRest(false)
     const newValue = { ...timer, minutes: 0, seconds: 0, isPlaying: false }
     setTimer(newValue)
     setIsFinish(true)
@@ -216,6 +259,9 @@ const TimerClock = () => {
   const resetTimer = () => {
     //Save the amount value when resetting the timer, also save the rest of the info
     setTimer({ ...defaultValues, short: short, long: long, amount: amount, current_task: current_task, task_id: task_id })
+
+    setShortRest(false)
+    setLongRest(false)
 
     setIsFinish(false)
     console.log(timer);
@@ -271,11 +317,11 @@ const TimerClock = () => {
           </div>
           :
           <div className="pomodoro-timer">
-            <button onClick={() => handleTaskPomo()}>Test</button>
+            {/* <button onClick={() => handleTaskPomo()}>Test</button> */}
             {
               current_task && <span>Current task: {current_task}</span>
             }
-            <span>{amount}</span>
+            {/* <span>{amount}</span> */}
             {/* <input className="volume-timer" type="range" onChange={handleVolume} /> */}
             {/* Settings for amount of focus, rest, sound etc */}
             {
@@ -284,7 +330,7 @@ const TimerClock = () => {
             <button className="timerSettings-btn" onClick={() => dispatch(ShowTimerSettings())}>
               <TimerSettings />
             </button>
-            <div className="timer-clock-full">
+            <div className="timer-clock-full" style={{ backgroundColor: shortRest ? "var(--gray02)" : "var(--white)" }}>
               <span className="clock-effect-1">
                 <span className="clock-effect-line"></span>
               </span>

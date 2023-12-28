@@ -5,9 +5,6 @@ import { useState } from "react";
 import axios from "axios";
 import { AddNewTask } from "../../features/taskSlice";
 
-
-
-
 const ListTimerAdd = () => {
   const dispatch = useDispatch();
   const { isTimerTaskAdd, isSubtaskTimer, subtasksTest, currentTimerId, dbTimer, lastTaskId } = useSelector((store) => store.timer);
@@ -50,8 +47,9 @@ const ListTimerAdd = () => {
     }
     try {
       await axios.post("http://localhost:8800/TaskCurrent", timerInput);
-      // const nextId = dbTasks.length > 0 ? dbTasks[dbTasks.length - 1].id : dbTimer.task_id;
-      const nextId = dbTasks.length > 0 ? lastTaskId : dbTimer.task_id;
+
+      const nextId = dbTasks.length >= 1 ? dbTasks[dbTasks.length - 1].id : dbTimer.task_id;
+      // const nextId = dbTasks.length > 0 ? lastTaskId : dbTimer.task_id;
       dispatch(AddNewTask({ ...timerInput, id: nextId + 1 }))
 
       setTimerInput({

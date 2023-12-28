@@ -134,6 +134,7 @@ const Timer = () => {
       await axios.patch("http://localhost:8800/UserSettings/ClearCurrentTask/" + settingsId, { current_task: null, task_id: id })
       dispatch(SetTimerSettings({ ...dbTimer, current_task: '', task_id: id }))
       dispatch(SetTaskList([]))
+      dispatch(SetLastTaskId(undefined))
     } catch (err) {
       console.log(err);
     }
@@ -153,6 +154,14 @@ const Timer = () => {
   //     console.log(err);
   //   }
   // }
+
+  const handleTimerTaskSettings = (e) => {
+    dispatch(SetTimerTaskSettings())
+    if (isTimerTaskSettings) {
+      addEventListener('click', console.log(e.target.className))
+    }
+  }
+
 
   return (
     <div>
@@ -181,7 +190,7 @@ const Timer = () => {
                 <div className="current-focus-title">
                   {current_task && <span className="currentTask">Current task: {current_task}</span>}
                   {/* <span className="focus-title">Title of the task</span> */}
-                  <img className="details-timer-img" src={details} alt="" onClick={() => dispatch(SetTimerTaskSettings())} />
+                  <img className="details-timer-img" src={details} alt="" onClick={handleTimerTaskSettings} />
                   {
                     isTimerTaskSettings && (
                       <div className="timerTaskSettings-container">
