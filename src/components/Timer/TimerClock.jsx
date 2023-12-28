@@ -273,7 +273,7 @@ const TimerClock = () => {
       {
         (Task || Calendar || Notes) ?
           <div className="pomodoro-timerMini">
-            <div className="timer-clock-mini">
+            <div className="timer-clock-mini" style={{ backgroundColor: shortRest ? "var(--gray02)" : "var(--white)" }}>
               {
                 minutes <= 9 ? <span className="timer-text-mini">{`0${minutes}`}</span> :
                   <span className="timer-text-mini">{`${minutes}`}</span>
@@ -318,9 +318,9 @@ const TimerClock = () => {
           :
           <div className="pomodoro-timer">
             {/* <button onClick={() => handleTaskPomo()}>Test</button> */}
-            {
+            {/* {
               current_task && <span>Current task: {current_task}</span>
-            }
+            } */}
             {/* <span>{amount}</span> */}
             {/* <input className="volume-timer" type="range" onChange={handleVolume} /> */}
             {/* Settings for amount of focus, rest, sound etc */}
