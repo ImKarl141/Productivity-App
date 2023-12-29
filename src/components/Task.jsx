@@ -15,6 +15,8 @@ import TaskUpdate from './Task/TaskUpdate';
 const TaskMenu = () => {
 
   const { dbTasks, dbProjects, dbTags, taskItems, isEdit, isTaskUpdate, addProjectEdit, projects, tags, addTagEdit, currentView } = useSelector((store) => store.task);
+  const { menuToggle } = useSelector((store) => store.menu);
+  const { Menu, Task, Calendar, Notes } = menuToggle;
   // console.log(currentView);
   // console.log(dbTasks);
   // console.log("Updated");
@@ -63,7 +65,7 @@ const TaskMenu = () => {
 
 
   return (
-    <section className='task-container'>
+    <section className={`task-container ${Task ? 'task-container-active' : ''} `}>
       <div className='task-overall'>
         <div className='overall-title'>
           <div className='task-title'><h1>Tasks</h1></div>

@@ -10,6 +10,16 @@
   z-index: 2;
   background-color: var(--pomodoroDark);
   padding: 0.2rem 0.2rem;
+  max-width: 0rem;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-width 0.1s ease-in-out, opacity 0.05s;
+}
+
+.notes-container-active {
+  max-width: 100%;
+  opacity: 1;
+
 }
 
 .noteCard-onTop-container {

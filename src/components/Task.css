@@ -6,11 +6,21 @@
   bottom: 1.8rem;
   right: 5.8rem;
   left: 5.8rem;
+  /* Animation */
+  max-width: 0rem;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-width 0.1s ease-in-out, opacity 0.05s;
+  /* Animation */
   z-index: 2;
   background-color: var(--pomodoroDark);
   padding: 0.2rem;
 }
 
+.task-container-active{
+  max-width: 100%;
+  opacity: 1;
+}
 
 .task-details {
   /* background-color: lightcoral; */

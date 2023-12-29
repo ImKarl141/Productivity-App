@@ -28,6 +28,7 @@ button {
   cursor: pointer;
   padding: 0;
   margin: 0;
+  transition: 0.1s ease-in-out;
 }
 
 button:hover {
@@ -35,17 +36,15 @@ button:hover {
 }
 
 .button-clicked {
+  font-weight: 800;
   background-color: var(--pomodoroDark);
 }
-
-/* .main-menu {
-  background-color: transparent;
-} */
 
 .main-menu:hover {
   background-color: #BB5F5F;
 }
 
+.main-menu,
 .icon-button{
   display: flex;
   flex-direction: column;
@@ -58,6 +57,52 @@ button:hover {
   /* background-color: transparent; */
 }
 
+.menu-toggle{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  max-height: 0rem;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.1s ease-in-out, opacity 0.5s;;
+  /* transition: opacity 0.1s; */
+}
+
+.menu-toggle-active {
+  max-height: 10rem;
+  opacity: 1;
+  /* background-color: red; */
+}
+
+/* .icon-button:hover {
+  transition: 0.1s ease-in-out;
+  transform: translateY(-0.1rem);
+} */
+
+/* .icon-button-text:hover {
+  transition: 0.1s ease-in-out;
+  transform: translateY(-0.02rem);
+} */
+
+.icon-button-text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: 0.1s ease-in;
+}
+
+.icon-button-text:hover {
+  transition: 0.1s ease-in;
+  transform: translate(-0.03rem, -0.03rem);
+}
+
+.icon-button-text:active {
+  transition: 0.1s ease-out;
+  transform: translateX(0.1rem);
+}
+
 .logo {
   /* height: 1.3rem; */
   width: 1.2rem;
@@ -65,12 +110,17 @@ button:hover {
 }
 
 .icon-text {
+  font-family: Nunito;
+  font-size: 0.8rem;
+  font-weight: 600;
   margin: 0.4rem 0rem 0rem 0rem;
   color: #191919;
   width: 4rem;
   text-align: center;
-  font-size: 0.8rem;
-  font-weight: 500;
+}
+
+.text-clicked {
+  font-weight: 800;
 }
 
 .appOptions-icon {
@@ -78,6 +128,8 @@ button:hover {
   height: 2rem;
   color: var(--black);
 }
+
+
 
 
 

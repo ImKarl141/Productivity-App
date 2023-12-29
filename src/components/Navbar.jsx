@@ -45,32 +45,42 @@ const Navbar = () => {
     <>
       <nav className='navbar-main'>
         <div className="menu-bar">
-          <button className='main-menu icon-button' onClick={() => dispatch(showMenuOptions())}>
+          <button className='main-menu' onClick={() => dispatch(showMenuOptions())}>
             {/* <img className='logo' src={homeMenu} alt="my icon" /> */}
             <MenuIcon />
           </button>
-          {Menu && (
-            <>
-              <button className={`icon-button ${Task ? 'button-clicked' : ''} `} onClick={() => dispatch(showTask())}>
-                {/* <img className='logo' src={taskMenu} alt="Task icon" /> */}
+          <div className={`menu-toggle ${Menu ? 'menu-toggle-active' : ''}`}>
+            <button className={`icon-button ${Task ? 'button-clicked' : ''} `} onClick={() => dispatch(showTask())}>
+              {/* <TaskIcon />
+                <p className={`icon-text ${Task ? 'icon-text text-clicked' : ''}`}>Task</p> */}
+              <span className='icon-button-text'>
                 <TaskIcon />
-                <p className='icon-text'>Task</p>
-              </button>
-              {/* <button className={`icon-button ${Calendar ? 'button-clicked' : ''} `} onClick={() => dispatch(showCalendar())}>
-                <CalendarIcon />
-                <p className='icon-text'>Calendar</p>
-              </button> */}
-              <button className={`icon-button ${Notes ? 'button-clicked' : ''} `} onClick={() => dispatch(showNotes())}>
+                <p className={`icon-text ${Task ? 'icon-text text-clicked' : ''}`}>Task</p>
+              </span>
+            </button>
+            <button className={`icon-button ${Notes ? 'button-clicked' : ''} `} onClick={() => dispatch(showNotes())}>
+              <span className='icon-button-text'>
                 <NotesIcon />
-                {/* <img className='logo' src={notesMenu} alt="Notes icon" /> */}
-                <p className='icon-text'>Notes</p>
-              </button>
-              {/* <button className={`icon-button ${toggleTag ? 'button-clicked' : ''} `} onClick={() => TagButton()}>
-                <img className='logo' src={tagMenu} alt="Tag icon" />
-                <p className='icon-text'>Tag</p>
-              </button> */}
-            </>
-          )}
+                <p className={`icon-text ${Notes ? 'icon-text text-clicked' : ''}`}>Notes</p>
+              </span>
+            </button>
+            {/* {Menu && (
+              <>
+                <button className={`icon-button ${Task ? 'button-clicked' : ''} `} onClick={() => dispatch(showTask())}>
+                  <span className='icon-button-text'>
+                    <TaskIcon />
+                    <p className={`icon-text ${Task ? 'icon-text text-clicked' : ''}`}>Task</p>
+                  </span>
+                </button>
+                <button className={`icon-button ${Notes ? 'button-clicked' : ''} `} onClick={() => dispatch(showNotes())}>
+                  <span className='icon-button-text'>
+                    <NotesIcon />
+                    <p className={`icon-text ${Notes ? 'icon-text text-clicked' : ''}`}>Notes</p>
+                  </span>
+                </button>
+              </>
+            )} */}
+          </div>
         </div>
         {/*Minibar display */}
         {/* {
@@ -114,15 +124,15 @@ const Navbar = () => {
           )}
         </div>
       </nav >
-      {Task && (
-        <TaskMenu />
-      )}
-      {Calendar && (
+      <TaskMenu />
+      {/* {Task && (
+      )} */}
+      {/* {Calendar && (
         <CalendarMenu />
-      )}
-      {Notes && (
-        <NotesMenu />
-      )}
+      )} */}
+      <NotesMenu />
+      {/* {Notes && (
+      )} */}
     </>
   )
 

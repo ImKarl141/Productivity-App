@@ -12,6 +12,8 @@ import NoteUpdate from './Note/NoteUpdate'
 const NotesMenu = () => {
   const { isEdit, noteItems, tag, dbNotes, dbDefaultColors, currentEditId, isNoteCardView, noteCardId } = useSelector((store) => store.note);
   const { dbTasks } = useSelector((store) => store.task);
+  const { menuToggle } = useSelector((store) => store.menu);
+  const { Menu, Task, Calendar, Notes } = menuToggle;
   // console.log(dbTasks);
 
   // console.log(dbNotes);
@@ -122,7 +124,7 @@ const NotesMenu = () => {
   //Add Tags from the list, figure out how to share the listOfTags into this component.
 
   return (
-    <section className="notes-container">
+    <section className={`notes-container ${Notes ? 'notes-container-active' : ''} `}>
       {
         isNoteCardView && (
           <div className='noteCard-onTop-container' onClick={() => dispatch(SetNoteCardView())}>
