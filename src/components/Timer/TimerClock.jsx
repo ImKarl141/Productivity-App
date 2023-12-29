@@ -25,20 +25,8 @@ const TimerClock = () => {
   const stopSound = new Audio(StopSound);
   const finishTimer = new Audio(FinishTimer);
 
-  // const currentTask = dbTimer.find(task => task.task_title === currentTimerTask)
-  // console.log(currentTask);
-
-
   //Default values to load then timer is reset
   const [defaultValues, setDefaultValues] = useState({
-    // minutes: 25,
-    // seconds: 0,
-    // short: 5,
-    // long: 15,
-    // amount: 0,
-    // isPlaying: false,
-    // isShortRest: true,
-    // isLongRest: false,
     minutes: 26, //from database
     seconds: 0,
     short: 5, //from database
@@ -51,20 +39,6 @@ const TimerClock = () => {
     current_task: '', //from database
     task_id: undefined
   });
-
-  //Short rest when focus timer is over
-  // const [shortRest, setShortRest] = useState({
-  //   minutes: 5,
-  //   seconds: 0,
-  //   isPlaying: false,
-  // });
-
-  //Long rest 
-  // const [longRest, setLongRest] = useState({
-  //   minutes: 15,
-  //   seconds: 0,
-  //   isPlaying: false,
-  // });
 
   const [shortRest, setShortRest] = useState(false)
   const [longRest, setLongRest] = useState(false)
@@ -194,19 +168,6 @@ const TimerClock = () => {
     }
   }
 
-  // const handleTaskPomo = async () => {
-  //   const focus_finished = dbTasks.find(task => task.id === task_id).focus_finished
-  //   const id = task_id
-  //   // focus_finished
-  //   //Add +1 to the focus_finished column inside the TaskCurrent table
-  //   try {
-  //     await axios.patch("http://localhost:8800/TaskCurrent/AddPomo/" + id, { focus_finished: focus_finished + 1 })
-  //     // dispatch(SetTimerSettings({ ...dbTimer, current_task: title }))
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // }
-
   //Clock's buttons 
   //Start and pause timer
   const playTimer = () => {
@@ -269,7 +230,7 @@ const TimerClock = () => {
   }
 
   return (
-    <div>
+    <>
       {
         (Task || Calendar || Notes) ?
           <div className="pomodoro-timerMini">
@@ -317,10 +278,9 @@ const TimerClock = () => {
           </div>
           :
           <div className="pomodoro-timer">
-            {/* <button onClick={() => handleTaskPomo()}>Test</button> */}
             {/* {
-              current_task && <span>Current task: {current_task}</span>
-            } */}
+            current_task && <span>Current task: {current_task}</span>
+          } */}
             {/* <span>{amount}</span> */}
             {/* <input className="volume-timer" type="range" onChange={handleVolume} /> */}
             {/* Settings for amount of focus, rest, sound etc */}
@@ -382,8 +342,8 @@ const TimerClock = () => {
                   )
                 }
                 {/* <button className='play-buttons-full' title="Stop" onClick={() => stopTimer()}>
-                  <SkipFullIcon />
-                </button> */}
+                <SkipFullIcon />
+              </button> */}
                 {
                   isShortRest
                     ? <button className='play-buttons-full' title="Short rest" onClick={() => restTimer()}>
@@ -401,7 +361,10 @@ const TimerClock = () => {
             </div>
           </div>
       }
-    </div>
+    </>
+    // <div>
+
+    // </div>
 
   )
 }
