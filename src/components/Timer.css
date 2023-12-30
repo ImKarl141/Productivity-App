@@ -22,6 +22,8 @@
   align-items: center;
   justify-content: center;
   gap: 0.1rem;
+  position: absolute;
+  right: -4.2rem;
 }
 
 .timer-btn-full {
@@ -44,10 +46,12 @@
 
 .timerMini-container {
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  max-width: 40rem;
+  min-width: 22rem;
   height: 5.5rem;
-  padding: 0rem 0.4rem;
+  padding: 0rem 1rem;
   gap: 1rem;
 }
 
@@ -98,6 +102,10 @@
   margin: 0rem 0.6rem;
   border: 0.3rem solid var(--pomodoro);
   border-radius: 3rem;
+}
+
+.timer-clock-mini [class^="clock-effect-"] {
+  display: none;
 }
 
 .timer-clock-full {
@@ -237,16 +245,6 @@
   justify-content: space-between;
 }
 
-
-.timer-text-mini {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--black);
-  font-family: Nunito;
-  font-size: 1.8rem;
-  font-weight: 600;
-}
 .timer-text-mini,
 .timer-text-full {
   display: flex;
@@ -256,46 +254,91 @@
   font-family: Nunito;
 }
 
-.timer-text-mini{
+.timer-text-mini {
   font-size: 1.8rem;
-  font-weight: 500;
+  font-weight: 600;
+  position: absolute;
 }
 
 .timer-text-full {
   font-size: 5rem;
   font-weight: 600;
   z-index: 9;
+  font-size: 4.8rem;
 }
 
-.countDownTest{
+/* .timer-text-mini{
+  font-size: 1.8rem;
+  font-weight: 500;
+} */
+
+
+.countDownContainer-full,
+.countDownContainer-mini{
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   color: var(--black);
   font-family: Nunito;
-  font-size: 5rem;
-  font-weight: 600;
   z-index: 9;
+  position: absolute;
+  top: 37%;
 }
 
-.countDownTest-numbers {
+.countDownContainer-full{
+  font-size: 5rem;
+  font-weight: 600;
+  font-size: 4.8rem;
+}
+
+.countDownContainer-mini .countDown-seconds,
+.countDownContainer-mini .countDown-separator{
+  display: none;
+}
+
+.countDownContainer-mini{
+  font-size: 5rem;
+  font-weight: 600;
+  font-size: 1.8rem;
+}
+
+
+.countDownFull-numbers {
   display: flex;
   justify-content: center;
   align-items: center;
+  /* gap: 0.2rem; */
   /* background-color: rgba(255, 0, 0, 0.356); */
-  height: 4.8rem;
+  height: 4.6rem;
 }
 
-.countDownTest-buttons {
+.countDownFull-numbers .countDown-minutes {
+  padding-left: 0.15rem;
+}
+
+.countDownFull-numbers .countDown-seconds {
+  padding-left: 0.2rem;
+}
+
+.countDownMini-buttons {
   display: flex;
-  /* background-color: red; */
+  position: absolute;
+}
+
+.countDownFull-buttons {
+  display: flex;
+  /* position: absolute; */
 }
 
 .test-text {
   background-color: red;
   height: 20rem;
   display: none;
+}
+
+.hide-element {
+  display: none
 }
 
 .play-buttons {
@@ -397,11 +440,8 @@
 } */
 
 .pomodoro-fullbarMini-container{
-  max-width: 30rem;
-  min-width: 28rem;
   background-color: var(--pomodoroLight);
   border-radius: 0.2rem;
-  padding: 0rem;
 }
 
 .pomodoro-timer {
@@ -423,6 +463,7 @@
 
 .pomodoro-timerMini{
   display: flex;
+  width: 10rem;
 }
 
 .currentTask-mini{

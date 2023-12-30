@@ -23,7 +23,9 @@ const Timer = () => {
   // const current_task = dbTimer.current_task
 
   const { current_task, PomoCount } = dbTimer
+  console.log(PomoCount);
 
+  console.log(dbTasks.length);
   // $(`.listTask-timer:contains()`)
 
 
@@ -61,6 +63,7 @@ const Timer = () => {
 
   //Task fetching
   useEffect(() => {
+    const userId = 1;
     const fetchTaskList = async () => {
       try {
         //Timer
@@ -71,6 +74,10 @@ const Timer = () => {
         //Task
         const resp = await axios.get("http://localhost:8800/TaskCurrent")
         dispatch(SetTaskList(resp.data))
+        if (dbTasks.length < 1) {
+          //Reset count when empty task
+          await axios.patch("http://localhost:8800/UserSettings/PomoCount/" + userId, { PomoCount: 0 })
+        }
 
       } catch (err) {
         console.log(err);
@@ -110,6 +117,7 @@ const Timer = () => {
       }
     })
     dispatch(SetTaskList(newTask))
+    dispatch(SetTimerTaskSettings()) //Close window
   }
   const handleClearFinished = async (id) => {
     const settingsId = 1;
@@ -123,7 +131,7 @@ const Timer = () => {
       // const nextId = dbTasks.length > 0 ? dbTasks[dbTasks.length - 1].id : dbTimer.task_id;
       // dispatch(AddNewTask({ ...timerInput, id: nextId + 1 }))
     } catch (err) {
-      console.log();
+      console.log(err);
     }
   }
 
@@ -133,9 +141,11 @@ const Timer = () => {
     try {
       await axios.post("http://localhost:8800/TaskCurrent/ClearAll")
       await axios.patch("http://localhost:8800/UserSettings/ClearCurrentTask/" + settingsId, { current_task: null, task_id: id })
-      dispatch(SetTimerSettings({ ...dbTimer, current_task: '', task_id: id }))
-      dispatch(SetTaskList([]))
-      dispatch(SetLastTaskId(undefined))
+      dispatch(SetTimerSettings({ ...dbTimer, current_task: '', task_id: id })) //Clear the id in order to reset the id count of the task
+      dispatch(SetTaskList([])) //Clear the list of task in the local state
+      dispatch(SetLastTaskId(undefined)) //Clear the current task message
+      dispatch(SetTimerTaskSettings()) //Close window
+
     } catch (err) {
       console.log(err);
     }
@@ -158,9 +168,9 @@ const Timer = () => {
 
   const handleTimerTaskSettings = (e) => {
     dispatch(SetTimerTaskSettings())
-    if (isTimerTaskSettings) {
-      addEventListener('click', console.log(e.target.className))
-    }
+    // if (isTimerTaskSettings) {
+    //   addEventListener('click', console.log(e.target.className))
+    // }
   }
 
 
@@ -171,7 +181,9 @@ const Timer = () => {
           <div className="timer-container">
             <TimerClock />
             <div className="current-focus-task">
-              <span className="pomo-container"><PomodoroIcon />#{PomoCount}</span>
+              {
+                PomoCount ? <span className="pomo-container"><PomodoroIcon />#{PomoCount}</span> : <></>
+              }
               {/*Show the title only when an task is selected in the list*/}
               <div className="current-focus-title">
                 {current_task && <span className="currentTask">Current task: {current_task}</span>}
@@ -225,7 +237,7 @@ const Timer = () => {
             <div className="pomodoro-amount-container">
               <PomodoroIcon />
               <span className="pomo-container">
-                #{1}
+                #{PomoCount}
               </span>
             </div>
             <div className="task-amount-container">

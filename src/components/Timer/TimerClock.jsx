@@ -15,10 +15,10 @@ import CountdownTimer from "./CountdownTimer"
 
 
 const TimerClock = () => {
-  const { isTimerSettings, isEnglish, soundVolume, dbTimer, currentTimerTask, isTimerMini } = useSelector((store) => store.timer)
   const { dbTasks } = useSelector((store) => store.task)
   const { menuToggle } = useSelector((store) => store.menu);
   const { Menu, Task, Calendar, Notes } = menuToggle;
+  const { isTimerSettings, isEnglish, soundVolume, dbTimer, currentTimerTask } = useSelector((store) => store.timer)
 
   // console.log(isEnglish);
   const dispatch = useDispatch()
@@ -158,8 +158,12 @@ const TimerClock = () => {
 
   const handleTaskPomo = async () => {
     const focus_finished = dbTasks.find(task => task.id === task_id).focus_finished
+    const userId = 1
+    const newCount = dbTimer.PomoCount + 1;
+    // console.log(newCount);
     try {
       await axios.patch("http://localhost:8800/TaskCurrent/AddPomo/" + task_id, { focus_finished: focus_finished + 1 })
+      await axios.patch("http://localhost:8800/UserSettings/PomoCount/" + userId, { PomoCount: newCount })
       const newTask = dbTasks.map((task) => {
         if (task.id === task_id) {
           return { ...task, focus_finished: focus_finished + 1 }
@@ -167,6 +171,7 @@ const TimerClock = () => {
         return { ...task }
       })
       dispatch(SetTaskList(newTask))
+      dispatch(SetTimerSettings({ ...dbTimer, PomoCount: newCount }))
       // console.log(newTask);
     } catch (err) {
       console.log(err);
@@ -230,7 +235,7 @@ const TimerClock = () => {
     setLongRest(false)
 
     setIsFinish(false)
-    console.log(timer);
+    // console.log(timer);
     console.log("Timer was reset");
   }
   const time = new Date();
@@ -238,9 +243,7 @@ const TimerClock = () => {
 
   return (
     <>
-      {
-        (Task || Calendar || Notes) ? //Instead use a localState that change a isTimerMini to true when changing Task and Notes
-          <div className="pomodoro-timerMini">
+      {/* <div className="pomodoro-timerMini">
             <div className="timer-clock-mini" style={{ backgroundColor: shortRest ? "var(--gray02)" : "var(--white)" }}>
               {
                 minutes <= 9 ? <span className="timer-text-mini">{`0${minutes}`}</span> :
@@ -282,107 +285,141 @@ const TimerClock = () => {
                 <SkipFullIcon />
               </button>
             </div>
-          </div>
-          :
-          <div className="pomodoro-timer">
-            <button style={{ color: "black" }} onClick={() => dispatch(SetTimerMini())}>Test tick</button>
-            {/* {
-            current_task && <span>Current task: {current_task}</span>
-          } */}
-            {/* <span>{amount}</span> */}
-            {/* <input className="volume-timer" type="range" onChange={handleVolume} /> */}
-            {/* Settings for amount of focus, rest, sound etc */}
-            {
-              isTimerSettings && <TimerClockSettings />
-            }
-            <button className="timerSettings-btn" onClick={() => dispatch(ShowTimerSettings())}>
+          </div> */}
+      <div className={(Task || Notes) ? "pomodoro-timerMini" : "pomodoro-timer"}>
+        {/* <button style={{ color: "black" }} onClick={() => dispatch(SetTimerMini())}>Test tick</button> */}
+        {
+          isTimerSettings && <TimerClockSettings /> //Settings display
+        }
+        {/* Button display */}
+        {
+          !isPlaying && (
+            <button className={(Notes || Task) ? "hide-element" : "timerSettings-btn"} onClick={() => dispatch(ShowTimerSettings())}>
               <TimerSettings />
             </button>
-            <div className="timer-clock-full" style={{ backgroundColor: shortRest ? "var(--gray02)" : "var(--white)" }}>
-              <span className="clock-effect-1">
-                <span className="clock-effect-line"></span>
-              </span>
-              <span className="clock-effect-2">
-                <span className="clock-effect-line"></span>
-              </span>
-              <span className="clock-effect-3">
-                <span className="clock-effect-line"></span>
-              </span>
-              <span className="clock-effect-4">
-                <span className="clock-effect-line"></span>
-              </span>
-              {
-                !isPlaying && (
-                  <>
-                    {
-                      minutes <= 9 ? <span className="timer-text-full">{`0${minutes}:`}</span> :
-                        <span className="timer-text-full">{`${minutes}:`}</span>
-                    }
-                    {
-                      seconds <= 9 ? <span className="timer-text-full">{`0${seconds}`}</span> : <span className="timer-text-full">{`${seconds}`}</span>
-                    }
-                  </>
-                )
-              }
-              {
-                isPlaying && <CountdownTimer expiryTimestamp={time} />
-              }
-              {
-                isTimerMini ?
-                  <>
-                    <div className="tick-main">
-                      <span className="tick-verticalMini-main"></span>
-                      <div className="tick-container">
-                        <span className="tick-horizontalMini-main"></span>
-                        <span className="tick-horizontalMini-main"></span>
-                      </div>
-                      <span className="tick-verticalMini-main"></span>
-                    </div>
-                    <div className="tick">
-                      <span className="tick-verticalMini"></span>
-                      <div className="tick-container">
-                        <span className="tick-horizontalMini"></span>
-                        <span className="tick-horizontalMini"></span>
-                      </div>
-                      <span className="tick-verticalMini"></span>
-                    </div>
-                  </>
-                  :
-                  <>
-                    <div className="tick-main">
-                      <span className="tick-vertical-main"></span>
-                      <div className="tick-container">
-                        <span className="tick-horizontal-main"></span>
-                        <span className="tick-horizontal-main"></span>
-                      </div>
-                      <span className="tick-vertical-main"></span>
-                    </div>
-                    <div className="tick">
-                      <span className="tick-vertical"></span>
-                      <div className="tick-container">
-                        <span className="tick-horizontal"></span>
-                        <span className="tick-horizontal"></span>
-                      </div>
-                      <span className="tick-vertical"></span>
-                    </div>
-                  </>
-              }
-              {/* <div className="tick-main">
-                <span className="tick-vertical-main"></span>
-                <div className="tick-container">
-                  <span className="tick-horizontal-main"></span>
-                  <span className="tick-horizontal-main"></span>
+          )
+        }
+        {/* {
+          (!Task || !Notes) && (
+            <>
+            </>
+          )
+        } */}
+        <div className={(Task || Notes) ? "timer-clock-mini" : "timer-clock-full"} style={{ backgroundColor: shortRest ? "var(--gray02)" : "var(--white)" }}>
+          <span className="clock-effect-1">
+            <span className="clock-effect-line"></span>
+          </span>
+          <span className="clock-effect-2">
+            <span className="clock-effect-line"></span>
+          </span>
+          <span className="clock-effect-3">
+            <span className="clock-effect-line"></span>
+          </span>
+          <span className="clock-effect-4">
+            <span className="clock-effect-line"></span>
+          </span>
+          {/* {
+            (!Task || !Notes) &&
+            <>
+              
+            </>
+          } */}
+          {
+            !isPlaying && (
+              (Task || Notes) ?
+
+                <>
+                  {
+                    minutes <= 9 ? <span className="timer-text-mini">{`0${minutes}`}</span> :
+                      <span className="timer-text-full">{`${minutes}`}</span>
+                  }
+                </>
+                :
+                <>
+                  {
+                    minutes <= 9 ? <span className="timer-text-full">{`0${minutes}:`}</span> :
+                      <span className="timer-text-full">{`${minutes}:`}</span>
+                  }
+                  {
+                    seconds <= 9 ? <span className="timer-text-full">{`0${seconds}`}</span> : <span className="timer-text-full">{`${seconds}`}</span>
+                  }
+                </>
+            )
+          }
+          {
+            isPlaying && <CountdownTimer expiryTimestamp={time} />
+          }
+          {
+            (Task || Notes) ?
+              <>
+                <div className="tick-main">
+                  <span className="tick-verticalMini-main"></span>
+                  <div className="tick-container">
+                    <span className="tick-horizontalMini-main"></span>
+                    <span className="tick-horizontalMini-main"></span>
+                  </div>
+                  <span className="tick-verticalMini-main"></span>
                 </div>
-                <span className="tick-vertical-main"></span>
-              </div>
-              <div className="tick">
-                <span className="tick-vertical"></span>
-                <div className="tick-container">
-                  <span className="tick-horizontal"></span>
-                  <span className="tick-horizontal"></span>
+                <div className="tick">
+                  <span className="tick-verticalMini"></span>
+                  <div className="tick-container">
+                    <span className="tick-horizontalMini"></span>
+                    <span className="tick-horizontalMini"></span>
+                  </div>
+                  <span className="tick-verticalMini"></span>
                 </div>
-                <span className="tick-vertical"></span>
-              </div> */}
+              </>
+              :
+              <>
+                <div className="tick-main">
+                  <span className="tick-vertical-main"></span>
+                  <div className="tick-container">
+                    <span className="tick-horizontal-main"></span>
+                    <span className="tick-horizontal-main"></span>
+                  </div>
+                  <span className="tick-vertical-main"></span>
+                </div>
+                <div className="tick">
+                  <span className="tick-vertical"></span>
+                  <div className="tick-container">
+                    <span className="tick-horizontal"></span>
+                    <span className="tick-horizontal"></span>
+                  </div>
+                  <span className="tick-vertical"></span>
+                </div>
+              </>
+          }
+          <div className={(Task || Notes) ? "timer-btn-mini" : "timer-btn-full"}>
+            {
+              isFinish && (
+                <button className="play-buttons-full" title="Reset" onClick={() => resetTimer()}>
+                  <ResetTimer />
+                </button>
+              )
+            }
+            {
+              !isFinish && (
+                <button className='play-buttons-full' title="Play/Pause" onClick={() => playTimer()}>
+                  <PlayPauseFullIcon />
+                </button>
+              )
+            }
+            {
+              isShortRest
+                ? <button className='play-buttons-full' title="Short rest" onClick={() => restTimer()}>
+                  <SkipFullIcon />
+                </button>
+
+                : <button className='play-buttons-full' title="Stop timer" onClick={() => stopTimer()}>
+                  <SkipFullIcon />
+                </button>
+            }
+          </div>
+
+
+          {/* {
+            (Task || Notes) && (
+
               <div className="timer-btn-full">
                 {
                   isFinish && (
@@ -402,18 +439,43 @@ const TimerClock = () => {
                   isShortRest
                     ? <button className='play-buttons-full' title="Short rest" onClick={() => restTimer()}>
                       <SkipFullIcon />
-                      {/* <span style={{ color: "black" }}>Next: Stop the timer</span> */}
                     </button>
 
                     : <button className='play-buttons-full' title="Stop timer" onClick={() => stopTimer()}>
                       <SkipFullIcon />
-                      {/* <span style={{ color: "black" }}>Reset the timer</span> */}
                     </button>
                 }
               </div>
-            </div>
-          </div>
-      }
+            )
+          } */}
+          {/* <div className="timer-btn-full">
+            {
+              isFinish && (
+                <button className="play-buttons-full" title="Reset" onClick={() => resetTimer()}>
+                  <ResetTimer />
+                </button>
+              )
+            }
+            {
+              !isFinish && (
+                <button className='play-buttons-full' title="Play/Pause" onClick={() => playTimer()}>
+                  <PlayPauseFullIcon />
+                </button>
+              )
+            }
+            {
+              isShortRest
+                ? <button className='play-buttons-full' title="Short rest" onClick={() => restTimer()}>
+                  <SkipFullIcon />
+                </button>
+
+                : <button className='play-buttons-full' title="Stop timer" onClick={() => stopTimer()}>
+                  <SkipFullIcon />
+                </button>
+            }
+          </div> */}
+        </div>
+      </div>
     </>
     // <div>
 

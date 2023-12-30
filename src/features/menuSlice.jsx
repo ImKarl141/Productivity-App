@@ -6,6 +6,7 @@ const initialState = {
     Task: false,
     Calendar: false,
     Notes: false,
+    isTimerMini: false,
   },
   isActive: {
     Task: false

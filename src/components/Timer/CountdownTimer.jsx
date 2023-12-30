@@ -11,6 +11,8 @@ import { SetTaskList } from '../../features/taskSlice';
 function CountdownTimer({ expiryTimestamp }) {
   const { autoStartRest, changeNumber, isTimerSettings, currentMessage, isPaused, dbTimer } = useSelector((store) => store.timer)
   const { dbTasks } = useSelector((store) => store.task)
+  const { menuToggle } = useSelector((store) => store.menu)
+  const { Menu, Task, Notes } = menuToggle;
 
 
   const { task_id } = dbTimer
@@ -51,6 +53,12 @@ function CountdownTimer({ expiryTimestamp }) {
     restart,
   } = useTimer({
     expiryTimestamp, onExpire: () => {
+      //Actions to perform when the timer is finished:
+      //-Validate current rest(short/long)
+      //-Add a amount pomo (Axios)
+      //-Add pomo finished to the task (if selected) (Axios)
+
+
       // const time = new Date();
       // time.setSeconds(time.getSeconds() + 300);
       // restart(time)
@@ -71,19 +79,22 @@ function CountdownTimer({ expiryTimestamp }) {
 
 
   return (
-    <div className={!isTimerSettings ? 'countDownTest' : 'test-text'} >
-      <div className='countDownTest-numbers'>
-        <span>{minutes}</span>:<span>{(seconds < 9) ? `0${seconds}` : seconds}</span>
+    // <div className={!isTimerSettings ? 'countDownTest' : 'test-text'} >
+    <div className={(Task || Notes) ? 'countDownContainer-mini' : 'countDownContainer-full'} >
+      <div className='countDownFull-numbers'>
+        <span className='countDown-minutes'>{(minutes <= 9) ? `0${minutes}` : minutes}</span>
+        <span className='countDown-separator'>:</span>
+        <span className='countDown-seconds'>{(seconds <= 9) ? `0${seconds}` : seconds}</span>
       </div>
-      <div className='countDownTest-buttons'>
+      <div className={(Task || Notes) ? 'countDownMini-buttons' : 'countDownFull-buttons'}>
         {/* <button onClick={start}>
           Start
           <PlayPauseFullIcon />
         </button> */}
-        <button onClick={pause}>
+        <button onClick={pause} title='timer-pause'>
           Pause
         </button>
-        <button onClick={resume}>
+        <button onClick={resume} title='timer-resume'>
           Resume
         </button>
       </div>
