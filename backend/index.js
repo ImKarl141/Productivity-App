@@ -236,6 +236,20 @@ app.patch("/UserSettings/ClearCurrentTask/:id", (req, resp) => {
   })
 })
 
+app.patch("/UserSettings/PomoCount/:id", (req, resp) => {
+  const userId = req.params.id
+  const q = "UPDATE UserSettings SET `PomoCount` = ? WHERE id = ?"
+  const values = [
+    req.body.PomoCount,
+  ]
+
+  db.query(q, [...values, userId], (err, data) => {
+    if (err) return resp.json(err);
+    console.log("Pomo Count Added");
+    return resp.json(data)
+  })
+})
+
 app.patch("/TaskCurrent/AddPomo/:id", (req, resp) => {
   const taskId = req.params.id
   const q = "UPDATE TaskCurrent SET `focus_finished` = ?  WHERE id = ?"
