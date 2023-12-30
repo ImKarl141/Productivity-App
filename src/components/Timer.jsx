@@ -23,8 +23,6 @@ const Timer = () => {
   // const current_task = dbTimer.current_task
 
   const { current_task, PomoCount } = dbTimer
-  console.log(PomoCount);
-
 
   // $(`.listTask-timer:contains()`)
 

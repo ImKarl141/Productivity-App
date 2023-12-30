@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux"
 import { NumberDownIcon, NumberUpIcon, CloseTimerSettings } from "../../icons"
 import { useState } from "react"
-import { ShowTimerSettings, SetSoundVolume, SetTimerSettings } from "../../features/timerSlice"
+import { ShowTimerSettings, SetSoundVolume, SetTimerSettings, SetIsSettingsChange } from "../../features/timerSlice"
 import GuitarSound from '../../assets/guitar_Notification.mp3'
 import TimerSound from '../../assets/timer_Notification.ogg'
 import EraseSound from '../../assets/erase_Notification.wav'
@@ -102,6 +102,7 @@ const TimerClockSettings = () => {
           dispatch(ShowTimerSettings())
           dispatch(SetSoundVolume(myVolume))
           handleSettingsSubmit();
+          dispatch(SetIsSettingsChange())
         }}>
           <CloseTimerSettings />
         </span>

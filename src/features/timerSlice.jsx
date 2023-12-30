@@ -36,14 +36,31 @@ const initialState = {
   amountPomo: 0,
   soundVolume: 0.8,
   dbTimer: {},
-  lastTaskId: ''
+  lastTaskId: '',
+  autoStartRest: true,
+  isSettingsChange: false,
+  changeNumber: (10 * 60),
+  currentMessage: "Focus finished",
+  isPaused: true,
+  isTimerMini: false,
 }
-
 
 const timerSlice = createSlice({
   name: 'timer',
   initialState,
   reducers: {
+    SetTimerMini: (state) => {
+      state.isTimerMini = !state.isTimerMini
+    },
+    SetPaused: (state) => {
+      state.isPaused = !state.isPaused
+    },
+    SetTestReload: (state) => {
+      state.testReload = !state.testReload
+    },
+    SetIsSettingsChange: (state) => {
+      // window.location.reload()
+    },
     SetTimerListAdd: (state) => {
       state.isTimerTaskAdd = !state.isTimerTaskAdd;
     },
@@ -89,5 +106,5 @@ const timerSlice = createSlice({
   }
 });
 
-export const { SetTimerListAdd, SetTimerListEdit, SetCurrentEditTimer, SetCheckedTask, SetCurrentTimerTask, ShowTimerSettings, ToggleLanguage, SetTimerTaskSettings, SetSoundVolume, SetTimerSettings, SetLastTaskId } = timerSlice.actions;
+export const { SetTimerMini, SetTestReload, SetPaused, SetIsSettingsChange, SetTimerListAdd, SetTimerListEdit, SetCurrentEditTimer, SetCheckedTask, SetCurrentTimerTask, ShowTimerSettings, ToggleLanguage, SetTimerTaskSettings, SetSoundVolume, SetTimerSettings, SetLastTaskId } = timerSlice.actions;
 export default timerSlice.reducer;

@@ -267,6 +267,37 @@
   z-index: 9;
 }
 
+.countDownTest{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: var(--black);
+  font-family: Nunito;
+  font-size: 5rem;
+  font-weight: 600;
+  z-index: 9;
+}
+
+.countDownTest-numbers {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* background-color: rgba(255, 0, 0, 0.356); */
+  height: 4.8rem;
+}
+
+.countDownTest-buttons {
+  display: flex;
+  /* background-color: red; */
+}
+
+.test-text {
+  background-color: red;
+  height: 20rem;
+  display: none;
+}
+
 .play-buttons {
   display: flex;
   align-items: center;

@@ -1,22 +1,25 @@
 import { useEffect, useRef, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { TimerSettings, PlayPauseFullIcon, PlayPauseMiniIcon, ResetTimer, SkipFullIcon, SkipMiniIcon, NumberDownIcon, NumberUpIcon } from "../../icons"
+import { TimerSettings, PlayPauseFullIcon, ResetTimer, SkipFullIcon } from "../../icons"
 import { useTimer } from "./useTimer"
-import { ShowTimerSettings, ToggleLanguage, SetTimerSettings } from "../../features/timerSlice"
+import { ShowTimerSettings, ToggleLanguage, SetTimerSettings, SetTimerMini } from "../../features/timerSlice"
 import TimerClockSettings from "./TimerClockSettings"
 import PlaySound from '../../assets/play_Button.wav'
 import StopSound from '../../assets/stop_Button.wav'
 import FinishTimer from '../../assets/clockDigital_Alarm.mp3'
 import axios from "axios"
 import { SetTaskList } from "../../features/taskSlice"
+import CountdownTimer from "./CountdownTimer"
+
 
 
 
 const TimerClock = () => {
-  const { isTimerSettings, isEnglish, soundVolume, dbTimer, currentTimerTask } = useSelector((store) => store.timer)
+  const { isTimerSettings, isEnglish, soundVolume, dbTimer, currentTimerTask, isTimerMini } = useSelector((store) => store.timer)
   const { dbTasks } = useSelector((store) => store.task)
   const { menuToggle } = useSelector((store) => store.menu);
   const { Menu, Task, Calendar, Notes } = menuToggle;
+
   // console.log(isEnglish);
   const dispatch = useDispatch()
   // console.log(currentTimerTask);
@@ -46,7 +49,7 @@ const TimerClock = () => {
 
   //Values for timer clock
   const [timer, setTimer] = useState({
-    minutes: 28, //from database
+    minutes: undefined, //from database
     seconds: 0,
     short: 5, //from database
     long: 15, //from database
@@ -99,45 +102,47 @@ const TimerClock = () => {
     long: 15,
   })
 
+
+
   //Destructure timer state. This control the timer.
   const { minutes, seconds, short, long, isPlaying, isShortRest, isLongRest, amount, current_task, task_id } = timer;
   // console.log(task_id);
   const [isFinish, setIsFinish] = useState(false)
 
-  useTimer(() => {
-    updateTime()
-  },
-    isPlaying ? 1000 : null
-  )
+  // useTimer(() => {
+  //   updateTime()
+  // },
+  //   isPlaying ? 1000 : null
+  // )
 
-  const updateTime = () => {
-    if (isPlaying) {
-      if (minutes >= 1) {
-        // console.log("More than one minute");
-        if (seconds >= 1) { //Decrease only seconds
-          // const newValue = { ...timer, seconds: timer.seconds - 1 };
-          setTimer({ ...timer, seconds: timer.seconds - 1 });
-        } else { //Decrease minutes and set Seconds to 59
-          // const newValue = { ...timer, minutes: timer.minutes - 1, seconds: 59 };
-          setTimer({ ...timer, minutes: timer.minutes - 1, seconds: 59 });
-        }
-      } else { //No minutes
-        if (seconds >= 1) { //Decrease only seconds
-          // const newValue = { ...timer, seconds: timer.seconds - 1 };
-          setTimer({ ...timer, seconds: timer.seconds - 1 });
-        } else {
-          // const newValue = { ...timer, isPlaying: !isPlaying }
-          setTimer({ ...timer, isPlaying: !isPlaying, minutes: short, isShortRest: false }) // Once the focus finished set to short/long rest
-          // handleTaskPomo(); //Add +1 to focus_finished
-          shortRest || longRest ? () => { setShortRest(false); setLongRest(false) } : restTimer(); //If in short/long rest do not execute restTimer
-          finishTimer.play(); // Alarm sound
-          myAlert(); //Activate Notification when timer is finished
-        }
-      }
-    } else {
-      return;
-    }
-  }
+  // const updateTime = () => {
+  //   if (isPlaying) {
+  //     if (minutes >= 1) {
+  //       // console.log("More than one minute");
+  //       if (seconds >= 1) { //Decrease only seconds
+  //         // const newValue = { ...timer, seconds: timer.seconds - 1 };
+  //         setTimer({ ...timer, seconds: timer.seconds - 1 });
+  //       } else { //Decrease minutes and set Seconds to 59
+  //         // const newValue = { ...timer, minutes: timer.minutes - 1, seconds: 59 };
+  //         setTimer({ ...timer, minutes: timer.minutes - 1, seconds: 59 });
+  //       }
+  //     } else { //No minutes
+  //       if (seconds >= 1) { //Decrease only seconds
+  //         // const newValue = { ...timer, seconds: timer.seconds - 1 };
+  //         setTimer({ ...timer, seconds: timer.seconds - 1 });
+  //       } else {
+  //         // const newValue = { ...timer, isPlaying: !isPlaying }
+  //         setTimer({ ...timer, isPlaying: !isPlaying, minutes: short, isShortRest: false }) // Once the focus finished set to short/long rest
+  //         // handleTaskPomo(); //Add +1 to focus_finished
+  //         shortRest || longRest ? () => { setShortRest(false); setLongRest(false) } : restTimer(); //If in short/long rest do not execute restTimer
+  //         finishTimer.play(); // Alarm sound
+  //         myAlert(); //Activate Notification when timer is finished
+  //       }
+  //     }
+  //   } else {
+  //     return;
+  //   }
+  // }
 
   // const resetRest = () => {
   //   setShortRest(false) 
@@ -228,11 +233,13 @@ const TimerClock = () => {
     console.log(timer);
     console.log("Timer was reset");
   }
+  const time = new Date();
+  time.setSeconds(time.getSeconds() + (minutes * 60)); // 10 minutes timer
 
   return (
     <>
       {
-        (Task || Calendar || Notes) ?
+        (Task || Calendar || Notes) ? //Instead use a localState that change a isTimerMini to true when changing Task and Notes
           <div className="pomodoro-timerMini">
             <div className="timer-clock-mini" style={{ backgroundColor: shortRest ? "var(--gray02)" : "var(--white)" }}>
               {
@@ -278,6 +285,7 @@ const TimerClock = () => {
           </div>
           :
           <div className="pomodoro-timer">
+            <button style={{ color: "black" }} onClick={() => dispatch(SetTimerMini())}>Test tick</button>
             {/* {
             current_task && <span>Current task: {current_task}</span>
           } */}
@@ -304,13 +312,62 @@ const TimerClock = () => {
                 <span className="clock-effect-line"></span>
               </span>
               {
-                minutes <= 9 ? <span className="timer-text-full">{`0${minutes}:`}</span> :
-                  <span className="timer-text-full">{`${minutes}:`}</span>
+                !isPlaying && (
+                  <>
+                    {
+                      minutes <= 9 ? <span className="timer-text-full">{`0${minutes}:`}</span> :
+                        <span className="timer-text-full">{`${minutes}:`}</span>
+                    }
+                    {
+                      seconds <= 9 ? <span className="timer-text-full">{`0${seconds}`}</span> : <span className="timer-text-full">{`${seconds}`}</span>
+                    }
+                  </>
+                )
               }
               {
-                seconds <= 9 ? <span className="timer-text-full">{`0${seconds}`}</span> : <span className="timer-text-full">{`${seconds}`}</span>
+                isPlaying && <CountdownTimer expiryTimestamp={time} />
               }
-              <div className="tick-main">
+              {
+                isTimerMini ?
+                  <>
+                    <div className="tick-main">
+                      <span className="tick-verticalMini-main"></span>
+                      <div className="tick-container">
+                        <span className="tick-horizontalMini-main"></span>
+                        <span className="tick-horizontalMini-main"></span>
+                      </div>
+                      <span className="tick-verticalMini-main"></span>
+                    </div>
+                    <div className="tick">
+                      <span className="tick-verticalMini"></span>
+                      <div className="tick-container">
+                        <span className="tick-horizontalMini"></span>
+                        <span className="tick-horizontalMini"></span>
+                      </div>
+                      <span className="tick-verticalMini"></span>
+                    </div>
+                  </>
+                  :
+                  <>
+                    <div className="tick-main">
+                      <span className="tick-vertical-main"></span>
+                      <div className="tick-container">
+                        <span className="tick-horizontal-main"></span>
+                        <span className="tick-horizontal-main"></span>
+                      </div>
+                      <span className="tick-vertical-main"></span>
+                    </div>
+                    <div className="tick">
+                      <span className="tick-vertical"></span>
+                      <div className="tick-container">
+                        <span className="tick-horizontal"></span>
+                        <span className="tick-horizontal"></span>
+                      </div>
+                      <span className="tick-vertical"></span>
+                    </div>
+                  </>
+              }
+              {/* <div className="tick-main">
                 <span className="tick-vertical-main"></span>
                 <div className="tick-container">
                   <span className="tick-horizontal-main"></span>
@@ -325,7 +382,7 @@ const TimerClock = () => {
                   <span className="tick-horizontal"></span>
                 </div>
                 <span className="tick-vertical"></span>
-              </div>
+              </div> */}
               <div className="timer-btn-full">
                 {
                   isFinish && (
@@ -341,9 +398,6 @@ const TimerClock = () => {
                     </button>
                   )
                 }
-                {/* <button className='play-buttons-full' title="Stop" onClick={() => stopTimer()}>
-                <SkipFullIcon />
-              </button> */}
                 {
                   isShortRest
                     ? <button className='play-buttons-full' title="Short rest" onClick={() => restTimer()}>
@@ -355,7 +409,6 @@ const TimerClock = () => {
                       <SkipFullIcon />
                       {/* <span style={{ color: "black" }}>Reset the timer</span> */}
                     </button>
-
                 }
               </div>
             </div>
