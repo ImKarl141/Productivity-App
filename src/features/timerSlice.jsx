@@ -43,12 +43,16 @@ const initialState = {
   currentMessage: "Focus finished",
   isPaused: true,
   isTimerMini: false,
+  isFinished: true,
 }
 
 const timerSlice = createSlice({
   name: 'timer',
   initialState,
   reducers: {
+    SetFinish: (state, value) => {
+      state.isFinished = value.payload;
+    },
     SetTimerMini: (state) => {
       state.isTimerMini = !state.isTimerMini
     },
@@ -106,5 +110,5 @@ const timerSlice = createSlice({
   }
 });
 
-export const { SetTimerMini, SetTestReload, SetPaused, SetIsSettingsChange, SetTimerListAdd, SetTimerListEdit, SetCurrentEditTimer, SetCheckedTask, SetCurrentTimerTask, ShowTimerSettings, ToggleLanguage, SetTimerTaskSettings, SetSoundVolume, SetTimerSettings, SetLastTaskId } = timerSlice.actions;
+export const { SetTimerMini, SetFinish, SetTestReload, SetPaused, SetIsSettingsChange, SetTimerListAdd, SetTimerListEdit, SetCurrentEditTimer, SetCheckedTask, SetCurrentTimerTask, ShowTimerSettings, ToggleLanguage, SetTimerTaskSettings, SetSoundVolume, SetTimerSettings, SetLastTaskId } = timerSlice.actions;
 export default timerSlice.reducer;

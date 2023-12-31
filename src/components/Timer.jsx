@@ -72,11 +72,10 @@ const Timer = () => {
         //Task
         const resp = await axios.get("http://localhost:8800/TaskCurrent")
         dispatch(SetTaskList(resp.data))
-        if (dbTasks.length < 1) {
-          //Reset count when empty task
-          await axios.patch("http://localhost:8800/UserSettings/PomoCount/" + userId, { PomoCount: 0 })
-        }
-
+        // if (dbTasks.length < 1) {
+        //   //Reset count when empty task
+        //   await axios.patch("http://localhost:8800/UserSettings/PomoCount/" + userId, { PomoCount: 0 })
+        // }
       } catch (err) {
         console.log(err);
       }
@@ -125,6 +124,11 @@ const Timer = () => {
     try {
       await axios.delete("http://localhost:8800/TaskCurrent/" + id)
       await axios.patch("http://localhost:8800/UserSettings/ClearCurrentTask/" + settingsId, { current_task: null, task_id: myId })
+      if (dbTasks.length < 1) {
+        //Reset count when empty task
+        await axios.patch("http://localhost:8800/UserSettings/PomoCount/" + userId, { PomoCount: 0 })
+        dispatch(SetTimerSettings({ ...dbTimer, current_task: '', task_id: id, PomoCount: 0 })) //Clear the id in order to reset the id count of the task
+      }
       dispatch(SetTimerSettings({ ...dbTimer, current_task: '', task_id: myId }))
       // const nextId = dbTasks.length > 0 ? dbTasks[dbTasks.length - 1].id : dbTimer.task_id;
       // dispatch(AddNewTask({ ...timerInput, id: nextId + 1 }))
@@ -136,9 +140,15 @@ const Timer = () => {
   const handleClearAll = async () => {
     const settingsId = 1;
     const id = 0;
+    const userId = 1;
     try {
       await axios.post("http://localhost:8800/TaskCurrent/ClearAll")
       await axios.patch("http://localhost:8800/UserSettings/ClearCurrentTask/" + settingsId, { current_task: null, task_id: id })
+      // if (dbTasks.length < 1) {
+      //   //Reset count when empty task
+      //   await axios.patch("http://localhost:8800/UserSettings/PomoCount/" + userId, { PomoCount: 0 })
+      // }
+      await axios.patch("http://localhost:8800/UserSettings/PomoCount/" + userId, { PomoCount: 0 })
       dispatch(SetTimerSettings({ ...dbTimer, current_task: '', task_id: id, PomoCount: 0 })) //Clear the id in order to reset the id count of the task
       dispatch(SetTaskList([])) //Clear the list of task in the local state
       dispatch(SetLastTaskId(undefined)) //Clear the current task message
@@ -224,13 +234,13 @@ const Timer = () => {
         :
         <div className="timerMini-container">
           <TimerClock />
-          {current_task &&
+          {/* {current_task &&
             <div className="currentTask-mini">
               <span>Current task:</span>
               <span className="currentTask-title">{current_task}</span>
             </div>
-          }
-          <div className="left-clock-container">
+          } */}
+          {/* <div className="left-clock-container">
             <div className="pomodoro-amount-container">
               <PomodoroIcon />
               <span className="pomo-container">
@@ -242,7 +252,7 @@ const Timer = () => {
               <span>/</span>
               <span className="task-amount-text">1</span>
             </div>
-          </div>
+          </div> */}
         </div>
       }
     </div>
