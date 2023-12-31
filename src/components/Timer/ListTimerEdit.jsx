@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux"
 import { SetTimerListEdit, SetTimerSettings } from "../../features/timerSlice";
 import { NumberUpIcon, NumberDownIcon, AddSubtaskIcon } from "../../icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { SetTaskList, DeleteTask, } from "../../features/taskSlice";
 
@@ -31,10 +31,12 @@ const ListTimerUpdate = () => {
     if (!task_title) {
       return
     }
+    // const userId = 1;
     try {
       await axios.patch("http://localhost:8800/TaskCurrent/" + currentTimerId, timerInput);
-      const newTask = dbTasks.map((task) => {
+      const newTask = dbTasks.map((task) => { //Modify only the task with the id selected
         if (task.id == currentTimerId) {
+          dispatch(SetTimerSettings({ ...dbTimer, current_task: task_title }))
           return { ...task, task_title: task_title, focus_amount: focus_amount, is_checked: is_checked }
         }
         return task

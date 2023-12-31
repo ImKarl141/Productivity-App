@@ -109,45 +109,7 @@ const TimerClock = () => {
   // console.log(task_id);
   const [isFinish, setIsFinish] = useState(false)
 
-  // useTimer(() => {
-  //   updateTime()
-  // },
-  //   isPlaying ? 1000 : null
-  // )
 
-  // const updateTime = () => {
-  //   if (isPlaying) {
-  //     if (minutes >= 1) {
-  //       // console.log("More than one minute");
-  //       if (seconds >= 1) { //Decrease only seconds
-  //         // const newValue = { ...timer, seconds: timer.seconds - 1 };
-  //         setTimer({ ...timer, seconds: timer.seconds - 1 });
-  //       } else { //Decrease minutes and set Seconds to 59
-  //         // const newValue = { ...timer, minutes: timer.minutes - 1, seconds: 59 };
-  //         setTimer({ ...timer, minutes: timer.minutes - 1, seconds: 59 });
-  //       }
-  //     } else { //No minutes
-  //       if (seconds >= 1) { //Decrease only seconds
-  //         // const newValue = { ...timer, seconds: timer.seconds - 1 };
-  //         setTimer({ ...timer, seconds: timer.seconds - 1 });
-  //       } else {
-  //         // const newValue = { ...timer, isPlaying: !isPlaying }
-  //         setTimer({ ...timer, isPlaying: !isPlaying, minutes: short, isShortRest: false }) // Once the focus finished set to short/long rest
-  //         // handleTaskPomo(); //Add +1 to focus_finished
-  //         shortRest || longRest ? () => { setShortRest(false); setLongRest(false) } : restTimer(); //If in short/long rest do not execute restTimer
-  //         finishTimer.play(); // Alarm sound
-  //         myAlert(); //Activate Notification when timer is finished
-  //       }
-  //     }
-  //   } else {
-  //     return;
-  //   }
-  // }
-
-  // const resetRest = () => {
-  //   setShortRest(false) 
-  //   setLongRest(false)
-  // }
 
   const myAlert = () => {
     // console.log("Timer finished");
@@ -243,49 +205,6 @@ const TimerClock = () => {
 
   return (
     <>
-      {/* <div className="pomodoro-timerMini">
-            <div className="timer-clock-mini" style={{ backgroundColor: shortRest ? "var(--gray02)" : "var(--white)" }}>
-              {
-                minutes <= 9 ? <span className="timer-text-mini">{`0${minutes}`}</span> :
-                  <span className="timer-text-mini">{`${minutes}`}</span>
-              }
-              <div className="tick-main">
-                <span className="tick-verticalMini-main"></span>
-                <div className="tick-container">
-                  <span className="tick-horizontalMini-main"></span>
-                  <span className="tick-horizontalMini-main"></span>
-                </div>
-                <span className="tick-verticalMini-main"></span>
-              </div>
-              <div className="tick">
-                <span className="tick-verticalMini"></span>
-                <div className="tick-container">
-                  <span className="tick-horizontalMini"></span>
-                  <span className="tick-horizontalMini"></span>
-                </div>
-                <span className="tick-verticalMini"></span>
-              </div>
-            </div>
-            <div className="timer-btn-mini">
-              {
-                isFinish && (
-                  <button className="play-buttons-full" title="Reset" onClick={() => resetTimer()}>
-                    <ResetTimer />
-                  </button>
-                )
-              }
-              {
-                !isFinish && (
-                  <button className='play-buttons-full' title="Play/Pause" onClick={() => playTimer()}>
-                    <PlayPauseFullIcon />
-                  </button>
-                )
-              }
-              <button className='play-buttons-full' title="Stop" onClick={() => stopTimer()}>
-                <SkipFullIcon />
-              </button>
-            </div>
-          </div> */}
       <div className={(Task || Notes) ? "pomodoro-timerMini" : "pomodoro-timer"}>
         {/* <button style={{ color: "black" }} onClick={() => dispatch(SetTimerMini())}>Test tick</button> */}
         {
@@ -318,12 +237,6 @@ const TimerClock = () => {
           <span className="clock-effect-4">
             <span className="clock-effect-line"></span>
           </span>
-          {/* {
-            (!Task || !Notes) &&
-            <>
-              
-            </>
-          } */}
           {
             !isPlaying && (
               (Task || Notes) ?
@@ -415,72 +328,9 @@ const TimerClock = () => {
                 </button>
             }
           </div>
-
-
-          {/* {
-            (Task || Notes) && (
-
-              <div className="timer-btn-full">
-                {
-                  isFinish && (
-                    <button className="play-buttons-full" title="Reset" onClick={() => resetTimer()}>
-                      <ResetTimer />
-                    </button>
-                  )
-                }
-                {
-                  !isFinish && (
-                    <button className='play-buttons-full' title="Play/Pause" onClick={() => playTimer()}>
-                      <PlayPauseFullIcon />
-                    </button>
-                  )
-                }
-                {
-                  isShortRest
-                    ? <button className='play-buttons-full' title="Short rest" onClick={() => restTimer()}>
-                      <SkipFullIcon />
-                    </button>
-
-                    : <button className='play-buttons-full' title="Stop timer" onClick={() => stopTimer()}>
-                      <SkipFullIcon />
-                    </button>
-                }
-              </div>
-            )
-          } */}
-          {/* <div className="timer-btn-full">
-            {
-              isFinish && (
-                <button className="play-buttons-full" title="Reset" onClick={() => resetTimer()}>
-                  <ResetTimer />
-                </button>
-              )
-            }
-            {
-              !isFinish && (
-                <button className='play-buttons-full' title="Play/Pause" onClick={() => playTimer()}>
-                  <PlayPauseFullIcon />
-                </button>
-              )
-            }
-            {
-              isShortRest
-                ? <button className='play-buttons-full' title="Short rest" onClick={() => restTimer()}>
-                  <SkipFullIcon />
-                </button>
-
-                : <button className='play-buttons-full' title="Stop timer" onClick={() => stopTimer()}>
-                  <SkipFullIcon />
-                </button>
-            }
-          </div> */}
         </div>
       </div>
     </>
-    // <div>
-
-    // </div>
-
   )
 }
 export default TimerClock

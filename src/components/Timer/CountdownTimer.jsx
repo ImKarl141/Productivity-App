@@ -15,7 +15,7 @@ function CountdownTimer({ expiryTimestamp }) {
   const { Menu, Task, Notes } = menuToggle;
 
 
-  const { task_id } = dbTimer
+  const { task_id, isPlaying } = dbTimer
 
   const [number, myNumber] = useState(changeNumber)
 
@@ -24,8 +24,12 @@ function CountdownTimer({ expiryTimestamp }) {
 
   const handleTaskPomo = async () => {
     const focus_finished = dbTasks.find(task => task.id === task_id).focus_finished
+    const userId = 1
+    const newCount = dbTimer.PomoCount + 1;
+    // console.log(newCount);
     try {
       await axios.patch("http://localhost:8800/TaskCurrent/AddPomo/" + task_id, { focus_finished: focus_finished + 1 })
+      await axios.patch("http://localhost:8800/UserSettings/PomoCount/" + userId, { PomoCount: newCount })
       const newTask = dbTasks.map((task) => {
         if (task.id === task_id) {
           return { ...task, focus_finished: focus_finished + 1 }
@@ -33,6 +37,7 @@ function CountdownTimer({ expiryTimestamp }) {
         return { ...task }
       })
       dispatch(SetTaskList(newTask))
+      dispatch(SetTimerSettings({ ...dbTimer, PomoCount: newCount }))
       // console.log(newTask);
     } catch (err) {
       console.log(err);
@@ -87,15 +92,18 @@ function CountdownTimer({ expiryTimestamp }) {
         <span className='countDown-seconds'>{(seconds <= 9) ? `0${seconds}` : seconds}</span>
       </div>
       <div className={(Task || Notes) ? 'countDownMini-buttons' : 'countDownFull-buttons'}>
+        {
+          console.log(typeof (pause))
+        }
         {/* <button onClick={start}>
           Start
           <PlayPauseFullIcon />
         </button> */}
         <button onClick={pause} title='timer-pause'>
-          Pause
+          <PlayPauseFullIcon />
         </button>
         <button onClick={resume} title='timer-resume'>
-          Resume
+          <PlayPauseFullIcon />
         </button>
       </div>
       {/* <button onClick={() => {

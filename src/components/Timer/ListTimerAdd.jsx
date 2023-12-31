@@ -62,8 +62,8 @@ const ListTimerAdd = () => {
         focus_finished: 0,
         is_checked: 0,
       })
-      console.log("Task created");
-      console.log(nextId + 1);
+      // console.log("Task created");
+      // console.log(nextId + 1);
 
       // window.location.reload();
     } catch (err) {
@@ -144,7 +144,7 @@ const ListTimerAdd = () => {
                   </div>
                 </div>
               </div>
-              {
+              {/* {
                 (subtasksTest.length > 0) && (
                   <div className="subtaskList">
                     {
@@ -166,7 +166,7 @@ const ListTimerAdd = () => {
                     }
                   </div>
                 )
-              }
+              } */}
             </form>
             <div className="taskTimer-btn">
               <button className="taskTimerDetails-btn">

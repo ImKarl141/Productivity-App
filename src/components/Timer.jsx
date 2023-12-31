@@ -23,9 +23,7 @@ const Timer = () => {
   // const current_task = dbTimer.current_task
 
   const { current_task, PomoCount } = dbTimer
-  console.log(PomoCount);
 
-  console.log(dbTasks.length);
   // $(`.listTask-timer:contains()`)
 
 
@@ -141,11 +139,10 @@ const Timer = () => {
     try {
       await axios.post("http://localhost:8800/TaskCurrent/ClearAll")
       await axios.patch("http://localhost:8800/UserSettings/ClearCurrentTask/" + settingsId, { current_task: null, task_id: id })
-      dispatch(SetTimerSettings({ ...dbTimer, current_task: '', task_id: id })) //Clear the id in order to reset the id count of the task
+      dispatch(SetTimerSettings({ ...dbTimer, current_task: '', task_id: id, PomoCount: 0 })) //Clear the id in order to reset the id count of the task
       dispatch(SetTaskList([])) //Clear the list of task in the local state
       dispatch(SetLastTaskId(undefined)) //Clear the current task message
       dispatch(SetTimerTaskSettings()) //Close window
-
     } catch (err) {
       console.log(err);
     }
