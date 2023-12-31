@@ -1,9 +1,9 @@
 import { useTimer } from 'react-timer-hook';
-import { TimerSettings, PlayPauseFullIcon, ResetTimer, SkipFullIcon } from "../../icons"
+import { TimerSettings, PlayPauseFullIcon, ResetTimer, SkipFullIcon, PauseTimerIcon, ResumeTimerIcon } from "../../icons"
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import FinishTimer from '../../assets/clockDigital_Alarm.mp3'
-import { SetPaused } from '../../features/timerSlice';
+import { SetPaused, SetFinish } from '../../features/timerSlice';
 import axios from 'axios';
 import { SetTaskList } from '../../features/taskSlice';
 
@@ -22,27 +22,27 @@ function CountdownTimer({ expiryTimestamp }) {
   const dispatch = useDispatch()
   const finishTimer = new Audio(FinishTimer);
 
-  const handleTaskPomo = async () => {
-    const focus_finished = dbTasks.find(task => task.id === task_id).focus_finished
-    const userId = 1
-    const newCount = dbTimer.PomoCount + 1;
-    // console.log(newCount);
-    try {
-      await axios.patch("http://localhost:8800/TaskCurrent/AddPomo/" + task_id, { focus_finished: focus_finished + 1 })
-      await axios.patch("http://localhost:8800/UserSettings/PomoCount/" + userId, { PomoCount: newCount })
-      const newTask = dbTasks.map((task) => {
-        if (task.id === task_id) {
-          return { ...task, focus_finished: focus_finished + 1 }
-        }
-        return { ...task }
-      })
-      dispatch(SetTaskList(newTask))
-      dispatch(SetTimerSettings({ ...dbTimer, PomoCount: newCount }))
-      // console.log(newTask);
-    } catch (err) {
-      console.log(err);
-    }
-  }
+  // const handleTaskPomo = async () => {
+  //   const focus_finished = dbTasks.find(task => task.id === task_id).focus_finished
+  //   const userId = 1
+  //   const newCount = dbTimer.PomoCount + 1;
+  //   // console.log(newCount);
+  //   try {
+  //     await axios.patch("http://localhost:8800/TaskCurrent/AddPomo/" + task_id, { focus_finished: focus_finished + 1 })
+  //     await axios.patch("http://localhost:8800/UserSettings/PomoCount/" + userId, { PomoCount: newCount })
+  //     const newTask = dbTasks.map((task) => {
+  //       if (task.id === task_id) {
+  //         return { ...task, focus_finished: focus_finished + 1 }
+  //       }
+  //       return { ...task }
+  //     })
+  //     dispatch(SetTaskList(newTask))
+  //     // dispatch(SetTimerSettings({ ...dbTimer, PomoCount: newCount }))
+  //     // console.log(newTask);
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // }
 
 
   const {
@@ -62,14 +62,11 @@ function CountdownTimer({ expiryTimestamp }) {
       //-Validate current rest(short/long)
       //-Add a amount pomo (Axios)
       //-Add pomo finished to the task (if selected) (Axios)
-
-
-      // const time = new Date();
-      // time.setSeconds(time.getSeconds() + 300);
-      // restart(time)
       finishTimer.play();
-      handleTaskPomo();
+
+      // dispatch(SetFinish(false));
       alert(currentMessage)
+
     }, autoStart: autoStartRest ? true : false,
   });
 
@@ -86,25 +83,40 @@ function CountdownTimer({ expiryTimestamp }) {
   return (
     // <div className={!isTimerSettings ? 'countDownTest' : 'test-text'} >
     <div className={(Task || Notes) ? 'countDownContainer-mini' : 'countDownContainer-full'} >
-      <div className='countDownFull-numbers'>
+      <div className={(Task || Notes) ? 'countDownMini-numbers' : 'countDownFull-numbers'}>
         <span className='countDown-minutes'>{(minutes <= 9) ? `0${minutes}` : minutes}</span>
         <span className='countDown-separator'>:</span>
         <span className='countDown-seconds'>{(seconds <= 9) ? `0${seconds}` : seconds}</span>
       </div>
       <div className={(Task || Notes) ? 'countDownMini-buttons' : 'countDownFull-buttons'}>
-        {
-          console.log(typeof (pause))
-        }
+        {/* {
+          !isPlaying &&
+          <div style={{ color: "black" }}>Timer start</div>
+        } */}
         {/* <button onClick={start}>
           Start
           <PlayPauseFullIcon />
         </button> */}
-        <button onClick={pause} title='timer-pause'>
-          <PlayPauseFullIcon />
+        <button className={(Task || Notes) ? 'hide-element' : 'fullTimer-btn'} onClick={resume} title='timer-resume'>
+          <ResumeTimerIcon />
         </button>
-        <button onClick={resume} title='timer-resume'>
-          <PlayPauseFullIcon />
+        <button className={(Task || Notes) ? 'hide-element' : 'fullTimer-btn'} onClick={pause} title='timer-pause'>
+          <PauseTimerIcon />
         </button>
+        {
+          (Task || Notes) &&
+          <>
+            <button className='start-buttons-mini' style={{ color: "black" }} onClick={pause} title='timer-pause'>
+              Pause
+              {/* <PauseTimerIcon /> */}
+            </button>
+            <button className='start-buttons-mini' style={{ color: "black" }} onClick={resume} title='timer-resume'>
+              Resume
+              {/* <ResumeTimerIcon /> */}
+            </button>
+          </>
+        }
+
       </div>
       {/* <button onClick={() => {
         // Restarts to 5 minutes timer
