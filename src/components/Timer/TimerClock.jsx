@@ -14,12 +14,12 @@ import CountdownTimer from "./CountdownTimer"
 
 
 
+
 const TimerClock = () => {
+  const { isTimerSettings, isEnglish, soundVolume, dbTimer, currentTimerTask } = useSelector((store) => store.timer)
   const { dbTasks } = useSelector((store) => store.task)
   const { menuToggle } = useSelector((store) => store.menu);
   const { Menu, Task, Calendar, Notes } = menuToggle;
-  const { isTimerSettings, isEnglish, soundVolume, dbTimer, currentTimerTask } = useSelector((store) => store.timer)
-
   // console.log(isEnglish);
   const dispatch = useDispatch()
   // console.log(currentTimerTask);
@@ -28,8 +28,20 @@ const TimerClock = () => {
   const stopSound = new Audio(StopSound);
   const finishTimer = new Audio(FinishTimer);
 
+  // const currentTask = dbTimer.find(task => task.task_title === currentTimerTask)
+  // console.log(currentTask);
+
+
   //Default values to load then timer is reset
   const [defaultValues, setDefaultValues] = useState({
+    // minutes: 25,
+    // seconds: 0,
+    // short: 5,
+    // long: 15,
+    // amount: 0,
+    // isPlaying: false,
+    // isShortRest: true,
+    // isLongRest: false,
     minutes: 26, //from database
     seconds: 0,
     short: 5, //from database
@@ -43,13 +55,27 @@ const TimerClock = () => {
     task_id: undefined
   });
 
+  //Short rest when focus timer is over
+  // const [shortRest, setShortRest] = useState({
+  //   minutes: 5,
+  //   seconds: 0,
+  //   isPlaying: false,
+  // });
+
+  //Long rest 
+  // const [longRest, setLongRest] = useState({
+  //   minutes: 15,
+  //   seconds: 0,
+  //   isPlaying: false,
+  // });
+
   const [shortRest, setShortRest] = useState(false)
   const [longRest, setLongRest] = useState(false)
 
 
   //Values for timer clock
   const [timer, setTimer] = useState({
-    minutes: undefined, //from database
+    minutes: 28, //from database
     seconds: 0,
     short: 5, //from database
     long: 15, //from database
@@ -102,14 +128,50 @@ const TimerClock = () => {
     long: 15,
   })
 
-
-
   //Destructure timer state. This control the timer.
   const { minutes, seconds, short, long, isPlaying, isShortRest, isLongRest, amount, current_task, task_id } = timer;
   // console.log(task_id);
   const [isFinish, setIsFinish] = useState(false)
 
+  useTimer(() => {
+    updateTime()
+  },
+    isPlaying ? 1000 : null
+  )
 
+  const updateTime = () => {
+    if (isPlaying) {
+      if (minutes >= 1) {
+        // console.log("More than one minute");
+        if (seconds >= 1) { //Decrease only seconds
+          // const newValue = { ...timer, seconds: timer.seconds - 1 };
+          setTimer({ ...timer, seconds: timer.seconds - 1 });
+        } else { //Decrease minutes and set Seconds to 59
+          // const newValue = { ...timer, minutes: timer.minutes - 1, seconds: 59 };
+          setTimer({ ...timer, minutes: timer.minutes - 1, seconds: 59 });
+        }
+      } else { //No minutes
+        if (seconds >= 1) { //Decrease only seconds
+          // const newValue = { ...timer, seconds: timer.seconds - 1 };
+          setTimer({ ...timer, seconds: timer.seconds - 1 });
+        } else {
+          // const newValue = { ...timer, isPlaying: !isPlaying }
+          setTimer({ ...timer, isPlaying: !isPlaying, minutes: short, isShortRest: false }) // Once the focus finished set to short/long rest
+          // handleTaskPomo(); //Add +1 to focus_finished
+          shortRest || longRest ? () => { setShortRest(false); setLongRest(false) } : restTimer(); //If in short/long rest do not execute restTimer
+          finishTimer.play(); // Alarm sound
+          myAlert(); //Activate Notification when timer is finished
+        }
+      }
+    } else {
+      return;
+    }
+  }
+
+  // const resetRest = () => {
+  //   setShortRest(false) 
+  //   setLongRest(false)
+  // }
 
   const myAlert = () => {
     // console.log("Timer finished");
@@ -120,12 +182,8 @@ const TimerClock = () => {
 
   const handleTaskPomo = async () => {
     const focus_finished = dbTasks.find(task => task.id === task_id).focus_finished
-    const userId = 1
-    const newCount = dbTimer.PomoCount + 1;
-    // console.log(newCount);
     try {
       await axios.patch("http://localhost:8800/TaskCurrent/AddPomo/" + task_id, { focus_finished: focus_finished + 1 })
-      await axios.patch("http://localhost:8800/UserSettings/PomoCount/" + userId, { PomoCount: newCount })
       const newTask = dbTasks.map((task) => {
         if (task.id === task_id) {
           return { ...task, focus_finished: focus_finished + 1 }
@@ -133,12 +191,24 @@ const TimerClock = () => {
         return { ...task }
       })
       dispatch(SetTaskList(newTask))
-      dispatch(SetTimerSettings({ ...dbTimer, PomoCount: newCount }))
       // console.log(newTask);
     } catch (err) {
       console.log(err);
     }
   }
+
+  // const handleTaskPomo = async () => {
+  //   const focus_finished = dbTasks.find(task => task.id === task_id).focus_finished
+  //   const id = task_id
+  //   // focus_finished
+  //   //Add +1 to the focus_finished column inside the TaskCurrent table
+  //   try {
+  //     await axios.patch("http://localhost:8800/TaskCurrent/AddPomo/" + id, { focus_finished: focus_finished + 1 })
+  //     // dispatch(SetTimerSettings({ ...dbTimer, current_task: title }))
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // }
 
   //Clock's buttons 
   //Start and pause timer
@@ -197,11 +267,13 @@ const TimerClock = () => {
     setLongRest(false)
 
     setIsFinish(false)
-    // console.log(timer);
+    console.log(timer);
     console.log("Timer was reset");
   }
+
   const time = new Date();
   time.setSeconds(time.getSeconds() + (minutes * 60)); // 10 minutes timer
+
 
   return (
     <>
@@ -240,11 +312,11 @@ const TimerClock = () => {
           {
             !isPlaying && (
               (Task || Notes) ?
-
                 <>
                   {
                     minutes <= 9 ? <span className="timer-text-mini">{`0${minutes}`}</span> :
-                      <span className="timer-text-full">{`${minutes}`}</span>
+                      <span className="timer-text-mini">{`${minutes}`}</span>
+                    // {(!Task && !Notes) ? "play-buttons-full" : "hide-element"}
                   }
                 </>
                 :
@@ -305,25 +377,49 @@ const TimerClock = () => {
           <div className={(Task || Notes) ? "timer-btn-mini" : "timer-btn-full"}>
             {
               isFinish && (
-                <button className="play-buttons-full" title="Reset" onClick={() => resetTimer()}>
-                  <ResetTimer />
-                </button>
+                <>
+                  <button className={(Task || Notes) ? "start-button-mini " : "hide-element"} title="Start timer mini" onClick={() => resetTimer()}>
+                    Reset
+                  </button>
+                  <button className={(!Task && !Notes) ? "play-buttons-full" : "hide-element"} title="Reset" onClick={() => resetTimer()}>
+                    <ResetTimer />
+                  </button>
+                </>
               )
             }
             {
-              !isFinish && (
-                <button className='play-buttons-full' title="Play/Pause" onClick={() => playTimer()}>
-                  <PlayPauseFullIcon />
-                </button>
-              )
+              !isPlaying &&
+              <>
+                {
+                  !isFinish && (
+                    <>
+                      <button className={(!Task && !Notes) ? "start-buttons-full" : "hide-element"} title="Start timer" onClick={() => playTimer()}>
+                        START
+                      </button>
+                      <button className={(Task || Notes) ? "start-button-mini " : "hide-element"} title="Start timer mini" onClick={() => playTimer()}>
+                        START
+                      </button>
+                    </>
+                  )
+                }
+              </>
             }
             {
               isShortRest
-                ? <button className='play-buttons-full' title="Short rest" onClick={() => restTimer()}>
-                  <SkipFullIcon />
-                </button>
+                ?
+                <>
+                  <button className={(!Task && !Notes) ? "play-buttons-full" : "hide-element"} title="Short rest" onClick={() => restTimer()}>
+                    <SkipFullIcon />
+                  </button>
 
-                : <button className='play-buttons-full' title="Stop timer" onClick={() => stopTimer()}>
+                </>
+
+                // <button className={(!Task && !Notes) ? "start-buttons-full" : "hide-element"} title="Skip timer" onClick={() => restTimer()}>
+                //   SKIP
+                // </button>
+                : <button className={(!Task && !Notes) ? "play-buttons-full" : "hide-element"} title="Stop timer" onClick={() => stopTimer()}>
+
+                  {/* Stop */}
                   <SkipFullIcon />
                 </button>
             }
