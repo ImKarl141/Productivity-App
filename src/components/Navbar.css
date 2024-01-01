@@ -132,4 +132,49 @@ button:hover {
 
 
 
+/* For screens less than 700px */
 
+@media only screen and (max-width:700px){
+  .navbar-main {
+    /* width: 100%; */
+    overflow: hidden;
+  }
+
+  .menu-bar {
+    /* flex-direction: row; */
+    width: 3.2rem;
+    padding: 0.14rem 0.14rem 0.14rem 0.14rem;
+  }
+
+  .main-menu {
+    width: 3.2rem;
+    height: 3.2rem;
+  }
+
+  .menu-icon{
+    width: 1.2rem;
+    height: 1.2rem;
+    color: var(--black);
+  }
+  
+  .icon-button  {
+    align-items: center;
+    justify-content: center;
+    width: 3.2rem;
+    height: 3.2rem;
+  }
+
+  /* .menu-toggle {
+    flex-direction: row;
+  } */
+
+  .pomodoro-fullbar-container {
+    /* background-color: red; */
+    font-size: 0.9rem;
+  }
+
+  .option-bar {
+    background-color: red;
+    display: none;
+  }
+}
