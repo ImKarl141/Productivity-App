@@ -1348,12 +1348,14 @@ label::selection {
 @media only screen and (max-width:700px){
   .pomodoro-fullbar-container {
     display: flex;
-    align-items: start;
-    background-color: transparent;
-    padding: 0rem 0.4rem 0rem 0.4rem;
+    align-items: center;
+    /* background-color: transparent; */
+    padding: 0rem 0.2rem 0.4rem 0.2rem;
+    background-color:var(--pomodoroLight);
+    min-width: 10rem;
     max-height: 35rem;
     min-height: 25rem;
-    overflow: auto;
+    /* overflow: auto; */
   }
 
   .pomodoro-fullbarMini-container{
@@ -1545,8 +1547,3 @@ label::selection {
     gap: 0.6rem;
   }
 }
-
-
-
-
-
