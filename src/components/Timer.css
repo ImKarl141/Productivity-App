@@ -1343,6 +1343,64 @@ label::selection {
   width: 0.6rem;
 }
 
+/* For screens less than 700px */
+
+@media only screen and (max-width:700px){
+  .pomodoro-fullbar-container {
+    /* max-width: 40rem; */
+    /* max-width: 10rem; */
+    /* min-height: 10rem; */
+    background-color: transparent;
+    /* margin-top: 2rem; */
+    /* background-color: rgba(255, 0, 0, 0.322); */
+  }
+
+  .timer-container {
+    width: 22rem;
+    background-color: #cc6666;
+    padding-top: 0.6rem;
+  }
+
+
+  .pomodoro-timer {
+    min-height: 14rem;
+    /* background-color: red; */
+  }
+
+  .timerSettings-icon {
+    width: 1.6rem;
+    height: 1.6rem;
+    color: var(--black);
+  }
+  
+  .timer-clock-full {
+  /* height: var(--timerSizeFull); */
+  /* width: var(--timerSizeFull); */
+  width: 13rem;
+  height: 13rem;
+  border: 0.4rem solid var(--pomodoro);
+  border-radius: 10rem;
+  }
+
+  .timer-clock-full [class^="clock-effect-"] {
+    display: none;
+  }
+
+  .pomodoro-task {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    /* align-items: center; */
+    justify-content: start;
+    width: 21.2rem;
+    /* background-color: var(--pomodoroLight); */
+    /* border: 0.16rem solid var(--gray02); */
+    /* border-style: dashed; */
+    /* border-radius: 0.2rem; */
+    padding: 0.4rem;
+  }
+}
+
 
 
 
