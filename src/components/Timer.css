@@ -263,7 +263,7 @@
 }
 
 .timer-text-full {
-  font-size: 5rem;
+  /* font-size: 5rem; */
   font-weight: 600;
   z-index: 9;
   font-size: 4.8rem;
@@ -1356,39 +1356,99 @@ label::selection {
     overflow: auto;
   }
 
+  .pomodoro-fullbarMini-container{
+    display: none;
+  }
+
   .timer-container {
     width: 18rem;
     background-color: #cc6666;
     padding-top: 0.6rem;
   }
 
-
   .pomodoro-timer {
     min-height: 14rem;
     /* background-color: red; */
   }
 
+  .current-focus-task{
+    padding: 0rem 0.4rem;
+  }
+
   .timerSettings-btn {
+    top: 0.2rem;
     right: 1rem;
   }
 
   .timerSettings-icon {
-    width: 1.6rem;
-    height: 1.6rem;
+    width: 1.4rem;
+    height: 1.4rem;
     color: var(--black);
   }
   
   .timer-clock-full {
   /* height: var(--timerSizeFull); */
   /* width: var(--timerSizeFull); */
-  width: 13rem;
-  height: 13rem;
+  width: 12rem;
+  height: 12rem;
   border: 0.4rem solid var(--pomodoro);
   border-radius: 10rem;
   }
 
   .timer-clock-full [class^="clock-effect-"] {
     display: none;
+  }
+
+  .timer-text-full {
+    font-weight: 600;
+    z-index: 9;
+    font-size: 2.4rem;
+  }
+
+  .tick,
+  .tick-main {
+    padding: 0.1rem;
+  }
+
+  .tick-vertical-main{
+    width: 0.3rem;
+    height: 0.8rem;
+  }
+
+  .tick-horizontal-main{
+    height: 0.3rem;
+    width: 0.8rem;
+  }
+
+  .tick-horizontal {
+    height: 0.2rem;
+    width: 0.6rem;
+  }
+
+  .tick-vertical {
+    height: 0.6rem;
+    width: 0.2rem;
+  }
+
+  .timer-btn-full {
+    /* display: flex;
+    position: absolute;
+    flex-direction: column; */
+    bottom: 1.3rem;
+    gap: 0rem;
+    /* align-items: center;
+    justify-content: center;
+    z-index: 10; */
+  }
+
+  .start-buttons-full{
+    font-size: 0.9rem;
+    font-weight: 700;
+    width: 4rem; 
+  }
+
+  .skip-full {
+    width: 1.3rem;
   }
 
   .pomodoro-task {
@@ -1400,20 +1460,57 @@ label::selection {
     width: 17.6rem;
     /* width: 21.2rem; */
 
-    padding: 0.4rem;
+    padding: 0.2rem;
   }
 
   .taskTimerAdd-container{
     width: 17.4rem;
   }
 
+  .add-task-timer {
+    display: flex;
+    font-size: 1rem;
+    font-weight: 600;
+    align-items: center;
+    justify-content: center;
+    color: var(--white);
+  }
+
+  .taskTimer-details-container {
+    height: 10rem;
+  }
+
+  .taskTimerAdd-btn{
+    padding: 0.2rem 1rem;
+  }
+
+  .taskTimerCancel-btn {
+    padding: 0.4rem 0.4rem;
+  }
+
+
+
+  .add-timerText {
+    padding: 0.6rem 0rem;
+  }
+
   .pomodoro-stats{
     width: 17.4rem;
-    height: 4rem;
+    height: 2rem;
     white-space: nowrap;
     font-size: 0.8rem;
     gap: 1rem;
     padding: 0.6rem 0.4rem;
+  }
+
+  .currentTimerList-container{
+    align-content: start;
+    gap: 0.2rem;
+    max-height: 8.4rem;
+  }
+
+  .listTask-timer {
+    height: 2.6rem;
   }
 
   /*Scrollbar styling*/
@@ -1422,6 +1519,12 @@ label::selection {
     background-color: var(--pomodoroDark);
     width: 0.4rem;
   }
+
+  .details-timer-img,
+  .details-task-img{
+    height: 2rem;
+  }
+
   .notes-overall::-webkit-scrollbar {
     background-color: var(--pomodoroLight);
     border-left: 0.14rem solid var(--pomodoroDark);
