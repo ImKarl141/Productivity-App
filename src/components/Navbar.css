@@ -51,7 +51,7 @@ button:hover {
 .main-menu,
 .icon-button{
   display: flex;
-  flex-direction: column;
+  /* flex-direction: column; */
   align-items: center;
   justify-content: center;
   border: 0 none;
@@ -141,19 +141,34 @@ button:hover {
 @media only screen and (max-width:700px){
   .navbar-main {
     /* height: 500px; */
+    flex-direction: column;
+    align-items: stretch;
     overflow-x: hidden;
     height: 100%;
-    padding-bottom: 2rem;
+    padding-bottom: 3rem;
+    gap: 0.2rem;
     /* background-color: red; */
   }
 
   .menu-bar {
-    /* flex-direction: row; */
-    width: var(--size-smallBtn-menu);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: start;
+    /* min-width: var(--size-smallBtn-menu); */
     padding: 0.14rem 0.14rem 0.14rem 0.14rem;
   }
 
   .main-menu {
+    display: flex;
+  /* flex-direction: column; */
+    align-items: center;
+    justify-content: center;
+    border: 0 none;
+    margin: 0.1rem 0rem;
+    /* width: 5rem; */
+    /* height: 5rem; */
+
     width: var(--size-smallBtn-menu);
     height: var(--size-smallBtn-menu);
   }
@@ -163,6 +178,25 @@ button:hover {
     height: 1.2rem;
     color: var(--black);
   }
+
+  .menu-toggle{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    max-width: 0rem;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-width 0.1s ease-in-out, opacity 0.5s;;
+    /* transition: opacity 0.1s; */
+  }
+  
+  .menu-toggle-active {
+    max-width: 10rem;
+    opacity: 1;
+    /* background-color: red; */
+  }
+  
   
   .icon-button  {
     align-items: center;
@@ -179,15 +213,6 @@ button:hover {
     color: #191919;
     width: 4rem;
     text-align: center;
-  }
-
-  /* .menu-toggle {
-    flex-direction: row;
-  } */
-
-  .pomodoro-fullbar-container {
-    /* background-color: red; */
-    font-size: 0.9rem;
   }
 
   .option-bar {
