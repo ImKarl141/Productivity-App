@@ -73,14 +73,14 @@ const RegularTaskItem = (props) => {
                 {
                   props.project_name && (
                     <span className='next-item' title='Project'>
-                      <span className='project-color' style={{ backgroundColor: `${props.project_color}` }}></span>
-                      {props.project_name}
+                      <span className='project-color-task' style={{ backgroundColor: `${props.project_color}` }}></span>
+                      <span className="next-item-project">{props.project_name}</span>
                     </span>
                   )
                 }
                 {
                   props.tag_name && (
-                    <span title='Tag'>{props.tag_name}</span>
+                    <span className="next-item-tag" title='Tag'>{props.tag_name}</span>
                   )
                 }
               </div>
