@@ -40,7 +40,7 @@ const ListProjects = () => {
               <button key={id} className='list-projects' style={{ backgroundColor: project_name === currentProjectView ? "var(--pomodoroDark)" : "transparent" }}>
                 <div id={id} className='project-title-container' title='Project name' onClick={() => dispatch(SetCurrentProjectView(project_name))}>
                   <div className='project-color' style={{ backgroundColor: project_color }}></div>
-                  <p className='myTask-text'>{project_name}</p>
+                  <p className='myTask-text project-title'>{project_name}</p>
                 </div>
                 <div className='project-settings-btn' >
                   <span title='Edit' onClick={() => dispatch(SetCurrentProjectId(id))}><EditListIcon /></span>

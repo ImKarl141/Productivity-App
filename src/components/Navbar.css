@@ -205,13 +205,23 @@ button:hover {
     height: var(--size-smallBtn-menu);
   }
 
+  .icon-button-text {
+    width: var(--size-smallBtn-menu);
+    height: var(--size-smallBtn-menu);
+  }
+
+  .icon-button-text:active {
+    transition: 0.1s ease-out;
+    transform: translateY(0.1rem);
+  }
+
   .icon-text {
     font-family: Nunito;
     font-size: 0.8rem;
     font-weight: 600;
     margin: 0.2rem 0rem 0rem 0rem;
     color: #191919;
-    width: 4rem;
+    width: var(--size-smallBtn-menu);
     text-align: center;
   }
 
