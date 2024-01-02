@@ -96,9 +96,10 @@ const NoteEdit = () => {
       </form>
       <div className='note-buttons'>
         <div className='note-buttons'>
-          <button className='notes-btn'>
+          {/* <span className='notes-btn make-list'>
             <NoteListIcon />
-          </button>
+          </span> */}
+          <div className="notes-btn make-list">Color:</div>
           <select
             id="note-color"
             name="note_color"
@@ -120,7 +121,7 @@ const NoteEdit = () => {
           <button
             onClick={handleNoteSubmit}
             className='notes-btn btn-save'>
-            Save changes
+            Save Changes
           </button>
           <button
             className='notes-btn'

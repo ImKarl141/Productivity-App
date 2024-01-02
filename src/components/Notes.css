@@ -172,7 +172,7 @@
 .note-placeholder span {
   color: var(--black);
   font-weight: 600;
-  font-size: 0.8rem;
+  font-size: 0.7rem;
   padding-left: 0.2rem;
   margin: 0;
 }
@@ -196,7 +196,6 @@
 .note-buttons {
   display: flex;
   justify-content: space-between;
-
 }
 
 .note-buttons-send {
@@ -213,6 +212,12 @@
   border-radius: 0.4rem;
   background-color: var(--pomodoroLight);
   padding: 0.2rem 0.6rem;
+}
+
+.make-list {
+  font-family: Nunito;
+  font-size: 0.8rem;
+  font-weight: 700;
 }
 
 .btn-save {
@@ -638,6 +643,27 @@
     position: relative;
   }
 
+  .note-edit {
+    display: flex;
+    flex-direction: column;
+    width: 20rem;
+  }
+  
+  .myInput {
+    width: 18.6rem;
+  }
+  
+  .note-buttons {
+    height: 2.5rem;
+  }
+
+  .notes-btn{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+  }
+  
   .note-list {
     display: grid;
     grid-template-columns: repeat(2, auto);
@@ -661,7 +687,120 @@
     background-color: var(--pomodoroDark);
     color: var(--blackMedium);
     font-weight: 700;
-    font-size: 1rem;
+  }
+
+  .note-card-title{
+    font-size: 0.8rem;
+  }
+  
+  .note-card-content{
+    font-size: 0.7rem;
+  }
+
+  .note-tag {
+    width: 5rem;
+    height: 1.6rem;
+  }
+
+  .note-card:hover .note-tag {
+    width: 5rem;
+  }
+  
+  .note-tag-edit {
+    height: 1.6rem;
+    width: 6rem;
+  }
+
+  .note-card:hover button {
+    opacity: 0.5;
+  }
+  
+  .note-card button:hover {
+    opacity: 1;
+  }
+  
+  .note-card:hover .notePinned-btn {
+    opacity: 1;
+  }
+  
+  .noteDelete-btn,
+  .noteMakeTask-btn,
+  .notePin-btn,
+  .noteEdit-btn {
+    display: flex;
+    position: absolute;
+    opacity: 0.3;
+  }
+
+  .notePinned-btn{
+    opacity: 1;
+  }
+
+  .pinNote-icon {
+    width: 1rem;
+    height: 1rem;
+  }
+
+  .deleteNote-icon,
+  .taskNote-icon,
+  .editNote-icon {
+    width: 1rem;
+    height: 1rem;
+  }
+
+  .noteAccept-btn {
+    right: 1.7rem;
+  }
+
+  .noteEdit-btn {
+    right: 1.6rem;
+  }
+
+  .noteDelete-btn,
+  .noteCancel-btn {
+    right: 0.3rem;
+  }
+
+  .noteMakeTask-btn {
+    right: 3rem;
+  }
+
+  .select-color {
+    position: absolute;
+    background-color: transparent;
+    border: none;
+    bottom: 0.5rem;
+    right: 3.2rem;
+    font-size: 0.7rem;
+    width: 6.7rem;
+    /* background-color: red; */
+  }
+
+  .noteCard-onTop-container {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    z-index: 5;
+    align-items: center;
+    justify-content: center;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: 0.4rem;
+    border-radius: 0.4rem;
+    background-color: #cc666696;
+    cursor: pointer;
+    /* background-color: #bb5f5f73; */
+    /* opacity: 0.8;  */
+    backdrop-filter: blur(0.05rem);
+  }
+
+  .make-list {
+    font-family: Nunito;
+    font-size: 0.8rem;
+    font-weight: 700;
   }
 
 }

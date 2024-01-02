@@ -146,7 +146,7 @@ const NotesMenu = () => {
               <NoteEdit /> :
               <div className='note-placeholder' onClick={() => dispatch(ShowNoteEdit())}>
                 <AddNoteIcon />
-                <span>Create a note...</span>
+                <span className='note-create-placeholder'>Create a note...</span>
               </div>
           }
         </div>
