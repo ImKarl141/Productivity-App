@@ -147,6 +147,11 @@
   margin-right: 0.5rem;
 }
 
+.date-mobile-container {
+  display: none;
+  /* visibility: hidden; */
+}
+
 .myTask-text-details {
   white-space: nowrap;
   font-family: Nunito;
@@ -1411,7 +1416,190 @@ a {
     height: 1rem;
   }
 
+  .overall-tags {
+    /* flex-basis: 8rem; */
+    display: flex;
+    flex-direction: column;
+    min-height: 7rem;
+  }
 
+  .tags-container {
+    /* display: grid;
+    align-items: center;
+    grid-template-columns: repeat(3, 1fr);
+    justify-items: stretch; */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: start;
+    height: 4rem;
+    /* background-color: red; */
+    margin: 0rem;
+    padding: 0.2rem 0.2rem 0.4rem 0.2rem;
+    grid-column-gap: 0.2rem;
+    grid-row-gap: 0.4rem;
+    overflow: auto;
+  }
+
+  .myTag {
+    display: grid;
+    position: relative;
+    font-family: Nunito;
+    color: var(--black);
+    font-weight: 600;
+    font-size: 0.8rem;
+    justify-content: center;
+    align-items: center;
+    padding: 0.2rem 0.6rem;
+    border-radius: 0.25rem ;
+    background-color: var(--pomodoroDark);
+    width: 5rem;
+    max-width: 5rem;
+    white-space: nowrap;
+    overflow: visible;
+    text-overflow: ellipsis;
+    opacity: 0.5;
+    cursor: pointer;
+  }
+
+  .tag-name {
+    font-size: 0.7rem;
+    margin-right: 0.13rem;
+    margin: 0;
+    padding: 0.1rem 0.2rem;
+  }
+
+  .editTag-icon,
+  .deleteTag-icon {
+    width: 0.9rem;
+    height: 0.9rem;
+    top: 0.4rem;
+  }
+
+  .tag-buttons {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.2rem 0rem;
+  }
+
+  .add-tags-btn {
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    justify-content: start;
+    align-items: center;
+    flex: 1;
+    padding: 0.2rem 0rem;
+    margin: 0rem 0.4rem;
+    border-radius: 0.5rem ;
+    background-color: var(--pomodoroLight);
+    opacity: 0.8;
+  }
+
+  .task-focus {
+    flex: 1;
+    margin-left: 0.2rem;
+    padding: 0.4rem;
+    border: 0 none;
+    border-radius: 0.2rem;
+    overflow: auto;
+    overflow-x: hidden;
+    min-height: 28.5rem;
+  }
+  
+  .task-focus-add {
+    margin-bottom: 0.2rem;  
+  }
+
+  .add-task-btn {
+    display: flex;
+    align-items: center;
+    border: 0.15rem solid var(--pomodoroDark);
+    border-radius: 0.2rem ;
+    padding: 0.2rem;
+    /* margin: 0.5rem; */
+    opacity: 0.8;
+    cursor: text;
+  }
+
+  .task-item-overall-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    white-space: nowrap;
+    padding: 0.2rem 0rem 0rem 0rem;
+    border-bottom: 0.1rem solid var(--blackLight);
+    font-family: Nunito;
+    font-size: 0.6rem;
+    font-weight: 600;
+    color: var(--black);
+    /* cursor: pointer; */
+  }
+
+  .task-item-container {
+    max-width: 12.3rem;
+    /* background-color: red; */
+    grid-column-gap: 0.2rem;
+    grid-row-gap: 0.1rem;
+    overflow: hidden;
+  }
+
+  .default-checkbox {
+    width: 1.2rem;
+    height: 1.2rem;
+    grid-row: span 2;
+  }
+
+  .checkmark {
+    height: 1rem;
+    width: 1rem;
+    /* background-color: red; */
+    border: 0.12rem solid var(--blackLight);
+  }
+
+  .task-item-text{
+    max-width:11rem;
+  }
+
+  .task-item-title {
+    max-width: 5rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .task-item-title::after {
+    content:":";
+  }
+
+  .task-item-description {
+    max-width: 7rem;
+  }
+
+  .calendar-icon {
+    width: 0.8rem;
+  }
+
+  .next-item,
+  .next-item-date {
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-column-gap: 0.2rem;
+    align-items: center;
+    border-right: 0.1rem solid var(--black);
+    padding-right: 0.2rem;
+    margin-right: 0.2rem;
+  }
+
+  .task-item-details {
+    /* grid-column-gap: 0.8rem; */
+    grid-template-columns: auto auto auto auto;
+    height: 2rem;
+    align-items: center;
+  }
+
+  .date-mobile-container {
+    display: flex;
+    grid-column: span 2;
+  }
 
 }
 

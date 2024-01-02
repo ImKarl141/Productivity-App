@@ -58,7 +58,7 @@ const CheckedTaskItem = (props) => {
           />
           <span className='checkmark'></span>
           <div className='task-item-text'>
-            <span>{props.task_title}:</span>
+            <span className="task-item-title">{props.task_title}</span>
             <span className='task-item-description'>{props.task_desc}</span>
           </div>
           {
@@ -67,9 +67,10 @@ const CheckedTaskItem = (props) => {
                 {
                   props.task_date && (
                     <>
-                      <span title='Due date'><CalendarIconTask /></span>
+                      <span title='Due date' className="due-date"><CalendarIconTask /></span>
                       <span title='Due date' className='next-item-date'>{props.task_date}</span>
                     </>
+
                   )
                 }
                 {
