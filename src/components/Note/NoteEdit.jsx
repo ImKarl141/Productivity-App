@@ -37,8 +37,13 @@ const NoteEdit = () => {
       await axios.post('http://localhost:8800/NoteList', inputNote)
       // window.location.reload();
       // dispatch(ShowLastId(dbNotes));
-      const nextId = dbNotes[dbNotes.length - 1].id;
-      dispatch(AddNote({ ...inputNote, id: nextId + 1, color_value: tempColor.current }))
+      if (dbNotes.length < 1) { //Note list is empty
+        dispatch(AddNote({ ...inputNote, id: 1, color_value: tempColor.current }))
+      } else {
+        const nextId = dbNotes[dbNotes.length - 1].id;
+        dispatch(AddNote({ ...inputNote, id: nextId + 1, color_value: tempColor.current }))
+      }
+
 
       setInputNote({
         note_name: '',

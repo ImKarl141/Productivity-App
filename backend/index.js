@@ -454,6 +454,15 @@ app.delete("/NoteList/:id", (req, resp) => {
   })
 })
 
+app.post("/NoteList/ClearAll", (req, resp) => {
+  const q = "TRUNCATE TABLE `NoteList`";
+
+  db.query(q, (err, data) => {
+    if (err) return resp.json(err);
+    return resp.json("All Notes deleted successfully");
+  })
+})
+
 ////////////////////////////////////////////////////////////////////////
 
 app.listen(8800, () => {

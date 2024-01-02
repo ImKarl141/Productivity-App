@@ -6,6 +6,7 @@ import { ShowNoteEdit, ShowNoteSettings, SetNoteList, SetNoteColors, SetCurrentE
 import NoteEdit from './Note/NoteEdit'
 import axios from 'axios'
 import NoteUpdate from './Note/NoteUpdate'
+import { SetTaskList } from '../features/taskSlice'
 
 
 
@@ -81,17 +82,27 @@ const NotesMenu = () => {
   }
 
   const handleDeleteItem = async (id) => {
-    try {
-      await axios.delete("http://localhost:8800/NoteList/" + id);
-      // const indexNote = dbNotes.map((note) => {
-      //   if (note.id == id) {
-      //     console.log(note);
-      //   }
-      // })
-      const indexNote = dbNotes.findIndex(note => note.id == id);
-      dispatch(DeleteNote(indexNote))
-    } catch (err) {
-      console.log(err);
+    if (dbNotes.length <= 1) {
+      try {
+        await axios.post("http://localhost:8800/NoteList/ClearAll");
+        const indexNote = dbNotes.findIndex(note => note.id == id);
+        dispatch(DeleteNote(indexNote))
+      } catch (err) {
+        console.log(err);
+      }
+    } else {
+      try {
+        await axios.delete("http://localhost:8800/NoteList/" + id);
+        // const indexNote = dbNotes.map((note) => {
+        //   if (note.id == id) {
+        //     console.log(note);
+        //   }
+        // })
+        const indexNote = dbNotes.findIndex(note => note.id == id);
+        dispatch(DeleteNote(indexNote))
+      } catch (err) {
+        console.log(err);
+      }
     }
   }
 
@@ -114,6 +125,9 @@ const NotesMenu = () => {
     }
     try {
       await axios.post("http://localhost:8800/TaskCurrent/NewTaskFromNote", newTask)
+      const resp = await axios.get("http://localhost:8800/TaskCurrent");
+      dispatch(SetTaskList(resp.data))
+
       console.log("Task created");
     } catch (err) {
       console.log(err);

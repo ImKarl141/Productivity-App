@@ -172,7 +172,7 @@
 .note-placeholder span {
   color: var(--black);
   font-weight: 600;
-  font-size: 0.7rem;
+  font-size: 1rem;
   padding-left: 0.2rem;
   margin: 0;
 }
@@ -690,11 +690,11 @@
   }
 
   .note-card-title{
-    font-size: 0.8rem;
+    font-size: 0.7rem;
   }
   
   .note-card-content{
-    font-size: 0.7rem;
+    font-size: 0.6rem;
   }
 
   .note-tag {
@@ -801,6 +801,12 @@
     font-family: Nunito;
     font-size: 0.8rem;
     font-weight: 700;
+  }
+
+  .note-placeholder span {
+    color: var(--black);
+    font-weight: 600;
+    font-size: 0.7rem;
   }
 
 }
