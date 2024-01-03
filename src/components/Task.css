@@ -1273,12 +1273,13 @@ a {
     justify-content: space-between;
     position: fixed;
     top: 3.7rem;
-    bottom: 1.8rem;
+    bottom: 0rem;
     right: 0rem;
     left: 0rem;
     z-index: 2;
     background-color: var(--pomodoroDark);
     padding: 0.2rem;
+    padding-bottom: 2rem;
     /* Animation */
     max-height: 0rem;
     overflow: auto;

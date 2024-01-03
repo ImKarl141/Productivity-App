@@ -40,13 +40,16 @@ footer {
 @media screen and (max-width: 700px){
   .app-footer {
     color: var(--black);
-    font-size: 0.9rem;
+    font-size: 0.7rem;
+    height: 1.4rem;
+    padding: 0rem 0rem 0rem 0rem;
+    background-color: #cc6666;
   } 
 
   .heart-icon-footer, 
   .coffee-icon-footer{
-    width: 1.6rem;
-    height: 1.6rem;
+    width: 1.3rem;
+    height: 1.3rem;
   }
 
 }

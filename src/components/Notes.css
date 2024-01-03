@@ -45,7 +45,7 @@
   display: flex;
   justify-content: space-between;
   z-index: 7;
-  cursor:alias;
+  cursor: default;
   flex-direction: column;
   font-family: Nunito;
   color: var(--black);
@@ -69,11 +69,14 @@
 
 .noteCard-onTop-desc{
   white-space: pre-wrap;
+  display: block;
+  word-wrap: break-word;
   overflow-x: hidden;
   overflow-y: auto;
   text-overflow: ellipsis;
   min-height: 6rem;
   max-height: 10rem;
+  /* width: 20rem; */
   /* height: 10rem; */
   /* min-height: 10rem; */
   padding: 0.4rem 1rem 0.2rem 1rem;
@@ -362,6 +365,7 @@
 
 .note-card-content {
   /* color: red; */
+  word-wrap: break-word;
   white-space: pre-wrap;
   font-size: 0.8rem;
   font-weight: 600;
@@ -693,8 +697,16 @@
     font-size: 0.7rem;
   }
   
-  .note-card-content{
-    font-size: 0.6rem;
+  .note-card-content {
+    /* color: red; */
+    word-wrap: break-word;
+    white-space: pre-wrap;
+    /* font-size: 0.8rem; */
+    font-size: 0.7rem;
+    font-weight: 600;
+    margin-bottom: 1.4rem;
+    overflow-x: hidden;
+    text-overflow: ellipsis;
   }
 
   .note-tag {
@@ -777,24 +789,26 @@
   }
 
   .noteCard-onTop-container {
-    position: fixed;
+    backdrop-filter: blur(0.04rem);
+  }
+
+  .noteCard-onTop {
     display: flex;
+    justify-content: space-between;
+    z-index: 7;
+    cursor:alias;
     flex-direction: column;
-    gap: 2rem;
-    z-index: 5;
-    align-items: center;
-    justify-content: center;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    margin: 0.4rem;
+    font-family: Nunito;
+    color: var(--black);
+    font-size: 0.9rem;
+    font-weight:600;
+    width: 20rem;
+    text-align:start;
+    background-color: var(--pomodoroDark);
     border-radius: 0.4rem;
-    background-color: #cc666696;
-    cursor: pointer;
-    /* background-color: #bb5f5f73; */
-    /* opacity: 0.8;  */
-    backdrop-filter: blur(0.05rem);
+    /* --pomodoroLight: #cc6666; */
+    /* --pomodoroDark: #BB5F5F; */
+    white-space: nowrap;
   }
 
   .make-list {
@@ -806,6 +820,38 @@
   .note-placeholder span {
     color: var(--black);
     font-weight: 600;
+    font-size: 0.7rem;
+  }
+
+  .noteCard-onTop-desc{
+    font-size: 0.7rem;
+  }
+
+  /*Scrollbar styling*/
+  .note-card-content::-webkit-scrollbar,
+  .input-content::-webkit-scrollbar,
+  .noteCard-onTop-desc::-webkit-scrollbar {
+    background-color: var(--pomodoroLight);
+    width: 0.4rem;
+  }
+
+  .note-card-content::-webkit-scrollbar-thumb,
+  .input-content::-webkit-scrollbar-thumb,
+  .noteCard-onTop-desc::-webkit-scrollbar-thumb {
+    background-color: var(--blackLight);
+    border-radius: 0.6rem;
+    /* width: 0.02rem; */
+    /* display : none; */
+  }
+
+  .input-title,
+  .input-content {
+    font-family: Nunito;
+    font-size: 0.7rem;
+    color: var(--blackMedium);
+  }
+
+  .noteCard-onTop-btn button {
     font-size: 0.7rem;
   }
 
