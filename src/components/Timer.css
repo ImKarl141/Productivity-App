@@ -861,6 +861,10 @@
   overflow: auto; */
 }
 
+.hide-btn {
+  display: none;
+}
+
 /*Scrollbar styling*/
 .currentTimerList-container::-webkit-scrollbar,
 .subtaskList::-webkit-scrollbar{
@@ -1369,7 +1373,7 @@ label::selection {
 
   .pomodoro-fullbarMini-container{
     /* display: block; */
-    z-index: 3;
+    z-index: 2;
     position: absolute;
     right: 0rem;
   }
@@ -1586,6 +1590,10 @@ label::selection {
     align-content: start;
     gap: 0.2rem;
     max-height: 8.4rem;
+  }
+
+  .hide-btn {
+    display: none;
   }
 
   .listTask-timer {

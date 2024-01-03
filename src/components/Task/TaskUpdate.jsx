@@ -199,30 +199,6 @@ const TaskUpdate = () => {
           </div>
         </form>
       </div>
-      <div className='task-details-subtask'>
-        <h1>Subtask:</h1>
-
-        <button className='add-subtask-btn'
-          onClick={() => dispatch(ShowSubtaskEdit())}
-        >
-          <AddTaskIcon />
-          <p className='myTask-text'>Add Subtask</p>
-        </button>
-        {
-          addSubtaskEdit && (
-            <form >
-              <label htmlFor="text">
-                <input
-                  id='text'
-                  type="text"
-                  name='sub_name'
-                />
-                Input
-              </label>
-            </form>
-          )
-        }
-      </div>
       <div className='task-details-button'>
         <button className='detailsBtn saveBtn' onClick={handleTaskUpdate}>Save Changes</button>
         <button className='detailsBtn' onClick={() => dispatch(ShowTaskUpdate())}>Cancel Task</button>

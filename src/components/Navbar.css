@@ -25,6 +25,11 @@
   border-radius: 0.2rem;
 }
 
+/* .option-bar {
+  opacity: 0;
+  pointer-events: none;
+} */
+
 
 button {
   background-color: transparent;

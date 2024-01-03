@@ -195,7 +195,7 @@ const Timer = () => {
               <div className="current-focus-title">
                 {current_task && <span className="currentTask">Current task: {current_task}</span>}
                 {/* <span className="focus-title">Title of the task</span> */}
-                <img className="details-timer-img" src={details} alt="" onClick={handleTimerTaskSettings} />
+                <img className={`details-timer-img ${isTimerTaskEdit ? "hide-btn" : ''}`} src={details} alt="" onClick={handleTimerTaskSettings} />
                 {
                   isTimerTaskSettings && (
                     <div className="timerTaskSettings-container">

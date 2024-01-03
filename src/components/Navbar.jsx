@@ -113,11 +113,13 @@ const Navbar = () => {
           </button>
           {Options && (
             <>
-              <button className={`icon-button ${Settings ? 'button-clicked' : ''} `} onClick={() => dispatch(showSettings())}>
-                <UserIcon />
-                <p className='icon-text'>User Settings</p>
+              <button className={`icon-button ${Settings ? 'button-clicked' : ''} `} onClick={() => alert("Coming soong")}>
+                <span>
+                  <UserIcon />
+                  <p className='icon-text'>User Settings</p>
+                </span>
               </button>
-              <button className={`icon-button ${logInOut ? 'button-clicked' : ''} `} onClick={() => dispatch(showUser())}>
+              <button className={`icon-button ${logInOut ? 'button-clicked' : ''} `} onClick={() => alert("Coming soong")}>
                 <LoginIcon />
               </button>
             </>

@@ -18,6 +18,7 @@
 } */
 
 .task-container::-webkit-scrollbar,
+.myInput-description::-webkit-scrollbar,
 .task-focus::-webkit-scrollbar,
 .tags-container::-webkit-scrollbar {
   background-color: var(--pomodoroDark);
@@ -26,6 +27,7 @@
 }
 
 .task-container::-webkit-scrollbar-thumb,
+.myInput-description::-webkit-scrollbar-thumb,
 .task-focus::-webkit-scrollbar-thumb,
 .tags-container::-webkit-scrollbar-thumb {
   background-color: var(--blackLight);
@@ -497,7 +499,7 @@
 .errorTitle {
   color: #bb1b1b;
   caret-color: var(--black);
-  animation: test 0.13s 3;
+  animation: shakeErrorTitle 0.1s 2;
 }
 
 .myInput.errorTitle {
@@ -523,17 +525,17 @@
   font-weight: 700;
   font-size: 0.8rem;
   bottom: 0.4rem;
-  right: 0.7rem;
+  right: 1rem;
   opacity: 0.8;
 }
 
 
-.test {
+.shakeErrorTitle {
   color: var(--black);
-  animation: test 0.13s 3;
+  animation: shakeErrorTitle 0.13s 3;
 }
 
-@keyframes test {
+@keyframes shakeErrorTitle {
   0% { 
     transform: translateX(0) ;
   }
@@ -1493,7 +1495,7 @@ a {
     flex-direction: column;
     justify-content: space-between;
     align-items: start;
-    height: 4rem;
+    height: 3.7rem;
     /* background-color: red; */
     margin: 0rem;
     padding: 0.2rem 0.2rem 0.4rem 0.2rem;
@@ -1749,6 +1751,38 @@ a {
     /* align-items: start; */
     padding-left: 0.1rem;
     margin-bottom: 0.4rem;
+  }
+
+  .task-container::-webkit-scrollbar,
+  .myInput-description::-webkit-scrollbar,
+  .task-focus::-webkit-scrollbar,
+  .tags-container::-webkit-scrollbar {
+    background-color: var(--pomodoroDark);
+    width: 0.4rem;
+
+  }
+
+  .task-container::-webkit-scrollbar-thumb,
+  .myInput-description::-webkit-scrollbar-thumb,
+  .task-focus::-webkit-scrollbar-thumb,
+  .tags-container::-webkit-scrollbar-thumb {
+    background-color: var(--blackLight);
+    border-radius: 0.6rem;
+
+  }
+
+  .myInput {
+    max-width: 11.6rem;
+    font-size: 0.7rem;
+  }
+
+  .myInput-description {
+    margin: 0.2rem 0rem;
+    padding: 0.3rem;
+    max-width: 12rem;
+    font-size: 0.7rem;
+    /* width: fit-content; */
+    height: 10rem;
   }
 
 }

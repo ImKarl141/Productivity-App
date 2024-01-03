@@ -789,7 +789,7 @@
   }
 
   .noteCard-onTop-container {
-    backdrop-filter: blur(0.04rem);
+    backdrop-filter: blur(0.1rem);;
   }
 
   .noteCard-onTop {
