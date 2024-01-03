@@ -1406,7 +1406,19 @@ label::selection {
   .timer-text-mini {
     font-size: 1.3rem;
     font-weight: 600;
-    /* position: absolute; */
+    position: absolute;
+  }
+
+  .countDownMini-numbers{
+    font-size: 1.3rem;
+  }
+
+  .countDownMini-buttons {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    margin-left: 10rem;
+    gap: 0.2rem;
   }
 
   .current-focus-task{
@@ -1637,10 +1649,24 @@ label::selection {
     /* font-size: 5rem; */
     font-weight: 600;
     font-size: 1.8rem;
-    top: 20%;
+    top: 17%;
+    position: absolute;
   }
 
-  
-  
+  .start-buttons-mini,
+  .start-button-mini{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: Nunito;
+    color: var(--black);
+    font-weight: 600;
+    font-size: 0.7rem;
+    background-color: var(--gray02);
+    padding: 0.2rem 0.2rem;
+    width: 3rem;
+  }
+
+
 
 }

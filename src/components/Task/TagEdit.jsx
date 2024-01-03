@@ -27,7 +27,7 @@ const TagEdit = () => {
 
   const handleChangeInput = (e) => {
     setTagInput((prev) => ({ ...prev, [e.target.name]: e.target.value }))
-    console.log(tagInput);
+    // console.log(tagInput);
   }
 
   const handleTagSubmit = async (e) => {

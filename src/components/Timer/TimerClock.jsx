@@ -296,7 +296,7 @@ const TimerClock = () => {
             </>
           )
         } */}
-        <div className={(Task || Notes) ? "timer-clock-mini" : "timer-clock-full"} style={{ backgroundColor: shortRest ? "var(--gray02)" : "var(--white)" }}>
+        <div className={(Task || Notes) ? "timer-clock-mini" : "timer-clock-full"} style={{ backgroundColor: shortRest ? "var(--restColor)" : "var(--white)" }}>
           <span className="clock-effect-1">
             <span className="clock-effect-line"></span>
           </span>

@@ -6,6 +6,7 @@
   display: flex;
   justify-content: space-between;
   align-items: start;
+  padding-bottom: 3rem;
 }
 
 .menu-bar,
