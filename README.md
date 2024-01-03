@@ -1,8 +1,19 @@
-# React + Vite
+# Productivity App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-Currently, two official plugins are available:
+This project stems from the idea of creating a multipurpose app that aligns with my current workflow: 
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+-Note-taking. 
+-Formalizing notes into tasks.
+-Executing tasks through sessions using the Pomodoro technique. 
+
+This portfolio project is a work in progress. While it currently includes all the necessary features (Pomodoro timer, task management, and note-taking), the following are slated to be added in future updates: 
+
+- Calendar. 
+- Color and style customization.
+- Support for multiple languages.
+- Creation of subtasks. 
+
+And more!
+
+Feel free to take this project as a template or enhance existing functionalities. 
