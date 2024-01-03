@@ -1719,13 +1719,11 @@ label::selection {
     justify-content: center;
     font-family: Nunito;
     color: var(--black);
-    font-weight: 600;
+    font-weight: 700;
     font-size: 0.7rem;
     background-color: var(--gray02);
     padding: 0.2rem 0.2rem;
     width: 3rem;
   }
-
-
 
 }

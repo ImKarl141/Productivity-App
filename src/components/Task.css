@@ -1546,6 +1546,12 @@ a {
     cursor: pointer;
   }
 
+  .task-number {
+    font-size: 0.7rem;
+    padding: 0.1rem 0.2rem ;
+    border-radius: 0.2rem;
+  }
+
   .tag-name {
     font-size: 0.7rem;
     margin-right: 0.13rem;
@@ -1829,6 +1835,16 @@ a {
     font-size: 0.7rem;
   }
 
+  #title-task::placeholder,
+  #title-description::placeholder {
+    font-size: 0.8rem;
+    /* font-weight: 600; */
+  }
+
+  .myInput::placeholder {
+    font-size: 0.6rem;
+  }
+
   .myInput-description {
     margin: 0.2rem 0rem;
     padding: 0.3rem;
@@ -1836,6 +1852,10 @@ a {
     font-size: 0.7rem;
     /* width: fit-content; */
     height: 10rem;
+  }
+
+  .myInput-description::placeholder {
+    font-size: 0.6rem;
   }
 
   .project-form {
@@ -1868,6 +1888,19 @@ a {
   .tagSettings-icon{
     background-color: var(--pomodoroLight);
     height: 0.9rem;
+  }
+
+  .task-item-container .checkmark::after {
+    left: 0.3rem;
+    top: 0.1rem;
+    width: 0.22rem;
+    height: 0.5rem;
+    border: solid var(--pomodoroDark);
+    border-width: 0rem 0.18rem 0.18rem 0rem;
+    -webkit-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
   }
 
 

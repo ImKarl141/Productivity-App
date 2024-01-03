@@ -142,7 +142,7 @@ const TaskUpdate = () => {
           />
           <div className='descForm-container'>
             <textarea
-              id='description'
+              id='title-description'
               name='task_desc'
               type="text"
               placeholder='Description'
