@@ -181,19 +181,21 @@ const TimerClock = () => {
 
 
   const handleTaskPomo = async () => {
-    const focus_finished = dbTasks.find(task => task.id === task_id).focus_finished
-    try {
-      await axios.patch("http://localhost:8800/TaskCurrent/AddPomo/" + task_id, { focus_finished: focus_finished + 1 })
-      const newTask = dbTasks.map((task) => {
-        if (task.id === task_id) {
-          return { ...task, focus_finished: focus_finished + 1 }
-        }
-        return { ...task }
-      })
-      dispatch(SetTaskList(newTask))
-      // console.log(newTask);
-    } catch (err) {
-      console.log(err);
+    if (dbTasks.length >= 1) {
+      const focus_finished = dbTasks.find(task => task.id === task_id).focus_finished
+      try {
+        await axios.patch("http://localhost:8800/TaskCurrent/AddPomo/" + task_id, { focus_finished: focus_finished + 1 })
+        const newTask = dbTasks.map((task) => {
+          if (task.id === task_id) {
+            return { ...task, focus_finished: focus_finished + 1 }
+          }
+          return { ...task }
+        })
+        dispatch(SetTaskList(newTask))
+        // console.log(newTask);
+      } catch (err) {
+        console.log(err);
+      }
     }
   }
 

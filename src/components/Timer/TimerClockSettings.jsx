@@ -107,10 +107,10 @@ const TimerClockSettings = () => {
           <CloseTimerSettings />
         </span>
         <div className="timerAmount">
-          {isEnglish ? <span>Time (Minutes)</span> : <span>Tiempo (Minutos)</span>}
+          {isEnglish ? <span className="timerAmount-title">Time (Minutes)</span> : <span className="timerAmount-title">Tiempo (Minutos)</span>}
           <div className="timerLabel-container">
             <label className="timer-label">
-              {isEnglish ? <span>Focus</span> : <span>Enfoque</span>}
+              {isEnglish ? <span className="timerAmount-text">Focus</span> : <span className="timerAmount-text">Enfoque</span>}
               <div className="details-number">
                 <input
                   name="focus"
@@ -139,7 +139,7 @@ const TimerClockSettings = () => {
               </div>
             </label>
             <label className="timer-label">
-              Short Break
+              <span className="timerAmount-text">Short Break</span>
               <div className="details-number">
                 <input
                   name="short"
@@ -166,7 +166,7 @@ const TimerClockSettings = () => {
               </div>
             </label>
             <label className="timer-label">
-              Long Break
+              <span className="timerAmount-text">Long Break</span>
               <div className="details-number">
                 <input
                   name="long"
@@ -196,10 +196,10 @@ const TimerClockSettings = () => {
           </div>
         </div>
         <div className="timerSound">
-          <span>Sound</span>
+          <span className="timerAmount-title">Sound</span>
           <div className="alarm-sound">
             {/* <button onClick={() => alarm.play()}>Test sound</button> */}
-            <span>Alarm Sound</span>
+            <span className="timerAmount-text">Alarm Sound</span>
             <select
               className="sound-select"
               onChange={handleSound}

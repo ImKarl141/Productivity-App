@@ -121,8 +121,10 @@ const NotesMenu = () => {
       task_project: null,
       task_tag: null,
       focus_amount: 1,
+      focus_finished: 0,
       is_checked: false,
     }
+    // console.log("Make");
     try {
       await axios.post("http://localhost:8800/TaskCurrent/NewTaskFromNote", newTask)
       const resp = await axios.get("http://localhost:8800/TaskCurrent");
@@ -193,7 +195,7 @@ const NotesMenu = () => {
                       </span>
                       <button className='noteEdit-btn' title='Edit Note' onClick={() => dispatch(SetCurrentEditId(id))}><EditNoteIcon /></button>
                       <button className='noteDelete-btn' title='Delete Note' onClick={() => handleDeleteItem(id)}><DeleteNoteIcon /></button>
-                      <button className='noteMakeTask-btn' title='Make a task' onClick={() => noteMakeTask(id)}><TaskNoteIcon /></button>
+                      {/* <button className='noteMakeTask-btn' title='Make a task' onClick={() => noteMakeTask(id)}><TaskNoteIcon /></button> */}
                       <button
                         // id={id}
                         className='notePinned-btn'
@@ -215,16 +217,6 @@ const NotesMenu = () => {
                 if (currentEditId === id) {
                   return (
                     <NoteUpdate key={id} />
-                    // <form key={id} className='note-card'>
-                    //   <input type="text"
-                    //     className='input-title'
-                    //     value={note_name}
-                    //   />
-                    //   <textarea type="text"
-                    //     className='input-content'
-                    //     value={note_desc}
-                    //   />
-                    // </form>
                   )
                 } else {
                   return (
@@ -235,9 +227,8 @@ const NotesMenu = () => {
                       </span>
                       <button className='noteEdit-btn' title='Edit Note' onClick={() => dispatch(SetCurrentEditId(id))}><EditNoteIcon /></button>
                       <button className='noteDelete-btn' title='Delete Note' onClick={() => handleDeleteItem(id)}><DeleteNoteIcon /></button>
-                      <button className='noteMakeTask-btn' title='Make a task' onClick={() => noteMakeTask(id)}><TaskNoteIcon /></button>
+                      {/* <button className='noteMakeTask-btn' title='Make a task' onClick={() => noteMakeTask(id)}><TaskNoteIcon /></button> */}
                       <button
-                        // id={id}
                         className='notePin-btn'
                         title='Pin note'
                         onClick={() => handleNotePin(is_pinned, id)}

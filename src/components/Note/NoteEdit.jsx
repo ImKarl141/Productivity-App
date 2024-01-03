@@ -85,7 +85,7 @@ const NoteEdit = () => {
           maxLength={45}
           type="text"
           placeholder='Title'
-          className='myInput'
+          className='myInput myInput-note'
           onChange={handleChangeInput}
         />
         <textarea

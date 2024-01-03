@@ -141,6 +141,7 @@
 }
 
 .overall-tags {
+  justify-content: space-between;
   padding-bottom: 0.6rem;
 }
 
@@ -185,7 +186,7 @@
 
 
 .task-item span {
-  font-size: 0.8rem;
+  font-size: 0.87rem;
   margin-left: 0.2rem;
 }
 
@@ -209,7 +210,7 @@
   white-space: nowrap;
   font-family: Nunito;
   font-weight: 600;
-  font-size: 0.8rem;
+  font-size: 0.87rem;
   color: var(--black);
   margin: 0;
   margin-left: 0.3rem;
@@ -325,7 +326,7 @@
   white-space: nowrap;
   font-family: Nunito;
   font-weight: 600;
-  font-size: 0.8rem;
+  font-size: 0.87rem;
   color: var(--black);
   margin: 0 0 0 0.6rem;
 }
@@ -339,7 +340,7 @@
   padding: 0.4rem 0rem;
   border-bottom: 0.1rem solid var(--blackLight);
   font-family: Nunito;
-  font-size: 0.8rem;
+  font-size: 0.87rem;
   font-weight: 600;
   color: var(--black);
   /* cursor: pointer; */
@@ -475,7 +476,7 @@
 }
 
 .input-text-description span {
-  font-size: 0.8rem;
+  font-size: 0.87rem;
   padding-left: 0.4rem;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -523,7 +524,7 @@
 .text-indicator {
   position: absolute;
   font-weight: 700;
-  font-size: 0.8rem;
+  font-size: 0.87rem;
   bottom: 0.4rem;
   right: 1rem;
   opacity: 0.8;
@@ -645,7 +646,7 @@ input[type=date]::after {
 
 .detailsBtn {
   font-family: Nunito;
-  font-size: 0.8rem;
+  font-size: 0.87rem;
   font-weight: 700;
   color: var(--black);
   padding: 0.4rem 0.6rem;
@@ -840,7 +841,7 @@ a {
 
 .task-number {
   font-family: Nunito;
-  font-size: 0.8rem;
+  font-size: 0.87rem;
   color: var(--black);
   font-weight: 800;
   padding: 0.1rem 0.6rem ;
@@ -958,7 +959,7 @@ a {
   grid-column-gap: 0.4rem;
   /* opacity: 0; */
   /* transition: opacity 0.1s; */
-  display: none;
+  /* display: none; */
 }
 
 .project-settings-toggle{
@@ -1002,7 +1003,7 @@ a {
 .projects-number {
   font-family: Nunito;
   font-weight: 800;
-  font-size: 0.8rem;
+  font-size: 0.87rem;
   color: var(--black);
   padding: 0.1rem 0.6rem ;
   background-color: var(--pomodoroDark);
@@ -1075,7 +1076,7 @@ a {
 
 .tag-cancel-btn {
   font-family: Nunito;
-  font-size: 0.8rem;
+  font-size: 0.87rem;
   font-weight: 700;
   color: var(--black);
   padding: 0.2rem 0.8rem;
@@ -1098,7 +1099,7 @@ a {
   font-family: Nunito;
   color: var(--black);
   font-weight: 600;
-  font-size: 0.8rem;
+  font-size: 0.87rem;
   justify-content: start;
   align-items: center;
   padding: 0.3rem 0.6rem;
@@ -1267,7 +1268,7 @@ a {
   white-space: nowrap;
   font-family: Nunito;
   font-weight: 600;
-  font-size: 0.8rem;
+  font-size: 0.87rem;
   color: var(--black);
   margin: 0 0.2rem 0 0.2rem;
   white-space: nowrap;
@@ -1384,6 +1385,21 @@ a {
     margin: 0rem 0rem 0rem 0.3rem;
   }
 
+  .details-text,
+  .detailsBtn {
+    font-size: 0.8rem;
+  }
+
+  .text-indicator,
+  .myInput-date{
+    font-size: 0.7rem;
+  }
+
+  .task-details-info select{
+    font-size: 0.7rem;
+  }
+
+
   .task-icons {
     height: 1rem;
     width: 1rem;
@@ -1402,6 +1418,11 @@ a {
   .projectSettings-icon {
     height: 1rem;
     width: 1rem;
+  }
+
+  .project-btn-edit,
+  .edit-btn {
+    display: none;
   }
 
   .list-title {
@@ -1543,6 +1564,7 @@ a {
     display: flex;
     justify-content: space-between;
     padding: 0.2rem 0rem;
+    gap: 0.3rem;
   }
 
   .add-tags-btn {
@@ -1552,10 +1574,35 @@ a {
     align-items: center;
     flex: 1;
     padding: 0.2rem 0rem;
-    margin: 0rem 0.4rem;
+    margin: 0rem 0.1rem;
     border-radius: 0.5rem ;
     background-color: var(--pomodoroLight);
     opacity: 0.8;
+  }
+
+  .tag-edit {
+    padding-right: 0.2rem;
+  }
+
+
+
+  .tag-cancel-btn {
+    font-size: 0.7rem;
+    padding: 0.1rem 0.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .myInputAddTag {
+    width: 5.1rem;
+    height: 0.65rem;
+    font-size: 0.7rem;
+  }
+
+  .tag-form {
+    grid-template-columns: 1.2rem 1fr;
+    padding: 0rem 0.2rem;
   }
 
   .task-focus {
@@ -1567,6 +1614,12 @@ a {
     overflow: auto;
     overflow-x: hidden;
     min-height: 28.6rem;
+  }
+
+  .cancel-tags-btn {
+    opacity: 1;
+    right: 0.1rem;
+    top: 0.22rem;
   }
 
   .task-item-btn {
@@ -1758,7 +1811,7 @@ a {
   .task-focus::-webkit-scrollbar,
   .tags-container::-webkit-scrollbar {
     background-color: var(--pomodoroDark);
-    width: 0.4rem;
+    width: 0.3rem;
 
   }
 
@@ -1784,6 +1837,40 @@ a {
     /* width: fit-content; */
     height: 10rem;
   }
+
+  .project-form {
+    display: grid;
+    grid-template-columns: 1rem 1fr;
+    /* justify-items: stretch; */
+    padding: 0rem 0.2rem;
+    margin: 0.2rem 0rem;
+    /* width: 2rem; */
+  }
+
+  .default-colorPicker,
+  .custom-colorPicker{
+    width: 0.8rem ;
+    height: 0.8rem;
+  }
+
+  .myInputAddProject{
+    font-size: 0.65rem;
+    width: 5.2rem;
+    height: 0.7rem;
+  }
+
+  .cancel-projects-btn{
+    top: 0.28rem;
+    right: 0.2rem;
+    opacity: 1;
+  }
+
+  .tagSettings-icon{
+    background-color: var(--pomodoroLight);
+    height: 0.9rem;
+  }
+
+
 
 }
 

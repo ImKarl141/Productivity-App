@@ -87,7 +87,7 @@ const ListTags = () => {
               {
                 (!isTagUpdate && !isTagDelete) && (
                   <>
-                    <span className="tag-edit-btn" onClick={() => dispatch(ShowTagUpdate())}>
+                    <span className="tag-edit-btn edit-btn" onClick={() => dispatch(ShowTagUpdate())}>
                       <EditListIcon />
                     </span>
                     <span className="tag-edit-btn" onClick={() => dispatch(ShowTagDelete())}>

@@ -43,8 +43,8 @@ const ListProjects = () => {
                   <p className='myTask-text project-title'>{project_name}</p>
                 </div>
                 <div className='project-settings-btn' >
-                  <span title='Edit' onClick={() => dispatch(SetCurrentProjectId(id))}><EditListIcon /></span>
-                  <span title='Delete' onClick={() => handleDeleteProject(id)} ><DeleteListIcon /></span>
+                  <span className="project-btn-edit" title='Edit' onClick={() => dispatch(SetCurrentProjectId(id))}><EditListIcon /></span>
+                  <span className="project-btn-delete" title='Delete' onClick={() => handleDeleteProject(id)} ><DeleteListIcon /></span>
                 </div>
               </button>
             )

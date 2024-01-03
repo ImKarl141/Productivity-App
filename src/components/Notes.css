@@ -112,7 +112,7 @@
 
 /* display: flex;
   font-family: Nunito;
-  font-size: 0.8rem;
+  font-size: 0.87rem;
   font-weight: 700;
   color: var(--blackMedium);
   border: 0.2rem solid var(--pomodoroDark);
@@ -158,7 +158,7 @@
 .label-title span {
   color: var(--black);
   font-weight: 600;
-  font-size: 0.8rem;
+  font-size: 0.87rem;
   padding-left: 0.2rem;
   margin: 0;
 }
@@ -208,7 +208,7 @@
 .notes-btn {
   display: flex;
   font-family: Nunito;
-  font-size: 0.8rem;
+  font-size: 0.87rem;
   font-weight: 700;
   color: var(--blackMedium);
   border: 0.2rem solid var(--pomodoroDark);
@@ -219,7 +219,7 @@
 
 .make-list {
   font-family: Nunito;
-  font-size: 0.8rem;
+  font-size: 0.87rem;
   font-weight: 700;
 }
 
@@ -247,7 +247,7 @@
 
 .myInput::placeholder {
   font-family: Nunito;
-  font-size: 0.8rem;
+  font-size: 0.87rem;
 }
 
 .myInput-content {
@@ -260,7 +260,7 @@
 .text-indicator-note {
   position: absolute;
   font-weight: 700;
-  font-size: 0.8rem;
+  font-size: 0.87rem;
   bottom: 0.2rem;
   right: 0.9rem;
   opacity: 0.4;
@@ -271,7 +271,7 @@
 .note-edit span {
   color: var(--black);
   font-weight: 600;
-  font-size: 0.8rem;
+  font-size: 0.87rem;
   padding-left: 0.2rem;
   margin: 0;
 }
@@ -318,6 +318,10 @@
   cursor: pointer;
 }
 
+.note-card-content {
+  padding-right: 0.4rem;
+}
+
 .input-title,
 .input-content {
   font-family: Nunito;
@@ -338,7 +342,7 @@
 }
 
 .input-content {
-  font-size: 0.8rem;
+  font-size: 0.87rem;
   font-weight: 600;
   margin-bottom: 2.2rem;
   overflow-x: hidden;
@@ -367,7 +371,7 @@
   /* color: red; */
   word-wrap: break-word;
   white-space: pre-wrap;
-  font-size: 0.8rem;
+  font-size: 0.87rem;
   font-weight: 600;
   margin-bottom: 2.2rem;
   overflow-x: hidden;
@@ -475,7 +479,7 @@
 
 .noteEdit-btn,
 .noteAccept-btn {
-  right: 2rem;
+  right: 2.6rem;
 }
 
 .noteDelete-btn,
@@ -652,13 +656,23 @@
     flex-direction: column;
     width: 20rem;
   }
-  
-  .myInput {
-    width: 18.6rem;
+
+  .myInput-note,
+  .myInput-content {
+    max-width: 18.6rem;
+  }
+
+  .myInput-note::placeholder,
+  .myInput-content::placeholder {
+    font-size: 0.8rem;
   }
   
   .note-buttons {
     height: 2.5rem;
+  }
+
+  .note-buttons select {
+    font-size: 0.7rem;
   }
 
   .notes-btn{
@@ -707,11 +721,13 @@
     margin-bottom: 1.4rem;
     overflow-x: hidden;
     text-overflow: ellipsis;
+    padding-right: 0.2rem;
   }
 
   .note-tag {
-    width: 5rem;
-    height: 1.6rem;
+    width: 6.2rem;
+    height: 1.5rem;
+    border: 0.3rem solid var(--pomodoroDark);
   }
 
   .note-card:hover .note-tag {
@@ -813,7 +829,7 @@
 
   .make-list {
     font-family: Nunito;
-    font-size: 0.8rem;
+    font-size: 0.7rem;
     font-weight: 700;
   }
 
