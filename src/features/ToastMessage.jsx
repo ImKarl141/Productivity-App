@@ -2,7 +2,7 @@ import { CheckedIcon } from "../icons"
 
 const ToastMessage = () => {
   return (
-    <div className="spawned-message">
+    <div className="spawned-message-container">
       {/* Messages */}
 
       {/* Project*/}
