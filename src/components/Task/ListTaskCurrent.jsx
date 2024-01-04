@@ -71,7 +71,7 @@ const ListTaskCurrent = () => {
   // $("span:contains('Red project')").hide()
 
   return (
-    <div className='task-focus'>
+    <section className='task-focus'>
       {/* <button onClick={() => $(".task-item-overall-container:contains('Red project')").hide()}>Test</button> */}
       <div className='task-focus-add' >
         <label className='addBtn add-task-btn' onClick={() => dispatch(ShowTaskEdit())}>
@@ -144,7 +144,7 @@ const ListTaskCurrent = () => {
           )
         }
       </ul >
-    </div >
+    </section >
   )
 }
 export default ListTaskCurrent

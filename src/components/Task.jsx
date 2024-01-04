@@ -66,7 +66,7 @@ const TaskMenu = () => {
 
   return (
     <section className={`task-container ${Task ? 'task-container-active' : ''} `}>
-      <div className='task-overall'>
+      <section className='task-overall'>
         <div className='overall-title'>
           <div className='task-title'><h1>Tasks</h1></div>
         </div>
@@ -108,7 +108,7 @@ const TaskMenu = () => {
         {/* List of projects */}
         <ListProjects />
         <ListTags />
-      </div>
+      </section>
       <ListTaskCurrent />
       {
         isEdit && <TaskEdit />
