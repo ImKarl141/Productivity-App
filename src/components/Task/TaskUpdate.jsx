@@ -21,6 +21,19 @@ const TaskUpdate = () => {
 
   //Formatting date of task. If the task doesn't have a one then omit the formatting.
   // console.log(temp_task);
+
+  //Toast message
+  const showMessage = (idElement) => {
+    const spawnMessage = document.getElementById(idElement);
+
+    spawnMessage.style.display = "flex";
+
+    setTimeout(() => {
+      spawnMessage.style.display = "none";
+    }, 3000)
+  }
+
+
   const formatDate = (date) => {
     try {
       const [month, day, year] = date.split("-")
@@ -95,6 +108,7 @@ const TaskUpdate = () => {
   const handleTaskUpdate = async (e) => {
     e.preventDefault();
     if (!task_title) {
+      showMessage("emptyTitle")
       return;
     }
     try {
@@ -102,6 +116,7 @@ const TaskUpdate = () => {
       // const resp = await axios.get('http://localhost:8800/TaskCurrent')
       // dispatch(SetTaskList(resp.data))
       updateChanges();
+      showMessage("taskUpdated")
       // dispatch(ShowTaskUpdate())
       // console.log(inputTask);
       // window.location.reload();
@@ -115,6 +130,7 @@ const TaskUpdate = () => {
       await axios.delete("http://localhost:8800/TaskCurrent/" + id)
       updateChanges();
       notification.play()
+      showMessage("taskDeleted")
       // const resp = await axios.get('http://localhost:8800/TaskCurrent')
       // dispatch(SetTaskList(resp.data))
       // window.location.reload();

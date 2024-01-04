@@ -28,9 +28,21 @@ const NoteEdit = () => {
 
   // console.log(lastId);
 
+  //Toast message
+  const showMessage = (idElement) => {
+    const spawnMessage = document.getElementById(idElement);
+
+    spawnMessage.style.display = "flex";
+
+    setTimeout(() => {
+      spawnMessage.style.display = "none";
+    }, 3000)
+  }
+
   const handleNoteSubmit = async (e) => {
     e.preventDefault();
     if (!note_name) {
+      showMessage("emptyTitleNote")
       return;
     }
     try {
@@ -54,6 +66,7 @@ const NoteEdit = () => {
       //Clear color list
       const color_input = document.getElementById('note-color');
       color_input.value = '';
+      showMessage("noteSubmitted")
     } catch (err) {
       console.log(err);
     }

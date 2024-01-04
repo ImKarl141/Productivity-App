@@ -13,9 +13,6 @@ const NoteUpdate = () => {
   const noValue = "No Color";
   // console.log(color_value);
 
-
-
-
   //Get the color value in hex
   const colorValue = color_value;
 
@@ -31,6 +28,16 @@ const NoteUpdate = () => {
   // console.log(inputNote);
 
   const tempColor = useRef()
+
+  const showMessage = (idElement) => {
+    const spawnMessage = document.getElementById(idElement);
+
+    spawnMessage.style.display = "flex";
+
+    setTimeout(() => {
+      spawnMessage.style.display = "none";
+    }, 3000)
+  }
 
   const handleChangeInput = (e) => {
     e.target.value ? setInputNote((prev) => ({ ...prev, [e.target.name]: e.target.value })) :
@@ -54,6 +61,7 @@ const NoteUpdate = () => {
   const handleNoteSubmit = async (e) => {
     e.preventDefault();
     if (!note_name) {
+      showMessage("emptyTitleNote")
       return;
     }
     try {
@@ -70,6 +78,7 @@ const NoteUpdate = () => {
       dispatch(SetCurrentEditId(''))
       // console.log(newNote);
       // window.location.reload()
+      showMessage("noteUpdated")
     } catch (err) {
       console.log(err);
     }

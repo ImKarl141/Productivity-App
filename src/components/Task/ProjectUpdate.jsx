@@ -20,13 +20,26 @@ const ProjectUpdate = () => {
   // console.log(projectInput);
   const { project_name, project_color } = projectInput
 
+  //Toast message
+  const showMessage = (idElement) => {
+    const spawnMessage = document.getElementById(idElement);
+
+    spawnMessage.style.display = "flex";
+
+    setTimeout(() => {
+      spawnMessage.style.display = "none";
+    }, 3000)
+  }
+
   const handleChangeInput = (e) => {
     setProjectInput((prev) => ({ ...prev, [e.target.name]: e.target.value }))
     // console.log(projectInput);
   }
 
   const handleProjectSubmit = async (e) => {
+    e.preventDefault();
     if (!project_name) {
+      showMessage("emptyTitleProject")
       return;
     }
     e.preventDefault();
@@ -37,6 +50,7 @@ const ProjectUpdate = () => {
       dispatch(SetTaskList(task.data))
       dispatch(SetProjectList(resp.data))
       dispatch(SetCurrentProjectId(''))
+      showMessage("projectUpdated")
     } catch (err) {
       console.log(err);
     };

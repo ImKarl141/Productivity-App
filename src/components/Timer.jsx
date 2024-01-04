@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react"
-import { PomodoroIcon, ClearAllTasksIcon, ClearFinishedTasksIcon } from "../icons"
+import { PomodoroIcon, ClearAllTasksIcon, ClearFinishedTasksIcon, CheckedIcon } from "../icons"
 import timerMini from '../images/timer-stage2-icon.svg'
 import details from '../images/kebab.svg'
 import ListTimerTask from "./Timer/ListTimerTask"
@@ -84,6 +84,21 @@ const Timer = () => {
   }, [])
 
 
+  // useEffect(() => {
+  //   if (showSpawnedDiv) {
+  //     const timeoutId = setTimeout(() => {
+  //       setShowSpawnedDiv(false);
+  //     }, 3000);
+
+  //     return () => clearTimeout(timeoutId);
+  //   }
+  // }, [showSpawnedDiv]);
+
+  // const spawnAndFade = () => {
+  //   setShowSpawnedDiv(true);
+  // };
+
+
 
   //Task fetching
   // useEffect(() => {
@@ -116,6 +131,18 @@ const Timer = () => {
     dispatch(SetTaskList(newTask))
     dispatch(SetTimerTaskSettings()) //Close window
   }
+
+  //Toast message
+  const showMessage = (idElement) => {
+    const spawnMessage = document.getElementById(idElement);
+
+    spawnMessage.style.display = "flex";
+
+    setTimeout(() => {
+      spawnMessage.style.display = "none";
+    }, 3000)
+  }
+
   const handleClearFinished = async (id) => {
     const settingsId = 1;
     const myId = 0;
@@ -130,6 +157,7 @@ const Timer = () => {
         dispatch(SetTimerSettings({ ...dbTimer, current_task: '', task_id: id, PomoCount: 0 })) //Clear the id in order to reset the id count of the task
       }
       dispatch(SetTimerSettings({ ...dbTimer, current_task: '', task_id: myId }))
+      showMessage("task-checkedDeleted")
       // const nextId = dbTasks.length > 0 ? dbTasks[dbTasks.length - 1].id : dbTimer.task_id;
       // dispatch(AddNewTask({ ...timerInput, id: nextId + 1 }))
     } catch (err) {
@@ -153,6 +181,7 @@ const Timer = () => {
       dispatch(SetTaskList([])) //Clear the list of task in the local state
       dispatch(SetLastTaskId(undefined)) //Clear the current task message
       dispatch(SetTimerTaskSettings()) //Close window
+      showMessage("task-allDeleted")
     } catch (err) {
       console.log(err);
     }
@@ -181,8 +210,13 @@ const Timer = () => {
   }
 
 
+
   return (
-    <div className={(Task || Notes) ? "pomodoro-fullbarMini-container" : "pomodoro-fullbar-container"}>
+    <section className={(Task || Notes) ? "pomodoro-fullbarMini-container" : "pomodoro-fullbar-container"}>
+      {/* This is causing a bug that reload the entire component */}
+      {/* Is better to place this at the Navbar component */}
+      {/* <ToastMessageTimer /> */}
+
       {(!Task && !Notes) ?
         <>
           <div className="timer-container">
@@ -255,7 +289,7 @@ const Timer = () => {
           </div> */}
         </div>
       }
-    </div>
+    </section>
     // <div>
     //   <div className={(Task || Calendar || Notes) ? "pomodoro-fullbar-container" : "pomodoro-fullbarMini-container"}>
     //     <div className="timer-container">

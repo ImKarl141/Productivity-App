@@ -30,6 +30,18 @@ const TaskEdit = () => {
 
   const { task_title, task_desc, task_date } = inputTask;
 
+  //Toast message
+  const showMessage = (idElement) => {
+    const spawnMessage = document.getElementById(idElement);
+
+    spawnMessage.style.display = "flex";
+
+    setTimeout(() => {
+      spawnMessage.style.display = "none";
+    }, 3000)
+  }
+
+
   // const { nameProject, projectColor } = projectInput
 
   //Update the remain text in the description form
@@ -59,6 +71,7 @@ const TaskEdit = () => {
   const handleTaskSubmit = async (e) => {
     e.preventDefault();
     if (!task_title) {
+      showMessage("emptyTitle")
       return
     }
     try {
@@ -86,6 +99,8 @@ const TaskEdit = () => {
 
       const tag_input = document.getElementById('tag-id');
       tag_input.value = '0';
+
+      showMessage("taskSubmitted")
 
       // console.log("Reset");
     } catch (err) {

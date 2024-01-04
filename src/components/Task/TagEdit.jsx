@@ -25,6 +25,17 @@ const TagEdit = () => {
 
   const dispatch = useDispatch();
 
+  //Toast message
+  const showMessage = (idElement) => {
+    const spawnMessage = document.getElementById(idElement);
+
+    spawnMessage.style.display = "flex";
+
+    setTimeout(() => {
+      spawnMessage.style.display = "none";
+    }, 3000)
+  }
+
   const handleChangeInput = (e) => {
     setTagInput((prev) => ({ ...prev, [e.target.name]: e.target.value }))
     // console.log(tagInput);
@@ -33,6 +44,7 @@ const TagEdit = () => {
   const handleTagSubmit = async (e) => {
     e.preventDefault();
     if (!tag_name) {
+      showMessage("emptyTitleTag")
       return
     }
     for (const listOfTags of dbTags) {
@@ -51,6 +63,7 @@ const TagEdit = () => {
         tag_color: '#FFFFFF',
       })
       // window.location.reload();
+      showMessage("tagSubmitted")
     } catch (err) {
       console.log(err);
     }

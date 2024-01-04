@@ -15,6 +15,17 @@ const ListProjects = () => {
     dispatch(SetTaskList(resp.data))
   }
 
+  //Toast message
+  const showMessage = (idElement) => {
+    const spawnMessage = document.getElementById(idElement);
+
+    spawnMessage.style.display = "flex";
+
+    setTimeout(() => {
+      spawnMessage.style.display = "none";
+    }, 3000)
+  }
+
   const handleDeleteProject = async (myId) => {
     try {
       await axios.put("http://localhost:8800/TaskCurrent/deleteProject/" + myId)
@@ -22,6 +33,7 @@ const ListProjects = () => {
       const projectIndex = dbProjects.findIndex((project) => project.id === myId)
       dispatch(DeleteProjectItem(projectIndex))
       updateChanges()
+      showMessage("projectDeleted")
     } catch (err) {
       console.log(err);
     }

@@ -20,6 +20,17 @@ const ListTags = () => {
     dispatch(SetTaskList(resp.data))
   }
 
+  //Toast message
+  const showMessage = (idElement) => {
+    const spawnMessage = document.getElementById(idElement);
+
+    spawnMessage.style.display = "flex";
+
+    setTimeout(() => {
+      spawnMessage.style.display = "none";
+    }, 3000)
+  }
+
   const handleDeleteTag = async (myId) => {
     try {
       await axios.put("http://localhost:8800/TaskCurrent/deleteTag/" + myId)
@@ -27,6 +38,7 @@ const ListTags = () => {
       const tagIndex = dbTags.findIndex((tag) => tag.id === myId)
       dispatch(DeleteTagItem(tagIndex))
       updateChanges()
+      showMessage("tagDeleted")
     } catch (err) {
       console.log(err);
     }

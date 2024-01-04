@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux"
-import { NumberDownIcon, NumberUpIcon, CloseTimerSettings } from "../../icons"
+import { NumberDownIcon, NumberUpIcon, CloseTimerSettings, CheckedIcon } from "../../icons"
 import { useState } from "react"
 import { ShowTimerSettings, SetSoundVolume, SetTimerSettings, SetIsSettingsChange } from "../../features/timerSlice"
 import GuitarSound from '../../assets/guitar_Notification.mp3'
@@ -25,8 +25,19 @@ const TimerClockSettings = () => {
 
   const { focus, short, long } = timerInput
 
+  const showMessage = (idElement) => {
+    const spawnMessage = document.getElementById(idElement);
+
+    spawnMessage.style.display = "flex";
+
+    setTimeout(() => {
+      spawnMessage.style.display = "none";
+    }, 3000)
+  }
+
   const handleSettingsSubmit = async () => {
     const id = 1;
+    showMessage("settings")
     try {
       await axios.patch("http://localhost:8800/UserSettings/" + id, timerInput)
       dispatch(SetTimerSettings({ ...dbTimer, focus: focus, short: short, long: long }))

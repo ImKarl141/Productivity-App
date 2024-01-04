@@ -11,6 +11,7 @@ import './Navbar.css'
 import './Timer.css'
 import { showCalendar, showTask, showMenuOptions, showNotes } from '../features/menuSlice';
 import timerMini from '../images/timer-stage2-icon.svg'
+import ToastMessage from '../features/ToastMessage';
 
 // import playIcon from '../images/play-icon.svg'
 // import pauseIcon from '../images/pause-icon.svg'
@@ -44,7 +45,8 @@ const Navbar = () => {
   return (
     <>
       <nav className='navbar-main'>
-        <div className="menu-bar">
+        <ToastMessage />
+        <section className="menu-bar">
           <button className='main-menu' onClick={() => dispatch(showMenuOptions())}>
             {/* <img className='logo' src={homeMenu} alt="my icon" /> */}
             <MenuIcon />
@@ -81,7 +83,7 @@ const Navbar = () => {
               </>
             )} */}
           </div>
-        </div>
+        </section>
         {/*Minibar display */}
         {/* {
           Task && (
@@ -107,7 +109,7 @@ const Navbar = () => {
             </button>
           </div>
         </div> */}
-        <div className="option-bar">
+        <section className="option-bar">
           <button className='icon-button' onClick={() => dispatch(showOption())}>
             <OptionsIcon />
           </button>
@@ -124,7 +126,7 @@ const Navbar = () => {
               </button>
             </>
           )}
-        </div>
+        </section>
         {/* <div className=''>
 
         </div> */}

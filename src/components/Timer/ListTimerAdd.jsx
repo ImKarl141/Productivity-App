@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux"
 import { SetTimerListAdd } from "../../features/timerSlice";
-import { NumberUpIcon, NumberDownIcon, AddSubtaskIcon } from "../../icons";
+import { NumberUpIcon, NumberDownIcon, AddSubtaskIcon, CheckedIcon } from "../../icons";
 import { useState } from "react";
 import axios from "axios";
 import { AddNewTask } from "../../features/taskSlice";
@@ -34,6 +34,17 @@ const ListTimerAdd = () => {
     }
   }
 
+  //Toast message
+  const showMessage = (idElement) => {
+    const spawnMessage = document.getElementById(idElement);
+
+    spawnMessage.style.display = "flex";
+
+    setTimeout(() => {
+      spawnMessage.style.display = "none";
+    }, 3000)
+  }
+
   // try {
   //   console.log(dbTasks.length);
   // } catch (err) {
@@ -43,6 +54,7 @@ const ListTimerAdd = () => {
   const handleTimerSubmit = async (e) => {
     // e.preventDefault();
     if (!task_title) {
+      showMessage("emptyTitle")
       return
     }
     try {
@@ -66,6 +78,7 @@ const ListTimerAdd = () => {
       // console.log(nextId + 1);
 
       // window.location.reload();
+      showMessage("taskSubmitted")
     } catch (err) {
       console.log(err);
     }
@@ -108,7 +121,8 @@ const ListTimerAdd = () => {
               <div className="taskTimer-details">
                 <input
                   name="task_title"
-                  className="taskTimer-title"
+                  className={task_title.length >= 45 ? 'taskTimer-title errorTitle' : 'taskTimer-title'}
+                  maxLength={45}
                   type="text"
                   value={task_title}
                   placeholder="Task title"

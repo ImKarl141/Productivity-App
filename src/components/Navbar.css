@@ -139,6 +139,63 @@ button:hover {
   color: var(--black);
 }
 
+.spawned-message {
+  display: none;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.2rem;
+  position: fixed;
+  font-family: Nunito;
+  font-size: 0.9rem;
+  font-weight: 600;
+  /* top: 50%; */
+  /* left: 50%; */
+  bottom: 2rem;
+  right: -2rem;
+  transform: translate(-50%, -50%);
+  background-color: var(--white);
+  color: var(--black);
+  padding: 0.6rem 0.4rem;
+  /* border: 0.2rem solid var(--pomodoroDark); */
+  border-radius: 0.4rem;
+  animation: fadeInOut 1.5s ease-in-out;
+  z-index: 12;
+}
+
+.all-deleted{
+  right: -3.85rem;
+}
+
+.checked-deleted{
+  bottom: 4rem;
+  right: -5.6rem;
+}
+
+.timer-settings{
+  bottom: 6rem;
+  right: -5.4rem;
+}
+
+.task-created{
+  bottom: 8rem;
+  right: -3.1rem;
+}
+
+.task-deleted{
+  bottom: 10rem;
+  right: -3.1rem;
+}
+
+.missing-title{
+  bottom: 12rem;
+  right: -4rem;
+}
+
+.task-updated{
+  bottom: 14rem;
+  right: -3.1rem;
+}
+
 
 
 

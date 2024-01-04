@@ -19,6 +19,17 @@ const ProjectEdit = () => {
 
   const [isDuplicate, setIsDuplicate] = useState(false)
 
+  //Toast message
+  const showMessage = (idElement) => {
+    const spawnMessage = document.getElementById(idElement);
+
+    spawnMessage.style.display = "flex";
+
+    setTimeout(() => {
+      spawnMessage.style.display = "none";
+    }, 3000)
+  }
+
   const handleChangeInput = (e) => {
     setProjectInput((prev) => ({ ...prev, [e.target.name]: e.target.value }))
     // console.log(projectInput);
@@ -42,6 +53,8 @@ const ProjectEdit = () => {
   const handleProjectSubmit = async (e) => {
     e.preventDefault();
     if (!project_name) {
+      // console.log("empty");
+      showMessage("emptyTitleProject")
       return
     }
     for (const listOfProject of dbProjects) {
@@ -61,6 +74,7 @@ const ProjectEdit = () => {
       })
       // dispatch(SetProjectList([...dbP]))
       // window.location.reload();
+      showMessage("projectSubmitted")
     } catch (err) {
       console.log(err);
     };

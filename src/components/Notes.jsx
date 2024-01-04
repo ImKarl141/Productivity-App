@@ -57,11 +57,24 @@ const NotesMenu = () => {
     fetchNoteData();
   }, [])
 
+  //Toast message
+  const showMessage = (idElement) => {
+    const spawnMessage = document.getElementById(idElement);
+
+    spawnMessage.style.display = "flex";
+
+    setTimeout(() => {
+      spawnMessage.style.display = "none";
+    }, 3000)
+  }
+
   const handleNotePin = async (pin, id) => {
     if (!pin) {
       isPinned.current = true;
+      showMessage("notePinned")
     } else {
       isPinned.current = false;
+      showMessage("noteUnpinned")
     }
     // console.log(isPinned);
     try {
@@ -87,6 +100,7 @@ const NotesMenu = () => {
         await axios.post("http://localhost:8800/NoteList/ClearAll");
         const indexNote = dbNotes.findIndex(note => note.id == id);
         dispatch(DeleteNote(indexNote))
+        showMessage("noteDeleted")
       } catch (err) {
         console.log(err);
       }
@@ -100,6 +114,7 @@ const NotesMenu = () => {
         // })
         const indexNote = dbNotes.findIndex(note => note.id == id);
         dispatch(DeleteNote(indexNote))
+        showMessage("noteDeleted")
       } catch (err) {
         console.log(err);
       }

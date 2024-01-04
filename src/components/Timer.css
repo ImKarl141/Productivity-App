@@ -830,6 +830,7 @@
 }
 
 
+
 .pomodoro-task {
   display: flex;
   flex-direction: column;
@@ -1306,6 +1307,12 @@ label::selection {
   height: 1.5rem;
 }
 
+.checked-icon{
+  width: 1.5rem;
+  height: 1.5rem;
+  color: var(--pomodoro);
+}
+
 .clearAllTask-icon {
   width: 1.5rem;
   height: 1.5rem;
@@ -1355,6 +1362,49 @@ label::selection {
   height: 1.2rem;
   width: 0.6rem;
 }
+
+/* .missing-title,
+.task-updated,
+.task-deleted,
+.task-created,
+.timer-settings,
+.checked-deleted,
+.all-deleted{
+  display: flex;
+} */
+
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.1;
+  }
+  90% {
+    opacity: 0.9;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* @keyframes fadeInOut {
+  0% {
+    opacity: 0;
+  }
+  25% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1 ;
+  }
+  75% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 0;
+  }
+} */
 
 /* For screens less than 700px */
 
@@ -1725,5 +1775,40 @@ label::selection {
     padding: 0.2rem 0.2rem;
     width: 3rem;
   }
+
+  .shakeErrorTitle {
+    color: var(--black);
+    animation: shakeErrorTitle 0.13s 3;
+  }
+
+  @keyframes shakeErrorTitle {
+    0% { 
+      transform: translateX(0) ;
+    }
+    25% { 
+      transform: translateX(5px);
+     }
+    50% { 
+      transform: translateX(-5px);
+     }
+    75% { 
+      transform: translateX(5px);
+     }
+    100% { 
+      transform: translateX(0);
+     }
+   }
+
+  .errorTitle {
+    color: #bb1b1b;
+    caret-color: var(--black);
+    animation: shakeErrorTitle 0.1s 2;
+  }
+
+  .taskTimer-title.errorTitle {
+    border: 0.15rem solid #bb1b1b;
+  }
+
+
 
 }

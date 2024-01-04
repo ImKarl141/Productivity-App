@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux"
 import { SetTimerListEdit, SetTimerSettings } from "../../features/timerSlice";
-import { NumberUpIcon, NumberDownIcon, AddSubtaskIcon } from "../../icons";
+import { NumberUpIcon, NumberDownIcon, AddSubtaskIcon, CheckedIcon } from "../../icons";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { SetTaskList, DeleteTask, } from "../../features/taskSlice";
@@ -26,9 +26,20 @@ const ListTimerUpdate = () => {
   const [number, setNumber] = useState(1)
   // console.log(typeof (number));
 
+  const showMessage = (idElement) => {
+    const spawnMessage = document.getElementById(idElement);
+
+    spawnMessage.style.display = "flex";
+
+    setTimeout(() => {
+      spawnMessage.style.display = "none";
+    }, 3000)
+  }
+
   const handleTimerSubmit = async (e) => {
     // e.preventDefault();
     if (!task_title) {
+      showMessage("emptyTitle")
       return
     }
     // const userId = 1;
@@ -44,6 +55,7 @@ const ListTimerUpdate = () => {
       // window.location.reload();
       dispatch(SetTaskList(newTask))
       dispatch(SetTimerListEdit(''))
+      showMessage("taskUpdated")
     } catch (err) {
       console.log(err);
     }
@@ -98,6 +110,7 @@ const ListTimerUpdate = () => {
       const indexTask = dbTasks.findIndex(task => task.id == id);
       dispatch(DeleteTask(indexTask))
       dispatch(SetTimerListEdit(''))
+      showMessage("taskDeleted")
     } catch (err) {
       console.log(err);
     }
@@ -118,7 +131,8 @@ const ListTimerUpdate = () => {
           <div className="taskTimer-details">
             <input
               name="task_title"
-              className="taskTimer-title"
+              className={task_title.length >= 45 ? 'taskTimer-title errorTitle' : 'taskTimer-title'}
+              maxLength={45}
               type="text"
               placeholder="Task title"
               value={task_title}
