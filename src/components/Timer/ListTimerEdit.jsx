@@ -44,7 +44,7 @@ const ListTimerUpdate = () => {
     }
     // const userId = 1;
     try {
-      await axios.patch("http://localhost:8800/TaskCurrent/" + currentTimerId, timerInput);
+      await axios.patch("https://productivity-app-api-production.up.railway.app/TaskCurrent/" + currentTimerId, timerInput);
       const newTask = dbTasks.map((task) => { //Modify only the task with the id selected
         if (task.id == currentTimerId) {
           dispatch(SetTimerSettings({ ...dbTimer, current_task: task_title }))
@@ -88,22 +88,22 @@ const ListTimerUpdate = () => {
     const settingsId = 1
     const userId = 1
     try {
-      await axios.delete("http://localhost:8800/TaskCurrent/" + id);
+      await axios.delete("https://productivity-app-api-production.up.railway.app/TaskCurrent/" + id);
       // store the last id of the Task inside the UserSettings table in order to use it when the Task list is empty. This is to retain the auto_increment of the primary key inside SQL
       // console.log(dbTasks.length);
 
       if (dbTasks.length <= 1) {
-        await axios.patch("http://localhost:8800/UserSettings/PomoCount/" + userId, { PomoCount: 0 })
+        await axios.patch("https://productivity-app-api-production.up.railway.app/UserSettings/PomoCount/" + userId, { PomoCount: 0 })
         dispatch(SetTimerSettings({ ...dbTimer, current_task: '', task_id: 0, PomoCount: 0 })) //Clear the id in order to reset the id count of the task
         // console.log("Deleted");
       }
 
       if (dbTasks.length <= 1) {
-        await axios.patch("http://localhost:8800/UserSettings/ClearCurrentTask/" + settingsId, { current_task: null, task_id: id })
+        await axios.patch("https://productivity-app-api-production.up.railway.app/UserSettings/ClearCurrentTask/" + settingsId, { current_task: null, task_id: id })
         //Update UserSettings
         dispatch(SetTimerSettings({ ...dbTimer, current_task: '', task_id: id }))
       } else { //Clear current_task and task_id
-        await axios.patch("http://localhost:8800/UserSettings/ClearCurrentTask/" + settingsId, { current_task: null, task_id: null })
+        await axios.patch("https://productivity-app-api-production.up.railway.app/UserSettings/ClearCurrentTask/" + settingsId, { current_task: null, task_id: null })
         //Update UserSettings
         dispatch(SetTimerSettings({ ...dbTimer, current_task: '', task_id: '' }))
       }

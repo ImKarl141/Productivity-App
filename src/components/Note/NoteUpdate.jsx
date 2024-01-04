@@ -65,7 +65,7 @@ const NoteUpdate = () => {
       return;
     }
     try {
-      await axios.put("http://localhost:8800/NoteList/" + currentEditId, inputNote)
+      await axios.put("https://productivity-app-api-production.up.railway.app/NoteList/" + currentEditId, inputNote)
       // const newNote = dbNotes.find(note => note.id == currentEditId)
       const newNote = dbNotes.map((note) => {
         if (note.id == currentEditId) {
