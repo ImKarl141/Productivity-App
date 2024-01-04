@@ -73,7 +73,7 @@ const TaskUpdate = () => {
 
   //Update local state
   const updateChanges = async () => {
-    const resp = await axios.get('https://productivity-app-api-production.up.railway.app/TaskCurrent')
+    const resp = await axios.get('http://localhost:8800/TaskCurrent')
     dispatch(SetTaskList(resp.data))
     dispatch(ShowTaskUpdate())
   }
@@ -112,8 +112,8 @@ const TaskUpdate = () => {
       return;
     }
     try {
-      await axios.put('https://productivity-app-api-production.up.railway.app/TaskCurrent/' + currentEditId, inputTask)
-      // const resp = await axios.get('https://productivity-app-api-production.up.railway.app/TaskCurrent')
+      await axios.put('http://localhost:8800/TaskCurrent/' + currentEditId, inputTask)
+      // const resp = await axios.get('http://localhost:8800/TaskCurrent')
       // dispatch(SetTaskList(resp.data))
       updateChanges();
       showMessage("taskUpdated")
@@ -127,11 +127,11 @@ const TaskUpdate = () => {
 
   const handleDeleteTask = async (id) => {
     try {
-      await axios.delete("https://productivity-app-api-production.up.railway.app/TaskCurrent/" + id)
+      await axios.delete("http://localhost:8800/TaskCurrent/" + id)
       updateChanges();
       notification.play()
       showMessage("taskDeleted")
-      // const resp = await axios.get('https://productivity-app-api-production.up.railway.app/TaskCurrent')
+      // const resp = await axios.get('http://localhost:8800/TaskCurrent')
       // dispatch(SetTaskList(resp.data))
       // window.location.reload();
     } catch (err) {

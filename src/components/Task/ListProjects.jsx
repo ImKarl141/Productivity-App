@@ -11,7 +11,7 @@ const ListProjects = () => {
   const { addProjectEdit, dbProjects, isProjectUpdate, currentProjectId, currentProjectView } = useSelector((store) => store.task);
 
   const updateChanges = async () => {
-    const resp = await axios.get('https://productivity-app-api-production.up.railway.app/TaskCurrent')
+    const resp = await axios.get('http://localhost:8800/TaskCurrent')
     dispatch(SetTaskList(resp.data))
   }
 
@@ -28,8 +28,8 @@ const ListProjects = () => {
 
   const handleDeleteProject = async (myId) => {
     try {
-      await axios.put("https://productivity-app-api-production.up.railway.app/TaskCurrent/deleteProject/" + myId)
-      await axios.delete("https://productivity-app-api-production.up.railway.app/ProjectList/" + myId)
+      await axios.put("http://localhost:8800/TaskCurrent/deleteProject/" + myId)
+      await axios.delete("http://localhost:8800/ProjectList/" + myId)
       const projectIndex = dbProjects.findIndex((project) => project.id === myId)
       dispatch(DeleteProjectItem(projectIndex))
       updateChanges()

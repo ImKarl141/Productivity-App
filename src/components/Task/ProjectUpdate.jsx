@@ -44,9 +44,9 @@ const ProjectUpdate = () => {
     }
     e.preventDefault();
     try {
-      await axios.put('https://productivity-app-api-production.up.railway.app/ProjectList/' + currentProjectId, projectInput);
-      const resp = await axios.get('https://productivity-app-api-production.up.railway.app/ProjectList')
-      const task = await axios.get('https://productivity-app-api-production.up.railway.app/TaskCurrent')
+      await axios.put('http://localhost:8800/ProjectList/' + currentProjectId, projectInput);
+      const resp = await axios.get('http://localhost:8800/ProjectList')
+      const task = await axios.get('http://localhost:8800/TaskCurrent')
       dispatch(SetTaskList(task.data))
       dispatch(SetProjectList(resp.data))
       dispatch(SetCurrentProjectId(''))

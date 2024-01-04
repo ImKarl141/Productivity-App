@@ -92,7 +92,7 @@ const TimerClock = () => {
   useEffect(() => {
     const fetchTimerSettings = async () => {
       try {
-        const respTimer = await axios.get("https://productivity-app-api-production.up.railway.app/UserSettings")
+        const respTimer = await axios.get("http://localhost:8800/UserSettings")
         const newSetting = respTimer.data.find(setting => setting.id === 1)
         setTimer({
           ...timer,
@@ -184,7 +184,7 @@ const TimerClock = () => {
     if (dbTasks.length >= 1) {
       const focus_finished = dbTasks.find(task => task.id === task_id).focus_finished
       try {
-        await axios.patch("https://productivity-app-api-production.up.railway.app/TaskCurrent/AddPomo/" + task_id, { focus_finished: focus_finished + 1 })
+        await axios.patch("http://localhost:8800/TaskCurrent/AddPomo/" + task_id, { focus_finished: focus_finished + 1 })
         const newTask = dbTasks.map((task) => {
           if (task.id === task_id) {
             return { ...task, focus_finished: focus_finished + 1 }
@@ -205,7 +205,7 @@ const TimerClock = () => {
   //   // focus_finished
   //   //Add +1 to the focus_finished column inside the TaskCurrent table
   //   try {
-  //     await axios.patch("https://productivity-app-api-production.up.railway.app/TaskCurrent/AddPomo/" + id, { focus_finished: focus_finished + 1 })
+  //     await axios.patch("http://localhost:8800/TaskCurrent/AddPomo/" + id, { focus_finished: focus_finished + 1 })
   //     // dispatch(SetTimerSettings({ ...dbTimer, current_task: title }))
   //   } catch (err) {
   //     console.log(err);

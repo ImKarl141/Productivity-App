@@ -55,8 +55,8 @@ const TagEdit = () => {
       }
     }
     try {
-      await axios.post("https://productivity-app-api-production.up.railway.app/TagList", tagInput);
-      const resp = await axios.get('https://productivity-app-api-production.up.railway.app/TagList')
+      await axios.post("http://localhost:8800/TagList", tagInput);
+      const resp = await axios.get('http://localhost:8800/TagList')
       dispatch(SetTagList(resp.data))
       setTagInput({
         tag_name: '',

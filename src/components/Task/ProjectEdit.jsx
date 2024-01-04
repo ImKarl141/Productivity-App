@@ -65,8 +65,8 @@ const ProjectEdit = () => {
       }
     }
     try {
-      await axios.post('https://productivity-app-api-production.up.railway.app/ProjectList', projectInput);
-      const resp = await axios.get('https://productivity-app-api-production.up.railway.app/ProjectList')
+      await axios.post('http://localhost:8800/ProjectList', projectInput);
+      const resp = await axios.get('http://localhost:8800/ProjectList')
       dispatch(SetProjectList(resp.data))
       setProjectInput({
         project_name: '',

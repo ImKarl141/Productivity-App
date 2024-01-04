@@ -42,9 +42,9 @@ const TagUpdate = () => {
       return;
     }
     try {
-      await axios.put('https://productivity-app-api-production.up.railway.app/TagList/' + currentTagId, tagInput);
-      const tag = await axios.get('https://productivity-app-api-production.up.railway.app/TagList')
-      const task = await axios.get('https://productivity-app-api-production.up.railway.app/TaskCurrent')
+      await axios.put('http://localhost:8800/TagList/' + currentTagId, tagInput);
+      const tag = await axios.get('http://localhost:8800/TagList')
+      const task = await axios.get('http://localhost:8800/TaskCurrent')
       dispatch(SetTaskList(task.data))
       dispatch(SetTagList(tag.data))
       dispatch(SetCurrentTagId(''))

@@ -75,9 +75,9 @@ const TaskEdit = () => {
       return
     }
     try {
-      await axios.post('https://productivity-app-api-production.up.railway.app/TaskCurrent', inputTask)
+      await axios.post('http://localhost:8800/TaskCurrent', inputTask)
       // window.location.reload()
-      const resp = await axios.get('https://productivity-app-api-production.up.railway.app/TaskCurrent')
+      const resp = await axios.get('http://localhost:8800/TaskCurrent')
       dispatch(SetTaskList(resp.data))
       setInputTask({
         task_title: '',

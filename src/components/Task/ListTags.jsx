@@ -16,7 +16,7 @@ const ListTags = () => {
   // console.log(`isUpdate: ${isTagUpdate}, isDelete: ${isTagUpdate}`);
 
   const updateChanges = async () => {
-    const resp = await axios.get('https://productivity-app-api-production.up.railway.app/TaskCurrent')
+    const resp = await axios.get('http://localhost:8800/TaskCurrent')
     dispatch(SetTaskList(resp.data))
   }
 
@@ -33,8 +33,8 @@ const ListTags = () => {
 
   const handleDeleteTag = async (myId) => {
     try {
-      await axios.put("https://productivity-app-api-production.up.railway.app/TaskCurrent/deleteTag/" + myId)
-      await axios.delete("https://productivity-app-api-production.up.railway.app/TagList/" + myId)
+      await axios.put("http://localhost:8800/TaskCurrent/deleteTag/" + myId)
+      await axios.delete("http://localhost:8800/TagList/" + myId)
       const tagIndex = dbTags.findIndex((tag) => tag.id === myId)
       dispatch(DeleteTagItem(tagIndex))
       updateChanges()
