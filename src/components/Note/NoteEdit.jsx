@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { NoteListIcon } from "../../icons"
-import { SetNoteList, ShowNoteEdit, AddNote, ShowLastId } from "../../features/NoteSlice"
+import { SetNoteList, ShowNoteEdit, AddNote, ShowLastId } from "../../features/noteSlices"
 import axios from "axios"
 
 
