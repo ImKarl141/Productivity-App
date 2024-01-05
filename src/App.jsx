@@ -11,9 +11,8 @@ function App() {
 
   return (
     <main>
-      {/* <Navbar />
-      <Footer /> */}
-      <div>Hello friend</div>
+      <Navbar />
+      <Footer />
     </main>
   )
 }
