@@ -11,9 +11,9 @@ function App() {
 
   return (
     <main>
-      <Navbar />
-      {/* <footer className='app-footer'>Made with love and coffee by&nbsp;<a href="https://www.linkedin.com/in/carlos-duran-avila-45a13a183/" target='_blank'>Carlos</a></footer> */}
-      <Footer />
+      {/* <Navbar />
+      <Footer /> */}
+      <div>Hello friend</div>
     </main>
   )
 }
