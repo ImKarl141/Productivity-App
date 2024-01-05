@@ -1,9 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { userNotes, userTags } from "../data";
 
 const initialState = {
-  noteItems: '',
+  noteItems: userNotes,
   isEdit: false,
-  tag: '',
+  tag: userTags,
   dbNotes: [],
   dbDefaultColors: [],
   currentEditId: '',
@@ -13,7 +14,7 @@ const initialState = {
   lastId: '',
 }
 
-const noteSlices = createSlice({
+const noteSlice = createSlice({
   name: 'notes',
   initialState,
   reducers: {
@@ -51,6 +52,6 @@ const noteSlices = createSlice({
 })
 
 
-export const { SetNoteCardView, AddNote, DeleteNote, ShowLastId, ShowNoteEdit, ShowNoteSettings, SetNoteList, SetNoteColors, SetCurrentEditId } = noteSlices.actions;
-export default noteSlices.reducer;
+export const { SetNoteCardView, AddNote, DeleteNote, ShowLastId, ShowNoteEdit, ShowNoteSettings, SetNoteList, SetNoteColors, SetCurrentEditId } = noteSlice.actions;
+export default noteSlice.reducer;
 
