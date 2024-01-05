@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useRef, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { AcceptUpdateIcon, CancelUpdateIcon } from "../../icons";
-import { SetCurrentEditId, SetNoteList } from "../../features/NoteSlice";
+import { SetCurrentEditId, SetNoteList } from "../../features/noteSlice";
 
 
 const NoteUpdate = () => {
