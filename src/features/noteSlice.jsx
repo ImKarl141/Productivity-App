@@ -1,13 +1,10 @@
-// import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 // import { userNotes, userTags } from "../data";
 
-import { createSlice } from "@reduxjs/toolkit";
-import { userNotes, userTags } from "../data";
-
 const initialState = {
-  noteItems: userNotes,
+  // noteItems: userNotes,
   isEdit: false,
-  tag: userTags,
+  // tag: userTags,
   dbNotes: [],
   dbDefaultColors: [],
   currentEditId: '',
