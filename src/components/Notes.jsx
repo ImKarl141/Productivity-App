@@ -25,7 +25,7 @@ const NotesMenu = () => {
   // useEffect(() => {
   //   const fetchNoteList = async () => {
   //     try {
-  //       const resp = await axios.get('http://localhost:8800/NoteList');
+  //       const resp = await axios.get('https://todo-api-teal.vercel.app/NoteList');
   //       dispatch(SetNoteList(resp.data))
   //     } catch (err) {
   //       console.log(err);
@@ -33,7 +33,7 @@ const NotesMenu = () => {
   //   }
   //   const fetchNoteColors = async () => {
   //     try {
-  //       const resp = await axios.get("http://localhost:8800/DefaultColors");
+  //       const resp = await axios.get("https://todo-api-teal.vercel.app/DefaultColors");
   //       dispatch(SetNoteColors(resp.data));
   //     } catch (err) {
   //       console.log(err);
@@ -46,8 +46,8 @@ const NotesMenu = () => {
   useEffect(() => {
     const fetchNoteData = async () => {
       try {
-        const resp_color = await axios.get("http://localhost:8800/DefaultColors");
-        const resp_note = await axios.get('http://localhost:8800/NoteList');
+        const resp_color = await axios.get("https://todo-api-teal.vercel.app/DefaultColors");
+        const resp_note = await axios.get('https://todo-api-teal.vercel.app/NoteList');
         dispatch(SetNoteList(resp_note.data))
         dispatch(SetNoteColors(resp_color.data));
       } catch (err) {
@@ -78,7 +78,7 @@ const NotesMenu = () => {
     }
     // console.log(isPinned);
     try {
-      await axios.patch("http://localhost:8800/NoteList/" + id, isPinned)
+      await axios.patch("https://todo-api-teal.vercel.app/NoteList/" + id, isPinned)
       const newNote = dbNotes.map((note) => {
         if (note.id == id) {
           return { ...note, is_pinned: isPinned.current }
@@ -87,7 +87,7 @@ const NotesMenu = () => {
       })
       // console.log(newNote);
       dispatch(SetNoteList(newNote))
-      // const resp = await axios.get("http://localhost:8800/NoteList")
+      // const resp = await axios.get("https://todo-api-teal.vercel.app/NoteList")
       // dispatch(SetNoteList(resp.data))
     } catch (err) {
       console.log(err);
@@ -97,7 +97,7 @@ const NotesMenu = () => {
   const handleDeleteItem = async (id) => {
     if (dbNotes.length <= 1) {
       try {
-        await axios.post("http://localhost:8800/NoteList/ClearAll");
+        await axios.post("https://todo-api-teal.vercel.app/NoteList/ClearAll");
         const indexNote = dbNotes.findIndex(note => note.id == id);
         dispatch(DeleteNote(indexNote))
         showMessage("noteDeleted")
@@ -106,7 +106,7 @@ const NotesMenu = () => {
       }
     } else {
       try {
-        await axios.delete("http://localhost:8800/NoteList/" + id);
+        await axios.delete("https://todo-api-teal.vercel.app/NoteList/" + id);
         // const indexNote = dbNotes.map((note) => {
         //   if (note.id == id) {
         //     console.log(note);
@@ -141,8 +141,8 @@ const NotesMenu = () => {
     }
     // console.log("Make");
     try {
-      await axios.post("http://localhost:8800/TaskCurrent/NewTaskFromNote", newTask)
-      const resp = await axios.get("http://localhost:8800/TaskCurrent");
+      await axios.post("https://todo-api-teal.vercel.app/TaskCurrent/NewTaskFromNote", newTask)
+      const resp = await axios.get("https://todo-api-teal.vercel.app/TaskCurrent");
       dispatch(SetTaskList(resp.data))
 
       console.log("Task created");

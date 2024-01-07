@@ -46,7 +46,7 @@ const NoteEdit = () => {
       return;
     }
     try {
-      await axios.post('http://localhost:8800/NoteList', inputNote)
+      await axios.post('https://todo-api-teal.vercel.app/NoteList', inputNote)
       // window.location.reload();
       // dispatch(ShowLastId(dbNotes));
       if (dbNotes.length < 1) { //Note list is empty

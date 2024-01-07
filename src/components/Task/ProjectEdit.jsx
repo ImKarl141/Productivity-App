@@ -65,8 +65,8 @@ const ProjectEdit = () => {
       }
     }
     try {
-      await axios.post('http://localhost:8800/ProjectList', projectInput);
-      const resp = await axios.get('http://localhost:8800/ProjectList')
+      await axios.post('https://todo-api-teal.vercel.app/ProjectList', projectInput);
+      const resp = await axios.get('https://todo-api-teal.vercel.app/ProjectList')
       dispatch(SetProjectList(resp.data))
       setProjectInput({
         project_name: '',

@@ -65,16 +65,16 @@ const Timer = () => {
     const fetchTaskList = async () => {
       try {
         //Timer
-        const respTimer = await axios.get("http://localhost:8800/UserSettings")
+        const respTimer = await axios.get("https://todo-api-teal.vercel.app/UserSettings")
         const newSetting = respTimer.data.find(setting => setting.id === 1)
         dispatch(SetTimerSettings(newSetting))
 
         //Task
-        const resp = await axios.get("http://localhost:8800/TaskCurrent")
+        const resp = await axios.get("https://todo-api-teal.vercel.app/TaskCurrent")
         dispatch(SetTaskList(resp.data))
         // if (dbTasks.length < 1) {
         //   //Reset count when empty task
-        //   await axios.patch("http://localhost:8800/UserSettings/PomoCount/" + userId, { PomoCount: 0 })
+        //   await axios.patch("https://todo-api-teal.vercel.app/UserSettings/PomoCount/" + userId, { PomoCount: 0 })
         // }
       } catch (err) {
         console.log(err);
@@ -104,7 +104,7 @@ const Timer = () => {
   // useEffect(() => {
   //   const fetchSettings = async () => {
   //     try {
-  //       const resp = await axios.get("http://localhost:8800/UserSettings")
+  //       const resp = await axios.get("https://todo-api-teal.vercel.app/UserSettings")
   //       const newSetting = resp.data.find(setting => setting.id === 1)
   //       dispatch(SetTimerSettings(newSetting))
   //       // console.log(newSetting);
@@ -149,11 +149,11 @@ const Timer = () => {
     const lastId = dbTasks.length > 0 ? dbTasks[dbTasks.length - 1].id : 0;
     dispatch(SetLastTaskId(lastId))
     try {
-      await axios.delete("http://localhost:8800/TaskCurrent/" + id)
-      await axios.patch("http://localhost:8800/UserSettings/ClearCurrentTask/" + settingsId, { current_task: null, task_id: myId })
+      await axios.delete("https://todo-api-teal.vercel.app/TaskCurrent/" + id)
+      await axios.patch("https://todo-api-teal.vercel.app/UserSettings/ClearCurrentTask/" + settingsId, { current_task: null, task_id: myId })
       if (dbTasks.length < 1) {
         //Reset count when empty task
-        await axios.patch("http://localhost:8800/UserSettings/PomoCount/" + userId, { PomoCount: 0 })
+        await axios.patch("https://todo-api-teal.vercel.app/UserSettings/PomoCount/" + userId, { PomoCount: 0 })
         dispatch(SetTimerSettings({ ...dbTimer, current_task: '', task_id: id, PomoCount: 0 })) //Clear the id in order to reset the id count of the task
       }
       dispatch(SetTimerSettings({ ...dbTimer, current_task: '', task_id: myId }))
@@ -170,13 +170,13 @@ const Timer = () => {
     const id = 0;
     const userId = 1;
     try {
-      await axios.post("http://localhost:8800/TaskCurrent/ClearAll")
-      await axios.patch("http://localhost:8800/UserSettings/ClearCurrentTask/" + settingsId, { current_task: null, task_id: id })
+      await axios.post("https://todo-api-teal.vercel.app/TaskCurrent/ClearAll")
+      await axios.patch("https://todo-api-teal.vercel.app/UserSettings/ClearCurrentTask/" + settingsId, { current_task: null, task_id: id })
       // if (dbTasks.length < 1) {
       //   //Reset count when empty task
-      //   await axios.patch("http://localhost:8800/UserSettings/PomoCount/" + userId, { PomoCount: 0 })
+      //   await axios.patch("https://todo-api-teal.vercel.app/UserSettings/PomoCount/" + userId, { PomoCount: 0 })
       // }
-      await axios.patch("http://localhost:8800/UserSettings/PomoCount/" + userId, { PomoCount: 0 })
+      await axios.patch("https://todo-api-teal.vercel.app/UserSettings/PomoCount/" + userId, { PomoCount: 0 })
       dispatch(SetTimerSettings({ ...dbTimer, current_task: '', task_id: id, PomoCount: 0 })) //Clear the id in order to reset the id count of the task
       dispatch(SetTaskList([])) //Clear the list of task in the local state
       dispatch(SetLastTaskId(undefined)) //Clear the current task message
@@ -192,8 +192,8 @@ const Timer = () => {
   //   const settingsId = 1
   //   // console.log("All tasks deleted");
   //   try {
-  //     await axios.post("http://localhost:8800/TaskCurrent/ClearAll")
-  //     await axios.patch("http://localhost:8800/UserSettings/ClearCurrentTask/" + settingsId, { current_task: null, task_id: id })
+  //     await axios.post("https://todo-api-teal.vercel.app/TaskCurrent/ClearAll")
+  //     await axios.patch("https://todo-api-teal.vercel.app/UserSettings/ClearCurrentTask/" + settingsId, { current_task: null, task_id: id })
   //     //Update UserSettings
   //     dispatch(SetTimerSettings({ ...dbTimer, current_task: '', task_id: id }))
   //     dispatch(SetTaskList([]))

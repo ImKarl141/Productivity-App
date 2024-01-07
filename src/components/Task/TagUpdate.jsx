@@ -42,9 +42,9 @@ const TagUpdate = () => {
       return;
     }
     try {
-      await axios.put('http://localhost:8800/TagList/' + currentTagId, tagInput);
-      const tag = await axios.get('http://localhost:8800/TagList')
-      const task = await axios.get('http://localhost:8800/TaskCurrent')
+      await axios.put('https://todo-api-teal.vercel.app/TagList/' + currentTagId, tagInput);
+      const tag = await axios.get('https://todo-api-teal.vercel.app/TagList')
+      const task = await axios.get('https://todo-api-teal.vercel.app/TaskCurrent')
       dispatch(SetTaskList(task.data))
       dispatch(SetTagList(tag.data))
       dispatch(SetCurrentTagId(''))

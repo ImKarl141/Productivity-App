@@ -73,7 +73,7 @@ const TaskUpdate = () => {
 
   //Update local state
   const updateChanges = async () => {
-    const resp = await axios.get('http://localhost:8800/TaskCurrent')
+    const resp = await axios.get('https://todo-api-teal.vercel.app/TaskCurrent')
     dispatch(SetTaskList(resp.data))
     dispatch(ShowTaskUpdate())
   }
@@ -112,8 +112,8 @@ const TaskUpdate = () => {
       return;
     }
     try {
-      await axios.put('http://localhost:8800/TaskCurrent/' + currentEditId, inputTask)
-      // const resp = await axios.get('http://localhost:8800/TaskCurrent')
+      await axios.put('https://todo-api-teal.vercel.app/TaskCurrent/' + currentEditId, inputTask)
+      // const resp = await axios.get('https://todo-api-teal.vercel.app/TaskCurrent')
       // dispatch(SetTaskList(resp.data))
       updateChanges();
       showMessage("taskUpdated")
@@ -127,11 +127,11 @@ const TaskUpdate = () => {
 
   const handleDeleteTask = async (id) => {
     try {
-      await axios.delete("http://localhost:8800/TaskCurrent/" + id)
+      await axios.delete("https://todo-api-teal.vercel.app/TaskCurrent/" + id)
       updateChanges();
       notification.play()
       showMessage("taskDeleted")
-      // const resp = await axios.get('http://localhost:8800/TaskCurrent')
+      // const resp = await axios.get('https://todo-api-teal.vercel.app/TaskCurrent')
       // dispatch(SetTaskList(resp.data))
       // window.location.reload();
     } catch (err) {

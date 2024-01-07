@@ -28,8 +28,8 @@ function CountdownTimer({ expiryTimestamp }) {
   //   const newCount = dbTimer.PomoCount + 1;
   //   // console.log(newCount);
   //   try {
-  //     await axios.patch("http://localhost:8800/TaskCurrent/AddPomo/" + task_id, { focus_finished: focus_finished + 1 })
-  //     await axios.patch("http://localhost:8800/UserSettings/PomoCount/" + userId, { PomoCount: newCount })
+  //     await axios.patch("https://todo-api-teal.vercel.app/TaskCurrent/AddPomo/" + task_id, { focus_finished: focus_finished + 1 })
+  //     await axios.patch("https://todo-api-teal.vercel.app/UserSettings/PomoCount/" + userId, { PomoCount: newCount })
   //     const newTask = dbTasks.map((task) => {
   //       if (task.id === task_id) {
   //         return { ...task, focus_finished: focus_finished + 1 }

@@ -44,9 +44,9 @@ const ProjectUpdate = () => {
     }
     e.preventDefault();
     try {
-      await axios.put('http://localhost:8800/ProjectList/' + currentProjectId, projectInput);
-      const resp = await axios.get('http://localhost:8800/ProjectList')
-      const task = await axios.get('http://localhost:8800/TaskCurrent')
+      await axios.put('https://todo-api-teal.vercel.app/ProjectList/' + currentProjectId, projectInput);
+      const resp = await axios.get('https://todo-api-teal.vercel.app/ProjectList')
+      const task = await axios.get('https://todo-api-teal.vercel.app/TaskCurrent')
       dispatch(SetTaskList(task.data))
       dispatch(SetProjectList(resp.data))
       dispatch(SetCurrentProjectId(''))

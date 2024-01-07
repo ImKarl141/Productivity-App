@@ -16,7 +16,7 @@ const ListTags = () => {
   // console.log(`isUpdate: ${isTagUpdate}, isDelete: ${isTagUpdate}`);
 
   const updateChanges = async () => {
-    const resp = await axios.get('http://localhost:8800/TaskCurrent')
+    const resp = await axios.get('https://todo-api-teal.vercel.app/TaskCurrent')
     dispatch(SetTaskList(resp.data))
   }
 
@@ -33,8 +33,8 @@ const ListTags = () => {
 
   const handleDeleteTag = async (myId) => {
     try {
-      await axios.put("http://localhost:8800/TaskCurrent/deleteTag/" + myId)
-      await axios.delete("http://localhost:8800/TagList/" + myId)
+      await axios.put("https://todo-api-teal.vercel.app/TaskCurrent/deleteTag/" + myId)
+      await axios.delete("https://todo-api-teal.vercel.app/TagList/" + myId)
       const tagIndex = dbTags.findIndex((tag) => tag.id === myId)
       dispatch(DeleteTagItem(tagIndex))
       updateChanges()

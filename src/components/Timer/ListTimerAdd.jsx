@@ -58,7 +58,7 @@ const ListTimerAdd = () => {
       return
     }
     try {
-      await axios.post("http://localhost:8800/TaskCurrent", timerInput);
+      await axios.post("https://todo-api-teal.vercel.app/TaskCurrent", timerInput);
 
       const nextId = dbTasks.length >= 1 ? dbTasks[dbTasks.length - 1].id : dbTimer.task_id;
       // const nextId = dbTasks.length > 0 ? lastTaskId : dbTimer.task_id;

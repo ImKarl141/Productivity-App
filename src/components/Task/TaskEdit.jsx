@@ -75,9 +75,9 @@ const TaskEdit = () => {
       return
     }
     try {
-      await axios.post('http://localhost:8800/TaskCurrent', inputTask)
+      await axios.post('https://todo-api-teal.vercel.app/TaskCurrent', inputTask)
       // window.location.reload()
-      const resp = await axios.get('http://localhost:8800/TaskCurrent')
+      const resp = await axios.get('https://todo-api-teal.vercel.app/TaskCurrent')
       dispatch(SetTaskList(resp.data))
       setInputTask({
         task_title: '',

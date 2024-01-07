@@ -11,7 +11,7 @@ const ListProjects = () => {
   const { addProjectEdit, dbProjects, isProjectUpdate, currentProjectId, currentProjectView } = useSelector((store) => store.task);
 
   const updateChanges = async () => {
-    const resp = await axios.get('http://localhost:8800/TaskCurrent')
+    const resp = await axios.get('https://todo-api-teal.vercel.app/TaskCurrent')
     dispatch(SetTaskList(resp.data))
   }
 
@@ -28,8 +28,8 @@ const ListProjects = () => {
 
   const handleDeleteProject = async (myId) => {
     try {
-      await axios.put("http://localhost:8800/TaskCurrent/deleteProject/" + myId)
-      await axios.delete("http://localhost:8800/ProjectList/" + myId)
+      await axios.put("https://todo-api-teal.vercel.app/TaskCurrent/deleteProject/" + myId)
+      await axios.delete("https://todo-api-teal.vercel.app/ProjectList/" + myId)
       const projectIndex = dbProjects.findIndex((project) => project.id === myId)
       dispatch(DeleteProjectItem(projectIndex))
       updateChanges()

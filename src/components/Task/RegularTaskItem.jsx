@@ -24,7 +24,7 @@ const RegularTaskItem = (props) => {
 
   const handleCheckedSubmit = async (title, focus, check, myId) => {
     try {
-      await axios.patch("http://localhost:8800/TaskCurrent/" + myId, { task_title: title, focus_amount: focus, is_checked: check });
+      await axios.patch("https://todo-api-teal.vercel.app/TaskCurrent/" + myId, { task_title: title, focus_amount: focus, is_checked: check });
 
       //Update the local state of the Task List.
       // const newTask = dbTasks.map((task) => {
@@ -34,7 +34,7 @@ const RegularTaskItem = (props) => {
       //   }
       //   return task;
       // });
-      const resp = await axios.get("http://localhost:8800/TaskCurrent/");
+      const resp = await axios.get("https://todo-api-teal.vercel.app/TaskCurrent/");
       dispatch(SetTaskList(resp.data))
       // window.location.reload();
     } catch (err) {

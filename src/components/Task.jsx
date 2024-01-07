@@ -42,14 +42,14 @@ const TaskMenu = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const task = await axios.get("http://localhost:8800/TaskCurrent")
+        const task = await axios.get("https://todo-api-teal.vercel.app/TaskCurrent")
         dispatch(SetTaskList(task.data))
         // console.log(task.data);
 
-        const project = await axios.get("http://localhost:8800/ProjectList")
+        const project = await axios.get("https://todo-api-teal.vercel.app/ProjectList")
         dispatch(SetProjectList(project.data))
 
-        const tag = await axios.get("http://localhost:8800/TagList")
+        const tag = await axios.get("https://todo-api-teal.vercel.app/TagList")
         dispatch(SetTagList(tag.data))
       } catch (err) {
         console.log(err);

@@ -29,8 +29,8 @@ const ListTimerTask = () => {
 
   const handleCheckedSubmit = async (title, focus, check, myId) => {
     try {
-      const req = await axios.patch("http://localhost:8800/TaskCurrent/" + myId, { task_title: title, focus_amount: focus, is_checked: check });
-      const resp = await axios.get("http://localhost:8800/TaskCurrent/");
+      const req = await axios.patch("https://todo-api-teal.vercel.app/TaskCurrent/" + myId, { task_title: title, focus_amount: focus, is_checked: check });
+      const resp = await axios.get("https://todo-api-teal.vercel.app/TaskCurrent/");
       dispatch(SetTaskList(resp.data))
       // console.log("Checked");
       // window.location.reload();
@@ -42,7 +42,7 @@ const ListTimerTask = () => {
   const handleCurrentTask = async (title, taskId) => {
     const id = 1;
     try {
-      await axios.patch("http://localhost:8800/UserSettings/CurrentTask/" + id, { current_task: title, task_id: taskId })
+      await axios.patch("https://todo-api-teal.vercel.app/UserSettings/CurrentTask/" + id, { current_task: title, task_id: taskId })
       dispatch(SetTimerSettings({ ...dbTimer, current_task: title }))
     } catch (err) {
       console.log(err);
@@ -51,7 +51,7 @@ const ListTimerTask = () => {
   // const handleCurrentTask = async (title) => {
   //   const id = 1
   //   try {
-  //     await axios.patch("http://localhost:8800/UserSettings/CurrentTask/" + id, { current_task: title })
+  //     await axios.patch("https://todo-api-teal.vercel.app/UserSettings/CurrentTask/" + id, { current_task: title })
   //   } catch (err) {
   //     console.log(err);
   //   }
@@ -60,7 +60,7 @@ const ListTimerTask = () => {
   // const handleCurrentTask = async (focus) => {
   //   const id = 1;
   //   try {
-  //     await axios.patch("http://localhost:8800/UserSettings/" + id, timerInput)
+  //     await axios.patch("https://todo-api-teal.vercel.app/UserSettings/" + id, timerInput)
   //     dispatch(SetTimerSettings({ ...dbTimer, focus: focus, short: short, long: long }))
   //   } catch (err) {
   //     console.log(err);

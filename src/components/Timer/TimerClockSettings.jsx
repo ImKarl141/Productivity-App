@@ -39,7 +39,7 @@ const TimerClockSettings = () => {
     const id = 1;
     showMessage("settings")
     try {
-      await axios.patch("http://localhost:8800/UserSettings/" + id, timerInput)
+      await axios.patch("https://todo-api-teal.vercel.app/UserSettings/" + id, timerInput)
       dispatch(SetTimerSettings({ ...dbTimer, focus: focus, short: short, long: long }))
     } catch (err) {
       console.log(err);
