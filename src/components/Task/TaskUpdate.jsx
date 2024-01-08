@@ -181,7 +181,7 @@ const TaskUpdate = () => {
             />
           </div>
           <div className='task-details-info'>
-            <p className='details-text'>List</p>
+            <p className='details-text'>Project</p>
             <select
               name='task_project'
               value={task_project}
