@@ -286,9 +286,35 @@
   flex-direction: column; */
 }
 
-@media only screen and (max-width: 958px) {
+/* 958px */
+
+@media screen and (min-width: 701px) and (max-width: 830px) {
+  .note-list {
+    grid-template-columns: repeat(2, 15rem);
+  }
+}
+
+@media screen and (min-width: 831px) and (max-width: 1070px) {
   .note-list {
     grid-template-columns: repeat(3, 15rem);
+  }
+}
+
+@media only screen and (min-width: 1071px) and (max-width: 1311px) {
+  .note-list {
+    grid-template-columns: repeat(4, 15rem);
+  }
+}
+
+@media only screen and (min-width: 1312px) and (max-width: 1700px) {
+  .note-list {
+    grid-template-columns: repeat(5, 15rem);
+  }
+}
+
+@media only screen and (min-width: 1701px) {
+  .note-list {
+    grid-template-columns: repeat(7, 15rem);
   }
 }
 
