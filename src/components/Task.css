@@ -925,6 +925,15 @@ a {
   background-color: #6e4545;
 }
 
+.project-color-task {
+  /* padding: 0.3rem; */
+  width: 1rem;
+  height: 1rem;
+  border: 0.12rem solid var(--black);
+  border-radius: 0.8rem;
+  background-color: #6e4545;
+}
+
 .list-title {
   align-items: start;
   justify-content: start;
