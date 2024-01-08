@@ -18,7 +18,7 @@ const ListTaskCurrent = () => {
   const dispatch = useDispatch();
 
   const partialDate = new Date()
-  const currentDate = `${(partialDate.getMonth() + 1)}-${partialDate.getDate()}-${partialDate.getFullYear()}`
+  const currentDate = `${(partialDate.getMonth() + 1).toString().padStart(2, '0')}-${partialDate.getDate().toString().padStart(2, '0')}-${partialDate.getFullYear()}`
   const { all, current, completed } = currentView;
   const [isChecked, setIsChecked] = useState(true)
   // console.log(isChecked);

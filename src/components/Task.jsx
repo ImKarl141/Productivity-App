@@ -30,8 +30,7 @@ const TaskMenu = () => {
     month: "numeric",
     day: "numeric",
   })
-  const currentDate = myDate.split("/")
-  // console.log(currentDate);
+  const currentDate = myDate.split("/").map(item => item.padStart(2, '0'));
   const [month, day, year] = currentDate
 
   // console.log(dbTasks.filter(task => task.is_checked == true).length);
@@ -60,9 +59,6 @@ const TaskMenu = () => {
 
   // const test = false;
   // console.log(dbTasks);
-
-  // console.log(dbTasks.filter(task => task.task_date == "12-22-2023").length);
-
 
   return (
     <section className={`task-container ${Task ? 'task-container-active' : ''} `}>
