@@ -56,7 +56,7 @@ const ListTaskCurrent = () => {
     }
   }
 
-  useEffect(() => {
+  useEffect(() => { //Filter for project and tag view
     if (currentProjectView || currentTagView) {
       $(`.task-item-overall-container`).show()
       $(`.task-item-overall-container:not(:contains(${currentProjectView}))`).hide()
