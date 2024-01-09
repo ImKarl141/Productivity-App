@@ -1,14 +1,12 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { ShowAddProjectEdit, ChangeProjectName, ChangeProjectColor, AddProjectItem, SetCurrentProjectId, SetProjectList, SetTaskList } from '../../features/taskSlice';
-import { CancelIcon, AcceptUpdateIcon, CancelUpdateIcon } from '../../icons';
+import { SetCurrentProjectId, SetProjectList, SetTaskList } from '../../features/taskSlice';
+import { AcceptUpdateIcon, CancelUpdateIcon } from '../../icons';
 import { useState } from 'react';
 import axios from 'axios';
 
 const ProjectUpdate = () => {
   const dispatch = useDispatch();
   const { currentProjectId, dbProjects } = useSelector((store) => store.task)
-  // const currentProject = dbProjects.find(project => project.id === currentProjectId)
-  // console.log(currentProject);
 
   const [projectInput, setProjectInput] = useState({
     project_name: currentProjectId ?
@@ -17,7 +15,6 @@ const ProjectUpdate = () => {
       dbProjects.find(project => project.id === currentProjectId).project_color : ''
   })
 
-  // console.log(projectInput);
   const { project_name, project_color } = projectInput
 
   //Toast message
@@ -33,7 +30,6 @@ const ProjectUpdate = () => {
 
   const handleChangeInput = (e) => {
     setProjectInput((prev) => ({ ...prev, [e.target.name]: e.target.value }))
-    // console.log(projectInput);
   }
 
   const handleProjectSubmit = async (e) => {
@@ -77,7 +73,6 @@ const ProjectUpdate = () => {
           className='myInputUpdateProject'
           placeholder='Project name'
           value={project_name}
-          //Make the value the same as the dbProject based on the id
           onChange={handleChangeInput}
         />
       </form>

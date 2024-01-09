@@ -1,6 +1,5 @@
-import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { SetProjectList, RemoveProjectItem, ShowAddProjectEdit, SetCurrentProjectId, ShowProjectUpdate, DeleteProjectItem, SetTaskList, SetCurrentProjectView, SetCurrentTagView } from "../../features/taskSlice";
+import { ShowAddProjectEdit, SetCurrentProjectId, DeleteProjectItem, SetTaskList, SetCurrentProjectView } from "../../features/taskSlice";
 import { AddProjectIcon, EditListIcon, DeleteListIcon } from '../../icons';
 import axios from "axios";
 import ProjectEdit from "./ProjectEdit";
@@ -8,14 +7,13 @@ import ProjectUpdate from "./ProjectUpdate";
 
 const ListProjects = () => {
   const dispatch = useDispatch();
-  const { addProjectEdit, dbProjects, isProjectUpdate, currentProjectId, currentProjectView } = useSelector((store) => store.task);
+  const { addProjectEdit, dbProjects, currentProjectId, currentProjectView } = useSelector((store) => store.task);
 
   const updateChanges = async () => {
     const resp = await axios.get('https://todo-api-teal.vercel.app/TaskCurrent')
     dispatch(SetTaskList(resp.data))
   }
 
-  //Toast message
   const showMessage = (idElement) => {
     const spawnMessage = document.getElementById(idElement);
 

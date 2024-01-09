@@ -51,14 +51,12 @@ button:hover {
 .main-menu,
 .icon-button{
   display: flex;
-  /* flex-direction: column; */
   align-items: center;
   justify-content: center;
   border: 0 none;
   margin: 0.1rem 0rem;
   width: 5rem;
   height: 5rem;
-  /* background-color: transparent; */
 }
 
 .menu-toggle{
@@ -76,18 +74,7 @@ button:hover {
 .menu-toggle-active {
   max-height: 10rem;
   opacity: 1;
-  /* background-color: red; */
 }
-
-/* .icon-button:hover {
-  transition: 0.1s ease-in-out;
-  transform: translateY(-0.1rem);
-} */
-
-/* .icon-button-text:hover {
-  transition: 0.1s ease-in-out;
-  transform: translateY(-0.02rem);
-} */
 
 .icon-button-text {
   display: flex;
@@ -202,10 +189,6 @@ button:hover {
 }
 
 /* Toast messages */
-
-
-
-/* For screens less than 700px */
 
 @media only screen and (max-width:700px){
   .navbar-main {

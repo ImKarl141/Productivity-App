@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { useSelector, useDispatch } from "react-redux"
-import { EditTagIcon, CancelIcon, AcceptUpdateIcon, CancelUpdateIcon } from '../../icons';
-import { ShowAddTagEdit, SetCurrentTagId, SetTagList, SetTaskList } from '../../features/taskSlice';
+import { AcceptUpdateIcon, CancelUpdateIcon } from '../../icons';
+import { SetCurrentTagId, SetTagList, SetTaskList } from '../../features/taskSlice';
 import axios from "axios";
 
 
@@ -48,8 +48,6 @@ const TagUpdate = () => {
       dispatch(SetTaskList(task.data))
       dispatch(SetTagList(tag.data))
       dispatch(SetCurrentTagId(''))
-      // const resp = await axios.get
-      // window.location.reload();
       showMessage("tagUpdated")
     } catch (err) {
       console.log(err);
@@ -57,7 +55,6 @@ const TagUpdate = () => {
   };
 
   return (
-    // <div>Hello world</div>
     <div className='form-container'>
       <form className='tag-form' onSubmit={handleTagSubmit}>
         <div className='color-picker-container'>
@@ -66,7 +63,6 @@ const TagUpdate = () => {
             name='tag_color'
             type="color"
             className='default-colorPicker'
-            // value={tag_name}
             onChange={handleChangeInput}
           />
           <div className='custom-colorPicker' style={{ backgroundColor: tag_color }}>

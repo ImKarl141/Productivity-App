@@ -1,7 +1,6 @@
-import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { ShowAddTagEdit, SetTagList, ShowTagUpdate, ShowTagDelete, ShowTagCancel, SetCurrentTagId, SetTaskList, DeleteTagItem, SetCurrentTagView } from "../../features/taskSlice";
-import { AddTagsIcon, TagSettingsIcon, EditListIcon, DeleteListIcon, TagIcon, EditTagIcon, DeleteTagIcon } from '../../icons';
+import { ShowAddTagEdit, ShowTagUpdate, ShowTagDelete, ShowTagCancel, SetCurrentTagId, SetTaskList, DeleteTagItem, SetCurrentTagView } from "../../features/taskSlice";
+import { AddTagsIcon, EditListIcon, DeleteListIcon, EditTagIcon, DeleteTagIcon } from '../../icons';
 import axios from "axios";
 import TagEdit from "./TagEdit";
 import TagUpdate from "./TagUpdate";
@@ -10,10 +9,7 @@ import TagUpdate from "./TagUpdate";
 const ListTags = () => {
 
   const { addTagEdit, dbTags, isTagUpdate, isTagDelete, currentTagId, currentTagView } = useSelector((store) => store.task);
-  // const [dbTags, setDbTags] = useState([]);
-  // console.log(currentTagId);
   const dispatch = useDispatch();
-  // console.log(`isUpdate: ${isTagUpdate}, isDelete: ${isTagUpdate}`);
 
   const updateChanges = async () => {
     const resp = await axios.get('https://todo-api-teal.vercel.app/TaskCurrent')

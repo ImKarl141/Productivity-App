@@ -1,47 +1,21 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { AddNoteIcon, NoteListIcon, TaskNoteIcon, DeleteNoteIcon, PinNoteIcon, EditNoteIcon } from '../icons'
+import { AddNoteIcon, DeleteNoteIcon, PinNoteIcon, EditNoteIcon } from '../icons'
 import './Notes.css'
-import { ShowNoteEdit, ShowNoteSettings, SetNoteList, SetNoteColors, SetCurrentEditId, SetNoteCardView, DeleteNote } from '../features/noteSlice'
+import { ShowNoteEdit, SetNoteList, SetNoteColors, SetCurrentEditId, SetNoteCardView, DeleteNote } from '../features/noteSlice'
 import NoteEdit from './Note/NoteEdit'
 import axios from 'axios'
 import NoteUpdate from './Note/NoteUpdate'
-import { SetTaskList } from '../features/taskSlice'
-
 
 
 const NotesMenu = () => {
-  const { isEdit, noteItems, tag, dbNotes, dbDefaultColors, currentEditId, isNoteCardView, noteCardId } = useSelector((store) => store.note);
+  const { isEdit, dbNotes, currentEditId, isNoteCardView, noteCardId } = useSelector((store) => store.note);
   const { dbTasks } = useSelector((store) => store.task);
   const { menuToggle } = useSelector((store) => store.menu);
-  const { Menu, Task, Calendar, Notes } = menuToggle;
-  // console.log(dbTasks);
+  const { Notes } = menuToggle;
 
-  // console.log(dbNotes);
   const dispatch = useDispatch();
   const isPinned = useRef(false)
-
-  //Fetching note list from database
-  // useEffect(() => {
-  //   const fetchNoteList = async () => {
-  //     try {
-  //       const resp = await axios.get('https://todo-api-teal.vercel.app/NoteList');
-  //       dispatch(SetNoteList(resp.data))
-  //     } catch (err) {
-  //       console.log(err);
-  //     }
-  //   }
-  //   const fetchNoteColors = async () => {
-  //     try {
-  //       const resp = await axios.get("https://todo-api-teal.vercel.app/DefaultColors");
-  //       dispatch(SetNoteColors(resp.data));
-  //     } catch (err) {
-  //       console.log(err);
-  //     }
-  //   }
-  //   fetchNoteList();
-  //   fetchNoteColors();
-  // }, [])
 
   useEffect(() => {
     const fetchNoteData = async () => {
@@ -76,7 +50,6 @@ const NotesMenu = () => {
       isPinned.current = false;
       showMessage("noteUnpinned")
     }
-    // console.log(isPinned);
     try {
       await axios.patch("https://todo-api-teal.vercel.app/NoteList/" + id, isPinned)
       const newNote = dbNotes.map((note) => {
@@ -85,10 +58,7 @@ const NotesMenu = () => {
         }
         return note;
       })
-      // console.log(newNote);
       dispatch(SetNoteList(newNote))
-      // const resp = await axios.get("https://todo-api-teal.vercel.app/NoteList")
-      // dispatch(SetNoteList(resp.data))
     } catch (err) {
       console.log(err);
     }
@@ -107,11 +77,6 @@ const NotesMenu = () => {
     } else {
       try {
         await axios.delete("https://todo-api-teal.vercel.app/NoteList/" + id);
-        // const indexNote = dbNotes.map((note) => {
-        //   if (note.id == id) {
-        //     console.log(note);
-        //   }
-        // })
         const indexNote = dbNotes.findIndex(note => note.id == id);
         dispatch(DeleteNote(indexNote))
         showMessage("noteDeleted")
@@ -120,39 +85,6 @@ const NotesMenu = () => {
       }
     }
   }
-
-  // const selectedNote = dbNotes.find(note => note.id === 11)
-  // console.log(selectedNote);
-
-  const noteMakeTask = async (id) => {
-    const selectedNote = dbNotes.find(note => note.id === id)
-    const { note_name, note_desc } = selectedNote
-    const lastTaskId = dbTasks[dbTasks.length - 1].id
-    const newTask = {
-      id: lastTaskId + 1,
-      task_title: note_name,
-      task_desc: note_desc,
-      task_date: null,
-      task_project: null,
-      task_tag: null,
-      focus_amount: 1,
-      focus_finished: 0,
-      is_checked: false,
-    }
-    // console.log("Make");
-    try {
-      await axios.post("https://todo-api-teal.vercel.app/TaskCurrent/NewTaskFromNote", newTask)
-      const resp = await axios.get("https://todo-api-teal.vercel.app/TaskCurrent");
-      dispatch(SetTaskList(resp.data))
-
-      console.log("Task created");
-    } catch (err) {
-      console.log(err);
-    }
-    handleDeleteItem(id);
-  }
-
-  //Add Tags from the list, figure out how to share the listOfTags into this component.
 
   return (
     <section className={`notes-container ${Notes ? 'notes-container-active' : ''} `}>
@@ -182,7 +114,6 @@ const NotesMenu = () => {
           }
         </div>
         <div className='note-list'>
-          {/*Map through the list of notes*/}
           {
             dbNotes.map((note) => {
               const { id, note_name, note_desc, color_name, color_value, is_pinned } = note;
@@ -190,16 +121,6 @@ const NotesMenu = () => {
                 if (currentEditId === id) {
                   return (
                     <NoteUpdate key={id} />
-                    // <form key={id} className='note-card'>
-                    //   <input type="text"
-                    //     className='input-title'
-                    //     value={note_name}
-                    //   />
-                    //   <textarea type="text"
-                    //     className='input-content'
-                    //     value={note_desc}
-                    //   />
-                    // </form>
                   )
                 } else {
                   return (
@@ -210,9 +131,7 @@ const NotesMenu = () => {
                       </span>
                       <button className='noteEdit-btn' title='Edit Note' onClick={() => dispatch(SetCurrentEditId(id))}><EditNoteIcon /></button>
                       <button className='noteDelete-btn' title='Delete Note' onClick={() => handleDeleteItem(id)}><DeleteNoteIcon /></button>
-                      {/* <button className='noteMakeTask-btn' title='Make a task' onClick={() => noteMakeTask(id)}><TaskNoteIcon /></button> */}
                       <button
-                        // id={id}
                         className='notePinned-btn'
                         title='Pin note'
                         onClick={() => handleNotePin(is_pinned, id)}
@@ -242,7 +161,6 @@ const NotesMenu = () => {
                       </span>
                       <button className='noteEdit-btn' title='Edit Note' onClick={() => dispatch(SetCurrentEditId(id))}><EditNoteIcon /></button>
                       <button className='noteDelete-btn' title='Delete Note' onClick={() => handleDeleteItem(id)}><DeleteNoteIcon /></button>
-                      {/* <button className='noteMakeTask-btn' title='Make a task' onClick={() => noteMakeTask(id)}><TaskNoteIcon /></button> */}
                       <button
                         className='notePin-btn'
                         title='Pin note'

@@ -1,16 +1,12 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 
 export const useTimer = (callback, delay) => {
-    // Creating a ref  
     const savedCallback = useRef();
 
-    // To remember the latest callback . 
     useEffect(() => {
         savedCallback.current = callback;
     }, [callback]);
 
-    // combining the setInterval and  
-    //clearInterval methods based on delay. 
     useEffect(() => {
         function func() {
             savedCallback.current();
@@ -21,25 +17,3 @@ export const useTimer = (callback, delay) => {
         }
     }, [delay]);
 }
-
-// export function useInterval(callback, delay) {
-//     // Creating a ref
-//     const savedCallback = useRef();
-
-//     // To remember the latest callback .
-//     useEffect(() => {
-//         savedCallback.current = callback;
-//     }, [callback]);
-
-//     // combining the setInterval and
-//     //clearInterval methods based on delay.
-//     useEffect(() => {
-//         function func() {
-//             savedCallback.current();
-//         }
-//         if (delay !== null) {
-//             let id = setInterval(func, delay);
-//             return () => clearInterval(id);
-//         }
-//     }, [delay]);
-// }

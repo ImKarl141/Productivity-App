@@ -1,15 +1,15 @@
 import { useDispatch, useSelector } from "react-redux"
 import { SetTimerListEdit, SetTimerSettings } from "../../features/timerSlice";
-import { NumberUpIcon, NumberDownIcon, AddSubtaskIcon, CheckedIcon } from "../../icons";
-import { useEffect, useState } from "react";
+import { NumberUpIcon, NumberDownIcon } from "../../icons";
+import { useState } from "react";
 import axios from "axios";
 import { SetTaskList, DeleteTask, } from "../../features/taskSlice";
 
 
 
 const ListTimerUpdate = () => {
-  const { isTaskUpdate, dbTasks } = useSelector((store) => store.task);
-  const { isTimerTaskEdit, isSubtaskTimer, subtasksTest, currentTimerId, dbTimer } = useSelector((store) => store.timer);
+  const { dbTasks } = useSelector((store) => store.task);
+  const { currentTimerId, dbTimer } = useSelector((store) => store.timer);
 
   const [timerInput, setTimerInput] = useState({
     task_title: currentTimerId ? dbTasks.find(task => task.id === currentTimerId).task_title : '',
@@ -19,12 +19,7 @@ const ListTimerUpdate = () => {
 
   const { task_title, focus_amount, is_checked } = timerInput;
 
-  // console.log(focus_amount);
-
   const dispatch = useDispatch();
-
-  const [number, setNumber] = useState(1)
-  // console.log(typeof (number));
 
   const showMessage = (idElement) => {
     const spawnMessage = document.getElementById(idElement);
@@ -42,17 +37,15 @@ const ListTimerUpdate = () => {
       showMessage("emptyTitle")
       return
     }
-    // const userId = 1;
     try {
       await axios.patch("https://todo-api-teal.vercel.app/TaskCurrent/" + currentTimerId, timerInput);
-      const newTask = dbTasks.map((task) => { //Modify only the task with the id selected
+      const newTask = dbTasks.map((task) => {
         if (task.id == currentTimerId) {
           dispatch(SetTimerSettings({ ...dbTimer, current_task: task_title }))
           return { ...task, task_title: task_title, focus_amount: focus_amount, is_checked: is_checked }
         }
         return task
       })
-      // window.location.reload();
       dispatch(SetTaskList(newTask))
       dispatch(SetTimerListEdit(''))
       showMessage("taskUpdated")
@@ -62,7 +55,6 @@ const ListTimerUpdate = () => {
   }
 
   const increaseNumber = () => {
-    // const amount = focus_amount;
     setTimerInput({ ...timerInput, focus_amount: focus_amount + 1 })
   }
 
@@ -89,22 +81,16 @@ const ListTimerUpdate = () => {
     const userId = 1
     try {
       await axios.delete("https://todo-api-teal.vercel.app/TaskCurrent/" + id);
-      // store the last id of the Task inside the UserSettings table in order to use it when the Task list is empty. This is to retain the auto_increment of the primary key inside SQL
-      // console.log(dbTasks.length);
-
       if (dbTasks.length <= 1) {
         await axios.patch("https://todo-api-teal.vercel.app/UserSettings/PomoCount/" + userId, { PomoCount: 0 })
-        dispatch(SetTimerSettings({ ...dbTimer, current_task: '', task_id: 0, PomoCount: 0 })) //Clear the id in order to reset the id count of the task
-        // console.log("Deleted");
+        dispatch(SetTimerSettings({ ...dbTimer, current_task: '', task_id: 0, PomoCount: 0 }))
       }
 
       if (dbTasks.length <= 1) {
         await axios.patch("https://todo-api-teal.vercel.app/UserSettings/ClearCurrentTask/" + settingsId, { current_task: null, task_id: id })
-        //Update UserSettings
         dispatch(SetTimerSettings({ ...dbTimer, current_task: '', task_id: id }))
-      } else { //Clear current_task and task_id
+      } else {
         await axios.patch("https://todo-api-teal.vercel.app/UserSettings/ClearCurrentTask/" + settingsId, { current_task: null, task_id: null })
-        //Update UserSettings
         dispatch(SetTimerSettings({ ...dbTimer, current_task: '', task_id: '' }))
       }
       const indexTask = dbTasks.findIndex(task => task.id == id);

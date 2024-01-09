@@ -1,13 +1,13 @@
 import { useDispatch, useSelector } from "react-redux"
 import { SetTimerListAdd } from "../../features/timerSlice";
-import { NumberUpIcon, NumberDownIcon, AddSubtaskIcon, CheckedIcon } from "../../icons";
+import { NumberUpIcon, NumberDownIcon } from "../../icons";
 import { useState } from "react";
 import axios from "axios";
 import { AddNewTask } from "../../features/taskSlice";
 
 const ListTimerAdd = () => {
   const dispatch = useDispatch();
-  const { isTimerTaskAdd, isSubtaskTimer, subtasksTest, currentTimerId, dbTimer, lastTaskId } = useSelector((store) => store.timer);
+  const { isTimerTaskAdd, dbTimer } = useSelector((store) => store.timer);
   const { dbTasks } = useSelector((store) => store.task);
 
   const [timerInput, setTimerInput] = useState({
@@ -24,7 +24,6 @@ const ListTimerAdd = () => {
   const { task_title, focus_amount } = timerInput;
 
   const increaseNumber = () => {
-    // const amount = focus_amount;
     setTimerInput({ ...timerInput, focus_amount: focus_amount + 1 })
   }
 
@@ -45,14 +44,9 @@ const ListTimerAdd = () => {
     }, 3000)
   }
 
-  // try {
-  //   console.log(dbTasks.length);
-  // } catch (err) {
-  //   console.log(1);
-  // }
+
 
   const handleTimerSubmit = async (e) => {
-    // e.preventDefault();
     if (!task_title) {
       showMessage("emptyTitle")
       return
@@ -61,7 +55,6 @@ const ListTimerAdd = () => {
       await axios.post("https://todo-api-teal.vercel.app/TaskCurrent", timerInput);
 
       const nextId = dbTasks.length >= 1 ? dbTasks[dbTasks.length - 1].id : dbTimer.task_id;
-      // const nextId = dbTasks.length > 0 ? lastTaskId : dbTimer.task_id;
       dispatch(AddNewTask({ ...timerInput, id: nextId + 1 }))
 
       setTimerInput({
@@ -74,10 +67,6 @@ const ListTimerAdd = () => {
         focus_finished: 0,
         is_checked: 0,
       })
-      // console.log("Task created");
-      // console.log(nextId + 1);
-
-      // window.location.reload();
       showMessage("taskSubmitted")
     } catch (err) {
       console.log(err);
@@ -91,7 +80,6 @@ const ListTimerAdd = () => {
   const handleChangeNumber = (e) => {
     if (e.target.value) {
       setTimerInput((prev) => ({ ...prev, [e.target.name]: parseInt(e.target.value) }))
-      // setNumber(parseInt(e.target.value))
     } else {
       setTimerInput((prev) => ({ ...prev, [e.target.name]: 1 }))
     }
@@ -140,7 +128,6 @@ const ListTimerAdd = () => {
                       value={focus_amount}
                       onChange={handleChangeNumber}
                     />
-                    {/* <span>{number}</span> */}
                     <div className="details-numberUpDown">
                       <button
                         type="button"
@@ -158,33 +145,9 @@ const ListTimerAdd = () => {
                   </div>
                 </div>
               </div>
-              {/* {
-                (subtasksTest.length > 0) && (
-                  <div className="subtaskList">
-                    {
-                      subtasksTest.map((subtask) => {
-                        const { id, title } = subtask
-                        return (
-                          <div key={id} className="taskTimer-subtask">
-                            <input className="subtask-checkbox" id={id} type="checkbox" />
-                            <label
-                              className="subtask-title"
-                              htmlFor={id}
-                              title={title}
-                            >
-                              {title}
-                            </label>
-                          </div>
-                        )
-                      })
-                    }
-                  </div>
-                )
-              } */}
             </form>
             <div className="taskTimer-btn">
               <button className="taskTimerDetails-btn">
-                {/* Task Details */}
               </button>
               <div className="taskTimerAddCancel-btn">
                 <button className="taskTimerCancel-btn" onClick={() => dispatch(SetTimerListAdd())}>Cancel</button>
@@ -194,7 +157,6 @@ const ListTimerAdd = () => {
           </div>
         )
       }
-
     </div>
   )
 }

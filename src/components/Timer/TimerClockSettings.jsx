@@ -1,19 +1,15 @@
 import { useDispatch, useSelector } from "react-redux"
-import { NumberDownIcon, NumberUpIcon, CloseTimerSettings, CheckedIcon } from "../../icons"
+import { NumberDownIcon, NumberUpIcon, CloseTimerSettings } from "../../icons"
 import { useState } from "react"
 import { ShowTimerSettings, SetSoundVolume, SetTimerSettings, SetIsSettingsChange } from "../../features/timerSlice"
 import GuitarSound from '../../assets/guitar_Notification.mp3'
 import TimerSound from '../../assets/timer_Notification.ogg'
 import EraseSound from '../../assets/erase_Notification.wav'
 import axios from "axios"
-// import GuitarSound from '../../assets/guitar_Notification.mp3'
-
 
 const TimerClockSettings = () => {
   const { isTimerSettings, isEnglish, soundVolume, dbTimer } = useSelector((store) => store.timer);
   const dispatch = useDispatch();
-
-  // const {focus, short, long} = dbTimer
 
   const [timerInput, setTimerInput] = useState({
     focus: dbTimer.focus,
@@ -55,7 +51,6 @@ const TimerClockSettings = () => {
   }
 
   const increaseNumber = (name) => {
-    // const amount = focus_amount;
     if (name === "focus") {
       setTimerInput({ ...timerInput, focus: focus + 1 })
     } else if (name === "short") {
@@ -74,13 +69,6 @@ const TimerClockSettings = () => {
       setTimerInput({ ...timerInput, long: long - 1 })
     }
   }
-  // const [sound, setSound] = useState(undefined)
-  // console.log(sound);
-
-  // useEffect(() => {
-  //   const song = new Audio(sound)
-  //   song.play()
-  // }, [sound])
 
   const handleSound = (e) => {
     if (e.target.value === "EraseSound") {
@@ -100,8 +88,6 @@ const TimerClockSettings = () => {
 
   const handleSoundVolume = (e) => {
     setSoundVolume(e.target.value / 100)
-    // dispatch(soundVolume(e.target.value / 100))
-    // console.log(e.target.value / 100);
   }
 
 
@@ -135,7 +121,6 @@ const TimerClockSettings = () => {
                 <div className="details-numberUpDown">
                   <button
                     type="button"
-                    // name="focus"
                     onClick={() => increaseNumber("focus")}>
                     <NumberUpIcon />
                   </button>
@@ -209,7 +194,6 @@ const TimerClockSettings = () => {
         <div className="timerSound">
           <span className="timerAmount-title">Sound</span>
           <div className="alarm-sound">
-            {/* <button onClick={() => alarm.play()}>Test sound</button> */}
             <span className="timerAmount-text">Alarm Sound</span>
             <select
               className="sound-select"

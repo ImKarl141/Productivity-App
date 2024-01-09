@@ -1,13 +1,11 @@
 import { useEffect, useRef, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { NoteListIcon } from "../../icons"
-import { SetNoteList, ShowNoteEdit, AddNote, ShowLastId } from "../../features/noteSlice"
+import { ShowNoteEdit, AddNote } from "../../features/noteSlice"
 import axios from "axios"
 
 
 const NoteEdit = () => {
-  const { noteItems, tag, dbNotes, listOfTags, dbDefaultColors, lastId } = useSelector((store) => store.note);
-  // console.log(dbTasks);
+  const { dbNotes, dbDefaultColors } = useSelector((store) => store.note);
 
   const [inputNote, setInputNote] = useState({
     id: '',
@@ -20,15 +18,10 @@ const NoteEdit = () => {
   const { id, note_name, note_desc } = inputNote;
 
   const tempColor = useRef()
-  // const lastTask = useRef()
   const [remainText, setRemainText] = useState(500)
 
   const dispatch = useDispatch();
-  // console.log(dbNotes);
 
-  // console.log(lastId);
-
-  //Toast message
   const showMessage = (idElement) => {
     const spawnMessage = document.getElementById(idElement);
 
@@ -47,9 +40,7 @@ const NoteEdit = () => {
     }
     try {
       await axios.post('https://todo-api-teal.vercel.app/NoteList', inputNote)
-      // window.location.reload();
-      // dispatch(ShowLastId(dbNotes));
-      if (dbNotes.length < 1) { //Note list is empty
+      if (dbNotes.length < 1) {
         dispatch(AddNote({ ...inputNote, id: 1, color_value: tempColor.current }))
       } else {
         const nextId = dbNotes[dbNotes.length - 1].id;
@@ -63,7 +54,6 @@ const NoteEdit = () => {
         note_color: null,
       })
 
-      //Clear color list
       const color_input = document.getElementById('note-color');
       color_input.value = '';
       showMessage("noteSubmitted")
@@ -82,11 +72,9 @@ const NoteEdit = () => {
       if (e.target.value) {
         const noteColor = dbDefaultColors.find(color => color.id == e.target.value).color_value
         tempColor.current = noteColor;
-        // console.log(noteColor);
       }
     }
   }
-  // console.log(dbTasks[dbTasks.length - 1].id)
 
   return (
     <div className='note-edit' >
@@ -114,15 +102,11 @@ const NoteEdit = () => {
       </form>
       <div className='note-buttons'>
         <div className='note-buttons'>
-          {/* <span className='notes-btn make-list'>
-            <NoteListIcon />
-          </span> */}
           <div className="notes-btn make-list">Color:</div>
           <select
             id="note-color"
             name="note_color"
             onChange={handleChangeInput}
-          // value={color_value}
           >
             <option value=''>Without color</option>
             {

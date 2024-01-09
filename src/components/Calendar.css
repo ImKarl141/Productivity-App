@@ -1,7 +1,6 @@
 .calendar-container {
     display: grid;
     position: fixed;
-    /* background-color: red; */
     top: 5.8rem;
     bottom: 1.8rem;
     right: 5.8rem;

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useEffect, useRef, useState } from "react"
+import { useRef, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { AcceptUpdateIcon, CancelUpdateIcon } from "../../icons";
 import { SetCurrentEditId, SetNoteList } from "../../features/noteSlice";
@@ -11,21 +11,18 @@ const NoteUpdate = () => {
   const tempNote = dbNotes.find(note => note.id === currentEditId);
   const { color_value } = tempNote;
   const noValue = "No Color";
-  // console.log(color_value);
 
-  //Get the color value in hex
+
   const colorValue = color_value;
 
   const [inputNote, setInputNote] = useState({
     note_name: dbNotes.find(note => note.id === currentEditId).note_name,
     note_desc: dbNotes.find(note => note.id === currentEditId).note_desc,
-    //Iterate over the DefaultColors table to find the id of the color that matches the value
     note_color: colorValue ? dbDefaultColors.find(color => color.color_value == colorValue).id : undefined,
     is_pinned: false,
   })
 
   const { note_name, note_desc, note_color } = inputNote
-  // console.log(inputNote);
 
   const tempColor = useRef()
 
@@ -42,21 +39,14 @@ const NoteUpdate = () => {
   const handleChangeInput = (e) => {
     e.target.value ? setInputNote((prev) => ({ ...prev, [e.target.name]: e.target.value })) :
       setInputNote((prev) => ({ ...prev, [e.target.name]: undefined }));
-    // e.target.value ? console.log("Is value") : console.log("No value");
-    // setInputNote((prev) => ({ ...prev, [e.target.name]: e.target.value }))
-    // console.log(inputNote);
     if (e.target.name === "note_color") {
       if (e.target.value) {
         const noteColor = dbDefaultColors.find(color => color.id == e.target.value).color_value
         tempColor.current = noteColor;
-        // console.log(noteColor);
       }
     }
   }
 
-  // const handleChangeColor = (e) => {
-  //   setInputNote((prev) => ({ ...prev, [e.target.name]: e.target.value }))
-  // }
 
   const handleNoteSubmit = async (e) => {
     e.preventDefault();
@@ -66,18 +56,14 @@ const NoteUpdate = () => {
     }
     try {
       await axios.put("https://todo-api-teal.vercel.app/NoteList/" + currentEditId, inputNote)
-      // const newNote = dbNotes.find(note => note.id == currentEditId)
       const newNote = dbNotes.map((note) => {
         if (note.id == currentEditId) {
           return { ...note, note_name: note_name, note_desc: note_desc, note_color: note_color, color_value: tempColor.current }
         }
         return note
       })
-      // console.log(newNote);
       dispatch(SetNoteList(newNote))
       dispatch(SetCurrentEditId(''))
-      // console.log(newNote);
-      // window.location.reload()
       showMessage("noteUpdated")
     } catch (err) {
       console.log(err);

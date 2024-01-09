@@ -1,26 +1,19 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { ShowTaskEdit, ShowSubtaskEdit, ShowTaskUpdate, SetCurrentEditId, SetTaskList } from '../../features/taskSlice';
-import { AddTaskIcon } from '../../icons';
+import { ShowTaskUpdate, SetTaskList } from '../../features/taskSlice';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import EraseSound from '../../assets/erase_Notification.wav'
 // import '../Task.css'
 
 const TaskUpdate = () => {
-  const { dbTasks, dbProjects, dbTags, addSubtaskEdit, subtaskInput, currentEditId } = useSelector((store) => store.task);
+  const { dbTasks, dbProjects, dbTags, currentEditId } = useSelector((store) => store.task);
   // Inputs
 
   const notification = new Audio(EraseSound);
   const dispatch = useDispatch();
-  // console.log(currentEditId);
 
   const temp_task = dbTasks.find(myTask => myTask.id === currentEditId)
   const { project_name, tag_name } = temp_task;
-
-  //Assign the id for selecting the proper project/tag. If the task doesn't have one then assign an empty value.
-
-  //Formatting date of task. If the task doesn't have a one then omit the formatting.
-  // console.log(temp_task);
 
   //Toast message
   const showMessage = (idElement) => {
@@ -39,7 +32,6 @@ const TaskUpdate = () => {
       const [month, day, year] = date.split("-")
       return `${year}-${month}-${day}`
     } catch {
-      // console.log("Date not found");
       return
     }
   }
@@ -58,7 +50,6 @@ const TaskUpdate = () => {
 
 
   const { task_title, task_desc, task_date, task_project, task_tag } = inputTask;
-  // console.log(subtasks[0].name);
 
   const [remainText, setRemainText] = useState(255)
 
@@ -83,19 +74,10 @@ const TaskUpdate = () => {
   const handleChangeInput = (e) => {
     e.target.value ? setInputTask((prev) => ({ ...prev, [e.target.name]: e.target.value })) :
       setInputTask((prev) => ({ ...prev, [e.target.name]: undefined }));
-    // console.log(typeof (e.target.value));
-    // console.log(inputTask);
-    // setInputTask((prev) => ({ ...prev, [e.target.name]: e.target.value }))
-    // console.log(inputTask);
-  }
-
-  const handleClearValues = (name) => { //onclick make values undefined
-    setInputTask((prev) => ({ ...prev, [name]: undefined }))
   }
 
   const handleChangeInputDate = (e) => {
-    // e.target.value ? console.log('Date added') :
-    //   console.log('Empty value');
+
     if (e.target.value) {
       const [year, month, day] = e.target.value.split('-')
       setInputTask((prev) => ({ ...prev, [e.target.name]: `${month}-${day}-${year}` }))
@@ -113,13 +95,8 @@ const TaskUpdate = () => {
     }
     try {
       await axios.put('https://todo-api-teal.vercel.app/TaskCurrent/' + currentEditId, inputTask)
-      // const resp = await axios.get('https://todo-api-teal.vercel.app/TaskCurrent')
-      // dispatch(SetTaskList(resp.data))
       updateChanges();
       showMessage("taskUpdated")
-      // dispatch(ShowTaskUpdate())
-      // console.log(inputTask);
-      // window.location.reload();
     } catch (err) {
       console.log(err);
     }
@@ -131,9 +108,6 @@ const TaskUpdate = () => {
       updateChanges();
       notification.play()
       showMessage("taskDeleted")
-      // const resp = await axios.get('https://todo-api-teal.vercel.app/TaskCurrent')
-      // dispatch(SetTaskList(resp.data))
-      // window.location.reload();
     } catch (err) {
       console.log(err);
     }
@@ -153,8 +127,6 @@ const TaskUpdate = () => {
             value={task_title}
             maxLength={45}
             onChange={handleChangeInput}
-          // value={taskT}
-          // onChange={(e) => dispatch(ChangeTitleInput(e.target.value))}
           />
           <div className='descForm-container'>
             <textarea
@@ -175,7 +147,6 @@ const TaskUpdate = () => {
               className='myInput-date'
               type="date"
               name='task_date'
-              // value={task_date}
               value={formatDate(task_date)}
               onChange={handleChangeInputDate}
             />
@@ -185,7 +156,6 @@ const TaskUpdate = () => {
             <select
               name='task_project'
               value={task_project}
-              // value={formatProjectInput(task_project)}
               onChange={handleChangeInput}
             >
               <option value={null}></option>

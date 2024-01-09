@@ -1,20 +1,12 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { ShowTaskEdit, ShowAddProjectEdit, ShowAddTagEdit, ChangeTitleInput, ChangeDescriptionInput, ChangeDateInput, ChangeProjectName, ChangeProjectColor, ChangeProjectNameInput, ChangeProjectColorInput, ChangeTagName, ChangeTagColor, AddTaskItem, RemoveTaskItem, AddProjectItem, RemoveProjectItem, AddTagItem, RemoveTagItem, SetTagList } from '../../features/taskSlice';
-import { AddTaskIcon, AllTasksIcon, CurrentTasksIcon, CompletedTasksIcon, AddProjectIcon, AddTagsIcon, EnterTaskIcon, CalendarIconTask, ProjectSettingsIcon, CancelIcon, TagSettingsIcon, EditListIcon, DeleteListIcon } from '../../icons';
+import { ShowAddTagEdit, SetTagList } from '../../features/taskSlice';
+import { CancelIcon } from '../../icons';
 import axios from 'axios';
 import { useState } from 'react';
 
 
 const TagEdit = () => {
-
   const { dbTags } = useSelector((store) => store.task);
-
-  // Inputs
-  // const { taskTitle, taskDescription, taskDate } = taskInput
-  // const { taskProjectName, taskProjectColor } = taskProjectInput
-  // const { nameProject, projectColor } = projectInput
-  // const { nameTag, tagColor } = tagInput
-
   const [tagInput, setTagInput] = useState({
     tag_name: '',
     tag_color: '#FFFFFF',
@@ -38,7 +30,6 @@ const TagEdit = () => {
 
   const handleChangeInput = (e) => {
     setTagInput((prev) => ({ ...prev, [e.target.name]: e.target.value }))
-    // console.log(tagInput);
   }
 
   const handleTagSubmit = async (e) => {
@@ -62,7 +53,6 @@ const TagEdit = () => {
         tag_name: '',
         tag_color: '#FFFFFF',
       })
-      // window.location.reload();
       showMessage("tagSubmitted")
     } catch (err) {
       console.log(err);
@@ -91,7 +81,6 @@ const TagEdit = () => {
           type="text"
           value={tag_name}
           className={isDuplicate ? 'test' : 'myInputAddTag'}
-          // className='myInputAddTag'
           onChange={handleChangeInput}
         />
       </form>

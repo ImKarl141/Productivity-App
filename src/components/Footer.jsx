@@ -1,4 +1,4 @@
-import { CoffeeIconFooter, FooterIcon, HeartIconFooter } from "../icons"
+import { CoffeeIconFooter, HeartIconFooter } from "../icons"
 import './Footer.css'
 HeartIconFooter
 

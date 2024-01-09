@@ -21,7 +21,6 @@ const noteSlice = createSlice({
     SetNoteCardView: (state, value) => {
       state.isNoteCardView = !state.isNoteCardView;
       state.noteCardId = value.payload;
-      // console.log(state.isNoteCardView);
     },
     AddNote: (state, value) => {
       state.dbNotes.push(value.payload);
@@ -43,7 +42,6 @@ const noteSlice = createSlice({
     },
     SetCurrentEditId: (state, value) => {
       state.currentEditId = value.payload;
-      // console.log(state.currentEditId);
     },
     SetColorUpdate: (state) => {
       state.isColorUpdate = !state.isColorUpdate;

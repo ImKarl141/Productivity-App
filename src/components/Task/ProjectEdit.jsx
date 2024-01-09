@@ -1,12 +1,11 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { ShowAddProjectEdit, ChangeProjectName, ChangeProjectColor, AddProjectItem, SetProjectList } from '../../features/taskSlice';
+import { ShowAddProjectEdit, SetProjectList } from '../../features/taskSlice';
 import { CancelIcon } from '../../icons';
 import { useState } from 'react';
 import axios from 'axios';
 
 const ProjectEdit = () => {
   const { dbProjects } = useSelector((store) => store.task)
-  // console.log(dbProjects);
 
   const dispatch = useDispatch();
 
@@ -32,28 +31,11 @@ const ProjectEdit = () => {
 
   const handleChangeInput = (e) => {
     setProjectInput((prev) => ({ ...prev, [e.target.name]: e.target.value }))
-    // console.log(projectInput);
   }
-
-  // const checkDuplicateProject = dbProjects.find(project => project.project_name === "Red project");
-  // console.log(checkDuplicateProject);
-
-  // const checkDuplicateProject = (myInput) => {
-  //   for (const listOfProject of dbProjects) {
-  //     if (myInput.project_name === listOfProject.project_name) {
-  //       console.log("Find duplicate");
-  //       return
-  //     }
-  //   }
-  //   console.log("No duplicate was found");
-  // }
-
-  // checkDuplicateProject({ project_name: "Red project", project_color: '#FFFFFF' });
 
   const handleProjectSubmit = async (e) => {
     e.preventDefault();
     if (!project_name) {
-      // console.log("empty");
       showMessage("emptyTitleProject")
       return
     }
@@ -72,8 +54,6 @@ const ProjectEdit = () => {
         project_name: '',
         project_color: '#FFFFFF',
       })
-      // dispatch(SetProjectList([...dbP]))
-      // window.location.reload();
       showMessage("projectSubmitted")
     } catch (err) {
       console.log(err);
@@ -99,7 +79,6 @@ const ProjectEdit = () => {
           name='project_name'
           type="text"
           className={isDuplicate ? 'test' : 'myInputAddProject'}
-          // className='test'
           value={project_name}
           placeholder='Project name'
           onChange={handleChangeInput}

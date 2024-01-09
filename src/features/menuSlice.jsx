@@ -27,12 +27,10 @@ const menuSlice = createSlice({
       const { menuToggle } = state;
       menuToggle.Task = !menuToggle.Task;
       menuToggle.Calendar = menuToggle.Notes = false;
-      // return menuToggle.Task
     },
     showCalendar: (state) => {
       const { menuToggle } = state;
       menuToggle.Calendar = !menuToggle.Calendar;
-      // console.log('Calendar displayed');
       menuToggle.Task = menuToggle.Notes = false;
     },
     showNotes: (state) => {

@@ -1,11 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { task, taskInput, projectInput, tagInput, taskProjectInput, userProjects, userTags, taskTagInput, subtaskTest, subtaskInput } from '../data'
-import { useEffect, useState } from "react";
-import axios from "axios";
-
-// const [dbProjects, setDbProjects] = useState([]);
-
-
 
 const initialState = {
   taskItems: task,
@@ -61,14 +55,11 @@ const taskSlice = createSlice({
         state.currentView.all = true;
         state.currentView.current = false;
         state.currentView.completed = false;
-        // console.log(state.currentView.all);
       } else if (value.payload === "current") {
         state.currentView.all = false;
         state.currentView.current = true;
         state.currentView.completed = false;
-        // console.log(state.currentView.current);
       } else if (value.payload === "completed") {
-        // console.log(state.currentView.completed);
         state.currentView.all = false;
         state.currentView.current = false;
         state.currentView.completed = true;
@@ -153,9 +144,6 @@ const taskSlice = createSlice({
     ChangeProjectColor: (state, value) => {
       state.projectInput.projectColor = value.payload
     },
-    // ChangeProjectInput: (state, value) => {
-    //   state.projectInput = value.payload
-    // },
     ChangeProjectNameInput: (state, value) => {
       state.taskProjectInput.taskProjectName = value.payload
     },
@@ -219,8 +207,6 @@ const taskSlice = createSlice({
       } else {
         state.currentTagView = value.payload
       }
-      // state.currentTagView = value.payload
-      // console.log(state.currentTagView);
     },
   }
 });

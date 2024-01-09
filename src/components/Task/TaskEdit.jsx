@@ -1,19 +1,14 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { ShowTaskEdit, ShowSubtaskEdit, SetTaskList, ChangeTitleInput, ChangeDescriptionInput, ChangeDateInput, ChangeProjectNameInput, ChangeProjectColorInput, ChangeTagInput, ChangeTagNameInput, ChangeTagColorInput, AddTaskItem } from '../../features/taskSlice';
-import { AddTaskIcon } from '../../icons';
+import { ShowTaskEdit, SetTaskList } from '../../features/taskSlice';
 import axios from 'axios';
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 // import '../Task.css'
 
 const TaskEdit = () => {
   const dispatch = useDispatch();
-  const { dbTasks, taskItems, subtaskTest, projects, dbProjects, dbTags, tags, taskInput, taskProjectInput, taskTagInput, addSubtaskEdit, subtaskInput } = useSelector((store) => store.task);
-  // console.log(dbTasks);
+  const { dbProjects, dbTags, subtaskInput } = useSelector((store) => store.task);
 
   // Inputs
-  const { taskTitle, taskDescription, taskDate } = taskInput
-  const { taskProjectName, taskProjectColor } = taskProjectInput
-  const { taskTagName, taskTagColor } = taskTagInput
   const { subtask } = subtaskInput
 
   const [remainText, setRemainText] = useState(256)
@@ -42,7 +37,6 @@ const TaskEdit = () => {
   }
 
 
-  // const { nameProject, projectColor } = projectInput
 
   //Update the remain text in the description form
   useEffect(() => {
@@ -50,14 +44,12 @@ const TaskEdit = () => {
   }, [task_desc])
 
 
-  // Change of inputs
   const handleChangeInput = (e) => {
     setInputTask((prev) => ({ ...prev, [e.target.name]: e.target.value }))
   }
 
   const handleChangeDesc = (e) => {
     setInputTask((prev) => ({ ...prev, [e.target.name]: e.target.value }))
-    // setRemainText(remainText - task_desc.length)
   }
 
   const handleChangeInputDate = (e) => {
@@ -66,8 +58,6 @@ const TaskEdit = () => {
   }
 
 
-  // const q = "SELECT t.id, t.task_title, t.task_desc, t.task_date, t.focus_amount, t.is_checked, p.project_name, p.project_color, tg.tag_name, tg.tag_color FROM `TaskCurrent` t LEFT JOIN `ProjectList` p ON t.task_project = p.id LEFT JOIN `TagList` tg ON t.task_tag = tg.id";
-  // Submit inputs to endpoint
   const handleTaskSubmit = async (e) => {
     e.preventDefault();
     if (!task_title) {
@@ -76,7 +66,6 @@ const TaskEdit = () => {
     }
     try {
       await axios.post('https://todo-api-teal.vercel.app/TaskCurrent', inputTask)
-      // window.location.reload()
       const resp = await axios.get('https://todo-api-teal.vercel.app/TaskCurrent')
       dispatch(SetTaskList(resp.data))
       setInputTask({
@@ -102,7 +91,6 @@ const TaskEdit = () => {
 
       showMessage("taskSubmitted")
 
-      // console.log("Reset");
     } catch (err) {
       console.log(err);
     }
@@ -118,22 +106,18 @@ const TaskEdit = () => {
 
   return (
     <div className='task-details'>
-      {/* <div className='test'>Hello</div> */}
       <div className='task-details-task'>
         <h1>Task:</h1>
         <form className='taskForm' onSubmit={handleTaskSubmit}>
           <input
             id='title-task'
             name='task_title'
-            // className='myInput'
             className={task_title.length >= 45 ? 'myInput errorTitle' : 'myInput'}
             type="text"
             placeholder='Title name'
             value={task_title}
             maxLength={45}
             onChange={handleChangeInput}
-          // value={taskT}
-          // onChange={(e) => dispatch(ChangeTitleInput(e.target.value))}
           />
           <div className='descForm-container'>
             <textarea
@@ -143,11 +127,8 @@ const TaskEdit = () => {
               placeholder='Description'
               value={task_desc}
               className='myInput myInput-description'
-              // className={task_title.length >= 45 ? 'myInput-description errorDesc' : 'myInput-description'}
               onChange={handleChangeDesc}
               maxLength={255}
-            // value={taskDescription}
-            // onChange={(e) => {dispatch(ChangeDescriptionInput(e.target.value))}}
             />
             <span className='text-indicator'>{remainText} characters left</span>
           </div>
@@ -159,12 +140,7 @@ const TaskEdit = () => {
               className='myInput-date'
               type="date"
               name='task_date'
-              // value={task_date}
               onChange={handleChangeInputDate}
-            // onChange={(e) => {
-            //   const [year, month, day] = e.target.value.split('-')
-            //   dispatch(ChangeDateInput(`${month}-${day}-${year}`))
-            // }}
             />
           </div>
           <div className='task-details-info'>
@@ -201,27 +177,9 @@ const TaskEdit = () => {
           </div>
         </form>
       </div>
-      {/* <div className='task-details-subtask'>
-        <h1>Subtask:</h1>
-        <button className='add-subtask-btn'
-          onClick={() => dispatch(ShowSubtaskEdit())}
-        >
-          <AddTaskIcon />
-          <p className='myTask-text'>Add Subtask</p>
-        </button>
-        {
-          addSubtaskEdit && (
-            <form onSubmit={handleSubtaskSubmit} >
-              <label htmlFor="text">Input</label>
-              <input id='text' type="text" />
-            </form>
-          )
-        }
-      </div> */}
       <div className='task-details-button'>
         <button className='detailsBtn saveBtn' onClick={handleTaskSubmit}>Create Task</button>
         <button className='detailsBtn cancelBtn' onClick={() => dispatch(ShowTaskEdit())}>Cancel Task</button>
-        {/* <button className='detailsBtn deleteBtn' >Delete Task</button> */}
       </div>
     </div>
   )

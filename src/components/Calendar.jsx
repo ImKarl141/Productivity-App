@@ -1,9 +1,6 @@
 import React from 'react';
-import { sliceEvents, createPlugin } from '@fullcalendar/core'
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
-import timeGridPlugin from '@fullcalendar/timegrid';
-import interactionPlugin from '@fullcalendar/interaction';
 
 import './Calendar.css'
 
@@ -14,7 +11,6 @@ const CalendarMenu = () => {
       <FullCalendar
         plugins={[dayGridPlugin]}
       />
-      {/* <h2>Calendar</h2> */}
     </section>
   )
 }

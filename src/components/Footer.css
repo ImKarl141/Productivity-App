@@ -34,7 +34,6 @@ footer {
   padding: 0.3rem;
   z-index: 100;
   background-color: var(--pomodoroDark);
-  /* border-top: 0.3rem solid var(--pomodoroLight); */
 }
 
 a {

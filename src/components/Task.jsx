@@ -14,9 +14,9 @@ import TaskUpdate from './Task/TaskUpdate';
 
 const TaskMenu = () => {
 
-  const { dbTasks, dbProjects, dbTags, taskItems, isEdit, isTaskUpdate, addProjectEdit, projects, tags, addTagEdit, currentView } = useSelector((store) => store.task);
+  const { dbTasks, isEdit, isTaskUpdate, currentView } = useSelector((store) => store.task);
   const { menuToggle } = useSelector((store) => store.menu);
-  const { Menu, Task, Calendar, Notes } = menuToggle;
+  const { Task } = menuToggle;
   // console.log(currentView);
   // console.log(dbTasks);
   // console.log("Updated");
@@ -33,17 +33,11 @@ const TaskMenu = () => {
   const currentDate = myDate.split("/").map(item => item.padStart(2, '0'));
   const [month, day, year] = currentDate
 
-  // console.log(dbTasks.filter(task => task.is_checked == true).length);
-
-  //Edit task menu
-
-  // Fetching data
   useEffect(() => {
     const fetchData = async () => {
       try {
         const task = await axios.get("https://todo-api-teal.vercel.app/TaskCurrent")
         dispatch(SetTaskList(task.data))
-        // console.log(task.data);
 
         const project = await axios.get("https://todo-api-teal.vercel.app/ProjectList")
         dispatch(SetProjectList(project.data))
@@ -56,9 +50,6 @@ const TaskMenu = () => {
     }
     fetchData();
   }, [])
-
-  // const test = false;
-  // console.log(dbTasks);
 
   return (
     <section className={`task-container ${Task ? 'task-container-active' : ''} `}>

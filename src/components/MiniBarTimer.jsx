@@ -1,10 +1,8 @@
 import { useEffect, useState } from "react"
-import { ResetTimer, CoffeeIcon, PlayPauseMiniIcon, SkipMiniIcon } from "../icons"
-import timerMini from '../images/timer-stage2-icon.svg'
+import { ResetTimer, PlayPauseMiniIcon, SkipMiniIcon } from "../icons"
 
 const MiniBarTimer = () => {
 
-  // const [isPlaying, setIsPlaying] = useState(true)
   const [defaultValues, setDefaultValues] = useState({
     hours: '00',
     minutes: '00',
@@ -58,7 +56,6 @@ const MiniBarTimer = () => {
   }
 
   const resetTimer = () => {
-    // const newValue = { ...timer, seconds: 0, isPlaying: false }
     setTimer(defaultValues)
     setIsFinish(false)
     console.log("Timer was reset");
@@ -93,9 +90,7 @@ const MiniBarTimer = () => {
         </button>
         <button className='play-buttons' title="Stop" onClick={() => stopTimer()}>
           <SkipMiniIcon />
-          {/* <img className='play-option' src={stopIcon} alt="stop" /> */}
         </button>
-        {/* Place the reset after the timer is done */}
         <button className="play-buttons" title="Reset" onClick={() => resetTimer()}>
           <ResetTimer />
         </button>

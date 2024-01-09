@@ -63,7 +63,6 @@ const timerSlice = createSlice({
       state.testReload = !state.testReload
     },
     SetIsSettingsChange: (state) => {
-      // window.location.reload()
     },
     SetTimerListAdd: (state) => {
       state.isTimerTaskAdd = !state.isTimerTaskAdd;
@@ -75,7 +74,6 @@ const timerSlice = createSlice({
     SetCurrentEditTimer: (state, value) => {
       state.currentTimerId = value.payload;
       state.isTimerTaskEdit = true
-      // console.log(state.currentEditTimer);
     },
     SetCheckedTask: (state, value) => {
       if (state.checkedItems.includes(value.payload)) {
@@ -87,7 +85,6 @@ const timerSlice = createSlice({
     },
     SetCurrentTimerTask: (state, value) => {
       state.currentTimerTask = value.payload
-      // console.log("Done");
     },
     ShowTimerSettings: (state) => {
       state.isTimerSettings = !state.isTimerSettings

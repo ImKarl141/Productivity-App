@@ -1,19 +1,16 @@
-import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { AddTaskIcon, EnterTaskIcon, CalendarIconTask, DeleteListIcon } from '../../icons';
-import { SetTaskList, ShowTaskEdit, ShowTaskUpdate, SetCurrentEditId, SetCurrentCheckedId } from "../../features/taskSlice";
+import { EnterTaskIcon, CalendarIconTask } from '../../icons';
+import { SetTaskList, ShowTaskUpdate, SetCurrentEditId } from "../../features/taskSlice";
 import axios from "axios";
 
 
 const RegularTaskItem = (props) => {
   const dispatch = useDispatch();
-  const { isTaskUpdate, dbTasks, currentView, currentCheckedId } = useSelector((store) => store.task);
+  const { isTaskUpdate } = useSelector((store) => store.task);
 
   const handle = (e) => {
-    //Separate the string into an array. Being, in order, task_title, focus_amount and is_checked
     const myArray = e.target.value.split("+");
 
-    //Change the value of is_checked. If is 0 mean false, so turn true, and vice versa.
     if (myArray[2] === "0") {
       myArray[2] = true
     } else {
@@ -26,17 +23,8 @@ const RegularTaskItem = (props) => {
     try {
       await axios.patch("https://todo-api-teal.vercel.app/TaskCurrent/" + myId, { task_title: title, focus_amount: focus, is_checked: check });
 
-      //Update the local state of the Task List.
-      // const newTask = dbTasks.map((task) => {
-      //   //The myId is an string, so parseInt or compare ignoring the datatype.
-      //   if (task.id == myId) {
-      //     return { ...task, is_checked: check };
-      //   }
-      //   return task;
-      // });
       const resp = await axios.get("https://todo-api-teal.vercel.app/TaskCurrent/");
       dispatch(SetTaskList(resp.data))
-      // window.location.reload();
     } catch (err) {
       console.log(err);
     }

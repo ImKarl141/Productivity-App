@@ -1,7 +1,5 @@
-//createSlice
 import { createSlice } from "@reduxjs/toolkit";
 
-//initial state
 const initialState = {
   optionToggle: {
     Options: false,
@@ -31,10 +29,7 @@ const optionSlice = createSlice({
     }
   }
 })
-// console.log('hello friend');
 
-//destructuring slice
 export const { showOption, showSettings, showUser } = optionSlice.actions;
 
-//export as reducer
 export default optionSlice.reducer;

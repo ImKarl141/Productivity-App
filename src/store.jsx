@@ -5,10 +5,6 @@ import optionReducer from './features/optionSlice';
 import noteReducer from "./features/noteSlice";
 import timerReducer from './features/timerSlice';
 
-
-
-
-
 export const store = configureStore({
   reducer: {
     menu: menuReducer,
