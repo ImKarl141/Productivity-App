@@ -1155,7 +1155,7 @@ export const CheckedIcon = () => {
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="currentColor"
-      className="checked-icon"
+      className="checkedToast-icon"
     >
       <path
         strokeLinecap="round"

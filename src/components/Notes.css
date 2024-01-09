@@ -482,6 +482,9 @@
   right: 5rem;
 }
 
+#note-color option {
+  font-weight: 600;
+}
 
 .notePin-btn,
 .notePinned-btn {
