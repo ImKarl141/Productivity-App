@@ -1,19 +1,20 @@
 .task-container::-webkit-scrollbar,
 .myInput-description::-webkit-scrollbar,
 .task-focus::-webkit-scrollbar,
-.tags-container::-webkit-scrollbar {
+.tags-container::-webkit-scrollbar,
+.projects-container::-webkit-scrollbar {
   background-color: var(--pomodoroDark);
-  width: 0.6rem;
+  width: 0.4rem;
 
 }
 
 .task-container::-webkit-scrollbar-thumb,
 .myInput-description::-webkit-scrollbar-thumb,
 .task-focus::-webkit-scrollbar-thumb,
-.tags-container::-webkit-scrollbar-thumb {
+.tags-container::-webkit-scrollbar-thumb,
+.projects-container::-webkit-scrollbar-thumb {
   background-color: var(--blackLight);
   border-radius: 0.6rem;
-
 }
 
 .task-container {
@@ -329,6 +330,10 @@
   grid-row-gap: 0.4rem;
   align-items: start;
   justify-items: start;
+}
+
+.task-item-title {
+  font-weight: 700;
 }
 
 .default-checkbox {
@@ -1568,11 +1573,12 @@ a {
     max-width: 5rem;
     overflow: hidden;
     text-overflow: ellipsis;
+    font-weight: 700;
   }
 
-  .task-item-title::after {
+  /* .task-item-title::after {
     content:":";
-  }
+  } */
 
   .task-item-description {
     max-width: 7rem;
@@ -1668,7 +1674,6 @@ a {
   .tags-container::-webkit-scrollbar {
     background-color: var(--pomodoroDark);
     width: 0.3rem;
-
   }
 
   .task-container::-webkit-scrollbar-thumb,
@@ -1677,7 +1682,6 @@ a {
   .tags-container::-webkit-scrollbar-thumb {
     background-color: var(--blackLight);
     border-radius: 0.6rem;
-
   }
 
   .myInput {

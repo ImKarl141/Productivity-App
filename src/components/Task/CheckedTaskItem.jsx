@@ -43,7 +43,7 @@ const CheckedTaskItem = (props) => {
           />
           <span className='checkmark'></span>
           <div className='task-item-text'>
-            <span className="task-item-title">{props.task_title}</span>
+            <span className="task-item-title">{props.task_title}:</span>
             <span className='task-item-description'>{props.task_desc}</span>
           </div>
           {
